@@ -1,0 +1,284 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scrolling Life</title>
+  <meta
+    name="description"
+    content="Scrolling Life es una pieza web sobre el scroll como gesto cultural, ritmo corporal y forma contemporanea de mirar."
+  />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;700;800&family=Instrument+Serif:ital@0;1&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body id="top">
+  <div class="netart-layer" aria-hidden="true"></div>
+  <div class="page-content">
+    <div class="bg-orbit orbit-a" aria-hidden="true"></div>
+    <div class="bg-orbit orbit-b" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <div class="progress-shell" aria-hidden="true">
+    
+    <div class="progress-track">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+  </div>
+
+  <details class="site-menu">
+    <summary>
+      <span class="site-menu-label">menú </span>
+    </summary>
+    <div class="site-menu-panel">
+      <p class="site-menu-caption">otras salas</p>
+      <div class="site-menu-links">
+        <a class="site-menu-link" href="./scroll_vertical/vertical1.html">
+          <span>Arquitectura</span>
+          <small>recorrido vertical</small>
+        </a>
+        <a class="site-menu-link" href="./sala-3d.html">
+          <span>Sala 3D</span>
+          <small>instalacion expandida</small>
+        </a>
+        <a class="site-menu-link" href="./comentarios_instagram/index.html">
+          <span>Comentarios</span>
+          <small>archivo de voces</small>
+        </a>
+        <a class="site-menu-link" href="./scroll_fantasmagorias/index.html">
+          <span>Fantasmagorias</span>
+          <small>deriva visual</small>
+        </a>
+        <a class="site-menu-link" href="./mosquito-caos.html">
+          <span>Mosquito Caos</span>
+          <small>enjambre interactivo</small>
+        </a>
+      </div>
+    </div>
+  </details>
+
+  <header class="hero section">
+    <div class="hero-copy reveal">
+      <p class="eyebrow">PROGRAMACIÓN VIRTUAL GALERÍA SANTA FE</p>
+      <h1>
+        <span>Scrolling</span>
+        <span class="title-accent">
+          <span class="title-accent-word">Life</span>
+          <a
+            class="mosquito-link"
+            href="./mosquito-caos.html"
+            aria-label="Entrar al enjambre de ventanas"
+            title="Entrar al enjambre de ventanas"
+            aria-hidden="true"
+            tabindex="-1"
+          >
+            <span class="mosquito">
+              <span class="mosquito-wing mosquito-wing-left"></span>
+              <span class="mosquito-wing mosquito-wing-right"></span>
+              <span class="mosquito-body"></span>
+              <span class="mosquito-head"></span>
+              <span class="mosquito-legs"></span>
+            </span>
+            <span class="mosquito-call">seguir</span>
+          </a>
+        </span>
+      </h1>
+      <p class="lead">
+        El ojo sigue al dedo,
+        el dedo sigue al ritmo,
+        el ritmo no responde a nada.
+        Y sin embargo aparece un paisaje continuo, imposible de retener.
+      </p>
+      <div class="hero-actions">
+        <a class="button button-solid" href="#manifiesto">Entrar al recorrido</a>
+        
+      </div>
+    </div>
+
+    <div class="hero-panel reveal">
+      <div class="panel-tag">No pares de bajar</div>
+      <p>
+        ¿Dónde termina tu scroll?
+      </p>
+      
+    </div>
+
+    <div class="kinetic-line" data-speed="0.24">scroll is never neutral</div>
+    <div class="kinetic-line line-bottom" data-speed="-0.18">cada deslizamiento reorganiza la mirada</div>
+  </header>
+
+  <main>
+    <section class="section split-section" id="manifiesto">
+      <div class="section-mark reveal">
+        <span>01</span>
+        Sobre lo infinito 
+      </div>
+      <div class="section-body reveal">
+        <h2>Verticalidad</h2>
+        <p>
+          Scrolling Life propone una lectura artistica del scroll como gesto repetido,
+          aprendido y ya casi involuntario. No se trata solo de navegar contenido:
+          se trata de entrenar el cuerpo para convivir con una corriente de imagenes,
+          textos, anuncios, memorias y promesas que nunca se deja poseer del todo.
+        </p>
+        <p>
+          En esta pieza, la pagina no ilustra una idea previa. La pagina es el ensayo.
+          Cada tramo, cada bloque y cada pausa trabajan como evidencia sensible de una
+          cultura que vive descendiendo por superficies infinitas.
+        </p>
+      </div>
+    </section>
+
+    <section class="section atlas-section">
+      <div class="atlas-intro reveal">
+        <p class="eyebrow">cartografia conceptual</p>
+        <h2>Cuatro fuerzas sostienen la vida en scroll.</h2>
+      </div>
+
+      <div class="card-grid">
+        <article class="concept-card reveal">
+          <div class="card-index">A</div>
+          <h3>Gesto</h3>
+          <p>
+            El scroll es una coreografia minima. Una accion pequena que organiza el
+            tiempo del cuerpo frente a la pantalla.
+          </p>
+        </article>
+        <article class="concept-card reveal">
+          <div class="card-index">B</div>
+          <h3>Deseo</h3>
+          <p>
+            Siempre hay algo mas abajo. El desplazamiento sostiene una promesa de
+            hallazgo que rara vez concluye.
+          </p>
+        </article>
+        <article class="concept-card reveal">
+          <div class="card-index">C</div>
+          <h3>Archivo</h3>
+          <p>
+            La memoria digital se presenta como flujo. Guardamos, olvidamos y volvemos
+            a ver sin abandonar la misma superficie.
+          </p>
+        </article>
+        <article class="concept-card reveal">
+          <div class="card-index">D</div>
+          <h3>Fatiga</h3>
+          <p>
+            La abundancia visual erosiona la atencion. El cansancio tambien es una forma
+            de conocimiento del presente.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section corridor" id="arquitectura">
+      <div class="corridor-header reveal">
+        <p class="eyebrow">arquitectura de la experiencia</p>
+        <h2>Una web pensada como sala, ensayo y dispositivo de mediacion.</h2>
+      </div>
+
+      <div class="corridor-steps">
+        <article class="corridor-step reveal">
+          <span class="step-no">01</span>
+          <div>
+            <h3>Umbral</h3>
+            <p>
+              Un arranque de alto contraste introduce el scroll como atmosfera. El titulo
+              no funciona solo como portada, sino como campo de tension entre deseo y agotamiento.
+            </p>
+          </div>
+        </article>
+        <article class="corridor-step reveal">
+          <span class="step-no">02</span>
+          <div>
+            <h3>Ensayo expandido</h3>
+            <p>
+              El contenido se distribuye en capas breves, precisas y visuales. Cada modulo
+              puede leerse de manera autonoma, pero la experiencia gana sentido cuando se recorre entera.
+            </p>
+          </div>
+        </article>
+        <article class="corridor-step reveal">
+          <span class="step-no">03</span>
+          <div>
+            <h3>Interfaz critica</h3>
+            <p>
+              El propio comportamiento del sitio hace visible la logica que analiza: barras,
+              desplazamientos, apariciones y persistencias convierten la forma en argumento.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section quote-section reveal">
+      <blockquote>
+        “Deslizar hacia abajo” parece una accion banal.
+        <br />
+        En realidad es una pedagogia del presente.
+      </blockquote>
+    </section>
+
+    <section class="section gallery-section">
+      <div class="gallery-copy reveal">
+        <p class="eyebrow">lineas de lectura</p>
+        <h2>El scroll como materia artistica.</h2>
+      </div>
+
+      <div class="gallery-stack">
+        <article class="gallery-panel reveal" data-speed="0.1">
+          <span>01</span>
+          <h3>Pantalla infinita</h3>
+          <p>
+            La obra se despliega como una superficie que nunca termina del todo. Cada pausa
+            es una decision contra la corriente.
+          </p>
+        </article>
+        <article class="gallery-panel reveal" data-speed="-0.08">
+          <span>02</span>
+          <h3>Cuerpo entrenado</h3>
+          <p>
+            La repeticion vuelve automatico el gesto. La automatizacion construye subjetividad.
+          </p>
+        </article>
+        <article class="gallery-panel reveal" data-speed="0.14">
+          <span>03</span>
+          <h3>Economia afectiva</h3>
+          <p>
+            El scroll administra ansiedad, curiosidad, comparacion y agotamiento en una sola cadena continua.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section closing-section">
+      <div class="closing-card reveal">
+        <p class="eyebrow">cierre</p>
+        <h2>Scrolling Life no describe el scroll desde afuera.</h2>
+        <p>
+          Lo activa, lo ralentiza y lo vuelve visible. La pieza propone una experiencia sobria,
+          atmosferica y critica para leer el desplazamiento vertical como forma cultural de nuestra epoca.
+        </p>
+        <a class="button button-solid" href="#top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' }); return false;">Volver al inicio</a>
+      </div>
+    </section>
+  </main>
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

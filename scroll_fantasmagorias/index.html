@@ -1,0 +1,143 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scroll Fantasmagorias</title>
+  <meta
+    name="description"
+    content="Instalacion web de scroll, cuerpo y fantasmagorias generativas accionadas por camara."
+  />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;700;800&family=Instrument+Serif:ital@0;1&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <video id="cameraFeed" class="sr-only" autoplay playsinline muted></video>
+  <canvas id="renderCanvas" aria-label="Fantasmagorias generativas accionadas por cuerpo y camara"></canvas>
+
+  <div class="grid-overlay" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="aura aura-a" aria-hidden="true"></div>
+  <div class="aura aura-b" aria-hidden="true"></div>
+
+  <div class="hud">
+    <section class="panel panel-brand">
+      <p class="eyebrow">instalacion web / cuerpo / scroll / archivo</p>
+      <h1>Scroll <span>Fantasmagorias</span></h1>
+      <p class="lead" id="stateLabel">Esperando activacion de camara y segmentacion.</p>
+    </section>
+
+    <section class="panel panel-stats">
+      <div class="metric">
+        <span>Fuente activa</span>
+        <strong id="sourceLabel">--</strong>
+      </div>
+      <div class="metric">
+        <span>Secuencia</span>
+        <strong id="sequenceLabel">0 / 0</strong>
+      </div>
+      <div class="metric">
+        <span>Modo</span>
+        <strong id="modeLabel">motion boost</strong>
+      </div>
+    </section>
+
+    <section class="panel panel-stats">
+      <div class="metric">
+        <span>Half-life</span>
+        <strong id="halfLifeLabel">60s</strong>
+      </div>
+      <div class="metric">
+        <span>Pintura</span>
+        <strong id="strengthLabel">0.45</strong>
+      </div>
+      <div class="metric">
+        <span>Scroll</span>
+        <strong id="scrollLabel">120 px/s</strong>
+      </div>
+    </section>
+
+    <section class="panel panel-stats">
+      <div class="metric">
+        <span>Cuerpo</span>
+        <strong id="bodyLabel">0.0%</strong>
+      </div>
+      <div class="metric">
+        <span>Movimiento</span>
+        <strong id="motionLabel">0.00</strong>
+      </div>
+      <div class="metric">
+        <span>Estado</span>
+        <strong id="playLabel">PLAY</strong>
+      </div>
+    </section>
+
+    <section class="panel panel-controls">
+      <p class="tiny-title">Controles</p>
+      <ul class="controls-list">
+        <li><kbd>Espacio</kbd> play / pause de la secuencia</li>
+        <li><kbd>1</kbd> <kbd>2</kbd> persistencia - / +</li>
+        <li><kbd>-</kbd> <kbd>+</kbd> fuerza de pintura - / +</li>
+        <li><kbd>[</kbd> <kbd>]</kbd> velocidad de scroll - / +</li>
+        <li><kbd>V</kbd> motion boost on / off</li>
+        <li><kbd>X</kbd> modo solo movimiento</li>
+        <li><kbd>S</kbd> guardar snapshot</li>
+        <li><kbd>R</kbd> limpiar build</li>
+        <li><kbd>F</kbd> pantalla completa</li>
+      </ul>
+      <div class="button-row">
+        <button class="button button-solid" id="toggleButton" type="button">Pause</button>
+        <button class="button button-ghost" id="saveButton" type="button">Guardar build</button>
+        <button class="button button-ghost" id="resetButton" type="button">Limpiar</button>
+      </div>
+    </section>
+  </div>
+
+  <div class="toast" id="statusToast" aria-live="polite"></div>
+
+  <section class="gate" id="gate">
+    <div class="gate-card">
+      <p class="eyebrow">version web del prototipo en python</p>
+      <h2>Una silueta que pinta y arrastra un archivo de imagenes.</h2>
+      <p class="gate-copy">
+        Esta pieza toma tu camara, detecta cuerpo y movimiento, mezcla una secuencia de
+        imagenes sobre la silueta y hace ascender la huella en un scroll continuo con fade.
+      </p>
+      <div class="gate-grid">
+        <div>
+          <span>01</span>
+          Silueta corporal con MediaPipe Selfie Segmentation.
+        </div>
+        <div>
+          <span>02</span>
+          Motion mask para reforzar el cuerpo vivo.
+        </div>
+        <div>
+          <span>03</span>
+          Build acumulativo con persistencia regulable.
+        </div>
+        <div>
+          <span>04</span>
+          Scroll ascendente y guardado de snapshot.
+        </div>
+      </div>
+      <div class="button-row gate-actions">
+        <button class="button button-solid" id="startButton" type="button">Activar camara</button>
+        <button class="button button-ghost" id="fullscreenButton" type="button">Pantalla completa</button>
+      </div>
+      <p class="tiny-note" id="gateNote">
+        Requiere permiso de camara y conexion para cargar MediaPipe desde CDN. Si la webcam
+        falla en file://, abre esta carpeta con un servidor local.
+      </p>
+    </div>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/selfie_segmentation.js"></script>
+  <script src="./script.js"></script>
+</body>
+</html>

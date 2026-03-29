@@ -1,0 +1,463 @@
+const progressBar = document.getElementById('progressBar');
+const revealNodes = document.querySelectorAll('.reveal');
+const kineticNodes = document.querySelectorAll('[data-speed]');
+const bgLayers = document.querySelectorAll('.bg-image');
+const netArtLayer = document.querySelector('.netart-layer');
+const pageContent = document.querySelector('.page-content');
+const siteMenu = document.querySelector('.site-menu');
+const mosquitoLink = document.querySelector('.mosquito-link');
+const netArtItems = [];
+
+const MOSQUITO_CYCLE_MS = 60000;
+const MOSQUITO_ACTIVE_MS = 20000;
+const RAIN_PHASE_MS = 3000;
+const MOSQUITO_AUDIO_SRC = './audio/mosquito-buzz.mp3';
+
+let netArtStartTime = performance.now();
+let mosquitoCycleTimer = null;
+let mosquitoHideTimer = null;
+let mosquitoSoundPlaying = false;
+let mosquitoAudioUnlocked = false;
+let mosquitoPlayRequested = false;
+let scrollRainDistance = 0;
+let scrollRainEnergy = 0;
+let lastScrollY = window.scrollY;
+
+const mosquitoAudio = mosquitoLink ? new Audio(MOSQUITO_AUDIO_SRC) : null;
+
+if (mosquitoAudio) {
+  mosquitoAudio.preload = 'auto';
+  mosquitoAudio.loop = true;
+  mosquitoAudio.volume = 0.48;
+  mosquitoAudio.playsInline = true;
+  mosquitoAudio.load();
+}
+
+const netArtImages = [
+  './images/netart/images/netart/Screenshot_20250108-144156.jpg',
+  './images/netart/images/netart/Screenshot_20250108-144156.jpg',
+  './images/netart/images/netart/Screenshot_20250108-144156.jpg',
+  './images/netart/images/netart/Screenshot_20250108-144156.jpg',
+  './images/netart/images/netart/Screenshot_20250108-144156.jpg',
+  './images/netart/images/netart/Screenshot_20250108-144156.jpg',
+  './images/netart/07.jpg',
+  './images/netart/08.jpg',
+  './images/netart/09.jpg',
+  './images/netart/10.jpg',
+  './images/netart/11.jpg',
+  './images/netart/12.jpg',
+  'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80',
+  'https://images.unsplash.com/photo-1526481280698-97a4f87fd3b1?auto=format&fit=crop&w=400&q=80',
+  'https://images.unsplash.com/photo-1491960693564-4f4b8be0a7d8?auto=format&fit=crop&w=400&q=80',
+  'https://images.unsplash.com/photo-1515300162564-1d1889fb5ad6?auto=format&fit=crop&w=400&q=80',
+  'https://images.unsplash.com/photo-1526318472351-bc6e6810efad?auto=format&fit=crop&w=400&q=80',
+  'https://images.unsplash.com/photo-1472586662442-3eec04b4eaa4?auto=format&fit=crop&w=400&q=80',
+  'https://images.unsplash.com/photo-1490111718993-d98654ce6cf7?auto=format&fit=crop&w=400&q=80',
+  'https://images.unsplash.com/photo-1487014679447-9f8336841d58?auto=format&fit=crop&w=400&q=80',
+  'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80',
+  'https://images.unsplash.com/photo-1504198458649-3128b932f49b?auto=format&fit=crop&w=400&q=80',
+  'https://images.unsplash.com/photo-1618220350557-6d01fc39bca3?auto=format&fit=crop&w=400&q=80',
+  'https://images.unsplash.com/photo-1612392061783-7160ba86ad66?auto=format&fit=crop&w=400&q=80'
+];
+
+const randomBetween = (min, max) => min + Math.random() * (max - min);
+
+const wrapValue = (value, min, max) => {
+  const range = max - min;
+  if (range <= 0) return value;
+  return ((value - min) % range + range) % range + min;
+};
+
+const randomizeNetArtItem = (item, subtle = false) => {
+  item.style.left = `${Math.random() * 100}%`;
+
+  const size = subtle ? randomBetween(118, 220) : randomBetween(96, 236);
+  item.style.width = `${size}px`;
+  item.style.height = `${size}px`;
+
+  if (subtle) {
+    const idleOpacity = randomBetween(0.05, 0.11);
+    item.dataset.idleOpacity = idleOpacity.toFixed(3);
+    item.style.opacity = `${idleOpacity}`;
+  }
+};
+
+const initNetArt = () => {
+  if (!netArtLayer) return;
+  const count = 45;
+  const vh = window.innerHeight;
+
+  for (let i = 0; i < count; i++) {
+    const item = document.createElement('div');
+    item.className = 'netart-item';
+
+    const image = netArtImages[i % netArtImages.length];
+    item.style.backgroundImage = `url(${image})`;
+
+    const y = Math.random() * vh * 1.2 - vh * 0.6;
+    item.style.top = '0px';
+    item.dataset.nearst = (0.35 + Math.random() * 1.5).toFixed(2);
+    item.dataset.rain = (0.8 + Math.random() * 2.1).toFixed(3);
+    item.dataset.scrollRain = (0.08 + Math.random() * 0.18).toFixed(3);
+    item.dataset.phase = (Math.random() * Math.PI * 2).toFixed(3);
+    item.dataset.idleOpacity = (0.05 + Math.random() * 0.06).toFixed(3);
+    item.dataset.baseY = y.toFixed(2);
+    item.dataset.introCycle = '0';
+    item.dataset.scrollCycle = '0';
+
+    randomizeNetArtItem(item, true);
+    item.style.transform = `translate3d(0, ${y}px, 0) scale(0.94)`;
+
+    netArtLayer.append(item);
+    netArtItems.push(item);
+  }
+};
+
+const updateProgress = () => {
+  if (!progressBar) return;
+  const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+  const ratio = scrollable <= 0 ? 0 : (window.scrollY / scrollable) * 100;
+  progressBar.style.height = `${Math.min(100, Math.max(0, ratio))}%`;
+};
+
+const terminalSequences = document.querySelectorAll('[data-terminal-sequence]');
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+const wait = (ms) => new Promise((resolve) => window.setTimeout(resolve, ms));
+
+const prepareTerminalSequence = (sequence) => {
+  sequence.querySelectorAll('[data-terminal-copy]').forEach((node) => {
+    const text = node.textContent.replace(/\s+/g, ' ').trim();
+    node.dataset.terminalText = text;
+
+    if (!prefersReducedMotion.matches) {
+      node.textContent = '';
+    }
+  });
+};
+
+const revealTerminalSequence = (sequence) => {
+  sequence.querySelectorAll('[data-terminal-copy]').forEach((node) => {
+    node.textContent = node.dataset.terminalText || '';
+    node.closest('.terminal-line')?.classList.add('is-complete');
+  });
+
+  sequence.classList.add('terminal-complete');
+};
+
+const typeTerminalLine = async (node, baseSpeed) => {
+  const text = node.dataset.terminalText || '';
+  const line = node.closest('.terminal-line');
+
+  if (!text) {
+    return;
+  }
+
+  line?.classList.add('is-typing');
+  node.textContent = '';
+
+  for (const char of text) {
+    node.textContent += char;
+    const delay = char === ' ' ? baseSpeed * 0.35 : baseSpeed + Math.random() * baseSpeed * 0.45;
+    await wait(delay);
+  }
+
+  line?.classList.remove('is-typing');
+  line?.classList.add('is-complete');
+};
+
+const playTerminalSequence = async (sequence) => {
+  if (sequence.dataset.terminalPlayed === 'true') {
+    return;
+  }
+
+  sequence.dataset.terminalPlayed = 'true';
+
+  if (prefersReducedMotion.matches) {
+    revealTerminalSequence(sequence);
+    return;
+  }
+
+  const lines = Array.from(sequence.querySelectorAll('[data-terminal-copy]'));
+  const baseSpeed = Number(sequence.dataset.terminalSpeed || 22);
+
+  await wait(140);
+
+  for (let index = 0; index < lines.length; index++) {
+    await typeTerminalLine(lines[index], baseSpeed);
+    await wait(index === 0 ? 180 : 240);
+  }
+
+  sequence.classList.add('terminal-complete');
+};
+const revealObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+
+        if (entry.target.hasAttribute('data-terminal-sequence')) {
+          playTerminalSequence(entry.target);
+        }
+
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  },
+  {
+    threshold: 0.16,
+    rootMargin: '0px 0px -40px 0px',
+  }
+);
+
+const startMosquitoSound = async () => {
+  if (!mosquitoAudio) {
+    return;
+  }
+
+  mosquitoPlayRequested = true;
+
+  if (!mosquitoAudioUnlocked || mosquitoSoundPlaying) {
+    return;
+  }
+
+  try {
+    mosquitoAudio.pause();
+    mosquitoAudio.currentTime = 0;
+    mosquitoAudio.volume = 0.48;
+    await mosquitoAudio.play();
+    mosquitoSoundPlaying = true;
+  } catch (error) {
+    mosquitoSoundPlaying = false;
+  }
+};
+
+const stopMosquitoSound = () => {
+  if (!mosquitoAudio) {
+    return;
+  }
+
+  mosquitoPlayRequested = false;
+  mosquitoAudio.pause();
+  mosquitoAudio.currentTime = 0;
+  mosquitoSoundPlaying = false;
+};
+
+const unlockMosquitoAudio = async () => {
+  if (!mosquitoAudio || mosquitoAudioUnlocked) {
+    if (mosquitoPlayRequested && mosquitoLink?.classList.contains('is-active')) {
+      startMosquitoSound();
+    }
+    return;
+  }
+
+  try {
+    mosquitoAudio.muted = true;
+    mosquitoAudio.volume = 0;
+    mosquitoAudio.currentTime = 0;
+    await mosquitoAudio.play();
+    mosquitoAudio.pause();
+    mosquitoAudio.currentTime = 0;
+    mosquitoAudioUnlocked = true;
+  } catch (error) {
+    mosquitoAudioUnlocked = false;
+  } finally {
+    mosquitoAudio.muted = false;
+    mosquitoAudio.volume = 0.48;
+  }
+
+  if (mosquitoAudioUnlocked && mosquitoPlayRequested && mosquitoLink?.classList.contains('is-active')) {
+    startMosquitoSound();
+  }
+};
+
+const registerMosquitoAudioUnlock = () => {
+  if (!mosquitoLink || !mosquitoAudio) return;
+
+  const onUnlock = async () => {
+    await unlockMosquitoAudio();
+
+    if (mosquitoAudioUnlocked) {
+      window.removeEventListener('pointerdown', onUnlock);
+      window.removeEventListener('touchstart', onUnlock);
+      window.removeEventListener('keydown', onUnlock);
+    }
+  };
+
+  window.addEventListener('pointerdown', onUnlock, { passive: true });
+  window.addEventListener('touchstart', onUnlock, { passive: true });
+  window.addEventListener('keydown', onUnlock);
+};
+
+const initSiteMenu = () => {
+  if (!siteMenu) return;
+
+  document.addEventListener('click', (event) => {
+    if (!(event.target instanceof Node) || siteMenu.contains(event.target)) {
+      return;
+    }
+
+    siteMenu.removeAttribute('open');
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      siteMenu.removeAttribute('open');
+    }
+  });
+};
+
+const setMosquitoActive = (active) => {
+  if (!mosquitoLink) return;
+
+  mosquitoLink.classList.toggle('is-active', active);
+  mosquitoLink.setAttribute('aria-hidden', String(!active));
+  mosquitoLink.tabIndex = active ? 0 : -1;
+
+  if (active) {
+    startMosquitoSound();
+  } else {
+    stopMosquitoSound();
+  }
+};
+
+const showMosquito = () => {
+  if (!mosquitoLink) return;
+
+  setMosquitoActive(true);
+  window.clearTimeout(mosquitoHideTimer);
+  mosquitoHideTimer = window.setTimeout(() => {
+    setMosquitoActive(false);
+  }, MOSQUITO_ACTIVE_MS);
+};
+
+const startMosquitoCycle = () => {
+  if (!mosquitoLink) return;
+
+  setMosquitoActive(false);
+
+  window.setTimeout(() => {
+    showMosquito();
+    mosquitoCycleTimer = window.setInterval(showMosquito, MOSQUITO_CYCLE_MS);
+  }, RAIN_PHASE_MS + 400);
+};
+
+terminalSequences.forEach((sequence) => prepareTerminalSequence(sequence));
+revealNodes.forEach((node) => revealObserver.observe(node));
+
+initNetArt();
+initSiteMenu();
+registerMosquitoAudioUnlock();
+startMosquitoCycle();
+
+const updateKinetic = () => {
+  const offset = window.scrollY;
+  const scrollDelta = offset - lastScrollY;
+  lastScrollY = offset;
+
+  if (scrollDelta > 0) {
+    scrollRainDistance += scrollDelta;
+    scrollRainEnergy = Math.min(1, scrollRainEnergy + scrollDelta * 0.012);
+  } else {
+    scrollRainEnergy *= 0.92;
+  }
+
+  scrollRainEnergy = Math.max(0, scrollRainEnergy - 0.005);
+
+  kineticNodes.forEach((node) => {
+    const speed = Number(node.dataset.speed || 0);
+    const movement = offset * speed;
+    node.style.transform = `translate3d(0, ${movement}px, 0)`;
+  });
+
+  bgLayers.forEach((layer) => {
+    const speed = Number(layer.dataset.speed || 0);
+    const movement = offset * speed;
+    layer.style.transform = `translate3d(0, ${movement}px, 0)`;
+  });
+
+  const elapsed = performance.now() - netArtStartTime;
+  const rainPhase = elapsed < RAIN_PHASE_MS;
+
+  if (pageContent) {
+    if (rainPhase) {
+      pageContent.classList.add('hidden');
+      if (netArtLayer) {
+        netArtLayer.style.opacity = '1';
+      }
+    } else {
+      pageContent.classList.remove('hidden');
+      if (netArtLayer) {
+        netArtLayer.style.opacity = `${0.02 + scrollRainEnergy * 0.12}`;
+      }
+    }
+  } else if (netArtLayer) {
+    netArtLayer.style.opacity = rainPhase ? '1' : `${0.12 + scrollRainEnergy * 0.12}`;
+  }
+
+  netArtItems.forEach((item) => {
+    const base = Number(item.dataset.baseY || 0);
+    const rainSpeed = Number(item.dataset.rain || 1.4);
+    const scrollRainSpeed = Number(item.dataset.scrollRain || 0.12);
+    const phase = Number(item.dataset.phase || 0);
+    const idleOpacity = Number(item.dataset.idleOpacity || 0.06);
+
+    let y = base;
+    let x = 0;
+    let scale = 1;
+    let opacity = idleOpacity;
+
+    if (rainPhase) {
+      const rawY = base + elapsed * rainSpeed * 1.35;
+      const wrapTop = -window.innerHeight * 2.4;
+      const wrapBottom = window.innerHeight + 220;
+      const wrapRange = wrapBottom - wrapTop;
+      const introCycle = Math.floor((rawY - wrapTop) / wrapRange);
+
+      if (introCycle !== Number(item.dataset.introCycle || 0)) {
+        item.dataset.introCycle = String(introCycle);
+        randomizeNetArtItem(item, false);
+      }
+
+      y = wrapValue(rawY, wrapTop, wrapBottom);
+      scale = 1 + Math.sin(elapsed * 0.012 + rainSpeed + phase) * 0.08;
+      opacity = 0.28 + Math.abs(Math.sin(elapsed * 0.022 + rainSpeed + phase)) * 0.22;
+    } else {
+      const rawY = base + scrollRainDistance * scrollRainSpeed + Math.sin(elapsed * 0.0011 + phase) * 12;
+      const wrapTop = -window.innerHeight * 0.95;
+      const wrapBottom = window.innerHeight + 180;
+      const wrapRange = wrapBottom - wrapTop;
+      const scrollCycle = Math.floor((rawY - wrapTop) / wrapRange);
+
+      if (scrollCycle !== Number(item.dataset.scrollCycle || 0)) {
+        item.dataset.scrollCycle = String(scrollCycle);
+        randomizeNetArtItem(item, true);
+      }
+
+      y = wrapValue(rawY, wrapTop, wrapBottom);
+      x = Math.sin(elapsed * 0.0008 + phase) * (5 + scrollRainSpeed * 18);
+      scale = 0.98 + Math.sin(elapsed * 0.0009 + phase) * 0.04 + scrollRainEnergy * 0.05;
+      opacity = 0.42 + Math.abs(Math.sin(elapsed * 0.02 + rainSpeed + phase)) * 0.24;
+    }
+
+    item.style.opacity = `${opacity}`;
+    item.style.transform = `translate3d(${x}px, ${y}px, 0) scale(${scale})`;
+  });
+};
+
+const animate = () => {
+  updateProgress();
+  updateKinetic();
+  requestAnimationFrame(animate);
+};
+
+updateProgress();
+updateKinetic();
+requestAnimationFrame(animate);
+window.addEventListener('scroll', updateProgress, { passive: true });
+window.addEventListener('resize', updateProgress);
+
+
+
+
+

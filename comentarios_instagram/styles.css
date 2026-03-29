@@ -1,0 +1,333 @@
+﻿:root {
+  --bg-top: #f8efdf;
+  --bg-bottom: #eadac2;
+  --paper: rgba(255, 249, 239, 0.78);
+  --ink: #111111;
+  --rust: #ff5d38;
+  --acid: #d8ff2a;
+  --cyan: #00bfe7;
+  --wine: #7d183d;
+  --navy: #0a4f73;
+  --line: rgba(17, 17, 17, 0.08);
+  --pressure: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  color: var(--ink);
+  font-family: 'Syne', 'Arial Narrow', sans-serif;
+  background:
+    radial-gradient(circle at 12% 16%, rgba(255, 93, 56, 0.22), transparent 0 24%),
+    radial-gradient(circle at 86% 18%, rgba(0, 191, 231, 0.18), transparent 0 24%),
+    radial-gradient(circle at 52% 84%, rgba(216, 255, 42, 0.16), transparent 0 30%),
+    linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 28px 28px;
+  opacity: 0.7;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.experience {
+  position: relative;
+  min-height: 100vh;
+}
+
+.page-noise,
+.scanlines,
+.stage,
+.intro,
+.hud {
+  position: fixed;
+}
+
+.page-noise,
+.scanlines,
+.stage {
+  inset: 0;
+  pointer-events: none;
+}
+
+.page-noise {
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(0, 0, 0, 0.14) 0 0.65px, transparent 0.8px),
+    radial-gradient(circle at 64% 58%, rgba(0, 0, 0, 0.11) 0 0.65px, transparent 0.8px),
+    radial-gradient(circle at 88% 12%, rgba(0, 0, 0, 0.08) 0 0.9px, transparent 1px);
+  background-size: 140px 140px;
+  opacity: 0.34;
+  mix-blend-mode: multiply;
+  z-index: 2;
+}
+
+.scanlines {
+  background:
+    repeating-linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.13) 0,
+      rgba(255, 255, 255, 0.13) 1px,
+      transparent 1px,
+      transparent 4px
+    );
+  opacity: calc(0.05 + var(--pressure) * 0.12);
+  z-index: 3;
+}
+
+.intro {
+  z-index: 20;
+  top: 28px;
+  left: 28px;
+  width: min(36rem, calc(100vw - 56px));
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+.eyebrow,
+.intro-meta,
+.hud-label {
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.eyebrow {
+  margin: 0 0 16px;
+  font-size: 0.72rem;
+}
+
+.intro h1 {
+  margin: 0;
+  display: grid;
+  font-size: clamp(3.6rem, 9vw, 7.4rem);
+  line-height: 0.84;
+  letter-spacing: -0.06em;
+  text-transform: uppercase;
+}
+
+.accent {
+  margin-left: 12%;
+  color: var(--rust);
+}
+
+.lead {
+  max-width: 30rem;
+  margin: 18px 0 0;
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  line-height: 1.45;
+}
+
+.intro-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 18px;
+  font-size: 0.7rem;
+}
+
+.intro-meta span,
+.intro-meta a {
+  padding: 8px 10px;
+  border: 1px solid rgba(17, 17, 17, 0.14);
+  border-radius: 999px;
+  background: rgba(255, 251, 244, 0.78);
+}
+
+.intro-meta a:hover {
+  background: rgba(255, 93, 56, 0.12);
+}
+
+.hud {
+  z-index: 21;
+  top: 28px;
+  right: 20px;
+  display: grid;
+  gap: 10px;
+  width: min(14rem, calc(100vw - 40px));
+}
+
+.hud-block {
+  padding: 12px 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(17, 17, 17, 0.14);
+  background: rgba(255, 249, 239, 0.8);
+  box-shadow: 0 10px 24px rgba(17, 17, 17, 0.08);
+}
+
+.hud-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.66rem;
+}
+
+.hud-block strong {
+  display: block;
+  font-size: clamp(1.2rem, 3vw, 1.65rem);
+  line-height: 1;
+}
+
+.stage {
+  z-index: 10;
+  overflow: hidden;
+}
+
+.stage::before,
+.stage::after,
+.stage-glow {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.stage::before {
+  background:
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.3) 0, transparent 48%),
+    radial-gradient(circle at 50% 45%, rgba(255, 93, 56, calc(0.08 + var(--pressure) * 0.1)) 0, transparent 34%);
+  filter: blur(18px);
+  opacity: calc(0.56 + var(--pressure) * 0.18);
+}
+
+.stage::after {
+  background:
+    radial-gradient(circle at center, transparent 0 38%, rgba(17, 17, 17, calc(var(--pressure) * 0.16)) 100%);
+}
+
+.stage-glow {
+  background:
+    linear-gradient(135deg, rgba(255, 93, 56, 0.08), transparent 34%),
+    linear-gradient(315deg, rgba(0, 191, 231, 0.08), transparent 34%);
+  mix-blend-mode: screen;
+}
+
+.comment-cloud {
+  position: absolute;
+  inset: 0;
+}
+
+.comment {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: 0;
+  padding: 0.02em 0.08em;
+  max-width: min(44vw, 32rem);
+  white-space: pre-wrap;
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  transform: translate3d(-50%, -50%, 0);
+  transform-origin: center;
+  opacity: 0;
+  contain: layout style paint;
+  transition: transform 180ms ease-out, opacity 180ms linear;
+  user-select: none;
+}
+
+.comment.is-neutral {
+  color: rgba(17, 17, 17, 0.92);
+}
+
+.comment.is-positive {
+  color: rgba(125, 24, 61, 0.9);
+}
+
+.comment.is-negative {
+  color: rgba(10, 79, 115, 0.88);
+}
+
+.comment.is-band {
+  background: rgba(255, 249, 239, 0.22);
+  mix-blend-mode: multiply;
+}
+
+.comment.is-soft {
+  filter: blur(0.9px);
+}
+
+.comment.is-shout {
+  font-family: 'IBM Plex Mono', monospace;
+  text-transform: uppercase;
+  mix-blend-mode: difference;
+  color: #fff9ef;
+  text-shadow: 0 0 14px rgba(17, 17, 17, 0.12);
+}
+
+.scroll-space {
+  position: relative;
+  z-index: 1;
+  height: 1200vh;
+}
+
+@media (max-width: 900px) {
+  .intro {
+    width: calc(100vw - 32px);
+    top: 16px;
+    left: 16px;
+  }
+
+  .hud {
+    top: auto;
+    right: 16px;
+    bottom: 16px;
+    width: min(13rem, calc(100vw - 32px));
+  }
+
+  .comment {
+    max-width: min(70vw, 24rem);
+  }
+}
+
+@media (max-width: 640px) {
+  .intro h1 {
+    font-size: clamp(2.8rem, 16vw, 4.2rem);
+  }
+
+  .lead {
+    font-size: 0.96rem;
+    max-width: 24rem;
+  }
+
+  .intro-meta {
+    gap: 8px;
+  }
+
+  .intro-meta span,
+  .intro-meta a,
+  .hud-block {
+    padding: 9px 10px;
+  }
+
+  .comment {
+    max-width: min(82vw, 18rem);
+    line-height: 0.94;
+  }
+}
+
+.hud {
+  display: none !important;
+}
+.intro-meta{
+  display: none !important;
+}

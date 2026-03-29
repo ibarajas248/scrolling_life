@@ -1,0 +1,4 @@
+strip_000001.jpg
+strip_000002.jpg
+strip_000003.jpg
+strip_000004.jpg

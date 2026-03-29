@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Enjambre de Ventanas</title>
+  <meta
+    name="description"
+    content="Un portal caotico de iframes diminutos de YouTube activado por el mosquito de Scrolling Life."
+  />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="./mosquito-caos.css" />
+</head>
+<body data-chaos-mode="enjambre">
+  <div class="chaos-background" aria-hidden="true"></div>
+  <div class="chaos-grid" aria-hidden="true"></div>
+  <div class="chaos-noise" aria-hidden="true"></div>
+  <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+
+  <div class="chaos-core" aria-hidden="true">
+    <span class="core-ring core-ring-a"></span>
+    <span class="core-ring core-ring-b"></span>
+    <span class="core-ring core-ring-c"></span>
+  </div>
+
+  <header class="chaos-ui">
+    <div class="chaos-copy">
+      <p class="chaos-kicker">portal del mosquito / proliferacion de ventanas / ruido audiovisual</p>
+      <h1>Enjambre de Ventanas</h1>
+      <p>
+        El mosquito no conduce a una sala estable. Conduce a una pantalla enferma de atencion:
+        miniaturas, repeticiones, loops, colisiones y reproducciones simultaneas fuera de control.
+      </p>
+    </div>
+
+    <div class="chaos-dashboard" aria-label="Lecturas del enjambre">
+      <article class="chaos-metric">
+        <span class="metric-label">ventanas</span>
+        <strong id="metricFrames">00</strong>
+      </article>
+      <article class="chaos-metric">
+        <span class="metric-label">velocidad</span>
+        <strong id="metricSpeed">0 px/s</strong>
+      </article>
+      <article class="chaos-metric">
+        <span class="metric-label">presion</span>
+        <strong id="metricPressure">0%</strong>
+      </article>
+      <article class="chaos-metric">
+        <span class="metric-label">modo</span>
+        <strong id="metricMode">enjambre basal</strong>
+      </article>
+    </div>
+
+    <div class="chaos-actions">
+      <a class="chaos-button" href="./index.html">Volver a Scrolling Life</a>
+      <button class="chaos-button chaos-button-alt" id="reshuffleButton" type="button">Abrir mas caos</button>
+    </div>
+  </header>
+
+  <aside class="chaos-note">
+    <p class="chaos-note-label">ritual de uso</p>
+    <p>Mueve el cursor para empujar la nube. Haz click para lanzar una onda y rebarajar el enjambre.</p>
+  </aside>
+
+  <div class="chaos-slogan chaos-slogan-a" aria-hidden="true">no cierres nada</div>
+  <div class="chaos-slogan chaos-slogan-b" aria-hidden="true">too many windows</div>
+  <div class="chaos-slogan chaos-slogan-c" aria-hidden="true">scroll glitch swarm</div>
+
+  <main class="chaos-stage" id="chaosStage">
+    <div class="frame-field" id="frameField" aria-label="Campo caotico de videos de YouTube"></div>
+    <div class="shock-field" id="shockField" aria-hidden="true"></div>
+  </main>
+
+  <div class="chaos-ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span>autoplay sin descanso</span>
+      <span>pantalla contaminada</span>
+      <span>mosquito portal</span>
+      <span>too many windows</span>
+      <span>click para agitar</span>
+      <span>mueve el cursor y empuja el enjambre</span>
+      <span>autoplay sin descanso</span>
+      <span>pantalla contaminada</span>
+      <span>mosquito portal</span>
+      <span>too many windows</span>
+      <span>click para agitar</span>
+      <span>mueve el cursor y empuja el enjambre</span>
+    </div>
+  </div>
+
+  <script src="./mosquito-caos.js"></script>
+</body>
+</html>

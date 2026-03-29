@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ruido Comentado</title>
+  <meta
+    name="description"
+    content="Pieza net art a partir de comentarios de redes sociales que se acumulan con el scroll hasta volverse ilegibles."
+  />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="page-noise" aria-hidden="true"></div>
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <main class="experience">
+    <header class="intro" id="intro">
+      
+      <h1>
+        <span>Ruido</span>
+        <span class="accent">Comentado</span>
+      </h1>
+      <p class="lead">
+        Desliza y deja que el archivo se abra. Cada tramo convoca mas voces, mas roce,
+        mas texto, hasta que la lectura colapsa en una masa visual.
+      </p>
+      <div class="intro-meta">
+        <span>1181 comentarios</span>
+        <span>scroll sin final</span>
+        <a href="../index.html">volver al portal</a>
+      </div>
+    </header>
+
+    <aside class="hud" aria-live="polite">
+      <div class="hud-block">
+        <span class="hud-label">visibles</span>
+        <strong id="visibleCount">0</strong>
+      </div>
+      <div class="hud-block">
+        <span class="hud-label">densidad</span>
+        <strong id="densityLabel">incipiente</strong>
+      </div>
+      <div class="hud-block">
+        <span class="hud-label">archivo</span>
+        <strong id="archiveCount">0</strong>
+      </div>
+    </aside>
+
+    <section class="stage" aria-label="Campo de comentarios superpuestos">
+      <div class="stage-glow" aria-hidden="true"></div>
+      <div class="comment-cloud" id="commentCloud"></div>
+    </section>
+
+    <div class="scroll-space" id="scrollSpace" aria-hidden="true"></div>
+  </main>
+
+  <script src="./comentarios-data.js"></script>
+  <script src="./script.js"></script>
+</body>
+</html>

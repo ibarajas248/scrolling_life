@@ -1,0 +1,769 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escape del Scroll</title>
+    <style>
+        :root {
+            --panel: rgba(19, 13, 24, 0.9);
+            --panel-line: #7f5d2e;
+            --ink: #f7edd2;
+            --muted: #cabf9f;
+            --danger: #ff5b49;
+            --glow: #59f4d6;
+            --gold: #f8c96a;
+        }
+        * { box-sizing: border-box; }
+        html, body {
+            margin: 0;
+            min-height: 100%;
+            background: radial-gradient(circle at top, #2f1812 0%, transparent 26%), linear-gradient(180deg, #150f1a 0%, #0a0710 100%);
+            color: var(--ink);
+            font-family: "Courier New", monospace;
+        }
+        body {
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+        }
+        .shell {
+            width: min(100vw - 24px, 980px);
+            display: grid;
+            gap: 14px;
+        }
+        .titlebar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 14px;
+            border: 3px solid rgba(255, 212, 138, 0.25);
+            background: rgba(15, 10, 17, 0.85);
+            box-shadow: 0 0 0 4px rgba(10, 6, 12, 0.75);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-size: 0.85rem;
+        }
+        .titlebar strong { color: var(--gold); }
+        .viewport {
+            position: relative;
+            border: 4px solid rgba(255, 212, 138, 0.28);
+            background: #07050b;
+            box-shadow: 0 0 0 6px rgba(10, 7, 12, 0.78), 0 30px 80px rgba(0, 0, 0, 0.45);
+            overflow: hidden;
+        }
+        canvas {
+            display: block;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 3 / 4;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+            background: linear-gradient(180deg, #120d19 0%, #07040a 100%);
+        }
+        .hud {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-content: start;
+            gap: 10px;
+            padding: 12px;
+        }
+        .panel {
+            border: 2px solid rgba(255, 211, 140, 0.22);
+            background: rgba(10, 8, 14, 0.78);
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.24);
+            padding: 10px;
+        }
+        .stack { display: grid; gap: 8px; }
+        .metric { display: grid; gap: 4px; }
+        .metric span, .caption, .touch button, .overlay p, .overlay li, .button, .tiny {
+            font-size: 0.78rem;
+            line-height: 1.5;
+        }
+        .metric span, .caption, .tiny {
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        .metric strong {
+            font-size: clamp(1rem, 2vw, 1.35rem);
+            color: var(--ink);
+        }
+        .bar {
+            width: min(240px, 44vw);
+            height: 16px;
+            border: 2px solid rgba(255, 211, 140, 0.28);
+            background: rgba(26, 17, 31, 0.95);
+            box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.28);
+            overflow: hidden;
+        }
+        .fill {
+            height: 100%;
+            width: 0%;
+            transition: width 120ms linear;
+        }
+        #dangerFill { background: linear-gradient(90deg, #2f130f 0%, #ff5b49 100%); }
+        #staminaFill { background: linear-gradient(90deg, #1b2d25 0%, #59f4d6 100%); }
+        .caption { min-height: 22px; }
+        .overlay {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            padding: 18px;
+            background: rgba(7, 5, 11, 0.76);
+            backdrop-filter: blur(4px);
+        }
+        .overlay[hidden] { display: none !important; }
+        .overlay-card {
+            width: min(100%, 560px);
+            padding: 18px;
+            border: 3px solid rgba(255, 211, 140, 0.28);
+            background: var(--panel);
+            box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.28);
+        }
+        .overlay-card h1, .overlay-card h2 {
+            margin: 0 0 10px;
+            line-height: 1.1;
+            text-transform: uppercase;
+        }
+        .overlay-card h1 { font-size: clamp(1.8rem, 5vw, 3rem); }
+        .overlay-card h2 { font-size: clamp(1.4rem, 4vw, 2rem); }
+        .overlay-card p { margin: 0 0 12px; color: var(--muted); }
+        .overlay-card ul { margin: 0 0 14px; padding-left: 18px; color: var(--ink); }
+        .button-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+        .button {
+            border: 0;
+            padding: 12px 16px;
+            background: linear-gradient(180deg, #f3c873 0%, #bb7f2f 100%);
+            color: #130c09;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            cursor: pointer;
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.2);
+        }
+        .button.alt { background: linear-gradient(180deg, #7fe9da 0%, #2c9588 100%); }
+        .touch { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+        .touch button {
+            border: 2px solid rgba(255, 211, 140, 0.24);
+            background: rgba(13, 10, 16, 0.92);
+            color: var(--ink);
+            padding: 14px 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        .footer-note {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            color: var(--muted);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        @media (max-width: 720px) {
+            .titlebar, .footer-note { flex-direction: column; align-items: flex-start; }
+            .hud { grid-template-columns: 1fr; }
+            .bar { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="shell">
+        <div class="titlebar">
+            <div><strong>Scrolling Life</strong> / Escape 8-bit</div>
+            <div>Huida del monstruo del scroll</div>
+        </div>
+        <div class="viewport">
+            <canvas id="game" width="384" height="512" aria-label="Juego 2D del monstruo del scroll"></canvas>
+            <div class="hud">
+                <div class="stack">
+                    <div class="panel stack">
+                        <div class="metric"><span>Profundidad</span><strong id="depthLabel">0000 m</strong></div>
+                        <div class="metric"><span>Mejor bajada</span><strong id="bestLabel">0000 m</strong></div>
+                    </div>
+                    <div class="panel caption" id="statusLabel">Desciende, evita los bloques rotos y gana aire.</div>
+                </div>
+                <div class="stack">
+                    <div class="panel stack">
+                        <span class="tiny">Peligro del monstruo</span>
+                        <div class="bar"><div class="fill" id="dangerFill"></div></div>
+                        <strong id="leadLabel">12 pasos de ventaja</strong>
+                    </div>
+                    <div class="panel stack">
+                        <span class="tiny">Impulso</span>
+                        <div class="bar"><div class="fill" id="staminaFill"></div></div>
+                        <span class="tiny">Shift o boton central para correr</span>
+                    </div>
+                </div>
+            </div>
+            <div class="overlay" id="startScreen">
+                <div class="overlay-card">
+                    <h1>Escape del Scroll</h1>
+                    <p>Un personaje baja unas escaleras infinitamente hacia abajo mientras el monstruo del scroll lo persigue. La meta es sobrevivir el mayor tiempo posible en una bajada cada vez mas hostil.</p>
+                    <ul>
+                        <li>A / D o flechas: moverte entre escalones.</li>
+                        <li>Shift o IMPULSO: bajar mas rapido por unos segundos.</li>
+                        <li>Evita los escalones rotos y los bloques rojos del feed.</li>
+                        <li>Toma los pulsos turquesa para alejar al monstruo.</li>
+                    </ul>
+                    <div class="button-row"><button class="button" id="startButton" type="button">Jugar</button></div>
+                </div>
+            </div>
+            <div class="overlay" id="gameOverScreen" hidden>
+                <div class="overlay-card">
+                    <h2>El scroll te alcanzo</h2>
+                    <p id="gameOverReason">La escalera se cerro detras de ti.</p>
+                    <div class="metric" style="margin-top: 10px;"><span>Profundidad final</span><strong id="finalDepth">0000 m</strong></div>
+                    <div class="metric" style="margin-top: 10px;"><span>Mejor marca</span><strong id="finalBest">0000 m</strong></div>
+                    <div class="button-row">
+                        <button class="button" id="restartButton" type="button">Intentar otra vez</button>
+                        <button class="button alt" id="menuButton" type="button">Volver al menu</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="touch">
+            <button id="leftButton" type="button">Izquierda</button>
+            <button id="dashButton" type="button">Impulso</button>
+            <button id="rightButton" type="button">Derecha</button>
+        </div>
+        <div class="footer-note"><span>Juego 2D pixelado / canvas puro</span><span>Monstruo del scroll / escaleras infinitas</span></div>
+    </div>
+    <script>
+        (() => {
+            const canvas = document.getElementById("game");
+            const ctx = canvas.getContext("2d");
+            ctx.imageSmoothingEnabled = false;
+            const depthLabel = document.getElementById("depthLabel");
+            const bestLabel = document.getElementById("bestLabel");
+            const leadLabel = document.getElementById("leadLabel");
+            const statusLabel = document.getElementById("statusLabel");
+            const dangerFill = document.getElementById("dangerFill");
+            const staminaFill = document.getElementById("staminaFill");
+            const startScreen = document.getElementById("startScreen");
+            const gameOverScreen = document.getElementById("gameOverScreen");
+            const gameOverReason = document.getElementById("gameOverReason");
+            const finalDepth = document.getElementById("finalDepth");
+            const finalBest = document.getElementById("finalBest");
+            const startButton = document.getElementById("startButton");
+            const restartButton = document.getElementById("restartButton");
+            const menuButton = document.getElementById("menuButton");
+            const leftButton = document.getElementById("leftButton");
+            const rightButton = document.getElementById("rightButton");
+            const dashButton = document.getElementById("dashButton");
+            const WIDTH = canvas.width;
+            const HEIGHT = canvas.height;
+            const CENTER_X = WIDTH / 2;
+            const STEP_GAP = 34;
+            const PLAYER_STEP_Y = 304;
+            const LOOK_AHEAD_STEPS = 1.85;
+            const CAMERA_EASE = 0.16;
+            const MAX_STEPS_AHEAD = 46;
+            const STORAGE_KEY = "scroll-monster-best";
+            const keys = { left: false, right: false, dash: false };
+            const state = {
+                running: false,
+                gameOver: false,
+                ready: false,
+                time: 0,
+                progress: 12,
+                depth: 0,
+                best: loadBest(),
+                dangerLag: 12,
+                stamina: 100,
+                steps: [],
+                particles: [],
+                currentStep: 12,
+                cameraY: 0,
+                speed: 3.8,
+                shake: 0,
+                message: "Desciende, evita los bloques rotos y gana aire.",
+                player: { x: 0, flash: 0, trail: 0 }
+            };
+
+            function loadBest() {
+                try {
+                    return Number(localStorage.getItem(STORAGE_KEY) || 0);
+                } catch (error) {
+                    return 0;
+                }
+            }
+
+            function saveBest(value) {
+                try {
+                    localStorage.setItem(STORAGE_KEY, String(value));
+                } catch (error) {
+                    // Ignore storage issues.
+                }
+            }
+
+            function clamp(value, min, max) {
+                return Math.max(min, Math.min(max, value));
+            }
+
+            function lerp(a, b, t) {
+                return a + (b - a) * t;
+            }
+
+            function randChoice(list) {
+                return list[Math.floor(Math.random() * list.length)];
+            }
+
+            function setMessage(text) {
+                state.message = text;
+                statusLabel.textContent = text;
+            }
+
+            function buildStep(index) {
+                const prev = state.steps[index - 1] || { x: 0 };
+                const early = index < 16;
+                const x = early ? lerp(prev.x, 0, 0.35) : clamp(prev.x + randChoice([-44, -22, 0, 22, 44]), -128, 128);
+                const width = early ? 118 : randChoice([88, 102, 118]);
+                const hazard = index > 18 && Math.random() < 0.17;
+                const pickup = !hazard && index > 14 && Math.random() < 0.19;
+                return { index, x, y: index * STEP_GAP, width, hazard, pickup, taken: false };
+            }
+
+            function ensureSteps(upTo) {
+                while (state.steps.length <= upTo) {
+                    state.steps.push(buildStep(state.steps.length));
+                }
+            }
+
+            function getStep(index) {
+                ensureSteps(index + MAX_STEPS_AHEAD);
+                return state.steps[index];
+            }
+
+            function getPathPoint(progress) {
+                const baseIndex = Math.floor(progress);
+                const t = progress - baseIndex;
+                const current = getStep(baseIndex);
+                const next = getStep(baseIndex + 1);
+                return {
+                    x: lerp(current.x, next.x, t),
+                    y: lerp(current.y, next.y, t)
+                };
+            }
+
+            function resetGame() {
+                state.running = false;
+                state.gameOver = false;
+                state.time = 0;
+                state.progress = 12;
+                state.depth = 0;
+                state.dangerLag = 12;
+                state.stamina = 100;
+                state.steps = [];
+                state.particles = [];
+                state.currentStep = 12;
+                state.cameraY = 0;
+                state.speed = 3.8;
+                state.shake = 0;
+                state.player.flash = 0;
+                state.player.trail = 0;
+                ensureSteps(70);
+                state.player.x = getStep(12).x;
+                setMessage("Desciende, evita los bloques rotos y gana aire.");
+                updateHud();
+            }
+
+            function startGame() {
+                resetGame();
+                state.running = true;
+                state.ready = true;
+                startScreen.hidden = true;
+                gameOverScreen.hidden = true;
+            }
+
+            function backToMenu() {
+                state.running = false;
+                state.gameOver = false;
+                state.ready = false;
+                resetGame();
+                startScreen.hidden = false;
+                gameOverScreen.hidden = true;
+            }
+
+            function updateHud() {
+                depthLabel.textContent = String(state.depth).padStart(4, "0") + " m";
+                bestLabel.textContent = String(Math.floor(state.best)).padStart(4, "0") + " m";
+                leadLabel.textContent = Math.max(0, state.dangerLag).toFixed(1) + " pasos de ventaja";
+                dangerFill.style.width = (100 - clamp((state.dangerLag / 14) * 100, 0, 100)) + "%";
+                staminaFill.style.width = clamp(state.stamina, 0, 100) + "%";
+            }
+
+            function spawnParticles(x, y, color, amount) {
+                for (let i = 0; i < amount; i += 1) {
+                    state.particles.push({
+                        x,
+                        y,
+                        dx: (Math.random() - 0.5) * 80,
+                        dy: -20 - Math.random() * 70,
+                        life: 0.35 + Math.random() * 0.35,
+                        color
+                    });
+                }
+            }
+
+            function fail(reason) {
+                state.running = false;
+                state.gameOver = true;
+                if (state.depth > state.best) {
+                    state.best = state.depth;
+                    saveBest(state.best);
+                }
+                gameOverReason.textContent = reason;
+                finalDepth.textContent = String(state.depth).padStart(4, "0") + " m";
+                finalBest.textContent = String(Math.floor(state.best)).padStart(4, "0") + " m";
+                gameOverScreen.hidden = false;
+                setMessage(reason);
+                updateHud();
+            }
+
+            function collectPickup(step) {
+                if (step.taken) {
+                    return;
+                }
+                step.taken = true;
+                state.dangerLag = clamp(state.dangerLag + 2.4, 0, 15);
+                state.stamina = clamp(state.stamina + 16, 0, 100);
+                setMessage("Robas un pulso turquesa y el monstruo retrocede.");
+                spawnParticles(step.x + CENTER_X, step.y - state.cameraY, "#59f4d6", 8);
+            }
+
+            function resolveLanding(step) {
+                const dx = Math.abs(state.player.x - step.x);
+                const safeHalf = step.width / 2 - 14;
+                if (dx > safeHalf + 18) {
+                    fail("Pisaste el vacio entre escalones.");
+                    return;
+                }
+                if (dx > safeHalf) {
+                    state.dangerLag -= 2.7;
+                    state.stamina = clamp(state.stamina - 18, 0, 100);
+                    state.shake = 10;
+                    state.player.flash = 0.32;
+                    state.player.x = step.x + Math.sign(state.player.x - step.x) * (safeHalf - 2);
+                    setMessage("Tropezaste con el borde del escalon.");
+                    spawnParticles(step.x + CENTER_X, step.y - state.cameraY, "#ffb357", 7);
+                } else {
+                    state.dangerLag = clamp(state.dangerLag + 0.24, 0, 15);
+                }
+                if (step.hazard) {
+                    state.dangerLag -= 1.45;
+                    state.player.flash = 0.22;
+                    state.shake = 8;
+                    setMessage("Un bloque rojo del feed te freno.");
+                    spawnParticles(step.x + CENTER_X, step.y - state.cameraY, "#ff5b49", 10);
+                }
+                if (step.pickup && !step.taken && dx < 20) {
+                    collectPickup(step);
+                }
+            }
+
+            function updateParticles(dt) {
+                state.particles = state.particles.filter((particle) => {
+                    particle.life -= dt;
+                    particle.x += particle.dx * dt;
+                    particle.y += particle.dy * dt;
+                    particle.dy += 120 * dt;
+                    return particle.life > 0;
+                });
+            }
+            function update(dt) {
+                if (!state.running) {
+                    return;
+                }
+                state.time += dt;
+                const input = (keys.right ? 1 : 0) - (keys.left ? 1 : 0);
+                const canDash = keys.dash && state.stamina > 6;
+                const lateralSpeed = canDash ? 252 : 208;
+                const dashBoost = canDash ? 1.45 : 0;
+                if (canDash) {
+                    state.stamina = clamp(state.stamina - 32 * dt, 0, 100);
+                    state.player.trail = 0.18;
+                } else {
+                    state.stamina = clamp(state.stamina + 20 * dt, 0, 100);
+                    state.player.trail = Math.max(0, state.player.trail - dt);
+                }
+                state.player.x = clamp(state.player.x + input * lateralSpeed * dt, -156, 156);
+                state.speed = Math.min(6.35, 3.45 + state.time * 0.036 + state.depth * 0.00038);
+                state.progress += (state.speed + dashBoost) * dt;
+                state.depth = Math.floor(state.progress * 12);
+                const cameraTarget = getPathPoint(state.progress + LOOK_AHEAD_STEPS).y - PLAYER_STEP_Y;
+                state.cameraY = lerp(state.cameraY, cameraTarget, 1 - Math.pow(1 - CAMERA_EASE, dt * 60));
+                state.dangerLag -= dt * 0.52;
+                state.dangerLag += dashBoost * dt * 0.24;
+                state.shake = Math.max(0, state.shake - 28 * dt);
+                state.player.flash = Math.max(0, state.player.flash - dt);
+                const landedStep = Math.floor(state.progress);
+                while (state.currentStep < landedStep) {
+                    state.currentStep += 1;
+                    resolveLanding(getStep(state.currentStep));
+                    if (state.gameOver) {
+                        break;
+                    }
+                }
+                const activeStep = getStep(Math.floor(state.progress) + 1);
+                if (activeStep.pickup && !activeStep.taken && Math.abs(state.player.x - activeStep.x) < 18) {
+                    collectPickup(activeStep);
+                }
+                updateParticles(dt);
+                if (state.dangerLag <= 1.1 && !state.gameOver) {
+                    fail("El monstruo del scroll te alcanzo.");
+                }
+                if (!state.gameOver && state.depth > state.best) {
+                    state.best = state.depth;
+                    saveBest(state.best);
+                }
+                if (!state.gameOver && state.dangerLag < 4.5) {
+                    setMessage("No mires atras. El monstruo ya esta respirandote encima.");
+                }
+                updateHud();
+            }
+
+            function pixelRect(x, y, width, height, color) {
+                ctx.fillStyle = color;
+                ctx.fillRect(Math.round(x), Math.round(y), Math.round(width), Math.round(height));
+            }
+
+            function pixelPoly(points, color) {
+                ctx.fillStyle = color;
+                ctx.beginPath();
+                ctx.moveTo(Math.round(points[0][0]), Math.round(points[0][1]));
+                for (let i = 1; i < points.length; i += 1) {
+                    ctx.lineTo(Math.round(points[i][0]), Math.round(points[i][1]));
+                }
+                ctx.closePath();
+                ctx.fill();
+            }
+
+            function drawBackground() {
+                const offset = (state.cameraY * 0.35) % 48;
+                const shakeX = state.shake > 0 ? (Math.random() - 0.5) * state.shake : 0;
+                const shakeY = state.shake > 0 ? (Math.random() - 0.5) * state.shake : 0;
+                ctx.save();
+                ctx.translate(shakeX, shakeY);
+                pixelRect(0, 0, WIDTH, HEIGHT, "#0a0710");
+                pixelRect(0, 0, WIDTH, HEIGHT * 0.62, "#160f1d");
+                pixelRect(0, HEIGHT * 0.62, WIDTH, HEIGHT * 0.38, "#08050b");
+                for (let i = -1; i < 18; i += 1) {
+                    const stripeY = i * 48 + offset;
+                    pixelRect(0, stripeY, 62, 20, i % 2 === 0 ? "#1b1224" : "#120c19");
+                    pixelRect(WIDTH - 62, stripeY + 12, 62, 20, i % 2 === 0 ? "#1b1224" : "#120c19");
+                }
+                for (let i = 0; i < 9; i += 1) {
+                    const signalY = (i * 74 + state.cameraY * 0.55) % (HEIGHT + 80) - 40;
+                    const signalX = i % 2 === 0 ? 48 : WIDTH - 54;
+                    pixelRect(signalX, signalY, 6, 18, "#3e2b4f");
+                    pixelRect(signalX + 2, signalY + 2, 2, 14, "#7c58a4");
+                }
+                ctx.restore();
+            }
+
+            function drawStep(step) {
+                const screenY = step.y - state.cameraY;
+                if (screenY < -36 || screenY > HEIGHT + 48) {
+                    return;
+                }
+                const x = CENTER_X + step.x;
+                const width = step.width;
+                const top = screenY;
+                const rise = 10;
+                const face = 15;
+                const skew = 10;
+                pixelPoly([[x - width / 2, top], [x + width / 2, top], [x + width / 2 + skew, top + rise], [x - width / 2 + skew, top + rise]], "#d7bd84");
+                pixelPoly([[x - width / 2 + skew, top + rise], [x + width / 2 + skew, top + rise], [x + width / 2 + skew, top + rise + face], [x - width / 2 + skew, top + rise + face]], "#8d6334");
+                pixelRect(x - width / 2, top, width, 2, "#f7edd2");
+                pixelRect(x - width / 2 + skew, top + rise + face - 2, width, 2, "#5e3d1a");
+                pixelRect(x - width / 2 + 6, top + 3, width - 12, 2, "#fbe9b8");
+                if (step.hazard) {
+                    pixelRect(x - 18, top + 2, 22, 10, "#3f1412");
+                    pixelRect(x - 16, top + 4, 18, 6, "#ff5b49");
+                    pixelRect(x + 6, top + 4, 10, 6, "#76201e");
+                }
+                if (step.pickup && !step.taken) {
+                    pixelRect(x - 4, top - 6, 8, 8, "#59f4d6");
+                    pixelRect(x - 2, top - 4, 4, 4, "#f7fffe");
+                }
+            }
+
+            function drawPlayer() {
+                if (state.player.flash > 0 && Math.floor(state.time * 18) % 2 === 0) {
+                    return;
+                }
+                const x = CENTER_X + state.player.x;
+                const y = PLAYER_STEP_Y - 22;
+                if (state.player.trail > 0) {
+                    pixelRect(x - 18, y + 10, 10, 8, "rgba(89, 244, 214, 0.35)");
+                    pixelRect(x - 30, y + 12, 8, 6, "rgba(89, 244, 214, 0.2)");
+                }
+                pixelRect(x - 8, y + 26, 16, 4, "#26191a");
+                pixelRect(x - 5, y + 16, 10, 12, "#182a31");
+                pixelRect(x - 7, y + 10, 14, 8, "#ffb357");
+                pixelRect(x - 4, y + 5, 8, 8, "#f2c48d");
+                pixelRect(x - 2, y + 8, 2, 2, "#0c0912");
+                pixelRect(x + 1, y + 8, 2, 2, "#0c0912");
+                pixelRect(x - 3, y + 0, 6, 6, "#5edfd0");
+                pixelRect(x - 10, y + 14, 3, 10, "#182a31");
+                pixelRect(x + 7, y + 14, 3, 10, "#182a31");
+                pixelRect(x - 6, y + 28, 4, 6, "#0c0912");
+                pixelRect(x + 2, y + 28, 4, 6, "#0c0912");
+            }
+            function drawPreview() {
+                const nextStep = getStep(Math.floor(state.progress) + 1);
+                const x = CENTER_X + nextStep.x;
+                const y = nextStep.y - state.cameraY - 18;
+                pixelRect(x - 7, y, 14, 3, "rgba(89, 244, 214, 0.7)");
+                pixelRect(x - 3, y - 4, 6, 4, "rgba(247, 255, 254, 0.85)");
+            }
+            function drawMonster() {
+                const closeness = 1 - clamp((state.dangerLag - 1) / 13, 0, 1);
+                const path = getPathPoint(Math.max(0, state.progress - Math.max(state.dangerLag, 1)));
+                const x = CENTER_X + lerp(path.x, state.player.x, closeness * 0.4);
+                const y = lerp(84, PLAYER_STEP_Y - 38, closeness);
+                const size = lerp(54, 122, closeness);
+                const half = size / 2;
+                pixelRect(x - half - 20, y + 18, size + 40, 18, "rgba(12, 8, 18, 0.55)");
+                pixelRect(x - half - 8, y + 6, size + 16, 28, "#2b1722");
+                pixelRect(x - half + 6, y - 8, size - 12, 32, "#f3d8a8");
+                pixelRect(x - half + 2, y - 10, 12, 18, "#f3d8a8");
+                pixelRect(x + half - 14, y - 10, 12, 18, "#f3d8a8");
+                pixelRect(x - 10, y - 2, 20, 12, "#3d1615");
+                pixelRect(x - 6, y + 0, 12, 8, "#ff5a45");
+                pixelRect(x - 16, y + 14, 32, 12, "#10080f");
+                pixelRect(x - 20, y + 28, 10, 20, "#2b1722");
+                pixelRect(x + 10, y + 28, 10, 20, "#2b1722");
+                pixelRect(x - 34, y + 18, 10, 34, "#1b0f18");
+                pixelRect(x + 24, y + 18, 10, 34, "#1b0f18");
+                pixelRect(x - 28, y + 48, 6, 16, "#10080f");
+                pixelRect(x + 22, y + 48, 6, 16, "#10080f");
+                for (let i = 0; i < 4; i += 1) {
+                    pixelRect(x - 14 + i * 7, y + 26, 3, 8, i % 2 === 0 ? "#f7edd2" : "#d8c39a");
+                }
+            }
+
+            function drawParticles() {
+                state.particles.forEach((particle) => {
+                    ctx.globalAlpha = clamp(particle.life, 0, 1);
+                    pixelRect(particle.x, particle.y, 3, 3, particle.color);
+                    ctx.globalAlpha = 1;
+                });
+            }
+
+            function drawVignette() {
+                const gradient = ctx.createLinearGradient(0, 0, 0, HEIGHT);
+                gradient.addColorStop(0, "rgba(5, 4, 8, 0.0)");
+                gradient.addColorStop(1, "rgba(5, 4, 8, 0.55)");
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, WIDTH, HEIGHT);
+                pixelRect(0, 0, WIDTH, 10, "rgba(0, 0, 0, 0.25)");
+                pixelRect(0, HEIGHT - 12, WIDTH, 12, "rgba(0, 0, 0, 0.35)");
+            }
+
+            function draw() {
+                drawBackground();
+                const start = Math.max(0, Math.floor(state.progress) - 14);
+                const end = Math.floor(state.progress) + MAX_STEPS_AHEAD;
+                ensureSteps(end + 2);
+                for (let i = start; i <= end; i += 1) {
+                    drawStep(getStep(i));
+                }
+                drawPreview();
+                drawMonster();
+                drawPlayer();
+                drawParticles();
+                drawVignette();
+            }
+
+            let lastFrame = performance.now();
+
+            function loop(now) {
+                const dt = Math.min(0.033, (now - lastFrame) / 1000);
+                lastFrame = now;
+                update(dt);
+                draw();
+                requestAnimationFrame(loop);
+            }
+
+            function setDirection(direction, active) {
+                if (direction === "left") {
+                    keys.left = active;
+                }
+                if (direction === "right") {
+                    keys.right = active;
+                }
+                if (direction === "dash") {
+                    keys.dash = active;
+                }
+            }
+
+            function bindTouch(button, direction) {
+                const press = (event) => {
+                    event.preventDefault();
+                    setDirection(direction, true);
+                };
+                const release = (event) => {
+                    event.preventDefault();
+                    setDirection(direction, false);
+                };
+                button.addEventListener("pointerdown", press);
+                button.addEventListener("pointerup", release);
+                button.addEventListener("pointerleave", release);
+                button.addEventListener("pointercancel", release);
+            }
+
+            document.addEventListener("keydown", (event) => {
+                if (["ArrowLeft", "ArrowRight", "Shift", "ShiftLeft", "ShiftRight", "KeyA", "KeyD"].includes(event.code)) {
+                    event.preventDefault();
+                }
+                if (event.code === "ArrowLeft" || event.code === "KeyA") {
+                    keys.left = true;
+                }
+                if (event.code === "ArrowRight" || event.code === "KeyD") {
+                    keys.right = true;
+                }
+                if (event.code === "ShiftLeft" || event.code === "ShiftRight") {
+                    keys.dash = true;
+                }
+                if (event.code === "Enter" && !state.running && !state.gameOver) {
+                    startGame();
+                }
+            });
+
+            document.addEventListener("keyup", (event) => {
+                if (event.code === "ArrowLeft" || event.code === "KeyA") {
+                    keys.left = false;
+                }
+                if (event.code === "ArrowRight" || event.code === "KeyD") {
+                    keys.right = false;
+                }
+                if (event.code === "ShiftLeft" || event.code === "ShiftRight") {
+                    keys.dash = false;
+                }
+            });
+
+            startButton.addEventListener("click", startGame);
+            restartButton.addEventListener("click", startGame);
+            menuButton.addEventListener("click", backToMenu);
+            bindTouch(leftButton, "left");
+            bindTouch(rightButton, "right");
+            bindTouch(dashButton, "dash");
+
+            resetGame();
+            updateHud();
+            draw();
+            requestAnimationFrame(loop);
+        })();
+    </script>
+</body>
+</html>
+
+
+
