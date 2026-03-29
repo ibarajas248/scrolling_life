@@ -1,4 +1,4 @@
-:root {
+﻿:root {
   --bg: #0c0f14;
   --bg-deep: #080a0f;
   --paper: rgba(20, 23, 28, 0.84);
@@ -734,57 +734,40 @@ a {
 .terminal-shell {
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(149, 255, 201, 0.18);
-  border-radius: 28px;
-  background: linear-gradient(180deg, rgba(7, 15, 10, 0.98), rgba(3, 7, 4, 0.98));
-  box-shadow: 0 28px 60px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(149, 255, 201, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 6px;
+  background: #0a2aa6;
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.38);
 }
 
 .terminal-chrome {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 14px 18px;
-  border-bottom: 1px solid rgba(149, 255, 201, 0.12);
-  background: linear-gradient(180deg, rgba(149, 255, 201, 0.14), rgba(8, 16, 10, 0.12));
+  gap: 8px;
+  padding: 10px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  background: #1436b7;
 }
 
 .terminal-chrome span {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  box-shadow: 0 0 14px currentColor;
-}
-
-.terminal-chrome span:nth-child(1) {
-  color: #ff9b72;
-  background: currentColor;
-}
-
-.terminal-chrome span:nth-child(2) {
-  color: #ffd56c;
-  background: currentColor;
-}
-
-.terminal-chrome span:nth-child(3) {
-  color: #9dffc9;
-  background: currentColor;
+  width: 8px;
+  height: 8px;
+  border-radius: 1px;
+  background: rgba(255, 255, 255, 0.55);
 }
 
 .terminal-chrome p {
   margin: 0 0 0 auto;
-  color: rgba(180, 255, 216, 0.76);
+  color: rgba(255, 255, 255, 0.9);
   font-family: 'VT323', 'Courier New', monospace;
-  font-size: 1.35rem;
+  font-size: 1.18rem;
   letter-spacing: 0.08em;
 }
 
 .terminal-screen {
   position: relative;
-  padding: 28px 30px 30px;
-  background:
-    radial-gradient(circle at top, rgba(120, 255, 188, 0.12), transparent 42%),
-    linear-gradient(180deg, rgba(4, 12, 7, 0.96), rgba(2, 4, 3, 0.99));
+  padding: 22px 24px 24px;
+  background: #0a2aa6;
 }
 
 .terminal-screen::before {
@@ -793,52 +776,50 @@ a {
   inset: 0;
   background: repeating-linear-gradient(
     180deg,
-    rgba(157, 255, 203, 0.08) 0,
-    rgba(157, 255, 203, 0.08) 1px,
+    rgba(255, 255, 255, 0.035) 0,
+    rgba(255, 255, 255, 0.035) 1px,
     transparent 1px,
-    transparent 4px
+    transparent 3px
   );
-  opacity: 0.2;
+  opacity: 0.32;
   pointer-events: none;
 }
 
 .terminal-screen::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at center, transparent 52%, rgba(0, 0, 0, 0.24) 100%);
-  pointer-events: none;
+  content: none;
 }
 
 .terminal-block .terminal-line {
   position: relative;
   display: flex;
-  gap: 14px;
+  gap: 12px;
   align-items: flex-start;
   margin: 0;
   max-width: none;
-  color: #9dffc9;
+  color: #ffffff;
   font-family: 'VT323', 'Courier New', monospace;
-  font-size: clamp(1.45rem, 2vw, 1.9rem);
-  line-height: 1.15;
-  letter-spacing: 0.04em;
-  text-shadow: 0 0 12px rgba(126, 255, 191, 0.18);
+  font-size: clamp(1.22rem, 1.55vw, 1.52rem);
+  line-height: 1.02;
+  letter-spacing: 0.01em;
+  text-shadow: none;
 }
 
 .terminal-block .terminal-line + .terminal-line {
-  margin-top: 18px;
+  margin-top: 12px;
 }
 
 .terminal-block .terminal-heading {
-  font-size: clamp(2.5rem, 4.6vw, 4rem);
-  line-height: 0.95;
-  color: #d9ffe8;
+  font-size: clamp(1.45rem, 1.9vw, 1.8rem);
+  line-height: 1.02;
+  color: #ffffff;
+  text-transform: none;
+  letter-spacing: 0.02em;
 }
 
 .terminal-block .terminal-prefix {
   flex: 0 0 auto;
-  min-width: fit-content;
-  color: rgba(157, 255, 203, 0.72);
+  min-width: 3.1rem;
+  color: rgba(255, 255, 255, 0.88);
 }
 
 .terminal-block .terminal-text {
@@ -846,22 +827,47 @@ a {
   white-space: pre-wrap;
 }
 
+.terminal-line-meta {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.terminal-line-meta .terminal-text {
+  padding-left: 0;
+}
+
 .terminal-line-command {
-  color: #ffd68a;
+  margin-top: 18px;
+  color: #ffffff;
 }
 
 .terminal-line-command .terminal-prefix {
-  color: rgba(255, 214, 138, 0.78);
+  color: #ffffff;
+}
+
+.terminal-line-boot {
+  color: rgba(255, 255, 255, 0.94);
+}
+
+.terminal-line-boot .terminal-prefix {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.terminal-line-output {
+  color: #ffffff;
+}
+
+.terminal-line-output .terminal-prefix {
+  color: rgba(255, 255, 255, 0.82);
 }
 
 .terminal-line-system {
-  color: rgba(190, 255, 220, 0.72);
+  margin-top: 18px;
+  color: rgba(255, 255, 255, 0.92);
 }
 
 .terminal-line-system .terminal-prefix {
-  color: rgba(255, 155, 114, 0.9);
+  color: rgba(255, 255, 255, 0.82);
 }
-
 .terminal-line.is-typing .terminal-text::after {
   content: '_';
   display: inline-block;
@@ -1032,16 +1038,20 @@ a {
 
 @media (max-width: 720px) {
   .terminal-screen {
-    padding: 22px 20px 24px;
+    padding: 18px 16px 20px;
   }
 
   .terminal-block .terminal-line {
-    gap: 10px;
-    font-size: 1.18rem;
+    gap: 8px;
+    font-size: 1.02rem;
+  }
+
+  .terminal-block .terminal-prefix {
+    min-width: 2.6rem;
   }
 
   .terminal-block .terminal-heading {
-    font-size: 2rem;
+    font-size: 1.28rem;
   }
 }
 
@@ -1174,6 +1184,8 @@ a {
     rgba(255, 255, 255, 0.48);
   border-color: rgba(187, 77, 45, 0.5);
 }
+
+
 
 
 
