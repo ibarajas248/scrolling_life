@@ -264,12 +264,11 @@
 
       <section class="section gallery-section" id="lineas" aria-labelledby="lineasTitle">
         <div class="gallery-copy reveal">
-          <p class="eyebrow">lineas de lectura</p>
-          <h2 id="lineasTitle">El scroll como materia artistica.</h2>
+          
         </div>
 
         <div class="gallery-stack" aria-label="Lineas de lectura">
-          <div class="gallery-line reveal">
+          <div class="gallery-line reveal" data-speed="0.05">
             <div class="gallery-line-inner">
               <p class="gallery-line-no" aria-hidden="true">01</p>
               <h3>Pantalla infinita</h3>
@@ -279,7 +278,7 @@
               </p>
             </div>
           </div>
-          <div class="gallery-line reveal">
+          <div class="gallery-line reveal" data-speed="-0.04">
             <div class="gallery-line-inner">
               <p class="gallery-line-no" aria-hidden="true">02</p>
               <h3>Cuerpo entrenado</h3>
@@ -288,7 +287,7 @@
               </p>
             </div>
           </div>
-          <div class="gallery-line reveal">
+          <div class="gallery-line reveal" data-speed="0.08">
             <div class="gallery-line-inner">
               <p class="gallery-line-no" aria-hidden="true">03</p>
               <h3>Economia afectiva</h3>

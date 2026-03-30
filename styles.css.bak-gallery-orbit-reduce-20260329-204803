@@ -1699,7 +1699,6 @@ body.accessible-mode .page-content {
   .concept-card,
   .corridor-step,
   .gallery-panel,
-  .gallery-line,
   .gallery-line-inner,
   .terminal-line,
   .terminal-text,
@@ -1719,7 +1718,6 @@ body.accessible-mode .page-content {
   .concept-card,
   .corridor-step,
   .gallery-panel,
-  .gallery-line,
   .gallery-line-inner,
   .terminal-line {
     opacity: 1 !important;
@@ -1732,41 +1730,5 @@ body.accessible-mode .page-content {
 
   .page-content {
     opacity: 1 !important;
-  }
-
-  .gallery-stack {
-    display: grid;
-    height: auto;
-    gap: 24px;
-  }
-
-  .gallery-stack::before,
-  .gallery-stack::after {
-    display: none;
-  }
-
-  .gallery-line {
-    position: relative;
-    top: auto;
-    left: auto;
-    width: 100%;
-    color: #e8f0fb;
-    pointer-events: auto;
-  }
-
-  .gallery-line::before {
-    left: 0;
-    top: 0;
-  }
-
-  .gallery-line-inner {
-    transform: none !important;
-    filter: none !important;
-    text-shadow: none !important;
-  }
-
-  .gallery-line h3,
-  .gallery-line p {
-    max-width: none;
   }
 }

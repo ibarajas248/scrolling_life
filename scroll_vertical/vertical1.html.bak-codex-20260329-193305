@@ -191,90 +191,6 @@
       font-style: italic;
     }
 
-    .video-overlay[hidden] {
-      display: none;
-    }
-
-    .video-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 30;
-      display: grid;
-      place-items: center;
-      padding: 20px;
-      background: rgba(12, 22, 18, 0.68);
-      backdrop-filter: blur(10px);
-    }
-
-    .video-modal {
-      position: relative;
-      width: min(92vw, 720px);
-      border-radius: 20px;
-      overflow: hidden;
-      background: rgba(18, 28, 23, 0.94);
-      border: 1px solid rgba(255,255,255,0.16);
-      box-shadow: 0 26px 70px rgba(0,0,0,0.35);
-    }
-
-    .video-frame-wrap {
-      position: relative;
-      width: 100%;
-      padding-top: 56.25%;
-      background: #000;
-    }
-
-    .video-frame-wrap iframe {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
-
-    .video-close {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      width: 40px;
-      height: 40px;
-      border: 0;
-      border-radius: 999px;
-      cursor: pointer;
-      font-size: 1.25rem;
-      line-height: 1;
-      color: #12211a;
-      background: rgba(255,255,255,0.92);
-      box-shadow: 0 8px 18px rgba(0,0,0,0.18);
-    }
-
-    .video-caption {
-      margin: 0;
-      padding: 14px 18px 18px;
-      font-size: 0.92rem;
-      line-height: 1.45;
-      color: rgba(238, 243, 240, 0.88);
-    }
-
-    .video-reopen {
-      position: fixed;
-      right: 18px;
-      bottom: 18px;
-      z-index: 25;
-      border: 0;
-      border-radius: 999px;
-      padding: 12px 16px;
-      cursor: pointer;
-      font: inherit;
-      color: #f4f1eb;
-      background: rgba(24, 40, 32, 0.86);
-      box-shadow: 0 14px 30px rgba(0,0,0,0.18);
-      backdrop-filter: blur(8px);
-    }
-
-    .video-reopen[hidden] {
-      display: none;
-    }
-
     @media (max-width: 700px) {
       .ghost-img {
         width: 90px;
@@ -287,20 +203,6 @@
       .page {
         padding-top: 24px;
       }
-
-      .video-overlay {
-        padding: 12px;
-      }
-
-      .video-close {
-        top: 10px;
-        right: 10px;
-      }
-
-      .video-reopen {
-        right: 12px;
-        bottom: 12px;
-      }
     }
   </style>
 </head>
@@ -310,29 +212,6 @@
 
   <div class="floating-texts" id="floating-texts"></div>
   <div class="ghost-layer" id="ghost-layer"></div>
-
-  <div class="video-overlay" id="video-overlay" hidden>
-    <section class="video-modal" aria-label="Video emergente de YouTube" role="dialog" aria-modal="true">
-      <button class="video-close" id="video-close-button" type="button" aria-label="Cerrar video">
-        &times;
-      </button>
-      <div class="video-frame-wrap">
-        <iframe
-          id="youtube-popup-frame"
-          title="Video emergente"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen
-        ></iframe>
-      </div>
-      <p class="video-caption">
-        Puedes cerrar este video cuando quieras para seguir viendo la pagina.
-      </p>
-    </section>
-  </div>
-
-  <button class="video-reopen" id="video-open-button" type="button" hidden>
-    Abrir video
-  </button>
 
   <main class="page">
     <div class="image-container" id="image-container">
@@ -349,14 +228,9 @@
     const imageContainer = document.getElementById("image-container");
     const floatingTexts = document.getElementById("floating-texts");
     const ghostLayer = document.getElementById("ghost-layer");
-    const videoOverlay = document.getElementById("video-overlay");
-    const videoFrame = document.getElementById("youtube-popup-frame");
-    const videoCloseButton = document.getElementById("video-close-button");
-    const videoOpenButton = document.getElementById("video-open-button");
 
     const totalImages = 100;
     const baseUrl = "https://ibarajas248.github.io/scrolleandowdwd/imagen";
-    const youtubeVideoUrl = "https://youtu.be/vOrh8h4npq8";
 
     // Frases flotantes
     const frases = [
@@ -499,79 +373,9 @@
       }
     }
 
-    function getYoutubeEmbedUrl(url) {
-      if (!url) {
-        return "";
-      }
-
-      let videoId = "";
-
-      try {
-        const parsedUrl = new URL(url);
-        const host = parsedUrl.hostname.replace("www.", "");
-
-        if (host === "youtu.be") {
-          videoId = parsedUrl.pathname.slice(1);
-        } else if (host.includes("youtube.com")) {
-          videoId = parsedUrl.searchParams.get("v") || "";
-
-          if (!videoId && parsedUrl.pathname.startsWith("/embed/")) {
-            videoId = parsedUrl.pathname.split("/embed/")[1] || "";
-          }
-
-          if (!videoId && parsedUrl.pathname.startsWith("/shorts/")) {
-            videoId = parsedUrl.pathname.split("/shorts/")[1] || "";
-          }
-        }
-      } catch (error) {
-        videoId = "";
-      }
-
-      if (!videoId) {
-        return "";
-      }
-
-      return `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
-    }
-
-    function closeVideoPopup() {
-      videoOverlay.hidden = true;
-      videoOpenButton.hidden = false;
-      videoFrame.src = "";
-    }
-
-    function openVideoPopup() {
-      const embedUrl = getYoutubeEmbedUrl(youtubeVideoUrl);
-
-      if (!embedUrl) {
-        videoOverlay.hidden = true;
-        videoOpenButton.hidden = true;
-        return;
-      }
-
-      videoFrame.src = embedUrl;
-      videoOverlay.hidden = false;
-      videoOpenButton.hidden = true;
-    }
-
-    videoCloseButton.addEventListener("click", closeVideoPopup);
-    videoOpenButton.addEventListener("click", openVideoPopup);
-    videoOverlay.addEventListener("click", (event) => {
-      if (event.target === videoOverlay) {
-        closeVideoPopup();
-      }
-    });
-
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && !videoOverlay.hidden) {
-        closeVideoPopup();
-      }
-    });
-
     loadImages();
     createFloatingTexts();
     createGhostImages();
-    openVideoPopup();
   </script>
 </body>
 </html>

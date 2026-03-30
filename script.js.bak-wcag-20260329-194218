@@ -5,7 +5,6 @@ const bgLayers = document.querySelectorAll('.bg-image');
 const netArtLayer = document.querySelector('.netart-layer');
 const pageContent = document.querySelector('.page-content');
 const siteMenu = document.querySelector('.site-menu');
-const siteMenuSummary = siteMenu?.querySelector('summary');
 const mosquitoLink = document.querySelector('.mosquito-link');
 const netArtItems = [];
 
@@ -123,7 +122,6 @@ const updateProgress = () => {
 
 const terminalSequences = document.querySelectorAll('[data-terminal-sequence]');
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-const reducedMotionEnabled = prefersReducedMotion.matches;
 
 const wait = (ms) => new Promise((resolve) => window.setTimeout(resolve, ms));
 
@@ -291,16 +289,8 @@ const registerMosquitoAudioUnlock = () => {
   window.addEventListener('keydown', onUnlock);
 };
 
-const syncSiteMenuState = () => {
-  if (!(siteMenuSummary instanceof HTMLElement) || !siteMenu) return;
-  siteMenuSummary.setAttribute('aria-expanded', String(siteMenu.hasAttribute('open')));
-};
-
 const initSiteMenu = () => {
-  if (!siteMenu || !(siteMenuSummary instanceof HTMLElement)) return;
-
-  syncSiteMenuState();
-  siteMenu.addEventListener('toggle', syncSiteMenuState);
+  if (!siteMenu) return;
 
   document.addEventListener('click', (event) => {
     if (!(event.target instanceof Node) || siteMenu.contains(event.target)) {
@@ -308,17 +298,15 @@ const initSiteMenu = () => {
     }
 
     siteMenu.removeAttribute('open');
-    syncSiteMenuState();
   });
 
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
       siteMenu.removeAttribute('open');
-      syncSiteMenuState();
-      siteMenuSummary.focus();
     }
   });
 };
+
 const setMosquitoActive = (active) => {
   if (!mosquitoLink) return;
 
@@ -355,25 +343,12 @@ const startMosquitoCycle = () => {
 };
 
 terminalSequences.forEach((sequence) => prepareTerminalSequence(sequence));
+revealNodes.forEach((node) => revealObserver.observe(node));
+
+initNetArt();
 initSiteMenu();
-
-if (reducedMotionEnabled) {
-  revealNodes.forEach((node) => node.classList.add('is-visible'));
-  terminalSequences.forEach((sequence) => revealTerminalSequence(sequence));
-
-  if (pageContent) {
-    pageContent.classList.remove('hidden');
-  }
-
-  if (netArtLayer) {
-    netArtLayer.style.opacity = '0';
-  }
-} else {
-  revealNodes.forEach((node) => revealObserver.observe(node));
-  initNetArt();
-  registerMosquitoAudioUnlock();
-  startMosquitoCycle();
-}
+registerMosquitoAudioUnlock();
+startMosquitoCycle();
 
 const updateKinetic = () => {
   const offset = window.scrollY;
@@ -477,12 +452,8 @@ const animate = () => {
 };
 
 updateProgress();
-
-if (!reducedMotionEnabled) {
-  updateKinetic();
-  requestAnimationFrame(animate);
-}
-
+updateKinetic();
+requestAnimationFrame(animate);
 window.addEventListener('scroll', updateProgress, { passive: true });
 window.addEventListener('resize', updateProgress);
 
@@ -492,88 +463,16 @@ window.addEventListener('resize', updateProgress);
 
 
 const accessibleReading = document.getElementById('accessibleReading');
-const accessibleReadAloud = document.getElementById('accessibleReadAloud');
-const accessibleStopReading = document.getElementById('accessibleStopReading');
 const accessibilityToggles = document.querySelectorAll('[data-accessibility-toggle], #toggleAccessibleReading');
-let activeUtterance = null;
 
 const updateAccessibilityToggles = (enabled) => {
   accessibilityToggles.forEach((toggle) => {
     if (!(toggle instanceof HTMLElement)) return;
 
-    const openLabel = toggle.dataset.labelOpen || 'Activar version accesible';
-    const closeLabel = toggle.dataset.labelClose || 'Cerrar version accesible';
-
     toggle.setAttribute('aria-expanded', String(enabled));
     toggle.setAttribute('aria-pressed', String(enabled));
-    toggle.textContent = enabled ? closeLabel : openLabel;
+    toggle.textContent = enabled ? 'Cerrar lectura accesible' : 'Version accesible';
   });
-};
-
-const setVisualExperienceHidden = (hidden) => {
-  if (!(pageContent instanceof HTMLElement)) return;
-
-  pageContent.setAttribute('aria-hidden', String(hidden));
-
-  if ('inert' in pageContent) {
-    pageContent.inert = hidden;
-  }
-};
-
-const updateSpeechButtons = (reading) => {
-  if (accessibleReadAloud instanceof HTMLButtonElement) {
-    accessibleReadAloud.setAttribute('aria-pressed', String(reading));
-  }
-
-  if (accessibleStopReading instanceof HTMLButtonElement) {
-    accessibleStopReading.disabled = !reading;
-  }
-};
-
-const stopAccessibleSpeech = () => {
-  if (!('speechSynthesis' in window)) return;
-
-  window.speechSynthesis.cancel();
-  activeUtterance = null;
-  updateSpeechButtons(false);
-};
-
-const getAccessibleReadingText = () => {
-  if (!(accessibleReading instanceof HTMLElement)) {
-    return '';
-  }
-
-  return Array.from(accessibleReading.querySelectorAll('h2, h3, p, li, blockquote'))
-    .map((node) => node.textContent?.replace(/\s+/g, ' ').trim() || '')
-    .filter(Boolean)
-    .join('. ');
-};
-
-const startAccessibleSpeech = () => {
-  if (!('speechSynthesis' in window) || !(accessibleReading instanceof HTMLElement)) {
-    return;
-  }
-
-  const textToRead = getAccessibleReadingText();
-  if (!textToRead) return;
-
-  stopAccessibleSpeech();
-
-  activeUtterance = new SpeechSynthesisUtterance(textToRead);
-  activeUtterance.lang = document.documentElement.lang || 'es-CO';
-  activeUtterance.rate = 0.96;
-  activeUtterance.pitch = 1;
-  activeUtterance.onend = () => {
-    activeUtterance = null;
-    updateSpeechButtons(false);
-  };
-  activeUtterance.onerror = () => {
-    activeUtterance = null;
-    updateSpeechButtons(false);
-  };
-
-  window.speechSynthesis.speak(activeUtterance);
-  updateSpeechButtons(true);
 };
 
 const enableAccessibleMode = (enabled, moveFocus = true) => {
@@ -583,21 +482,15 @@ const enableAccessibleMode = (enabled, moveFocus = true) => {
     accessibleReading.hidden = !enabled;
   }
 
-  setVisualExperienceHidden(enabled);
-
   if (enabled) {
     window.clearInterval(mosquitoCycleTimer);
     window.clearTimeout(mosquitoHideTimer);
     stopMosquitoSound();
     setMosquitoActive(false);
-  } else if (!reducedMotionEnabled) {
+  } else if (!prefersReducedMotion.matches) {
     window.clearInterval(mosquitoCycleTimer);
     window.clearTimeout(mosquitoHideTimer);
     startMosquitoCycle();
-  }
-
-  if (!enabled) {
-    stopAccessibleSpeech();
   }
 
   updateAccessibilityToggles(enabled);
@@ -615,20 +508,6 @@ const enableAccessibleMode = (enabled, moveFocus = true) => {
 const initAccessibleMode = () => {
   if (!accessibleReading || accessibilityToggles.length === 0) return;
 
-  const speechSupported = 'speechSynthesis' in window;
-
-  if (accessibleReadAloud instanceof HTMLButtonElement) {
-    accessibleReadAloud.disabled = !speechSupported;
-    accessibleReadAloud.addEventListener('click', () => {
-      if (!speechSupported) return;
-      startAccessibleSpeech();
-    });
-  }
-
-  if (accessibleStopReading instanceof HTMLButtonElement) {
-    accessibleStopReading.addEventListener('click', stopAccessibleSpeech);
-  }
-
   const savedMode = window.localStorage.getItem('scrollingLifeAccessibleMode') === 'true';
   enableAccessibleMode(savedMode, false);
 
@@ -638,8 +517,6 @@ const initAccessibleMode = () => {
       enableAccessibleMode(enabled);
     });
   });
-
-  window.addEventListener('beforeunload', stopAccessibleSpeech);
 };
 
 initAccessibleMode();
