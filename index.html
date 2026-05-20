@@ -18,18 +18,6 @@
 </head>
 <body id="top">
   <a class="skip-link" href="#main-content">Saltar al contenido principal</a>
-  <button
-    class="accessibility-launch"
-    type="button"
-    id="toggleAccessibleReading"
-    aria-controls="accessibleReading"
-    aria-expanded="false"
-    aria-pressed="false"
-    data-label-open="Activar version accesible"
-    data-label-close="Cerrar version accesible"
-  >
-    Activar version accesible
-  </button>
   <div class="netart-layer" aria-hidden="true"></div>
   <div class="page-content" id="visualExperience">
     <div class="bg-orbit orbit-a" aria-hidden="true"></div>
@@ -61,7 +49,7 @@
             <span>Comentarios</span>
             <small>archivo de voces</small>
           </a>
-          <a class="site-menu-link" href="./scroll_fantasmagorias/index.html">
+          <a class="site-menu-link" href="./fantasmagorias.html">
             <span>Fantasmagorias</span>
             <small>deriva visual</small>
           </a>
@@ -75,7 +63,7 @@
 
     <header class="hero section" role="banner" aria-describedby="heroSummary">
       <div class="hero-copy reveal">
-        <p class="sr-only" id="heroSummary">Scrolling Life es una pieza web sobre el scroll como gesto cultural. Use el boton Activar version accesible para abrir una lectura lineal, sin animaciones intensas y compatible con lector de pantalla o control por voz.</p>
+        <p class="sr-only" id="heroSummary">Scrolling Life es una pieza web sobre el scroll como gesto cultural, ritmo corporal y forma contemporanea de mirar.</p>
         <p class="eyebrow">PROGRAMACIÓN VIRTUAL GALERÍA SANTA FE</p>
         <h1>
           <span>Scrolling</span>
@@ -107,18 +95,6 @@
         </p>
         <div class="hero-actions">
           <a class="button button-solid" href="#manifiesto">Entrar al recorrido</a>
-          <button
-            class="button button-ghost accessibility-inline"
-            type="button"
-            data-accessibility-toggle
-            aria-controls="accessibleReading"
-            aria-expanded="false"
-            aria-pressed="false"
-            data-label-open="Activar version accesible"
-            data-label-close="Cerrar version accesible"
-          >
-            Activar version accesible
-          </button>
         </div>
       </div>
 
@@ -213,35 +189,51 @@
         <div class="atlas-intro reveal">
           <p class="eyebrow">cartografia conceptual</p>
           <h2 id="fuerzasTitle">Cuatro fuerzas sostienen la vida en scroll.</h2>
+          <p class="atlas-lead">
+            Este mapa no enumera ideas: muestra tensiones que aparecen al mismo tiempo
+            mientras deslizamos la pantalla.
+          </p>
         </div>
 
-        <div class="card-grid">
-          <article class="concept-card reveal">
-            <div class="card-index" aria-hidden="true">A</div>
+        <div class="card-grid atlas-grid">
+          <article class="concept-card concept-card-gesture reveal">
+            <div class="concept-head">
+              <div class="card-index" aria-hidden="true">A</div>
+              <span class="concept-meta">impulso</span>
+            </div>
             <h3>Gesto</h3>
             <p>
               El scroll es una coreografia minima. Una accion pequena que organiza el
               tiempo del cuerpo frente a la pantalla.
             </p>
           </article>
-          <article class="concept-card reveal">
-            <div class="card-index" aria-hidden="true">B</div>
+          <article class="concept-card concept-card-desire reveal">
+            <div class="concept-head">
+              <div class="card-index" aria-hidden="true">B</div>
+              <span class="concept-meta">promesa</span>
+            </div>
             <h3>Deseo</h3>
             <p>
               Siempre hay algo mas abajo. El desplazamiento sostiene una promesa de
               hallazgo que rara vez concluye.
             </p>
           </article>
-          <article class="concept-card reveal">
-            <div class="card-index" aria-hidden="true">C</div>
+          <article class="concept-card concept-card-archive reveal">
+            <div class="concept-head">
+              <div class="card-index" aria-hidden="true">C</div>
+              <span class="concept-meta">memoria</span>
+            </div>
             <h3>Archivo</h3>
             <p>
               La memoria digital se presenta como flujo. Guardamos, olvidamos y volvemos
               a ver sin abandonar la misma superficie.
             </p>
           </article>
-          <article class="concept-card reveal">
-            <div class="card-index" aria-hidden="true">D</div>
+          <article class="concept-card concept-card-fatigue reveal">
+            <div class="concept-head">
+              <div class="card-index" aria-hidden="true">D</div>
+              <span class="concept-meta">friccion</span>
+            </div>
             <h3>Fatiga</h3>
             <p>
               La abundancia visual erosiona la atencion. El cansancio tambien es una forma
@@ -303,142 +295,6 @@
       
     </main>
   </div>
-
-  <section
-    class="accessible-reading"
-    id="accessibleReading"
-    hidden
-    tabindex="-1"
-    role="region"
-    aria-labelledby="accessibleReadingTitle"
-    aria-describedby="accessibleReadingIntro accessibleSupportNote"
-  >
-    <div class="accessible-reading-shell">
-      <p class="accessible-kicker">modo accesible</p>
-      <h2 id="accessibleReadingTitle">Version accesible para lectores de pantalla</h2>
-      <p class="accessible-intro" id="accessibleReadingIntro">
-        Esta lectura lineal resume la pieza sin animaciones intensas, capas decorativas ni desplazamientos
-        visuales obligatorios. Esta opcion esta pensada para personas ciegas, usuarios de lector de
-        pantalla, navegacion por teclado o software de control por voz.
-      </p>
-      <div class="accessible-tools" role="group" aria-label="Herramientas de lectura">
-        <button class="button button-ghost accessible-tool" type="button" id="accessibleReadAloud" aria-pressed="false">
-          Escuchar esta version
-        </button>
-        <button class="button button-ghost accessible-tool" type="button" id="accessibleStopReading" disabled>
-          Detener lectura
-        </button>
-      </div>
-      <p class="accessible-note" id="accessibleSupportNote">
-        Esta version sigue criterios WCAG para estructura semantica, foco visible y nombres accesibles
-        compatibles con lector de pantalla y software de control por voz.
-      </p>
-
-      <nav class="accessible-nav" aria-label="Navegacion de la version accesible">
-        <a href="#accessible-manifiesto">Manifiesto</a>
-        <a href="#accessible-fuerzas">Cuatro fuerzas</a>
-        <a href="#accessible-arquitectura">Arquitectura</a>
-        <a href="#accessible-lineas">Lineas de lectura</a>
-        <a href="#accessible-salas">Otras salas</a>
-      </nav>
-
-      <article class="accessible-block" id="accessible-manifiesto">
-        <h3>Manifiesto</h3>
-        <p>
-          Scrolling Life parte de un gesto cotidiano y casi automatico para pensar la manera en que
-          nos relacionamos con las imagenes. El proyecto lleva el scroll mas alla de su funcion como
-          dispositivo de navegacion en internet y lo convierte en una condicion de experiencia,
-          atravesada por flujos algoritmicos y por la logica de una verticalidad que parece no
-          terminar nunca.
-        </p>
-        <p>
-          En ese movimiento continuo se hace visible la fragilidad de la imagen, cuya presencia se
-          desvanece con la misma rapidez con la que avanzamos hacia abajo, impulsados por la promesa
-          de un final que nunca llega.
-        </p>
-        <p>
-          La interfaz se presenta como un espacio de transito que obliga al usuario a reconsiderar
-          el acto de scrollear. Cada desplazamiento produce nuevas relaciones entre imagenes,
-          fragmentos y contenidos, y convierte la pagina en un ensayo sobre el deseo de seguir
-          buscando algo que nunca termina de aparecer.
-        </p>
-      </article>
-
-      <article class="accessible-block" id="accessible-fuerzas">
-        <h3>Cuatro fuerzas sostienen la vida en scroll</h3>
-        <ul class="accessible-list">
-          <li>
-            <strong>Gesto.</strong> El scroll es una coreografia minima, una accion pequena que
-            organiza el tiempo del cuerpo frente a la pantalla.
-          </li>
-          <li>
-            <strong>Deseo.</strong> Siempre hay algo mas abajo. El desplazamiento sostiene una
-            promesa de hallazgo que rara vez concluye.
-          </li>
-          <li>
-            <strong>Archivo.</strong> La memoria digital se presenta como flujo. Guardamos,
-            olvidamos y volvemos a ver sin abandonar la misma superficie.
-          </li>
-          <li>
-            <strong>Fatiga.</strong> La abundancia visual erosiona la atencion. El cansancio tambien
-            es una forma de conocimiento del presente.
-          </li>
-        </ul>
-      </article>
-
-      <article class="accessible-block" id="accessible-arquitectura">
-        <h3>Arquitectura de la experiencia</h3>
-        <ol class="accessible-list accessible-list-ordered">
-          <li>
-            <strong>Umbral.</strong> Un arranque de alto contraste introduce el scroll como
-            atmosfera y tension inicial.
-          </li>
-          <li>
-            <strong>Ensayo expandido.</strong> El contenido se distribuye en capas breves y
-            precisas que pueden leerse de forma autonoma.
-          </li>
-          <li>
-            <strong>Interfaz critica.</strong> El propio comportamiento del sitio hace visible la
-            logica que analiza: barras, desplazamientos, apariciones y persistencias convierten la
-            forma en argumento.
-          </li>
-        </ol>
-      </article>
-
-      <article class="accessible-block" id="accessible-lineas">
-        <h3>Lineas de lectura</h3>
-        <ul class="accessible-list">
-          <li>
-            <strong>Pantalla infinita.</strong> La obra se despliega como una superficie que nunca
-            termina del todo. Cada pausa es una decision contra la corriente.
-          </li>
-          <li>
-            <strong>Cuerpo entrenado.</strong> La repeticion vuelve automatico el gesto. La
-            automatizacion construye subjetividad.
-          </li>
-          <li>
-            <strong>Economia afectiva.</strong> El scroll administra ansiedad, curiosidad,
-            comparacion y agotamiento en una sola cadena continua.
-          </li>
-        </ul>
-      </article>
-
-      <blockquote class="accessible-quote">
-        "Deslizar hacia abajo" parece una accion banal. En realidad es una pedagogia del presente.
-      </blockquote>
-
-      <section class="accessible-block" id="accessible-salas" aria-labelledby="accessibleSalasTitle">
-        <h3 id="accessibleSalasTitle">Otras salas</h3>
-        <ul class="accessible-links">
-          <li><a href="./scroll_vertical/vertical1.html">Arquitectura: recorrido vertical</a></li>
-          <li><a href="./sala-3d.html">Juego: escapar del mounstro del scroll</a></li>
-          <li><a href="./comentarios_instagram/index.html">Comentarios: archivo de voces</a></li>
-          <li><a href="./scroll_fantasmagorias/index.html">Fantasmagorias: deriva visual</a></li>
-          <li><a href="./mosquito-caos.html">Mosquito Caos: enjambre interactivo</a></li>
-        </ul>
-      </section>
-    </div>
-  </section>
 
   <script src="./script.js"></script>
 </body>

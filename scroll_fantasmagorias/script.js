@@ -22,15 +22,17 @@
   const motionLabel = document.getElementById('motionLabel');
   const playLabel = document.getElementById('playLabel');
   const stateLabel = document.getElementById('stateLabel');
+  const bodyBar = document.getElementById('bodyBar');
+  const motionBar = document.getElementById('motionBar');
 
   renderCtx.imageSmoothingEnabled = false;
 
   const SOURCE_IMAGES = [
-    '../images/netart/Screenshot_20250108-144156.jpg',
-    '../scroll_strips/strip_000001.jpg',
-    '../scroll_strips/strip_000002.jpg',
-    '../scroll_strips/strip_000003.jpg',
-    '../scroll_strips/strip_000004.jpg',
+    './images/netart/Screenshot_20250108-144156.jpg',
+    './scroll_strips/strip_000001.jpg',
+    './scroll_strips/strip_000002.jpg',
+    './scroll_strips/strip_000003.jpg',
+    './scroll_strips/strip_000004.jpg',
   ];
 
   const config = {
@@ -103,7 +105,24 @@
     return Math.max(min, Math.min(max, value));
   }
 
+  function setBarValue(barElement, ratio) {
+    if (!(barElement instanceof HTMLElement)) {
+      return;
+    }
+    const safeRatio = clamp(ratio, 0, 1);
+    barElement.style.width = `${(safeRatio * 100).toFixed(1)}%`;
+  }
+
+  function setText(element, value) {
+    if (element) {
+      element.textContent = value;
+    }
+  }
+
   function setToast(message, duration = 900) {
+    if (!statusToast) {
+      return;
+    }
     statusToast.textContent = message;
     statusToast.classList.add('is-visible');
     clearTimeout(state.overlayTimer);
@@ -113,7 +132,7 @@
   }
 
   function setGateMessage(message) {
-    gateNote.textContent = message;
+    setText(gateNote, message);
   }
 
   function sourceName(path) {
@@ -131,19 +150,22 @@
     const total = state.sourceFrames.length;
     const safeIndex = total ? state.sourceIndex + 1 : 0;
 
-    sourceLabel.textContent = total ? sourceName(SOURCE_IMAGES[state.sourceIndex]) : '--';
-    sequenceLabel.textContent = `${safeIndex} / ${total}`;
-    modeLabel.textContent = currentModeLabel();
-    halfLifeLabel.textContent = `${config.halfLifeSec.toFixed(0)}s`;
-    strengthLabel.textContent = config.paintStrength.toFixed(2);
-    scrollLabel.textContent = `${config.scrollScreenPxPerSec.toFixed(0)} px/s`;
-    bodyLabel.textContent = `${(state.activeArea * 100).toFixed(1)}%`;
-    motionLabel.textContent = state.motionLevel.toFixed(2);
-    playLabel.textContent = state.play ? 'PLAY' : 'PAUSE';
-    toggleButton.textContent = state.play ? 'Pause' : 'Play';
-    stateLabel.textContent = state.started
+    setText(sourceLabel, total ? sourceName(SOURCE_IMAGES[state.sourceIndex]) : '--');
+    setText(sequenceLabel, `${safeIndex} / ${total}`);
+    setText(modeLabel, currentModeLabel());
+    setText(halfLifeLabel, `${config.halfLifeSec.toFixed(0)}s`);
+    setText(strengthLabel, config.paintStrength.toFixed(2));
+    setText(scrollLabel, `${config.scrollScreenPxPerSec.toFixed(0)} px/s`);
+    setText(bodyLabel, `${(state.activeArea * 100).toFixed(1)}%`);
+    setText(motionLabel, state.motionLevel.toFixed(2));
+    setText(playLabel, state.play ? 'PLAY' : 'PAUSE');
+    setText(toggleButton, state.play ? 'Pause' : 'Play');
+    document.body.dataset.playState = state.play ? 'play' : 'pause';
+    setBarValue(bodyBar, state.activeArea);
+    setBarValue(motionBar, state.motionLevel * 8);
+    setText(stateLabel, state.started
       ? 'Camara activa, build generativo corriendo.'
-      : 'Esperando activacion de camara y segmentacion.';
+      : 'Esperando activacion de camara y segmentacion.');
   }
 
   function resizeDisplayCanvas() {
@@ -525,6 +547,7 @@
     } catch (error) {
       console.error(error);
       setGateMessage('La segmentacion fallo durante la ejecucion. Revisa permisos, red o recarga la pagina.');
+      stopCameraStream();
       gate.hidden = false;
       state.started = false;
       updateUi();
@@ -537,6 +560,12 @@
   }
 
   async function initCamera() {
+    if (state.stream) {
+      state.stream.getTracks().forEach((track) => track.stop());
+      state.stream = null;
+      video.srcObject = null;
+    }
+
     state.stream = await navigator.mediaDevices.getUserMedia({
       audio: false,
       video: {
@@ -557,6 +586,16 @@
     });
 
     await video.play();
+  }
+
+  function stopCameraStream() {
+    if (!state.stream) {
+      return;
+    }
+
+    state.stream.getTracks().forEach((track) => track.stop());
+    state.stream = null;
+    video.srcObject = null;
   }
 
   function initSegmenter() {
@@ -587,7 +626,9 @@
 
     state.loading = true;
     setGateMessage('Cargando imagenes, camara y segmentacion...');
-    startButton.disabled = true;
+    if (startButton instanceof HTMLButtonElement) {
+      startButton.disabled = true;
+    }
 
     try {
       if (!state.sourceImages.length) {
@@ -620,10 +661,13 @@
     } catch (error) {
       console.error(error);
       setGateMessage(error.message || 'No se pudo iniciar la experiencia.');
+      stopCameraStream();
       gate.hidden = false;
     } finally {
       state.loading = false;
-      startButton.disabled = false;
+      if (startButton instanceof HTMLButtonElement) {
+        startButton.disabled = false;
+      }
       updateUi();
     }
   }
@@ -685,71 +729,37 @@
     updateUi();
   }
 
-  function handleKeydown(event) {
-    const handled = new Set([
-      'Space',
-      'Digit1',
-      'Digit2',
-      'Minus',
-      'Equal',
-      'BracketLeft',
-      'BracketRight',
-      'KeyV',
-      'KeyX',
-      'KeyS',
-      'KeyR',
-      'KeyF',
-      'NumpadAdd',
-      'NumpadSubtract',
-    ]);
+  const keyActions = new Map([
+    ['Space', () => {
+      if (state.started) {
+        togglePlay();
+      }
+    }],
+    ['Digit1', () => adjustHalfLife(-10)],
+    ['Digit2', () => adjustHalfLife(10)],
+    ['Minus', () => adjustPaintStrength(-0.05)],
+    ['NumpadSubtract', () => adjustPaintStrength(-0.05)],
+    ['Equal', () => adjustPaintStrength(0.05)],
+    ['NumpadAdd', () => adjustPaintStrength(0.05)],
+    ['BracketLeft', () => adjustScrollSpeed(-20)],
+    ['BracketRight', () => adjustScrollSpeed(20)],
+    ['KeyV', () => toggleMotionBoost()],
+    ['KeyX', () => toggleMotionOnly()],
+    ['KeyS', () => saveSnapshot()],
+    ['KeyR', () => clearBuild()],
+    ['KeyF', () => toggleFullscreen()],
+  ]);
 
-    if (handled.has(event.code)) {
+  const handledKeyCodes = new Set(keyActions.keys());
+
+  function handleKeydown(event) {
+    if (handledKeyCodes.has(event.code)) {
       event.preventDefault();
     }
 
-    switch (event.code) {
-      case 'Space':
-        if (state.started) {
-          togglePlay();
-        }
-        break;
-      case 'Digit1':
-        adjustHalfLife(-10);
-        break;
-      case 'Digit2':
-        adjustHalfLife(10);
-        break;
-      case 'Minus':
-      case 'NumpadSubtract':
-        adjustPaintStrength(-0.05);
-        break;
-      case 'Equal':
-      case 'NumpadAdd':
-        adjustPaintStrength(0.05);
-        break;
-      case 'BracketLeft':
-        adjustScrollSpeed(-20);
-        break;
-      case 'BracketRight':
-        adjustScrollSpeed(20);
-        break;
-      case 'KeyV':
-        toggleMotionBoost();
-        break;
-      case 'KeyX':
-        toggleMotionOnly();
-        break;
-      case 'KeyS':
-        saveSnapshot();
-        break;
-      case 'KeyR':
-        clearBuild();
-        break;
-      case 'KeyF':
-        toggleFullscreen();
-        break;
-      default:
-        break;
+    const action = keyActions.get(event.code);
+    if (action) {
+      action();
     }
   }
 
@@ -764,14 +774,28 @@
     }
   }
 
-  startButton.addEventListener('click', startExperience);
-  fullscreenButton.addEventListener('click', toggleFullscreen);
-  toggleButton.addEventListener('click', togglePlay);
-  saveButton.addEventListener('click', saveSnapshot);
-  resetButton.addEventListener('click', () => clearBuild());
-  window.addEventListener('resize', handleResize);
-  window.addEventListener('keydown', handleKeydown);
+  function bindEvents() {
+    if (startButton instanceof HTMLButtonElement) {
+      startButton.addEventListener('click', startExperience);
+    }
+    if (fullscreenButton instanceof HTMLButtonElement) {
+      fullscreenButton.addEventListener('click', toggleFullscreen);
+    }
+    if (toggleButton instanceof HTMLButtonElement) {
+      toggleButton.addEventListener('click', togglePlay);
+    }
+    if (saveButton instanceof HTMLButtonElement) {
+      saveButton.addEventListener('click', saveSnapshot);
+    }
+    if (resetButton instanceof HTMLButtonElement) {
+      resetButton.addEventListener('click', () => clearBuild());
+    }
+    window.addEventListener('beforeunload', stopCameraStream);
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('keydown', handleKeydown);
+  }
 
+  bindEvents();
   handleResize();
   updateUi();
 })();

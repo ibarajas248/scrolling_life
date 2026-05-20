@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scroll Fantasmagorias</title>
+  <meta
+    name="description"
+    content="Instalacion web de scroll, cuerpo y fantasmagorias generativas accionadas por camara."
+  />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;700;800&family=Instrument+Serif:ital@0;1&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="./scroll_fantasmagorias/styles.css" />
+</head>
+<body>
+  <video id="cameraFeed" class="sr-only" autoplay playsinline muted></video>
+  <canvas id="renderCanvas" aria-label="Fantasmagorias generativas accionadas por cuerpo y camara"></canvas>
+
+  <div class="grid-overlay" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="aura aura-a" aria-hidden="true"></div>
+  <div class="aura aura-b" aria-hidden="true"></div>
+
+  <button class="quick-action" id="fullscreenButton" type="button">Fullscreen</button>
+  <div class="status-pill" id="stateLabel" aria-live="polite">Esperando activacion de camara y segmentacion.</div>
+  <div class="toast" id="statusToast" aria-live="polite"></div>
+
+  <section class="gate" id="gate">
+    <button class="start-button" id="startButton" type="button">Activar camara</button>
+    <p class="gate-note" id="gateNote">
+      Permite camara para iniciar. Usa teclado: Espacio pausa, S snapshot, R limpiar, F pantalla completa.
+    </p>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/selfie_segmentation.js"></script>
+  <script src="./scroll_fantasmagorias/script.js"></script>
+</body>
+</html>
