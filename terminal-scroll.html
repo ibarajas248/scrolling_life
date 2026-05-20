@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terminal Scroll - Scrolling Life</title>
+  <meta name="description" content="Simulación de scroll en una terminal Linux dentro de Scrolling Life." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=Bricolage+Grotesque:wght@500;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="./terminal_scroll/styles.css" />
+</head>
+<body>
+  <a class="back-link" href="./index.html">Volver al recorrido</a>
+
+  <main class="stage">
+    <section class="terminal-window" aria-label="Simulador de terminal Linux">
+      <header class="terminal-top">
+        <div class="dots" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+        <p>scrolling@life: ~/terminal-scroll</p>
+      </header>
+
+      <div class="terminal-meta">
+        <p>modo: <strong id="modeLabel">manual</strong></p>
+        <p>linea: <strong id="lineLabel">0 / 0</strong></p>
+      </div>
+
+      <div class="terminal-body" id="terminalBody" tabindex="0" role="region" aria-label="Salida de terminal con scroll simulado">
+        <ol class="terminal-lines" id="terminalLines"></ol>
+      </div>
+
+      <div class="scroll-track" aria-hidden="true">
+        <div class="scroll-thumb" id="scrollThumb"></div>
+      </div>
+
+      <footer class="terminal-help">
+        wheel/trackpad: scroll · flechas o J/K: mover · espacio: autoplay
+      </footer>
+    </section>
+  </main>
+
+  <script src="./terminal_scroll/script.js"></script>
+</body>
+</html>
