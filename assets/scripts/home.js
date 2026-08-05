@@ -1,4 +1,4 @@
-﻿const progressBar = document.getElementById('progressBar');
+const progressBar = document.getElementById('progressBar');
 const revealNodes = document.querySelectorAll('.reveal');
 const kineticNodes = document.querySelectorAll('[data-speed]');
 const bgLayers = document.querySelectorAll('.bg-image');
@@ -12,7 +12,8 @@ const netArtItems = [];
 const MOSQUITO_CYCLE_MS = 60000;
 const MOSQUITO_ACTIVE_MS = 20000;
 const RAIN_PHASE_MS = 3000;
-const MOSQUITO_AUDIO_SRC = './audio/mosquito-buzz.mp3';
+const MOSQUITO_SOUND_ENABLED = false;
+const MOSQUITO_AUDIO_SRC = './assets/audio/mosquito-buzz.mp3';
 
 let netArtStartTime = performance.now();
 let mosquitoCycleTimer = null;
@@ -24,7 +25,7 @@ let scrollRainDistance = 0;
 let scrollRainEnergy = 0;
 let lastScrollY = window.scrollY;
 
-const mosquitoAudio = mosquitoLink ? new Audio(MOSQUITO_AUDIO_SRC) : null;
+const mosquitoAudio = mosquitoLink && MOSQUITO_SOUND_ENABLED ? new Audio(MOSQUITO_AUDIO_SRC) : null;
 
 if (mosquitoAudio) {
   mosquitoAudio.preload = 'auto';
@@ -35,30 +36,11 @@ if (mosquitoAudio) {
 }
 
 const netArtImages = [
-  './images/netart/images/netart/Screenshot_20250108-144156.jpg',
-  './images/netart/images/netart/Screenshot_20250108-144156.jpg',
-  './images/netart/images/netart/Screenshot_20250108-144156.jpg',
-  './images/netart/images/netart/Screenshot_20250108-144156.jpg',
-  './images/netart/images/netart/Screenshot_20250108-144156.jpg',
-  './images/netart/images/netart/Screenshot_20250108-144156.jpg',
-  './images/netart/07.jpg',
-  './images/netart/08.jpg',
-  './images/netart/09.jpg',
-  './images/netart/10.jpg',
-  './images/netart/11.jpg',
-  './images/netart/12.jpg',
-  'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80',
-  'https://images.unsplash.com/photo-1526481280698-97a4f87fd3b1?auto=format&fit=crop&w=400&q=80',
-  'https://images.unsplash.com/photo-1491960693564-4f4b8be0a7d8?auto=format&fit=crop&w=400&q=80',
-  'https://images.unsplash.com/photo-1515300162564-1d1889fb5ad6?auto=format&fit=crop&w=400&q=80',
-  'https://images.unsplash.com/photo-1526318472351-bc6e6810efad?auto=format&fit=crop&w=400&q=80',
-  'https://images.unsplash.com/photo-1472586662442-3eec04b4eaa4?auto=format&fit=crop&w=400&q=80',
-  'https://images.unsplash.com/photo-1490111718993-d98654ce6cf7?auto=format&fit=crop&w=400&q=80',
-  'https://images.unsplash.com/photo-1487014679447-9f8336841d58?auto=format&fit=crop&w=400&q=80',
-  'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80',
-  'https://images.unsplash.com/photo-1504198458649-3128b932f49b?auto=format&fit=crop&w=400&q=80',
-  'https://images.unsplash.com/photo-1618220350557-6d01fc39bca3?auto=format&fit=crop&w=400&q=80',
-  'https://images.unsplash.com/photo-1612392061783-7160ba86ad66?auto=format&fit=crop&w=400&q=80'
+  './assets/images/scroll-strips/strip_000001.jpg',
+  './assets/images/scroll-strips/strip_000002.jpg',
+  './assets/images/scroll-strips/strip_000003.jpg',
+  './assets/images/scroll-strips/strip_000004.jpg',
+  './assets/images/netart/Screenshot_20250108-144156.jpg'
 ];
 
 const randomBetween = (min, max) => min + Math.random() * (max - min);
@@ -139,6 +121,37 @@ const prepareTerminalSequence = (sequence) => {
 };
 
 const revealTerminalSequence = (sequence) => {
+  const setupPanel = sequence.querySelector('[data-setup-panel]');
+
+  if (setupPanel) {
+    const progress = setupPanel.querySelector('[data-setup-progress]');
+    const percent = setupPanel.querySelector('[data-setup-percent]');
+    const status = setupPanel.querySelector('[data-setup-status]');
+
+    if (progress instanceof HTMLElement) {
+      progress.style.width = '100%';
+    }
+
+    if (percent) {
+      percent.textContent = '100%';
+    }
+
+    if (status) {
+      status.textContent = 'Setup complete. Starting BIOS console...';
+    }
+
+    setupPanel.querySelectorAll('[data-setup-step]').forEach((step) => {
+      step.classList.add('is-complete');
+      const stepStatus = step.querySelector('[data-step-status]');
+
+      if (stepStatus) {
+        stepStatus.textContent = 'Completed';
+      }
+    });
+
+    sequence.classList.add('setup-complete');
+  }
+
   sequence.querySelectorAll('[data-terminal-copy]').forEach((node) => {
     node.textContent = node.dataset.terminalText || '';
     node.closest('.terminal-line')?.classList.add('is-complete');
@@ -168,6 +181,73 @@ const typeTerminalLine = async (node, baseSpeed) => {
   line?.classList.add('is-complete');
 };
 
+const playSetupPanel = async (sequence) => {
+  const setupPanel = sequence.querySelector('[data-setup-panel]');
+
+  if (!setupPanel) {
+    return;
+  }
+
+  const progress = setupPanel.querySelector('[data-setup-progress]');
+  const percent = setupPanel.querySelector('[data-setup-percent]');
+  const status = setupPanel.querySelector('[data-setup-status]');
+  const steps = Array.from(setupPanel.querySelectorAll('[data-setup-step]'));
+  const messages = [
+    'Checking visual memory...',
+    'Copying scroll files...',
+    'Installing verticality module...',
+    'Preparing BIOS console...',
+    'Setup complete. Starting BIOS console...',
+  ];
+
+  sequence.classList.add('setup-running');
+
+  for (let value = 0; value <= 100; value += 2) {
+    if (progress instanceof HTMLElement) {
+      progress.style.width = `${value}%`;
+    }
+
+    if (percent) {
+      percent.textContent = `${value}%`;
+    }
+
+    const activeIndex = Math.min(steps.length - 1, Math.floor(value / 25));
+
+    steps.forEach((step, index) => {
+      const stepStatus = step.querySelector('[data-step-status]');
+      const complete = value >= (index + 1) * 25;
+      const active = index === activeIndex && !complete;
+
+      step.classList.toggle('is-active', active);
+      step.classList.toggle('is-complete', complete);
+
+      if (stepStatus) {
+        stepStatus.textContent = complete ? 'Completed' : active ? 'Running' : 'Pending';
+      }
+    });
+
+    if (status) {
+      status.textContent = messages[Math.min(messages.length - 1, Math.floor(value / 25))];
+    }
+
+    await wait(value < 88 ? 42 : 72);
+  }
+
+  steps.forEach((step) => {
+    step.classList.remove('is-active');
+    step.classList.add('is-complete');
+    const stepStatus = step.querySelector('[data-step-status]');
+
+    if (stepStatus) {
+      stepStatus.textContent = 'Completed';
+    }
+  });
+
+  await wait(520);
+  sequence.classList.add('setup-complete');
+  await wait(420);
+};
+
 const playTerminalSequence = async (sequence) => {
   if (sequence.dataset.terminalPlayed === 'true') {
     return;
@@ -183,6 +263,7 @@ const playTerminalSequence = async (sequence) => {
   const lines = Array.from(sequence.querySelectorAll('[data-terminal-copy]'));
   const baseSpeed = Number(sequence.dataset.terminalSpeed || 22);
 
+  await playSetupPanel(sequence);
   await wait(140);
 
   for (let index = 0; index < lines.length; index++) {
@@ -319,6 +400,7 @@ const initSiteMenu = () => {
     }
   });
 };
+
 const setMosquitoActive = (active) => {
   if (!mosquitoLink) return;
 

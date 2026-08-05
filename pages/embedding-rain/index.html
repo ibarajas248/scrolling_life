@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Embedding Rain PCA 3D - Scrolling Life</title>
+  <meta
+    name="description"
+    content="Lluvia de imagenes con embeddings reales, memoria visual persistente y mapa PCA 3D fluido."
+  />
+  <link rel="stylesheet" href="../../assets/fonts/local-fonts.css" />
+  <link rel="preconnect" href="https://commons.wikimedia.org" />
+  <link rel="preconnect" href="https://upload.wikimedia.org" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="icon" href="data:," />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="scan-field" aria-hidden="true"></div>
+  <div class="grain-field" aria-hidden="true"></div>
+
+  <main class="lab-shell" id="pcaSpace">
+    <section class="pca-stage" aria-label="Mapa PCA 3D de embeddings visuales">
+      <canvas id="pcaCanvas" class="pca-canvas" aria-hidden="true"></canvas>
+      <div class="map-overlay" id="mapOverlay" aria-hidden="true"></div>
+      <div class="rain-layer" id="rainLayer" aria-hidden="true"></div>
+    </section>
+  </main>
+
+  <script src="./script.js"></script>
+</body>
+</html>

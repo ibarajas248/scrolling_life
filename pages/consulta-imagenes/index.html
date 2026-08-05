@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lluvia de Imagenes - Scrolling Life</title>
+  <meta
+    name="description"
+    content="Sala de Scrolling Life que consulta lotes de imagenes libres en Wikimedia Commons, las precarga en cache y las lanza como lluvia con el scroll."
+  />
+  <link rel="stylesheet" href="../../assets/fonts/local-fonts.css" />
+  <link rel="preconnect" href="https://commons.wikimedia.org" />
+  <link rel="preconnect" href="https://upload.wikimedia.org" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#imageStream">Saltar al flujo de imagenes</a>
+  <div class="screen-grid" aria-hidden="true"></div>
+  <div class="signal-noise" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="back-link" href="../../index.html">Scrolling Life</a>
+    <p class="api-tag">cache 20 / Wikimedia API</p>
+  </header>
+
+  <main class="image-stream" id="imageStream">
+    <section class="stream-stage is-loading" aria-label="Imagen consultada desde Wikimedia Commons">
+      <div class="rain-field" id="rainField" aria-hidden="true"></div>
+      <img
+        class="stream-image"
+        id="streamImage"
+        alt=""
+        crossorigin="anonymous"
+        decoding="async"
+        fetchpriority="high"
+      />
+      <div class="loading-vail" id="loadingVail" aria-live="polite">
+        <span>precargando lote de 20</span>
+      </div>
+      <div class="image-counter" aria-hidden="true">
+        <span id="counterLabel">00</span>
+      </div>
+      <div class="yolo-layer" id="yoloLayer" aria-hidden="true"></div>
+      <div class="learning-selection" id="learningSelection" aria-hidden="true"></div>
+      <div class="segmentation-layer" id="segmentationLayer" aria-hidden="true"></div>
+      <div class="sector-map" id="sectorMap" aria-hidden="true"></div>
+    </section>
+
+    <section class="learning-hud" aria-label="Simulacion de maquina aprendiendo">
+      <div class="learning-terminal">
+        <div class="learning-chrome" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+          <strong>NO MOLESTAR // MAQUINA APRENDIENDO</strong>
+        </div>
+        <ol class="learning-log" id="learningLog" aria-live="polite"></ol>
+      </div>
+
+      <div class="learning-readout" aria-label="Lectura de procesamiento">
+        <div>
+          <span>ciclo</span>
+          <strong id="mlCycle">00</strong>
+        </div>
+        <div>
+          <span>score</span>
+          <strong id="mlScore">0.00</strong>
+        </div>
+        <div>
+          <span>contexto</span>
+          <strong id="mlContext">esperando</strong>
+        </div>
+        <div>
+          <span>unidad semantica</span>
+          <strong id="mlSemantic">sin frame</strong>
+        </div>
+      </div>
+
+      <div class="embedding-panel" aria-label="Vector de embeddings simulado">
+        <p>embedding</p>
+        <div class="embedding-bars" id="embeddingBars"></div>
+      </div>
+
+      <div class="frame-strip" id="frameStrip" aria-label="Frames seleccionados por la simulacion"></div>
+    </section>
+
+    <section class="llm-vision" aria-label="Lo que el LLM ve">
+      <p class="llm-kicker">LLM / lo que veo</p>
+      <p class="llm-speech" id="llmSpeech">Estoy esperando el primer frame para describirlo.</p>
+      <div class="llm-tokens" id="llmTokens" aria-label="Tokens visuales detectados"></div>
+    </section>
+
+    <aside class="stream-console compact-console" aria-label="Controles de consulta">
+      <div class="console-heading">
+        <p class="kicker">api libre / cache comprimida / lluvia scroll</p>
+        <h1>Lluvia de Imagenes</h1>
+        <p class="lead">
+          Desliza para lanzar imagenes desde una cola precargada. Cada lote trae
+          veinte miniaturas comprimidas desde archivos abiertos.
+        </p>
+      </div>
+
+      <form class="query-form" id="queryForm">
+        <label for="queryInput">Consulta</label>
+        <div class="query-row">
+          <input
+            id="queryInput"
+            name="query"
+            type="search"
+            value="scroll internet visual culture"
+            autocomplete="off"
+          />
+          <button type="submit">Buscar</button>
+        </div>
+      </form>
+
+      <div class="control-strip console-hidden" aria-label="Controles de reproduccion">
+        <button id="pauseButton" type="button">Pausa</button>
+        <button id="nextButton" type="button">Lanzar</button>
+        <a id="sourceLink" href="https://commons.wikimedia.org/" target="_blank" rel="noreferrer">Archivo</a>
+      </div>
+
+      <dl class="readout console-hidden">
+        <div>
+          <dt>consulta</dt>
+          <dd id="queryLabel">scroll internet visual culture</dd>
+        </div>
+        <div>
+          <dt>cache</dt>
+          <dd id="poolLabel">00</dd>
+        </div>
+        <div>
+          <dt>licencia</dt>
+          <dd id="licenseLabel">abierta</dd>
+        </div>
+      </dl>
+
+      <div class="image-data console-hidden">
+        <p class="data-label">imagen actual</p>
+        <h2 id="imageTitle">Esperando respuesta</h2>
+        <p id="imageCredit">Wikimedia Commons</p>
+      </div>
+
+      <p class="status-line console-hidden" id="statusLine" aria-live="polite">Preparando cache.</p>
+      <div class="second-meter console-hidden" aria-hidden="true"><span></span></div>
+    </aside>
+  </main>
+
+  <div class="scroll-depth" aria-hidden="true"></div>
+
+  <script src="./script.js"></script>
+</body>
+</html>

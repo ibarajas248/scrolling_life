@@ -1,4 +1,4 @@
-﻿(() => {
+(() => {
   const renderCanvas = document.getElementById('renderCanvas');
   const renderCtx = renderCanvas.getContext('2d', { alpha: false });
   const video = document.getElementById('cameraFeed');
@@ -28,11 +28,11 @@
   renderCtx.imageSmoothingEnabled = false;
 
   const SOURCE_IMAGES = [
-    './images/netart/Screenshot_20250108-144156.jpg',
-    './scroll_strips/strip_000001.jpg',
-    './scroll_strips/strip_000002.jpg',
-    './scroll_strips/strip_000003.jpg',
-    './scroll_strips/strip_000004.jpg',
+    '../../assets/images/netart/Screenshot_20250108-144156.jpg',
+    '../../assets/images/scroll-strips/strip_000001.jpg',
+    '../../assets/images/scroll-strips/strip_000002.jpg',
+    '../../assets/images/scroll-strips/strip_000003.jpg',
+    '../../assets/images/scroll-strips/strip_000004.jpg',
   ];
 
   const config = {

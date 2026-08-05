@@ -1,21 +1,35 @@
-﻿# Scrolling Life
+# Scrolling Life
 
-Proyecto web nuevo para convocatoria. La propuesta esta construida como una pieza editorial y visual sobre el scroll como gesto cultural y materia artistica.
+Proyecto web de net art sobre el scroll como gesto cultural, archivo visual y materia artistica.
 
-## Archivos
+## Estructura
 
-- `index.html`: estructura principal de la pagina.
-- `styles.css`: direccion visual, composicion, responsive y animaciones.
-- `script.js`: barra de progreso, apariciones en scroll y desplazamientos sutiles.
-- `sala-3d.html`: nueva sala con interfaz tridimensional.
-- `sala-3d.css`: estilos de la escena espacial 3D.
-- `sala-3d.js`: interaccion de camara y cambio de paneles conceptuales.
+- `index.html`: portada principal y menu de salas.
+- `assets/`: recursos compartidos del sitio.
+- `assets/fonts/`: fuentes locales para no depender de proveedores externos.
+- `assets/images/`: imagenes locales y tiras verticales usadas por las salas.
+- `assets/audio/`: audio compartido.
+- `assets/styles/home.css`: estilos de la portada.
+- `assets/scripts/home.js`: logica de la portada.
+- `pages/`: rutas principales de cada experiencia.
+- `archive/`: backups y piezas legacy que no se cargan en produccion.
+
+## Rutas
+
+- `pages/scroll-vertical/`
+- `pages/sala-3d/`
+- `pages/comentarios-instagram/`
+- `pages/fantasmagorias/`
+- `pages/consulta-imagenes/`
+- `pages/embedding-rain/`
+- `pages/terminal-scroll/`
+- `pages/mosquito-caos/`
+
+Los HTML antiguos de la raiz siguen existiendo como redirecciones para no romper enlaces previos.
 
 ## Uso
 
-Abre `index.html` en el navegador.
-
-Desde la portada puedes entrar a la nueva sala 3D o abrir directamente `sala-3d.html`.
+Abre `index.html` o sirve la carpeta con cualquier servidor estatico.
 
 ## Idea base
 

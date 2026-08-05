@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -8,13 +8,8 @@
     name="description"
     content="Scrolling Life es una pieza web sobre el scroll como gesto cultural, ritmo corporal y forma contemporanea de mirar."
   />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;700;800&family=Instrument+Serif:ital@0;1&family=VT323&display=swap"
-    rel="stylesheet"
-  />
-  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="./assets/fonts/local-fonts.css" />
+  <link rel="stylesheet" href="./assets/styles/home.css" />
 </head>
 <body id="top">
   <a class="skip-link" href="#main-content">Saltar al contenido principal</a>
@@ -37,27 +32,35 @@
       <nav class="site-menu-panel" id="site-menu-panel" aria-label="Otras salas">
         <p class="site-menu-caption">otras salas</p>
         <div class="site-menu-links">
-          <a class="site-menu-link" href="./scroll_vertical/vertical1.html">
+          <a class="site-menu-link" href="./pages/scroll-vertical/">
             <span>línea continua</span>
             <small>recorrido vertical</small>
           </a>
-          <a class="site-menu-link" href="./sala-3d.html">
+          <a class="site-menu-link" href="./pages/sala-3d/">
             <span>Juego</span>
             <small>Escapar del mounstro del scroll</small>
           </a>
-          <a class="site-menu-link" href="./comentarios_instagram/index.html">
+          <a class="site-menu-link" href="./pages/comentarios-instagram/">
             <span>Comentarios</span>
             <small>archivo de voces</small>
           </a>
-          <a class="site-menu-link" href="./fantasmagorias.html">
+          <a class="site-menu-link" href="./pages/fantasmagorias/">
             <span>Fantasmagorias</span>
             <small>deriva visual</small>
           </a>
-          <a class="site-menu-link" href="./terminal-scroll.html">
+          <a class="site-menu-link" href="./pages/consulta-imagenes/">
+            <span>Lluvia de Imagenes</span>
+            <small>cache 20 + scroll</small>
+          </a>
+          <a class="site-menu-link" href="./pages/embedding-rain/">
+            <span>Embedding Rain</span>
+            <small>modelo + PCA 3D</small>
+          </a>
+          <a class="site-menu-link" href="./pages/terminal-scroll/">
             <span>Terminal Scroll</span>
             <small>simulacion linux</small>
           </a>
-          <a class="site-menu-link" href="./mosquito-caos.html">
+          <a class="site-menu-link" href="./pages/mosquito-caos/">
             <span>Mosquito Caos</span>
             <small>enjambre interactivo</small>
           </a>
@@ -66,16 +69,26 @@
     </details>
 
     <header class="hero section" role="banner" aria-describedby="heroSummary">
+      <div class="hero-archive" aria-hidden="true">
+        <span class="hero-strip hero-strip-a"></span>
+        <span class="hero-strip hero-strip-b"></span>
+        <span class="hero-strip hero-strip-c"></span>
+        <span class="hero-strip hero-strip-d"></span>
+        <span class="hero-strip hero-strip-e"></span>
+        <span class="hero-strip hero-strip-f"></span>
+        <span class="hero-strip hero-strip-g"></span>
+        <span class="hero-strip hero-strip-h"></span>
+      </div>
       <div class="hero-copy reveal">
         <p class="sr-only" id="heroSummary">Scrolling Life es una pieza web sobre el scroll como gesto cultural, ritmo corporal y forma contemporanea de mirar.</p>
-        <p class="eyebrow">PROGRAMACIÓN VIRTUAL GALERÍA SANTA FE</p>
+        <p class="eyebrow">&gt; Proyecto ganador de la Beca de Programación Virtual en Artes Plásticas y Visuales Red Galería Santa Fe 2026</p>
         <h1>
           <span>Scrolling</span>
           <span class="title-accent">
             <span class="title-accent-word">Life</span>
             <a
               class="mosquito-link"
-              href="./mosquito-caos.html"
+              href="./pages/mosquito-caos/"
               title="seguir hacia el enjambre de ventanas"
               aria-hidden="true"
               tabindex="-1"
@@ -91,22 +104,11 @@
             </a>
           </span>
         </h1>
-        <p class="lead">
-          El ojo sigue al dedo,
-          el dedo sigue al ritmo,
-          el ritmo no responde a nada.
-          Y sin embargo aparece un paisaje continuo, imposible de retener.
-        </p>
+        <p class="lead">&gt; Iván Barajas Hurtado</p>
+        <p class="hero-date">17 DE SEPTIEMBRE DE 2026</p>
         <div class="hero-actions">
           <a class="button button-solid" href="#manifiesto">Entrar al recorrido</a>
         </div>
-      </div>
-
-      <div class="hero-panel reveal">
-        <div class="panel-tag">No pares de bajar</div>
-        <p>
-          ¿Dónde termina tu scroll?
-        </p>
       </div>
 
       <div class="kinetic-line" data-speed="0.24" aria-hidden="true">scroll is never neutral</div>
@@ -125,13 +127,61 @@
           <p>En ese movimiento continuo se hace visible la fragilidad de la imagen, cuya presencia se desvanece con la misma rapidez con la que avanzamos hacia abajo, impulsados por la promesa de un final que nunca llega.</p>
           <p>El flujo de navegación propone una experiencia abierta en la que el archivo no se dispone de forma fija, sino que se activa en el recorrido. Cada desplazamiento produce nuevas relaciones entre imágenes, fragmentos y contenidos.</p>
         </div>
-        <div class="section-body reveal terminal-block" data-terminal-sequence data-terminal-speed="13">
+        <div class="section-body reveal terminal-block has-setup" data-terminal-sequence data-terminal-speed="13">
+          <div class="setup-panel" data-setup-panel aria-hidden="true">
+            <div class="setup-titlebar">
+              <span>Scrolling Life 98 Setup</span>
+              <span class="setup-window-controls" aria-hidden="true"><span></span><span></span><span></span></span>
+            </div>
+            <div class="setup-content">
+              <div class="setup-brand">
+                <span>SCROLLING</span>
+                <strong>LIFE 98</strong>
+              </div>
+              <div class="setup-main">
+                <p class="setup-kicker">Setup is configuring vertical experience.</p>
+                <h2>Scrolling Life Setup Wizard</h2>
+                <div class="setup-divider"></div>
+                <dl class="setup-checklist">
+                  <div data-setup-step="0">
+                    <dt>System Check</dt>
+                    <dd data-step-status>Waiting</dd>
+                  </div>
+                  <div data-setup-step="1">
+                    <dt>Copying Scroll Files</dt>
+                    <dd data-step-status>Pending</dd>
+                  </div>
+                  <div data-setup-step="2">
+                    <dt>Installing Verticality</dt>
+                    <dd data-step-status>Pending</dd>
+                  </div>
+                  <div data-setup-step="3">
+                    <dt>Preparing BIOS Console</dt>
+                    <dd data-step-status>Pending</dd>
+                  </div>
+                </dl>
+                <div class="setup-progress-row">
+                  <span>Progress:</span>
+                  <div class="setup-progress" aria-hidden="true">
+                    <span data-setup-progress></span>
+                  </div>
+                  <strong data-setup-percent>0%</strong>
+                </div>
+                <p class="setup-status" data-setup-status>Initializing setup...</p>
+              </div>
+            </div>
+            <div class="setup-actions" aria-hidden="true">
+              <button type="button" disabled>&lt; Back</button>
+              <button type="button">Next &gt;</button>
+              <button type="button">Cancel</button>
+            </div>
+          </div>
           <div class="terminal-shell" aria-hidden="true">
             <div class="terminal-chrome" aria-hidden="true">
               <span></span>
               <span></span>
               <span></span>
-              <p>SCROLL OS SETUP UTILITY</p>
+              <p>SCROLLING LIFE BIOS UTILITY</p>
             </div>
             <div class="terminal-screen">
               <p class="terminal-line terminal-line-meta">
@@ -200,49 +250,97 @@
         </div>
 
         <div class="card-grid atlas-grid">
-          <article class="concept-card concept-card-gesture reveal">
-            <div class="concept-head">
-              <div class="card-index" aria-hidden="true">A</div>
-              <span class="concept-meta">impulso</span>
+          <article class="concept-card concept-card-body reveal">
+            <div class="win-titlebar">
+              <span>C:\SCROLL\CUERPO.TXT</span>
+              <span class="win-controls" aria-hidden="true">
+                <span></span><span></span><span></span>
+              </span>
             </div>
-            <h3>Gesto</h3>
-            <p>
-              El scroll es una coreografia minima. Una accion pequena que organiza el
-              tiempo del cuerpo frente a la pantalla.
-            </p>
+            <div class="concept-window-body">
+              <div class="concept-head">
+                <div class="card-index" aria-hidden="true">A</div>
+                <span class="concept-meta">presencia</span>
+              </div>
+              <h3>Cuerpo</h3>
+              <p>
+                El scroll empieza en el cuerpo: dedo, mirada, postura y respiracion
+                quedan atrapados en un ritmo minimo frente a la pantalla.
+              </p>
+              <dl class="concept-readout">
+                <div><dt>input</dt><dd>dedo / retina</dd></div>
+                <div><dt>pulso</dt><dd>ritmo minimo</dd></div>
+              </dl>
+            </div>
           </article>
-          <article class="concept-card concept-card-desire reveal">
-            <div class="concept-head">
-              <div class="card-index" aria-hidden="true">B</div>
-              <span class="concept-meta">promesa</span>
+          <article class="concept-card concept-card-infinite reveal">
+            <div class="win-titlebar">
+              <span>C:\SCROLL\INFINITO.SYS</span>
+              <span class="win-controls" aria-hidden="true">
+                <span></span><span></span><span></span>
+              </span>
             </div>
-            <h3>Deseo</h3>
-            <p>
-              Siempre hay algo mas abajo. El desplazamiento sostiene una promesa de
-              hallazgo que rara vez concluye.
-            </p>
+            <div class="concept-window-body">
+              <div class="concept-head">
+                <div class="card-index" aria-hidden="true">B</div>
+                <span class="concept-meta">descenso</span>
+              </div>
+              <h3>Infinito</h3>
+              <p>
+                La pagina promete un fondo que nunca llega. Cada desplazamiento abre
+                otro tramo, otra imagen, otra espera.
+              </p>
+              <dl class="concept-readout">
+                <div><dt>loop</dt><dd>sin cierre</dd></div>
+                <div><dt>estado</dt><dd>cargando</dd></div>
+              </dl>
+            </div>
+          </article>
+          <article class="concept-card concept-card-noise reveal">
+            <div class="win-titlebar">
+              <span>C:\SCROLL\RUIDO.DLL</span>
+              <span class="win-controls" aria-hidden="true">
+                <span></span><span></span><span></span>
+              </span>
+            </div>
+            <div class="concept-window-body">
+              <div class="concept-head">
+                <div class="card-index" aria-hidden="true">C</div>
+                <span class="concept-meta">saturacion</span>
+              </div>
+              <h3>Ruido</h3>
+              <p>
+                Entre imagenes, datos y estimulos, la senal se vuelve inestable. El exceso
+                tambien compone una forma de lectura.
+              </p>
+              <dl class="concept-readout">
+                <div><dt>senal</dt><dd>interferencia</dd></div>
+                <div><dt>nivel</dt><dd>alto</dd></div>
+              </dl>
+            </div>
           </article>
           <article class="concept-card concept-card-archive reveal">
-            <div class="concept-head">
-              <div class="card-index" aria-hidden="true">C</div>
-              <span class="concept-meta">memoria</span>
+            <div class="win-titlebar">
+              <span>C:\SCROLL\ARCHIVO.LOG</span>
+              <span class="win-controls" aria-hidden="true">
+                <span></span><span></span><span></span>
+              </span>
             </div>
-            <h3>Archivo</h3>
-            <p>
-              La memoria digital se presenta como flujo. Guardamos, olvidamos y volvemos
-              a ver sin abandonar la misma superficie.
-            </p>
-          </article>
-          <article class="concept-card concept-card-fatigue reveal">
-            <div class="concept-head">
-              <div class="card-index" aria-hidden="true">D</div>
-              <span class="concept-meta">friccion</span>
+            <div class="concept-window-body">
+              <div class="concept-head">
+                <div class="card-index" aria-hidden="true">D</div>
+                <span class="concept-meta">memoria</span>
+              </div>
+              <h3>Archivo</h3>
+              <p>
+                El flujo guarda restos: capturas, comentarios, gestos y fragmentos que
+                regresan como capas de una misma superficie.
+              </p>
+              <dl class="concept-readout">
+                <div><dt>cache</dt><dd>fragmentos</dd></div>
+                <div><dt>modo</dt><dd>residual</dd></div>
+              </dl>
             </div>
-            <h3>Fatiga</h3>
-            <p>
-              La abundancia visual erosiona la atencion. El cansancio tambien es una forma
-              de conocimiento del presente.
-            </p>
           </article>
         </div>
       </section>
@@ -300,6 +398,6 @@
     </main>
   </div>
 
-  <script src="./script.js"></script>
+  <script src="./assets/scripts/home.js"></script>
 </body>
 </html>
