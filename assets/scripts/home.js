@@ -7,6 +7,8 @@ const pageContent = document.querySelector('.page-content');
 const siteMenu = document.querySelector('.site-menu');
 const siteMenuSummary = siteMenu?.querySelector('summary');
 const mosquitoLink = document.querySelector('.mosquito-link');
+const hero = document.querySelector('.hero');
+const heroArchive = document.querySelector('.hero-archive');
 const netArtItems = [];
 
 const MOSQUITO_CYCLE_MS = 60000;
@@ -35,7 +37,7 @@ if (mosquitoAudio) {
   mosquitoAudio.load();
 }
 
-const netArtImages = [
+let netArtImages = [
   './assets/images/scroll-strips/strip_000001.jpg',
   './assets/images/scroll-strips/strip_000002.jpg',
   './assets/images/scroll-strips/strip_000003.jpg',
@@ -65,10 +67,24 @@ const randomizeNetArtItem = (item, subtle = false) => {
   }
 };
 
-const initNetArt = () => {
+const initNetArt = async () => {
   if (!netArtLayer) return;
   const count = 45;
   const vh = window.innerHeight;
+
+  try {
+    const randomPage = Math.floor(Math.random() * 20) + 1;
+    const response = await fetch(`https://picsum.photos/v2/list?page=${randomPage}&limit=30`);
+    const data = await response.json();
+    if (data && data.length > 0) {
+      netArtImages = data.map(item => item.download_url);
+    }
+  } catch (e) {
+    console.warn('API de imágenes falló, usando imágenes locales de respaldo.', e);
+  }
+
+  // Reiniciar el contador para que la ráfaga dure sus 3 segundos completos después de cargar la API
+  netArtStartTime = performance.now();
 
   for (let i = 0; i < count; i++) {
     const item = document.createElement('div');
@@ -101,6 +117,52 @@ const updateProgress = () => {
   const scrollable = document.documentElement.scrollHeight - window.innerHeight;
   const ratio = scrollable <= 0 ? 0 : (window.scrollY / scrollable) * 100;
   progressBar.style.height = `${Math.min(100, Math.max(0, ratio))}%`;
+};
+
+const initHeroArchiveSpotlight = () => {
+  if (!hero || !heroArchive) return;
+
+  const canTrackPointer = window.matchMedia?.('(hover: hover) and (pointer: fine)').matches ?? true;
+  if (!canTrackPointer) return;
+
+  let pendingPointer = null;
+  let rafId = null;
+
+  const updateSpotlight = () => {
+    rafId = null;
+    if (!pendingPointer) return;
+
+    const rect = heroArchive.getBoundingClientRect();
+    const x = ((pendingPointer.clientX - rect.left) / rect.width) * 100;
+    const y = ((pendingPointer.clientY - rect.top) / rect.height) * 100;
+
+    heroArchive.style.setProperty('--archive-cursor-x', `${Math.min(100, Math.max(0, x)).toFixed(2)}%`);
+    heroArchive.style.setProperty('--archive-cursor-y', `${Math.min(100, Math.max(0, y)).toFixed(2)}%`);
+  };
+
+  const requestSpotlightUpdate = (event) => {
+    pendingPointer = event;
+    if (!rafId) {
+      rafId = window.requestAnimationFrame(updateSpotlight);
+    }
+  };
+
+  hero.addEventListener('pointerenter', (event) => {
+    heroArchive.classList.add('is-pointer-active');
+    requestSpotlightUpdate(event);
+  }, { passive: true });
+
+  hero.addEventListener('pointermove', requestSpotlightUpdate, { passive: true });
+
+  hero.addEventListener('pointerleave', () => {
+    heroArchive.classList.remove('is-pointer-active');
+    pendingPointer = null;
+
+    if (rafId) {
+      window.cancelAnimationFrame(rafId);
+      rafId = null;
+    }
+  }, { passive: true });
 };
 
 const terminalSequences = document.querySelectorAll('[data-terminal-sequence]');
@@ -160,7 +222,9 @@ const revealTerminalSequence = (sequence) => {
   sequence.classList.add('terminal-complete');
 };
 
-const typeTerminalLine = async (node, baseSpeed) => {
+let terminalRunId = 0;
+
+const typeTerminalLine = async (node, baseSpeed, runId) => {
   const text = node.dataset.terminalText || '';
   const line = node.closest('.terminal-line');
 
@@ -172,16 +236,18 @@ const typeTerminalLine = async (node, baseSpeed) => {
   node.textContent = '';
 
   for (const char of text) {
+    if (Number(node.closest('[data-terminal-sequence]').dataset.currentRunId) !== runId) return;
     node.textContent += char;
     const delay = char === ' ' ? baseSpeed * 0.35 : baseSpeed + Math.random() * baseSpeed * 0.45;
     await wait(delay);
   }
 
+  if (Number(node.closest('[data-terminal-sequence]').dataset.currentRunId) !== runId) return;
   line?.classList.remove('is-typing');
   line?.classList.add('is-complete');
 };
 
-const playSetupPanel = async (sequence) => {
+const playSetupPanel = async (sequence, runId) => {
   const setupPanel = sequence.querySelector('[data-setup-panel]');
 
   if (!setupPanel) {
@@ -203,6 +269,8 @@ const playSetupPanel = async (sequence) => {
   sequence.classList.add('setup-running');
 
   for (let value = 0; value <= 100; value += 2) {
+    if (Number(sequence.dataset.currentRunId) !== runId) return;
+
     if (progress instanceof HTMLElement) {
       progress.style.width = `${value}%`;
     }
@@ -233,6 +301,7 @@ const playSetupPanel = async (sequence) => {
     await wait(value < 88 ? 42 : 72);
   }
 
+  if (Number(sequence.dataset.currentRunId) !== runId) return;
   steps.forEach((step) => {
     step.classList.remove('is-active');
     step.classList.add('is-complete');
@@ -244,16 +313,22 @@ const playSetupPanel = async (sequence) => {
   });
 
   await wait(520);
+  if (Number(sequence.dataset.currentRunId) !== runId) return;
   sequence.classList.add('setup-complete');
   await wait(420);
 };
 
 const playTerminalSequence = async (sequence) => {
-  if (sequence.dataset.terminalPlayed === 'true') {
+  if (sequence.dataset.terminalPlayed === 'true' && !sequence.dataset.forceReplay) {
     return;
   }
 
   sequence.dataset.terminalPlayed = 'true';
+  sequence.dataset.forceReplay = '';
+
+  terminalRunId++;
+  const runId = terminalRunId;
+  sequence.dataset.currentRunId = runId;
 
   if (prefersReducedMotion.matches) {
     revealTerminalSequence(sequence);
@@ -263,12 +338,16 @@ const playTerminalSequence = async (sequence) => {
   const lines = Array.from(sequence.querySelectorAll('[data-terminal-copy]'));
   const baseSpeed = Number(sequence.dataset.terminalSpeed || 22);
 
-  await playSetupPanel(sequence);
+  await playSetupPanel(sequence, runId);
+  if (Number(sequence.dataset.currentRunId) !== runId) return;
   await wait(140);
+  if (Number(sequence.dataset.currentRunId) !== runId) return;
 
   for (let index = 0; index < lines.length; index++) {
-    await typeTerminalLine(lines[index], baseSpeed);
+    await typeTerminalLine(lines[index], baseSpeed, runId);
+    if (Number(sequence.dataset.currentRunId) !== runId) return;
     await wait(index === 0 ? 180 : 240);
+    if (Number(sequence.dataset.currentRunId) !== runId) return;
   }
 
   sequence.classList.add('terminal-complete');
@@ -559,6 +638,7 @@ const animate = () => {
 };
 
 updateProgress();
+initHeroArchiveSpotlight();
 
 if (!reducedMotionEnabled) {
   updateKinetic();
@@ -568,8 +648,223 @@ if (!reducedMotionEnabled) {
 window.addEventListener('scroll', updateProgress, { passive: true });
 window.addEventListener('resize', updateProgress);
 
+const resetTerminalSequence = (sequence) => {
+  sequence.dataset.forceReplay = 'true';
+  sequence.dataset.terminalPlayed = 'false';
+  
+  terminalRunId++;
+  sequence.dataset.currentRunId = terminalRunId;
 
+  sequence.classList.remove('setup-complete', 'terminal-complete', 'setup-running');
+  
+  const setupPanel = sequence.querySelector('[data-setup-panel]');
+  if (setupPanel) {
+    const progress = setupPanel.querySelector('[data-setup-progress]');
+    const percent = setupPanel.querySelector('[data-setup-percent]');
+    const status = setupPanel.querySelector('[data-setup-status]');
+    if (progress) progress.style.width = '0%';
+    if (percent) percent.textContent = '0%';
+    if (status) status.textContent = 'Initializing setup...';
+    setupPanel.querySelectorAll('[data-setup-step]').forEach((step, index) => {
+      step.classList.remove('is-active', 'is-complete');
+      const stepStatus = step.querySelector('[data-step-status]');
+      if (stepStatus) {
+        stepStatus.textContent = index === 0 ? 'Waiting' : 'Pending';
+      }
+    });
+  }
 
+  sequence.querySelectorAll('.terminal-line').forEach(line => {
+    line.classList.remove('is-complete', 'is-typing');
+  });
+  
+  sequence.querySelectorAll('[data-terminal-copy]').forEach(node => {
+    if (!prefersReducedMotion.matches) {
+      node.textContent = '';
+    }
+  });
+};
 
+const restartButton = document.querySelector('.hero-actions .button-solid[href="#manifiesto"]');
+if (restartButton) {
+  restartButton.addEventListener('click', (e) => {
+    const sequence = document.querySelector('[data-terminal-sequence]');
+    if (sequence) {
+      resetTerminalSequence(sequence);
+      setTimeout(() => playTerminalSequence(sequence), 50);
+    }
+  });
+}
 
+const paintFullscreenButton = document.getElementById('btnFullscreenPaint');
+const paintContainer = document.getElementById('paintContainer');
 
+const getFullscreenElement = () => (
+  document.fullscreenElement ||
+  document.webkitFullscreenElement ||
+  document.msFullscreenElement ||
+  null
+);
+
+const requestPaintFullscreen = () => {
+  if (!paintContainer) return Promise.resolve(false);
+
+  const request =
+    paintContainer.requestFullscreen ||
+    paintContainer.webkitRequestFullscreen ||
+    paintContainer.msRequestFullscreen;
+
+  if (!request) {
+    paintContainer.classList.add('is-fake-fullscreen');
+    document.body.classList.add('paint-fullscreen-lock');
+    return Promise.resolve(true);
+  }
+
+  return Promise.resolve(request.call(paintContainer)).then(() => true);
+};
+
+const exitPaintFullscreen = () => {
+  if (paintContainer?.classList.contains('is-fake-fullscreen')) {
+    paintContainer.classList.remove('is-fake-fullscreen');
+    document.body.classList.remove('paint-fullscreen-lock');
+    return Promise.resolve(true);
+  }
+
+  const exit =
+    document.exitFullscreen ||
+    document.webkitExitFullscreen ||
+    document.msExitFullscreen;
+
+  return exit ? Promise.resolve(exit.call(document)).then(() => true) : Promise.resolve(false);
+};
+
+const syncPaintFullscreenButton = () => {
+  if (!paintFullscreenButton || !paintContainer) return;
+  const active = getFullscreenElement() === paintContainer || paintContainer.classList.contains('is-fake-fullscreen');
+
+  paintFullscreenButton.textContent = active ? 'Salir de Pantalla Completa' : 'Pantalla Completa';
+  paintFullscreenButton.setAttribute('aria-pressed', String(active));
+};
+
+if (paintFullscreenButton && paintContainer) {
+  paintFullscreenButton.setAttribute('aria-pressed', 'false');
+
+  paintFullscreenButton.addEventListener('click', async () => {
+    const active = getFullscreenElement() === paintContainer || paintContainer.classList.contains('is-fake-fullscreen');
+
+    try {
+      if (active) {
+        await exitPaintFullscreen();
+      } else {
+        try {
+          await requestPaintFullscreen();
+        } catch {
+          paintContainer.classList.add('is-fake-fullscreen');
+          document.body.classList.add('paint-fullscreen-lock');
+        }
+      }
+    } finally {
+      syncPaintFullscreenButton();
+    }
+  });
+
+  document.addEventListener('fullscreenchange', syncPaintFullscreenButton);
+  document.addEventListener('webkitfullscreenchange', syncPaintFullscreenButton);
+  document.addEventListener('msfullscreenchange', syncPaintFullscreenButton);
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape' || !paintContainer.classList.contains('is-fake-fullscreen')) return;
+    exitPaintFullscreen().then(syncPaintFullscreenButton);
+  });
+}
+
+/* =========================================================================
+   WINDOWS 98 DESKTOP SIMULATOR LOGIC
+   ========================================================================= */
+const desktopContainer = document.getElementById('win98Desktop');
+const draggableWindows = document.querySelectorAll('.win-draggable');
+const taskbarTabs = document.querySelectorAll('.taskbar-tab');
+const taskbarTime = document.getElementById('taskbarTime');
+
+let highestZIndex = 10;
+
+// Reloj de la barra de tareas
+const updateTaskbarTime = () => {
+  if (!taskbarTime) return;
+  const now = new Date();
+  let hours = now.getHours();
+  let minutes = now.getMinutes();
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12 || 12;
+  minutes = minutes < 10 ? '0' + minutes : minutes;
+  taskbarTime.textContent = `${hours}:${minutes} ${ampm}`;
+};
+setInterval(updateTaskbarTime, 1000);
+updateTaskbarTime();
+
+// Lógica de arrastre y z-index
+draggableWindows.forEach(win => {
+  const titlebar = win.querySelector('.win-titlebar');
+  if (!titlebar) return;
+
+  let isDragging = false;
+  let startX, startY, initialX, initialY;
+
+  const bringToFront = () => {
+    highestZIndex++;
+    win.style.zIndex = highestZIndex;
+    draggableWindows.forEach(w => w.classList.remove('is-active'));
+    win.classList.add('is-active');
+
+    taskbarTabs.forEach(tab => {
+      tab.classList.toggle('is-active', tab.dataset.target === win.id);
+    });
+  };
+
+  win.addEventListener('mousedown', bringToFront);
+  win.addEventListener('touchstart', bringToFront, {passive: true});
+
+  titlebar.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    startX = e.clientX;
+    startY = e.clientY;
+    initialX = win.offsetLeft;
+    initialY = win.offsetTop;
+    bringToFront();
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    let newX = initialX + (e.clientX - startX);
+    let newY = initialY + (e.clientY - startY);
+    
+    // Evitar que se pierda la barra de título por arriba
+    if (newY < 0) newY = 0;
+    
+    win.style.left = `${newX}px`;
+    win.style.top = `${newY}px`;
+  });
+
+  document.addEventListener('mouseup', () => {
+    isDragging = false;
+  });
+});
+
+// Botones de la barra de tareas
+taskbarTabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    const targetId = tab.dataset.target;
+    const targetWin = document.getElementById(targetId);
+    if (targetWin) {
+      highestZIndex++;
+      targetWin.style.zIndex = highestZIndex;
+      
+      draggableWindows.forEach(w => w.classList.remove('is-active'));
+      targetWin.classList.add('is-active');
+      
+      taskbarTabs.forEach(t => t.classList.remove('is-active'));
+      tab.classList.add('is-active');
+    }
+  });
+});

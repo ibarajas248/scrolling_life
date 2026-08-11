@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maquetacion Instagram - Scrolling Life</title>
+  <meta
+    name="description"
+    content="Formatos 1:1 para publicaciones de Instagram basados en la imagen principal de Scrolling Life."
+  />
+  <link rel="stylesheet" href="../assets/fonts/local-fonts.css" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#formatos">Saltar al formato 1:1</a>
+
+  <header class="page-top">
+    <a class="brand-link" href="../index.html">Scrolling Life</a>
+    <span class="page-code">IG_LAYOUT</span>
+  </header>
+
+  <main class="layout-screen" id="formatos">
+    <section class="format-recycler" aria-label="Formatos disponibles">
+      <button class="format-item is-active" type="button" data-template="home" aria-pressed="true">
+        <span class="format-thumb thumb-home" aria-hidden="true"></span>
+        <span class="format-index">01</span>
+        <strong>Home 1:1</strong>
+        <small>1080 x 1080</small>
+      </button>
+      <button class="format-item" type="button" data-template="archive" aria-pressed="false">
+        <span class="format-thumb thumb-archive" aria-hidden="true"></span>
+        <span class="format-index">02</span>
+        <strong>Archivo</strong>
+        <small>texto + tiras</small>
+      </button>
+      <button class="format-item" type="button" data-template="date" aria-pressed="false">
+        <span class="format-thumb thumb-date" aria-hidden="true"></span>
+        <span class="format-index">03</span>
+        <strong>Fecha</strong>
+        <small>evento</small>
+      </button>
+      <button class="format-item" type="button" data-template="clean" aria-pressed="false">
+        <span class="format-thumb thumb-clean" aria-hidden="true"></span>
+        <span class="format-index">04</span>
+        <strong>Limpio</strong>
+        <small>titulo</small>
+      </button>
+      <button class="format-item" type="button" data-template="reel" aria-pressed="false" data-aspect="9:16">
+        <span class="format-thumb thumb-date" aria-hidden="true"></span>
+        <span class="format-index">05</span>
+        <strong>Reel</strong>
+        <small>1080 x 1920</small>
+      </button>
+      <button class="format-item" type="button" data-template="story" aria-pressed="false" data-aspect="9:16">
+        <span class="format-thumb thumb-archive" aria-hidden="true"></span>
+        <span class="format-index">06</span>
+        <strong>Historia</strong>
+        <small>1080 x 1920</small>
+      </button>
+    </section>
+
+    <section class="preview-stage" aria-label="Vista previa de publicacion">
+      <div class="preview-header">
+        <span id="activeFormat">POST_01_HOME</span>
+        <span id="activeAspect">1:1</span>
+      </div>
+
+      <article class="ig-post template-home" id="igPost" aria-label="Publicacion cuadrada Scrolling Life">
+        <div class="post-archive" aria-hidden="true">
+          <span class="post-strip post-strip-a"></span>
+          <span class="post-strip post-strip-b"></span>
+          <span class="post-strip post-strip-c"></span>
+          <span class="post-strip post-strip-d"></span>
+          <span class="post-strip post-strip-e"></span>
+          <span class="post-strip post-strip-f"></span>
+          <span class="post-strip post-strip-g"></span>
+        </div>
+
+        <div class="post-copy">
+          <p class="post-kicker">&gt; Proyecto ganador de la Beca de Programacion Virtual</p>
+          <h1>
+            <span>Scrolling</span>
+            <span>Life</span>
+          </h1>
+          <p class="post-author">&gt; Ivan Barajas Hurtado</p>
+          <p class="post-date">17 de septiembre de 2026</p>
+        </div>
+      </article>
+
+      <div class="preview-footer">
+        <span id="formatText">Formato para feed</span>
+        <span id="rgbText">RGB / cuadrado</span>
+      </div>
+
+      <div class="download-actions" aria-label="Acciones de descarga">
+        <button class="btn-action" id="btnDownloadImg" type="button">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+          </svg>
+          Descargar Imagen
+        </button>
+        <button class="btn-action" id="btnDownloadVid" type="button">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+          </svg>
+          Descargar Video
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <script src="./script.js"></script>
+</body>
+</html>

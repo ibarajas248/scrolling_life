@@ -1,0 +1,717 @@
+:root {
+  color-scheme: dark;
+  --green: #9eff71;
+  --paper: #f0f4ee;
+  --muted: rgba(232, 238, 232, 0.68);
+  --line: rgba(158, 255, 113, 0.28);
+  --panel: rgba(2, 5, 6, 0.78);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background: #010204;
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  overflow-x: hidden;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.94), rgba(0, 0, 0, 0.5) 48%, rgba(0, 0, 0, 0.96)),
+    #010204;
+  color: var(--paper);
+  font-family: 'Share Tech Mono', 'IBM Plex Mono', 'Courier New', monospace;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.7), transparent 38%, transparent 62%, rgba(0, 0, 0, 0.7)),
+    url('../assets/images/archive-sides/paper-strips-installation.png') left center / 210px auto repeat-y,
+    url('../assets/images/archive-sides/vertical-contact-strips.png') right center / 220px auto repeat-y;
+  filter: grayscale(1) contrast(1.14) brightness(0.58);
+  opacity: 0.45;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at center, rgba(158, 255, 113, 0.08), transparent 42%),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(90deg, transparent 0 72px, rgba(158, 255, 113, 0.04) 73px, transparent 74px);
+  mix-blend-mode: screen;
+}
+
+button,
+a {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+.skip-link {
+  position: fixed;
+  left: 14px;
+  top: 14px;
+  z-index: 20;
+  transform: translateY(-140%);
+  padding: 9px 12px;
+  border: 1px solid var(--line);
+  background: #020403;
+  color: var(--green);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.page-top {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px 24px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.86), rgba(0, 0, 0, 0));
+  pointer-events: none;
+}
+
+.brand-link,
+.page-code {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  border: 1px solid rgba(158, 255, 113, 0.26);
+  background: rgba(0, 0, 0, 0.52);
+  color: var(--green);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 8px 12px;
+  pointer-events: auto;
+}
+
+.brand-link {
+  font-family: 'Disket Mono', 'Share Tech Mono', monospace;
+}
+
+.page-code {
+  color: rgba(240, 246, 240, 0.78);
+}
+
+.layout-screen {
+  display: grid;
+  grid-template-columns: 286px minmax(0, 1fr);
+  gap: 28px;
+  width: min(1280px, calc(100% - 48px));
+  min-height: 100svh;
+  margin: 0 auto;
+  padding: 96px 0 44px;
+}
+
+.format-recycler {
+  align-self: center;
+  display: grid;
+  gap: 10px;
+  max-height: calc(100svh - 150px);
+  overflow-y: auto;
+  padding: 6px 8px 6px 0;
+  scroll-snap-type: y mandatory;
+  scrollbar-color: rgba(158, 255, 113, 0.55) rgba(255, 255, 255, 0.08);
+}
+
+.format-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 76px 42px 1fr;
+  grid-template-rows: auto auto;
+  align-items: center;
+  gap: 6px 10px;
+  min-height: 96px;
+  padding: 10px;
+  border: 1px solid rgba(220, 230, 220, 0.16);
+  border-radius: 8px;
+  background: rgba(4, 8, 8, 0.62);
+  color: var(--paper);
+  text-align: left;
+  cursor: pointer;
+  scroll-snap-align: start;
+}
+
+.format-item::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, rgba(158, 255, 113, 0.12), transparent 42%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.format-item:hover,
+.format-item:focus-visible,
+.format-item.is-active {
+  border-color: rgba(158, 255, 113, 0.72);
+  color: #f6fff1;
+  outline: none;
+}
+
+.format-item:hover::after,
+.format-item:focus-visible::after,
+.format-item.is-active::after {
+  opacity: 1;
+}
+
+.format-thumb {
+  grid-row: 1 / span 2;
+  width: 76px;
+  aspect-ratio: 1 / 1;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background-color: #010204;
+  background-position: center;
+  background-size: cover;
+  filter: grayscale(1) contrast(1.2) brightness(0.82);
+}
+
+.thumb-home {
+  background-image: url('../assets/images/archive-sides/paper-strips-installation.png');
+}
+
+.thumb-archive {
+  background-image: url('../assets/images/archive-sides/dense-text-column.png');
+}
+
+.thumb-date {
+  background-image: url('../assets/images/archive-sides/vertical-contact-strips.png');
+}
+
+.thumb-clean {
+  background-image: url('../assets/images/archive-sides/folded-paper-floor.png');
+}
+
+.format-index {
+  color: var(--green);
+  font-family: 'Disket Mono', 'Share Tech Mono', monospace;
+  font-size: 1.25rem;
+}
+
+.format-item strong {
+  align-self: end;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.format-item small {
+  grid-column: 3;
+  align-self: start;
+  color: var(--muted);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.preview-stage {
+  align-self: center;
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+}
+
+.preview-header,
+.preview-footer {
+  display: flex;
+  justify-content: space-between;
+  width: min(720px, 100%);
+  color: rgba(238, 245, 238, 0.68);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.ig-post {
+  position: relative;
+  width: min(720px, 100%);
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border: 1px solid rgba(158, 255, 113, 0.28);
+  border-radius: 8px;
+  background: #010204;
+  box-shadow:
+    0 24px 80px rgba(0, 0, 0, 0.52),
+    0 0 40px rgba(158, 255, 113, 0.08);
+  isolation: isolate;
+  transition: aspect-ratio 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), width 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.ig-post.aspect-9-16 {
+  aspect-ratio: 9 / 16;
+  width: min(405px, 100%); /* 720 * (9/16) to keep relative scale */
+}
+
+.ig-post::before,
+.ig-post::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.ig-post::before {
+  z-index: 2;
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(158, 255, 113, 0.1), transparent 46%),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.028) 0 1px, transparent 1px 8px);
+  mix-blend-mode: screen;
+}
+
+.ig-post::after {
+  z-index: 4;
+  background:
+    radial-gradient(ellipse at center, transparent 0 38%, rgba(0, 0, 0, 0.42) 74%, rgba(0, 0, 0, 0.94) 100%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.62), transparent 28%, transparent 72%, rgba(0, 0, 0, 0.62));
+}
+
+.post-archive {
+  position: absolute;
+  inset: -8%;
+  z-index: 1;
+}
+
+.post-archive::before,
+.post-archive::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.post-archive::before {
+  z-index: 2;
+  background:
+    radial-gradient(circle at 50% 46%, rgba(158, 255, 113, 0.18), transparent 34%),
+    radial-gradient(circle at 26% 54%, rgba(225, 235, 220, 0.13), transparent 28%),
+    radial-gradient(circle at 75% 42%, rgba(255, 255, 255, 0.11), transparent 24%);
+  filter: blur(12px);
+  mix-blend-mode: screen;
+  opacity: 0.72;
+}
+
+.post-archive::after {
+  z-index: 3;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.38), transparent 22%, transparent 78%, rgba(0, 0, 0, 0.46)),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 5px);
+  mix-blend-mode: multiply;
+  opacity: 0.7;
+}
+
+.post-strip {
+  position: absolute;
+  z-index: 1;
+  top: -12%;
+  bottom: -12%;
+  width: var(--w);
+  left: var(--x);
+  overflow: hidden;
+  background-image: var(--img);
+  background-position: var(--from, center 0);
+  background-repeat: repeat-y;
+  background-size: 100% auto;
+  filter: grayscale(1) contrast(var(--contrast, 1.2)) brightness(var(--brightness, 0.88));
+  mix-blend-mode: screen;
+  opacity: var(--alpha);
+  transform: rotate(var(--tilt, 0deg));
+  transform-origin: center top;
+  animation:
+    post-strip-scroll var(--speed) linear infinite,
+    post-strip-sway var(--sway-speed, 8s) ease-in-out infinite alternate;
+  animation-delay: var(--delay, 0s), var(--sway-delay, 0s);
+  box-shadow:
+    inset 0 0 28px rgba(255, 255, 255, 0.06),
+    0 0 22px rgba(158, 255, 113, 0.05);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 9%, #000 91%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 9%, #000 91%, transparent 100%);
+  will-change: background-position, transform;
+}
+
+.post-strip::before,
+.post-strip::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.post-strip::before {
+  z-index: 1;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.2), transparent 18%, transparent 78%, rgba(0, 0, 0, 0.34)),
+    radial-gradient(ellipse at var(--glow-x, 50%) 42%, rgba(158, 255, 113, var(--glow, 0.14)), transparent 52%);
+  mix-blend-mode: screen;
+  opacity: 0.82;
+}
+
+.post-strip::after {
+  z-index: 2;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.16), transparent 32%, transparent 68%, rgba(0, 0, 0, 0.34)),
+    repeating-linear-gradient(0deg, transparent 0 24px, rgba(255, 255, 255, 0.08) 25px, transparent 26px),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 6px);
+  opacity: 0.68;
+}
+
+.post-strip-a {
+  --x: 2%;
+  --w: 92px;
+  --alpha: 0.56;
+  --speed: 16s;
+  --sway-speed: 9s;
+  --sway-from: -5px;
+  --sway-to: 5px;
+  --tilt: -1.2deg;
+  --glow-x: 38%;
+  --img: url('../assets/images/archive-sides/paper-strips-installation.png');
+  --to: center -720px;
+}
+
+.post-strip-b {
+  --x: 15%;
+  --w: 66px;
+  --alpha: 0.46;
+  --speed: 9s;
+  --sway-speed: 7s;
+  --sway-from: 4px;
+  --sway-to: -4px;
+  --tilt: 0.7deg;
+  --glow: 0.18;
+  --img: url('../assets/images/archive-sides/dense-text-column.png');
+  --to: center -860px;
+}
+
+.post-strip-c {
+  --x: 28%;
+  --w: 88px;
+  --alpha: 0.3;
+  --speed: 30s;
+  --sway-speed: 11s;
+  --sway-from: -3px;
+  --sway-to: 3px;
+  --tilt: -0.4deg;
+  --brightness: 0.82;
+  --glow-x: 60%;
+  --img: url('../assets/images/archive-sides/vertical-contact-strips.png');
+  --to: center 760px;
+}
+
+.post-strip-d {
+  --x: 43%;
+  --w: 78px;
+  --alpha: 0.25;
+  --speed: 12s;
+  --sway-speed: 8s;
+  --sway-from: 5px;
+  --sway-to: -5px;
+  --tilt: 1deg;
+  --brightness: 0.76;
+  --glow: 0.11;
+  --img: url('../assets/images/archive-sides/sepia-contact-sheet.png');
+  --to: center -700px;
+}
+
+.post-strip-e {
+  --x: 57%;
+  --w: 110px;
+  --alpha: 0.28;
+  --speed: 24s;
+  --sway-speed: 10s;
+  --sway-from: -6px;
+  --sway-to: 6px;
+  --tilt: -1deg;
+  --brightness: 0.82;
+  --glow-x: 42%;
+  --img: url('../assets/images/archive-sides/folded-paper-floor.png');
+  --to: center 680px;
+}
+
+.post-strip-f {
+  --x: 73%;
+  --w: 90px;
+  --alpha: 0.52;
+  --speed: 10s;
+  --sway-speed: 7.5s;
+  --sway-from: 3px;
+  --sway-to: -3px;
+  --tilt: 0.6deg;
+  --glow: 0.2;
+  --img: url('../assets/images/archive-sides/dense-text-column.png');
+  --to: center -780px;
+}
+
+.post-strip-g {
+  --x: 86%;
+  --w: 126px;
+  --alpha: 0.58;
+  --speed: 20s;
+  --sway-speed: 12s;
+  --sway-from: -4px;
+  --sway-to: 4px;
+  --tilt: 1.1deg;
+  --glow-x: 56%;
+  --img: url('../assets/images/archive-sides/vertical-contact-strips.png');
+  --to: center 820px;
+}
+
+@keyframes post-strip-scroll {
+  from {
+    background-position: var(--from, center 0);
+  }
+
+  to {
+    background-position: var(--to, center -720px);
+  }
+}
+
+@keyframes post-strip-sway {
+  from {
+    transform: translate3d(var(--sway-from, -4px), -0.8%, 0) rotate(calc(var(--tilt, 0deg) - 0.22deg));
+  }
+
+  to {
+    transform: translate3d(var(--sway-to, 4px), 0.8%, 0) rotate(calc(var(--tilt, 0deg) + 0.22deg));
+  }
+}
+
+.post-copy {
+  position: relative;
+  z-index: 5;
+  display: grid;
+  align-content: center;
+  gap: 22px;
+  min-height: 100%;
+  padding: 70px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.post-kicker,
+.post-author,
+.post-date {
+  margin: 0;
+  color: rgba(245, 248, 245, 0.88);
+  font-size: 0.82rem;
+  line-height: 1.55;
+  letter-spacing: 0.1em;
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.95),
+    0 0 8px rgba(220, 236, 255, 0.14);
+}
+
+.post-copy h1 {
+  display: grid;
+  gap: 0.2em;
+  margin: 0;
+  color: #aaff8b;
+  font-family: 'Disket Mono', 'Share Tech Mono', monospace;
+  font-size: 3.65rem;
+  font-weight: 400;
+  line-height: 1.04;
+  letter-spacing: 0.12em;
+  text-shadow:
+    0 0 1px rgba(245, 255, 236, 0.9),
+    0 0 8px rgba(158, 255, 113, 0.58),
+    0 0 22px rgba(158, 255, 113, 0.34),
+    0 0 42px rgba(95, 215, 111, 0.18);
+}
+
+.post-date {
+  color: #e0ffd5;
+  font-size: 1rem;
+  letter-spacing: 0.14em;
+}
+
+.template-archive .post-strip {
+  opacity: calc(var(--alpha) + 0.12);
+}
+
+.template-archive .post-copy {
+  align-content: start;
+  justify-items: start;
+  gap: 18px;
+  padding-top: 82px;
+  text-align: left;
+}
+
+.template-archive .post-copy h1 {
+  font-size: 2.65rem;
+}
+
+.template-date .post-copy {
+  align-content: end;
+  gap: 16px;
+  padding-bottom: 78px;
+}
+
+.template-date .post-copy h1 {
+  order: 2;
+  font-size: 3.05rem;
+}
+
+.template-date .post-date {
+  order: 1;
+  color: var(--green);
+  font-size: 1.45rem;
+}
+
+.template-date .post-kicker,
+.template-date .post-author {
+  order: 3;
+}
+
+.template-clean .post-strip {
+  opacity: calc(var(--alpha) * 0.42);
+}
+
+.template-clean .ig-post::after,
+.template-clean::after {
+  background:
+    radial-gradient(ellipse at center, rgba(0, 0, 0, 0.16) 0 34%, rgba(0, 0, 0, 0.72) 82%, rgba(0, 0, 0, 0.96) 100%);
+}
+
+.template-clean .post-kicker,
+.template-clean .post-author {
+  opacity: 0.74;
+}
+
+/* Download Actions */
+.download-actions {
+  display: flex;
+  gap: 16px;
+  width: min(720px, 100%);
+  margin-top: 10px;
+  justify-content: center;
+}
+
+.btn-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border: 1px solid rgba(158, 255, 113, 0.4);
+  border-radius: 6px;
+  background: rgba(2, 5, 6, 0.8);
+  color: var(--green);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-action:hover, .btn-action:focus-visible {
+  background: rgba(158, 255, 113, 0.1);
+  border-color: var(--green);
+  box-shadow: 0 0 12px rgba(158, 255, 113, 0.2);
+  outline: none;
+}
+
+.btn-action:active {
+  transform: translateY(2px);
+}
+
+.btn-action svg {
+  opacity: 0.8;
+}
+
+@media (max-width: 980px) {
+  .page-top {
+    position: static;
+  }
+
+  .layout-screen {
+    grid-template-columns: 1fr;
+    width: min(720px, calc(100% - 28px));
+    min-height: auto;
+    padding-top: 20px;
+  }
+
+  .format-recycler {
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(230px, 1fr);
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-height: none;
+    padding: 0 0 10px;
+    scroll-snap-type: x mandatory;
+  }
+}
+
+@media (max-width: 640px) {
+  .page-top {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+    padding: 14px;
+  }
+
+  .layout-screen {
+    width: min(100% - 20px, 540px);
+  }
+
+  .preview-header,
+  .preview-footer {
+    font-size: 0.66rem;
+  }
+
+  .post-copy {
+    gap: 14px;
+    padding: 38px 28px;
+  }
+
+  .post-copy h1 {
+    font-size: 2.24rem;
+    letter-spacing: 0.08em;
+  }
+
+  .post-kicker,
+  .post-author,
+  .post-date {
+    font-size: 0.68rem;
+  }
+
+  .template-archive .post-copy h1,
+  .template-date .post-copy h1 {
+    font-size: 2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}

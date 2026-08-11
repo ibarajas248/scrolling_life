@@ -4,10 +4,10 @@
   const REFILL_AT = 6;
   const MAX_OFFSET = 460;
   const THUMB_WIDTH = 420;
-  const PROCESS_MS = 1050;
-  const MAX_ACTIVE_RAIN = 72;
-  const MAX_MEMORY = 140;
-  const MAX_VISIBLE_NODES = 72;
+  const PROCESS_MS = 1800; // Antes 1050 - Se aumenta para dar respiro al CPU
+  const MAX_ACTIVE_RAIN = 32; // Antes 72 - Reducción drástica
+  const MAX_MEMORY = 90; // Antes 140 - Reducción drástica
+  const MAX_VISIBLE_NODES = 45; // Antes 72 - Reducción drástica
   const VECTOR_DIMS = 64;
   const PCA_DIMS = 48;
   const MODEL_TIMEOUT_MS = 9000;
@@ -26,42 +26,13 @@
     }
   ];
 
-  const LOCAL_FALLBACK_IMAGES = [
-    {
-      id: 'local-netart-screen',
-      title: 'Pantalla local de archivo visual',
-      credit: 'Archivo local Scrolling Life',
-      license: 'fallback local',
-      url: '../../assets/images/netart/Screenshot_20250108-144156.jpg'
-    },
-    {
-      id: 'local-strip-001',
-      title: 'Fragmento scroll 001',
-      credit: 'Archivo local Scrolling Life',
-      license: 'fallback local',
-      url: '../../assets/images/scroll-strips/strip_000001.jpg'
-    },
-    {
-      id: 'local-strip-002',
-      title: 'Fragmento scroll 002',
-      credit: 'Archivo local Scrolling Life',
-      license: 'fallback local',
-      url: '../../assets/images/scroll-strips/strip_000002.jpg'
-    },
-    {
-      id: 'local-strip-003',
-      title: 'Fragmento scroll 003',
-      credit: 'Archivo local Scrolling Life',
-      license: 'fallback local',
-      url: '../../assets/images/scroll-strips/strip_000003.jpg'
-    },
-    {
-      id: 'local-strip-004',
-      title: 'Fragmento scroll 004',
-      credit: 'Archivo local Scrolling Life',
-      license: 'fallback local',
-      url: '../../assets/images/scroll-strips/strip_000004.jpg'
-    }
+  const CURATORIAL_TEXTS = [
+    "La pantalla se convierte en un archivo vivo donde las imágenes pierden su contexto original para habitar un nuevo espacio de relaciones algorítmicas.",
+    "El scroll vertical ya no es un medio para llegar a un fin, sino el fin mismo: un estado de tránsito constante, una caída libre en el infinito visual.",
+    "Cada imagen que aparece y desaparece nos recuerda la fragilidad de la memoria digital, sustituida rápidamente por el siguiente estímulo.",
+    "La inteligencia artificial organiza este enjambre, buscando afinidades invisibles a nuestros ojos, creando un atlas donde la máquina interpreta nuestra cultura.",
+    "Bajar y bajar... el gesto del pulgar se ha convertido en el pulso contemporáneo, un ritmo cardíaco sincronizado con la interfaz.",
+    "No hay un principio ni un final en esta lluvia, solo un presente continuo que reescribe la historia visual con cada nueva carga de datos."
   ];
 
   const RANDOM_QUERIES = [
@@ -205,7 +176,8 @@
           ...item,
           order: item.order || index,
           pca: item.pca || null,
-          cluster: Number.isFinite(item.cluster) ? item.cluster : 0
+          cluster: Number.isFinite(item.cluster) ? item.cluster : 0,
+          closestIds: item.closestIds || (item.closestId ? [item.closestId] : [])
         }));
     } catch {
       return [];
@@ -226,6 +198,7 @@
         vector: item.vector,
         pca: item.pca,
         cluster: item.cluster,
+        closestIds: item.closestIds || [],
         createdAt: item.createdAt,
         order: item.order
       }));
@@ -333,61 +306,32 @@
     return modelState.promise;
   };
 
-  const buildApiURL = (query, offset) => {
-    const params = new URLSearchParams({
-      origin: '*',
-      action: 'query',
-      format: 'json',
-      formatversion: '2',
-      generator: 'search',
-      gsrnamespace: '6',
-      gsrsearch: `${query} filetype:bitmap`,
-      gsrlimit: String(BATCH_SIZE),
-      gsroffset: String(offset),
-      prop: 'imageinfo',
-      iiprop: 'url|extmetadata|mime|mediatype|size',
-      iiurlwidth: String(THUMB_WIDTH),
-      iiextmetadatalanguage: 'es'
-    });
+  const pageToImage = (item) => {
+    if (!item || !item.download_url) return null;
 
-    return `${API_URL}?${params.toString()}`;
-  };
-
-  const pickRandomQuery = (avoid = '') => {
-    const pool = RANDOM_QUERIES.filter((query) => query !== avoid);
-    return pool[Math.floor(Math.random() * pool.length)] || RANDOM_QUERIES[0];
-  };
-
-  const pageToImage = (page) => {
-    const info = page.imageinfo?.[0];
-    if (!info) return null;
-
-    const url = info.thumburl || info.url;
-    const mime = info.mime || '';
-    const metadata = info.extmetadata || {};
-
-    if (!url || !mime.startsWith('image/') || mime.includes('svg')) {
-      return null;
-    }
-
-    const title = normalizeTitle(metadata.ObjectName?.value || page.title);
-    const credit = stripMarkup(metadata.Artist?.value || metadata.Credit?.value || 'Wikimedia Commons');
-    const license = stripMarkup(metadata.LicenseShortName?.value || metadata.UsageTerms?.value || 'licencia abierta');
-    const sourceTitle = String(page.title || '').replace(/\s+/g, '_');
+    const width = THUMB_WIDTH;
+    const height = Math.round(THUMB_WIDTH * (item.height / Math.max(1, item.width)));
+    // Solicitamos la imagen ya redimensionada a Picsum para ahorrar datos
+    const url = `https://picsum.photos/id/${item.id}/${width}/${height}`;
 
     return {
-      id: `${page.pageid || sourceTitle}-${url}`,
-      title: title || 'Imagen sin titulo',
-      credit,
-      license,
+      id: `picsum-${item.id}`,
+      title: `Imagen por ${item.author || 'Desconocido'}`,
+      credit: item.author || 'Picsum',
+      license: 'Libre (Unsplash/Picsum)',
       url,
-      width: info.thumbwidth || info.width || THUMB_WIDTH,
-      height: info.thumbheight || info.height || Math.round(THUMB_WIDTH * 0.72),
+      width,
+      height,
       ready: false,
       failed: false,
       element: null,
       loadingPromise: null
     };
+  };
+
+  const pickRandomQuery = (avoid = '') => {
+    const pool = RANDOM_QUERIES.filter((query) => query !== avoid);
+    return pool[Math.floor(Math.random() * pool.length)] || RANDOM_QUERIES[0];
   };
 
   const buildLocalFallbackImages = () => {
@@ -413,7 +357,11 @@
     const timer = window.setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
 
     try {
-      const response = await fetch(buildApiURL(query, offset), {
+      // Picsum no soporta busqueda por query, así que usamos paginación aleatoria
+      const page = Math.floor(Math.random() * 40) + 1;
+      const apiUrl = `https://picsum.photos/v2/list?page=${page}&limit=${BATCH_SIZE}`;
+      
+      const response = await fetch(apiUrl, {
         mode: 'cors',
         signal: controller.signal
       });
@@ -422,7 +370,7 @@
       }
 
       const data = await response.json();
-      return (data.query?.pages || []).map(pageToImage).filter(Boolean);
+      return (Array.isArray(data) ? data : []).map(pageToImage).filter(Boolean);
     } finally {
       window.clearTimeout(timer);
     }
@@ -504,12 +452,7 @@
         addLearningLine('cache', `api: wikimedia | lote: ${cached.length}/20 | query: ${truncateText(activeQuery, 26)}`);
       } catch (error) {
         console.warn(error);
-        const localImages = await cacheBatch(buildLocalFallbackImages());
-        localImages.forEach((image) => {
-          seenImages.add(image.id);
-          imagePool.push(image);
-        });
-        addLearningLine('cache', `api: local | lote: ${localImages.length}/20 | fluido: true`);
+        addLearningLine('err', 'api: error de conexion | reintentando...');
       } finally {
         isLoadingBatch = false;
         loadingPromise = null;
@@ -710,6 +653,7 @@
       vector: embedding.vector,
       pca: null,
       cluster: stats.closest?.cluster || 0,
+      closestIds: stats.topClosest?.map(n => n.id) || [],
       createdAt: Date.now(),
       order: memory.length
     };
@@ -976,7 +920,12 @@
   };
 
   const positionNodes = (time) => {
-    memory.slice(-MAX_VISIBLE_NODES).forEach((item) => {
+    const svgPath = document.getElementById('constellationPath');
+    let pathData = '';
+
+    const visibleItems = memory.slice(-MAX_VISIBLE_NODES);
+
+    visibleItems.forEach((item) => {
       const node = nodeById.get(item.id);
       if (!node) return;
 
@@ -994,7 +943,24 @@
       node.style.setProperty('--node-size', `${size.toFixed(1)}px`);
       node.style.setProperty('--node-opacity', opacity.toFixed(2));
       node.style.setProperty('--node-color-rgb', color.join(', '));
+
+      // Agregar líneas a la constelación si este nodo es relativamente nuevo (últimos 15 nodos para no saturar)
+      if (age < 15 && item.closestIds) {
+        item.closestIds.forEach((targetId) => {
+          const targetNode = nodeById.get(targetId);
+          if (!targetNode) return; // solo dibujar si está visible
+          const targetItem = memory.find(m => m.id === targetId);
+          if (!targetItem) return;
+          const targetPos = projectPoint(targetItem.pca || { x: 0, y: 0, z: 0 }, time);
+          
+          pathData += `M ${projected.x.toFixed(1)} ${projected.y.toFixed(1)} L ${targetPos.x.toFixed(1)} ${targetPos.y.toFixed(1)} `;
+        });
+      }
     });
+
+    if (svgPath) {
+      svgPath.setAttribute('d', pathData);
+    }
   };
 
   const resizeCanvas = () => {
@@ -1216,6 +1182,29 @@
       score: 0,
       source: 'init'
     });
+    const floatingTextPanel = document.getElementById('floatingTextPanel');
+    const floatingTextContent = document.getElementById('floatingTextContent');
+    let currentTextIndex = -1;
+
+    const updateFloatingText = () => {
+      if (!floatingTextPanel || !floatingTextContent) return;
+      
+      floatingTextPanel.classList.remove('is-visible');
+      setTimeout(() => {
+        let newIndex = currentTextIndex;
+        while (newIndex === currentTextIndex) {
+          newIndex = Math.floor(Math.random() * CURATORIAL_TEXTS.length);
+        }
+        currentTextIndex = newIndex;
+        floatingTextContent.textContent = CURATORIAL_TEXTS[currentTextIndex];
+        floatingTextPanel.classList.add('is-visible');
+      }, 800); // Dar tiempo al fade-out antes de cambiar el texto
+    };
+
+    // Cambiar texto cada 10 segundos
+    updateFloatingText();
+    window.setInterval(updateFloatingText, 10000);
+
     const rendererReady = initThree();
     initModel();
     loadBatch().then(() => {

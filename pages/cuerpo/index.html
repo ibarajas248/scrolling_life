@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cuerpo - Scrolling Life</title>
+  <meta name="description" content="Texto curatorial y reflexiones sobre el cuerpo en el contexto de Scrolling Life." />
+  <link rel="stylesheet" href="../../assets/fonts/local-fonts.css" />
+  
+  <style>
+    :root {
+      --bg: #03040a;
+      --bg-panel: rgba(8, 12, 18, 0.7);
+      --ink: #f0f4f8;
+      --muted: #a0a8b5;
+      --accent: #52e0ff;
+      --line: rgba(255, 255, 255, 0.08);
+      --font-mono: 'IBM Plex Mono', 'Share Tech Mono', monospace;
+      --font-sans: 'Bricolage Grotesque', sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background-color: var(--bg);
+      background-image: 
+        radial-gradient(circle at 15% 50%, rgba(82, 224, 255, 0.06), transparent 35%),
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 100% 100%, 32px 32px, 32px 32px;
+      color: var(--ink);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 4rem 2rem;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 800px;
+      background: var(--bg-panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 3rem;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    header {
+      margin-bottom: 3rem;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 2rem;
+    }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      color: var(--accent);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      line-height: 1;
+      text-transform: uppercase;
+      letter-spacing: -0.03em;
+    }
+
+    .content {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+
+    .content p {
+      margin-bottom: 1.5rem;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 3rem;
+      font-family: var(--font-mono);
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.9rem;
+      border: 1px solid var(--accent);
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .back-link:hover {
+      background: rgba(82, 224, 255, 0.1);
+      box-shadow: 0 0 12px rgba(82, 224, 255, 0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <span class="eyebrow">Directorio / Cuerpo</span>
+      <h1>Cuerpo</h1>
+    </header>
+
+    <div class="content">
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat nisl ut dapibus. Mauris iaculis porttitor posuere.</p>
+      
+      <p>Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque faucibus vestibulum.</p>
+      
+      <p>Nulla at nulla justo, eget luctus tortor. Nulla facilisi. Duis aliquet egestas purus in blandit. Curabitur vulputate, ligula lacinia scelerisque tempor, lacus lacus ornare ante, ac egestas est urna sit amet arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+      
+      <p>Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing, commodo quis, gravida id, est. Sed lectus. Praesent elementum hendrerit tortor. Sed semper lorem at felis. Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl.</p>
+    </div>
+
+    <a href="../../index.html" class="back-link">[ volver al menú principal ]</a>
+  </div>
+
+</body>
+</html>

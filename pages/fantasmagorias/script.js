@@ -27,13 +27,48 @@
 
   renderCtx.imageSmoothingEnabled = false;
 
-  const SOURCE_IMAGES = [
-    '../../assets/images/netart/Screenshot_20250108-144156.jpg',
-    '../../assets/images/scroll-strips/strip_000001.jpg',
-    '../../assets/images/scroll-strips/strip_000002.jpg',
-    '../../assets/images/scroll-strips/strip_000003.jpg',
-    '../../assets/images/scroll-strips/strip_000004.jpg',
-  ];
+  let SOURCE_IMAGES = [];
+
+  async function fetchApiImages() {
+    let newImages = [];
+    try {
+      const endpoint = "https://en.wikipedia.org/w/api.php";
+      const params = new URLSearchParams({
+        action: "query",
+        format: "json",
+        prop: "pageimages",
+        generator: "random",
+        grnnamespace: "0",
+        grnlimit: "40",
+        pithumbsize: "800",
+        origin: "*"
+      });
+      
+      const response = await fetch(`${endpoint}?${params}`);
+      const data = await response.json();
+      
+      if (data && data.query && data.query.pages) {
+        const pages = data.query.pages;
+        for (const pageId in pages) {
+          const thumb = pages[pageId].thumbnail;
+          if (thumb && thumb.source) {
+            newImages.push(thumb.source);
+          }
+        }
+      }
+    } catch (e) {
+      console.warn('Fallo la API de Wikipedia.', e);
+    }
+
+    // Si Wikipedia devolvió muy pocas (o ninguna), completamos con Picsum API garantizada.
+    if (newImages.length < 5) {
+      for (let i = 0; i < 8; i++) {
+        newImages.push(`https://picsum.photos/800/800?random=${Math.random()}`);
+      }
+    }
+
+    SOURCE_IMAGES = newImages;
+  }
 
   const config = {
     secondsPerImage: 3.0,
@@ -632,15 +667,12 @@
 
     try {
       if (!state.sourceImages.length) {
+        await fetchApiImages();
         const loaded = await preloadImages();
         state.sourceImages = loaded.filter((entry) => entry.ok).map((entry) => entry.image);
 
         if (!state.sourceImages.length) {
-          throw new Error('No pude cargar imagenes fuente locales.');
-        }
-
-        if (state.sourceImages.length < SOURCE_IMAGES.length) {
-          setToast('algunas imagenes no cargaron', 1200);
+          throw new Error('No pude cargar imagenes desde la API.');
         }
       }
 

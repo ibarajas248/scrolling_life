@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Artistas - Inteligencias Colectivas</title>
+  <link rel="stylesheet" href="../../../assets/fonts/local-fonts.css" />
+  <link rel="stylesheet" href="../../../assets/styles/home.css" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #020304;
+      color: #f7f8fb;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+    
+    .header {
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(245, 248, 255, 0.1);
+      flex-shrink: 0;
+    }
+
+    .header h1 {
+      font-family: 'Disket Mono', monospace;
+      font-size: 1.5rem;
+      color: #9eff71;
+      margin: 0;
+    }
+
+    .back-link {
+      font-family: 'Share Tech Mono', monospace;
+      color: #ee7d59;
+      text-decoration: none;
+      font-size: 0.9rem;
+      border: 1px solid #ee7d59;
+      padding: 6px 12px;
+      border-radius: 4px;
+      transition: background 0.3s;
+    }
+
+    .back-link:hover {
+      background: rgba(238, 125, 89, 0.2);
+    }
+
+    .horizontal-scroll-container {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      overflow-y: hidden;
+      flex-grow: 1;
+      min-height: 0; /* Clave para evitar que flexbox sobrepase el 100vh */
+      scroll-snap-type: x mandatory;
+      padding: 40px 40px 40px 80px; /* Padding extra a la izquierda */
+      gap: 40px;
+      
+      /* Ocultar barra de Firefox */
+      scrollbar-width: none;
+    }
+
+    /* Ocultar barra de Webkit */
+    .horizontal-scroll-container::-webkit-scrollbar {
+      display: none;
+    }
+
+    .artist-card {
+      /* Tarjeta más ancha (45vw), ideal para videos panorámicos y textos legibles */
+      width: 45vw; 
+      min-width: 45vw;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      scroll-snap-align: start;
+      overflow-y: auto; /* Cada tarjeta tiene su propio scroll */
+      overflow-x: hidden;
+      
+      /* Ocultar barra de Firefox */
+      scrollbar-width: none;
+    }
+
+    /* Ocultar barra de Webkit */
+    .artist-card::-webkit-scrollbar {
+      display: none;
+    }
+
+    .video-container {
+      width: 100%;
+      aspect-ratio: 16/9; /* Proporción panorámica para el video de Vimeo */
+      background: #0a0b10;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      border: 1px solid rgba(245, 248, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0; /* Asegurar que el video no se encoja */
+    }
+
+    .video-container video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .video-placeholder {
+      color: #a8b0c0;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.8rem;
+    }
+
+    .text-content {
+      flex-grow: 1;
+      padding-right: 10px;
+    }
+
+    .text-content h2 {
+      font-family: 'Disket Mono', monospace;
+      font-size: 1.2rem;
+      margin: 0 0 10px 0;
+      color: #d8e7ef;
+    }
+
+    .text-content p {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: #a8b0c0;
+      margin-bottom: 1rem;
+    }
+
+    @media (max-width: 900px) {
+      .artist-card {
+        width: 60vw;
+        min-width: 60vw; 
+      }
+    }
+
+    @media (max-width: 600px) {
+      .artist-card {
+        width: 85vw;
+        min-width: 85vw; 
+      }
+      .header {
+        flex-direction: column;
+        gap: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+   
+    <a href="./index.html" class="back-link">&lt; Volver al proyecto</a>
+  </header>
+
+  <main class="horizontal-scroll-container">
+    
+    <!-- Artista 1 -->
+    <article class="artist-card">
+      <div class="video-container">
+        <iframe src="https://player.vimeo.com/video/1067843577?autoplay=1&loop=1&muted=1&background=1" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div class="text-content">
+        <h2>Baila</h2>
+        <h3 style="font-family: 'Share Tech Mono', monospace; font-size: 0.9rem; color: #a8b0c0; margin-top: -5px; margin-bottom: 20px;">Itsaso Iribarren & Germán de la Riva.</h3>
+        
+        <p>Estamos en un frontón cubierto. Sonido de guitarras y batería. La guitarra eléctrica retumba. La batería marca un ritmo frenético. La voz de una joven canta en inglés. <em>You tell me that I make no difference. Well, at least I’m fucking trying.</em> Los cuerpos se agolpan saltando unos contra otros al ritmo vertiginoso de la música. Todo sucede muy cerca del escenario, en primera línea. Me concentro en no dejarme llevar hacia adelante y permanecer en la parte central del grupo para no salir disparada contra el escenario o hacia el espacio de alrededor.</p>
+        
+        <p>Empujo. Empujo y salto. Empujo y me impulso. Empujo con los codos hacia los lados. Me apoyo contra los cuerpos que hay detrás de mí. Abro un pequeño espacio y tomo aire. Dejo de botar unos segundos y la masa de cuerpos vuelve a rodearme. Mis codos me protegen, endurezco mis abdominales. Me golpeo contra todo el que tengo a mi alrededor. Lo que tengo alrededor me golpea. Una danza que tiene tanto de lucha individual como de dejarse llevar por las luchas de los demás.</p>
+
+        <p>Miro hacia la derecha y veo a una chica con un vestido amarillo y zapatillas blancas. Irradia luz rodeada de la tenebrosa oscuridad del concierto. Baila moviendo sus brazos a su alrededor, golpea el suelo con los pies y su larga melena se agita en cada giro que da. La masa de cuerpos sigue rebotando. Ella continua bailando un baile ancestral combinado con la música radical de Minor Threat. Nosotros seguimos rebotando. Conformamos una masa rítmica de cuerpos que se sacuden absortos por el frenético ritmo de la música. No hay palabras. Solo ojos abiertos y mandíbulas apretadas. Sudor. Carne. Huesos. Pelo mojado. Camisetas húmedas.</p>
+
+        <p>De entre el grupo de personas comienzan a salir las chicas de mi pueblo. Se ponen en parejas para bailar. La chica del vestido amarillo resulta ser de un pueblo del al lado y baila con sus amigas. Mucha gente ha venido hoy a las fiestas. Es fin de semana. Seguimos en el frontón al aire libre que tantas veces he habitado a lo largo de mi vida. Juegos. Besos. Peleas. Sangre. Fantasía. Disfraces y darlo todo cinco días al año. La fuente de agua y las grandes escaleras de piedra. Se hace el silencio y tras unos segundos comienza a sonar una música flamenca.</p>
+
+        <p>Siento que las chicas me miran. Ahora es mi turno. Mi madre es andaluza y debo saber mover mi cuerpo y dar palmas al mismo tiempo. Cara seria. Unas cuantas se ponen a mi alrededor para bailar conmigo. ¡Olé! Me miran con respeto y admiración. Mira que cara más seria. Es verdad, es así como bailan. Elijo bailar sola mirando a cada una de ellas e invitándoles a que den palmas y animen mi danza. ¡Olé! Gritamos todas subiendo los hombros y moviendo brazos y cabeza de un lado al otro. Cara seria y zapatazos contra el suelo de piedra. Se disponen en medio círculo a mi alrededor.</p>
+
+        <p>Sigo con la danza flamenca. Combinación de danza y tradición. Palmas. Gritos. Una fiesta familiar de celebración. Los hombres y mujeres sentados en los bancos de madera jalean. Las palmas suenan marcando el ritmo y el contra ritmo completando la melodía suave de la flauta, los acordes de la guitarra y la fuerte voz de una de las mujeres. Las chicas animan. Bulerías. Bailando con nosotras hay una mujer de melena rubia con flequillo. Viste pantalones y top oscuros. Americana de lentejuelas brillantes. Ojos pintados de negro intenso. Labios rojos. Nos seguimos moviendo. Nos miramos. Palmas. Las señoras cantan.</p>
+
+        <p>La música retumba en este estrecho valle del Pirineo. Rodeadas por montañas, ubicadas en una estrecha grieta del paisaje, habitamos la noche. La oscuridad borra la identidad de los cuerpos que tengo alrededor. El baile continúa al ritmo de la música disco de los años setenta. La música da significado a nuestras danzas. Somos las mismas pero esta nueva banda sonora nos transporta a otro tiempo, a otra cultura. Me siento libre. Viajera. Conozco otras culturas porque he bailado al ritmo de sus músicas. El cielo se tapa. La noche es más oscura. Siento la humedad.</p>
+
+        <p>Estamos en un bajo de un edificio antiguo cerca de la ría. El ventanal, las molduras y la barra tienen las esquinas redondeadas. Entre la multitud reconozco caras de artistas, ilustradores, pintores, bailarinas, directores de cine, músicos, actores, actrices, escritores, críticos y aquella mujer rubia. Faldas de encaje y pantalones. Vestidos estampados. Botas camperas. Vaqueros ajustados. Tops brillantes. Pantalones de campana. Pelo largo. Cazadoras de cuero. Cuerpos delgados. Gafas grandes. Abrigos de piel. Cervezas en vaso de tubo y humo de cigarrillo. Les he visto infinidad de veces en la universidad, en inauguraciones, jams, festivales, proyecciones, charlas, fiestas, conciertos… Son personas que siempre me cruzo. Conocidos desconocidos. Se quien eres. Sabes quien soy. No cruzamos palabra. Solo miradas de curiosidad y admiración.</p>
+
+        <p>Os he visto actuar en escenarios. Me he comunicado con vuestros cuerpos en escena a través de mis recuerdos. He explorado vuestras pinturas. He absorbido vuestras imágenes a través de la pantalla. He paseado junto a vuestras esculturas. He capturado vuestras palabras escritas. Una vez ví un autorretrato tuyo profanado por un spray. Decía: <em>volveré</em>. Pero nunca volviste. Me he colado en vuestros estudios para contemplar vuestras piezas en proceso. Aquellos objetos libres de discursos hablados. Quiero ver movimientos. Manchas. Formas. Danzas. Ensamblajes. Sonidos. Toda la experimentación con la materia.</p>
+
+        <p>Menos palabras. Menos discursos. Menos frases de crítica a lo que otros hacen. Menos paralización de la acción de las manos por la mente. Menos apoyarse en la puerta de la galería con una copa en la mano mirando quién entra y quién sale. Menos hablar de lo que se debería hacer. Menos virtuosismo. Menos transformaciones, menos magia y menos hacer creer. Menos héroes. Menos antihéroes. Menos imaginería basura. Menos seducción del espectador por las artimañas del intérprete.</p>
+
+        <p>¿Bailas? Bailo. Bailamos. De cerca y de lejos. Nuestro movimiento es subterráneo y nocturno. Nos trasladamos a otra temporalidad. Hace calor. El aire es denso y húmedo. Cojo un vaso. Bebo. No hay diferencia entre respirar y tragar. El ambiente se vuelve líquido. Nuestros sentidos se difuminan. Mi movimiento es el tuyo. Mi mirada y tu mirada. Tú y yo. Muchas somos tú y muchos somos yo. Respiramos y nos nutrimos. Atmósfera líquida. El tiempo se detiene. La música para.</p>
+
+        <p>El grupo se desplaza en diferentes direcciones. A veces uno va delante, otras detrás. Líderes cambiantes. En ocasiones es el propio grupo el que lidera. El liderazgo se disuelve entre la multitud. Percibo a lo lejos el dulce silbido del txistu acompañado del tamboril. Es una melodía que he escuchado en muchos días señalados a lo largo de mi vida. Bodas. Manifestaciones. Conmemoraciones. Funerales. Permanezco quieta escuchando. Recuerdo que a esta melodía sin letra la acompaña una danza. Adopto la pose de solemnidad que el homenaje requiere. ¿Qué es lo que hoy se celebra?</p>
+
+        <p>Siento un nudo en la garganta. Las lágrimas acercándose a mis ojos. La tripa tensa. Imagino que soy yo la que salta y da la gran patada en el aire. También que salto moviendo rápidamente los pies. Todos nos miramos serios mientras tarareamos para nuestros adentros la conocida melodía sin letra. Siento que al escuchar las notas de la canción la solemnidad embarga mi cuerpo. Cada pequeño rincón, cada célula recuerda y percibe este momento entre pasado, presente y futuro. Cierro los ojos. Negro. Intento contener las lágrimas. Nudo en la garganta. Respiro profundamente. Trago saliva. Se que esta noche es la noche.</p>
+
+        <p>Seguimos nuestro camino guiado por el color burdeos de una fachada, una bicicleta, un mirador hacia la ría, una caja de libros cerca de un contenedor, otro grupo que pasa a nuestro lado… Hablamos de nuestra vida mientras caminamos. ¿Hace cuanto que salimos? ¿Cuándo llegaremos? Caminamos hablando de nuestros miedos. Orgullosos de nuestra amistad habitamos y descubrimos una vez más cada rincón del casco antiguo. Una de nosotras sube por unas escaleras, se agarra a las verjas de metal de las puertas del mercado y termina encaramada agarrando fuertemente los barrotes. La seguimos.</p>
+
+        <p>Juntos construimos una imagen: un grupo de personas subido a una vaya ¿clamando por salir? Hoy nosotros estamos fuera. Celebramos la noche infinita. Subimos. Subimos más. Nos elevamos y llegamos al tejado del edificio. Esta noche templada durará toda la eternidad. Miro los tejados de alrededor. Parece que no hubiera nadie en los otros edificios. Hoy solo existimos nosotros cerca del cielo. Caminamos por las tejas de barro. Pasos cuidadosos. Rodillas flexionadas, manos cerca del suelo y tronco agachado para no resbalar.</p>
+
+        <p>Nos sentamos en la superficie inclinada del edificio. Nuestros cuerpos en penumbra. Detrás, el cielo nocturno. Cuerpos en cuclillas. Abrazamos nuestras rodillas. Una de nosotras sube más arriba. Hasta el vórtice donde se juntan los dos planos inclinados del tejado. En mi pueblo a la viga que sostiene el eje del tejado se le llama <em>bizkarra</em>, espalda. También es una loma, una colina, una cresta. El eje y su sostén crean un hueco. El espacio íntimo y cotidiano de la casa. La bizkarra. Quiero que esta aventura en las alturas sea interminable. Me quedo. Permanezco.</p>
+
+        <p>En el tejado de enfrente veo a una chica bailar. Realiza una coreografía sin sobresaltos. Contínua. Fluida. Constante. Seguro que ese movimiento lo ha hecho miles de veces. Y ese otro me recuerda a una persona que pasea un perro. Un niño rueda igual que ella. ¿Hace cuánto que no camino de puntillas? ¿Y con los talones? Me encantaba poner mis pies sobre los de mi padre y que él caminara por el suelo de madera del piso del ensanche como si fuéramos una sola persona. Quiero aprender a hacer ese movimiento. Seguro que puedo. No parece difícil. Debe ser placentero repetir ese abecedario de movimientos sencillos.</p>
+        
+        <p>Tal vez cuando los aprenda se los pueda enseñar a otras personas. Sin sobresaltos, sin música, sin color, todo es sencillo y tranquilo. Blanco. Silencio. No quiero irme. Camino y cada vez que asciendo, al llegar a la cresta, vuelve esa sensación de acercarme al cielo. No quiero volver. No quiero bajar. No quiero salir. Mis oídos se taponan. No oigo. No escucho. Mis ojos se cubren. No veo. Me fundo, me desparramo, mis límites se desdibujan, mi carne se deshace y lo que antes era tangible ya no lo es. Siento que un rayo de sol da en mi cara. El cielo comienza a iluminarse. Los afilados rayos de sol pasan a través de los edificios. Abro los párpados. La luz es muy intensa. Blanca. Brillante. El sol me ciega. Debe de haber amanecido.</p>
+      </div>
+    </article>
+
+    <!-- Artista 2 -->
+    <article class="artist-card">
+      <div class="video-container">
+        <iframe src="https://player.vimeo.com/video/1067846864?autoplay=1&loop=1&muted=1&background=1" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div class="text-content">
+        <h2>Baja tu barbilla</h2>
+        <h3 style="font-family: 'Share Tech Mono', monospace; font-size: 0.9rem; color: #a8b0c0; margin-top: -5px; margin-bottom: 20px;">Francisco Holgado</h3>
+        
+        <p>¡Baja tu barbilla!<br>
+        ¿Has tenido glaciaciones, <br>
+        golpes de meteoro?</p>
+
+        <p>¿Fuiste acaso esfera en llamas? <br>
+        ¿Imponentes criaturas <br>
+        han evolucionado en tu tripa <br>
+        para hacerse huesos grandes</p>
+
+        <p>con un disparo de tiempo? <br>
+        Ni siquiera puedes “chocar con” <br>
+        planetas. <br>
+        Como mucho “caer en” <br>
+        planetas.</p>
+
+        <p>Es una cuestión de proporciones. <br>
+        ¡Baja tu barbilla!</p>
+      </div>
+    </article>
+
+    <!-- Artista 3 -->
+    <article class="artist-card">
+      <div class="video-container">
+        <iframe src="https://player.vimeo.com/video/1067849999?autoplay=1&loop=1&muted=1&background=1" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div class="text-content">
+        <h2>Ruinas, cuerpos y alzamientos.</h2>
+        <h3 style="font-family: 'Share Tech Mono', monospace; font-size: 0.9rem; color: #a8b0c0; margin-top: -5px; margin-bottom: 20px;"> Adrián Porcel y Rosa García</h3>
+        
+        <p>La ciudad ha abandonado su futuro. La metrópolis se dilata a la velocidad de la desintegración, desparramando una ristra de sueños desencantados, producto final del abandono postcapitalista que se materializa en un progreso que no llegó. Tras de sí, la ruina se erige en obsolescencia, caducada desde sus cimientos, acorde con la nueva realidad de la producción. El proyecto inconcluso se apodera del espacio urbano, imponiendo desde el boceto una macro-arquitectura megalómana y hostil que aleja a los cuerpos de su memoria.</p>
+        
+        <p>Desde la crisis final de la imaginación, el complejo entramado de lo público se disuelve en el anonimato, convirtiéndose en un espacio inhabitable, donde apenas el tránsito es concebible. Estas lógicas nacen de la lengua atrofiada de un sistema dislocado, que arroja al habitante al abismo de la contemplación; sólo cuerpos en movimiento a través de un paisaje parásito. La ciudad, en su infinita extensión de lo irreconocible, jamás será morada, pues pertenecer a ella implica desaparecer en su constante transformación.</p>
+        
+        <p>Bloque tras bloque, el entorno se desarticula en fragmentos, donde los encuentros entre individuos parecen extraplanetarios, eventos frágiles, llenos de peligro, un reflejo de la alta tensión que define este nuevo orden. Realismo de la homogeneidad y del ruido intenso. Cada residencia es parcelada por el estruendo de la construcción, un espectáculo grotesco que provoca un temblor en los cimientos de la ciudad misma. Un avispero visiblemente agitado por el colapso, las temerosas obreras terminarán por hallar el engranaje incendiado, al máximo de su capacidad y engrasado por el vertiginoso simulacro.</p>
+        
+        <p>Habitar es la última utopía contemporánea, infundida por el deseo de reconfigurar el lugar, de lograr la revolucionaria apropiación de cada órgano extirpado por el poder. La imponente mirada del monstruoso sistema vigilante no puede detenerse sobre cada brizna de hierba, desde la anómala distancia dada por sus dimensiones –aquellas con las que el poder se desmaterializa y que le sirve para ejercer su violencia–. La resistencia se desplazará diminutamente, soportando la caída de sus contenedores para abalanzarse sobre la totalidad de las grietas, perturbando las frías costuras del depredador, dejando al gigante desnudo. El cuerpo colectivo será hierbajo y musgo de pared, tabiques arcaicos plenos de humedades y verdín de cambio, y cada mañana transpirará de la vieja tierra muerta un leve petricor.</p>
+      </div>
+    </article>
+
+    <!-- Artista 4 -->
+    <article class="artist-card">
+      <div class="video-container">
+        <iframe src="https://player.vimeo.com/video/1068769481?autoplay=1&loop=1&muted=1&background=1" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div class="text-content">
+        <h2>ᓴᙲᓐᓂᐅᔪᖅ</h2>
+        <h3 style="font-family: 'Share Tech Mono', monospace; font-size: 0.9rem; color: #a8b0c0; margin-top: -5px; margin-bottom: 20px;"> Marina A. Carnero</h3>
+        
+        <p>Caen los primeros rayos de un sol rojizo. Salen del refugio y se sientan sobre la nieve. Miran al frente entornando los ojos como inuits.</p>
+
+        <p>El glaciar emerge imponente, como una gran textura que hace suyas las luces y memorias de estrellas apagadas. Ellos miran el gran bloque de hielo con ojos nuevos. No es la capa de niebla invisible ni el telón de fondo fantasmal que se dibujaba en cada paisaje, sino una forma de vida desatendida, como tantas otras, que reescribe de pronto su guion como figura principal, mostrándoles la cara oculta y radical de su existencia.</p>
+
+        <p>Habituados a las maravillas de la naturaleza, eternas y repetidas, observan desconcertados el sistema vital, colectivo y equilibrado de comunicación entre lo aéreo y lo terrestre, lo mineral y vegetal, desconociendo tantas de las leyes orgánicas de su intercambio.</p>
+
+        <p>Una maquinaria nueva, como la que un día adaptaron las flores ante la aparición de los insectos, se pone en marcha. Ellos reciben una fuerte sacudida, sabiendo que asisten a los deseos de progreso de una forma de vida psíquica y no carnal, dejándolos sin lenguaje que transcriba en palabras su trascendencia.</p>
+
+        <p>Al lado del disfraz de nieve, el cristal de agua crepita.</p>
+
+        <p>El hielo, al fin, respira.</p>
+      </div>
+    </article>
+
+    <!-- Artista 5 -->
+    <article class="artist-card">
+      <div class="video-container">
+        <iframe src="https://player.vimeo.com/video/1068772019?autoplay=1&loop=1&muted=1&background=1" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div class="text-content">
+        <h2>Dueños del presente</h2>
+        <h3 style="font-family: 'Share Tech Mono', monospace; font-size: 0.9rem; color: #a8b0c0; margin-top: -5px; margin-bottom: 20px;">Guada Díaz</h3>
+        
+        <p>Cómo sería otro presente<br>
+        Me gustaría saber<br>
+        Cómo estar presente<br>
+        Cómo ser en tu presencia<br>
+        Son cuestiones que rondan mi cabeza y para las que no tengo respuesta</p>
+
+        <p>A veces el ruido del mortero parece un martillo<br>
+        A veces la calle parece una apisonadora<br>
+        Y me pregunto si el asfalto fue un progreso o si la vida era mejor en ciudades de tierra<br>
+        ¿Cómo sonaría el silencio y quién es su dueño?</p>
+
+        <p>Me gustaría conocer<br>
+        A alguien que no quiera adueñarse de nada<br>
+        Y a alguien sin dueño.</p>
+      </div>
+    </article>
+
+    <!-- Artista 6 -->
+    <article class="artist-card">
+      <div class="video-container">
+        <iframe src="https://player.vimeo.com/video/1068772661?autoplay=1&loop=1&muted=1&background=1" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div class="text-content">
+        <h2>El movimiento de la mariposa</h2>
+        <h3 style="font-family: 'Share Tech Mono', monospace; font-size: 0.9rem; color: #a8b0c0; margin-top: -5px; margin-bottom: 20px;">Isabel Gaspar</h3>
+        
+        <p>Ahora me doy cuenta de que todo comenzó cuando descubrí las posibilidades de la tecnología en el arte y empecé a aprender todo lo que pude. Sin embargo, pronto comprendí que lo mío, realmente, era dibujar y pintar, y que todo giraba en torno al color y a cómo lo percibimos.</p>
+        
+        <p>Un día, mientras me detenía a observar unas flores, vi una mariposa que volaba de una a otra y pensé: “El movimiento de la mariposa”. ¿Cómo podría registrarlo? ¿Con qué tecnología? En ese instante, pensé en Aketzalli, Emmanuel y en la magia que logran con los sensores y la naturaleza, y en cómo ellos sí han desarrollado ese conocimiento.</p>
+        
+        <p>Por un momento, me sentí incapaz de capturar el movimiento de la mariposa. Me senté y me quedé mirando. Recordé todas las veces que me he detenido a observar el brillo del sol entre las hojas; la primera vez que tuve migraña al tratar de captar todos los colores de un árbol: azul, amarillo, naranja, verde, MORADO.</p>
+        
+        <p>Recordé las veces que he contado las mariposas que veo en la calle, organizándolas mentalmente por color. Recordé también cuando deseé ver una mariposa naranja… y apareció una mariposa naranja. Entonces pensé en el proceso que viví para comenzar a entender qué es un sensor, qué es la programación, y todo lo que se puede hacer con ella.</p>
+        
+        <p>Recordé mi primera experiencia con hongos psicoactivos y ese MORADO intenso y vibrante que volvió a aparecer, esta vez en una flor, y que ahora podía comparar con el color de una pantalla. Recordé las imágenes en internet de cómo las mariposas ven las flores.</p>
+        
+        <p>Recordé que, a veces, solo hay que quedarse en silencio, quieta y escuchar… shhhh, en calma. No todo tiene que registrarse con tecnología (no todo quiero registrarlo con tecnología).</p>
+        
+        <p>Para mí, la tecnología fue parte de un proceso que me llevó de vuelta a lo natural, a algo que ya existía en mí desde niña; un camino hacia lo más interno y personal, hacia esa conexión que es parte de la gran red de la existencia.</p>
+        
+        <p>Su misión, en mi vida, fue mostrarme que realmente todo está conectado. Me enseñó que ver, oír, oler, escuchar, dibujar y pintar también son maneras de registrar el mundo, me permitió descubrir una nueva manera de observarlo. Me hizo consciente de que no todas ni todos tenemos que ser expertos en tecnología para empezar a comprenderla y ver al mundo a través de esas ventanas.</p>
+      </div>
+    </article>
+
+    <!-- Artista 7 -->
+    <article class="artist-card">
+      <div class="video-container">
+        <iframe src="https://player.vimeo.com/video/1068775077?autoplay=1&loop=1&muted=1&background=1" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div class="text-content">
+        <h2>Un recuerdo (fragmento)</h2>
+        <h3 style="font-family: 'Share Tech Mono', monospace; font-size: 0.9rem; color: #a8b0c0; margin-top: -5px; margin-bottom: 20px;">Romina Casile</h3>
+        
+        <p>Los sonidos se comienzan a transformar en corrientes acuosas y las bocas empiezan a llenarse de saliva.<br>
+        Cataratas comienzan a emerger de las bocas y en su desbordamiento comienzan a crecer charcos.<br>
+        Charcos que en su unión van conformando lagunas y luego cauces.<br>
+        Cauces que se extienden y que en su prolongación generan nuevos afluentes, nuevas corrientes.<br>
+        Nos dejamos llevar.</p>
+      </div>
+    </article>
+
+    <!-- Artista 8 -->
+    <article class="artist-card">
+      <div class="video-container">
+        <iframe src="https://player.vimeo.com/video/1070994128?autoplay=1&loop=1&muted=1&background=1" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div class="text-content">
+        <h2>Sin título</h2>
+        <h3 style="font-family: 'Share Tech Mono', monospace; font-size: 0.9rem; color: #a8b0c0; margin-top: -5px; margin-bottom: 20px;">Tzu-Han Hung</h3>
+        
+        <p>Mientras el aire entra al cuerpo con cada aspiración y expiración, siento cómo va masajeando cada músculo, siento cómo cada músculo se va estirando y encogiendo.</p>
+        
+        <p>Mi columna se convierte tentaculada, mi piel translúcida y empieza a echar chispa eléctrica furiosa, como el relámpago que llega antes del trueno que desliza fugitivamente desde el interior de mí, que no está adherido a nada. Un estallido, estremecen trazos que ramifican en miles de formas. Me llevan las brisas marineras y tormentas con un solo soplo. Todo es movimiento y movimiento es todo, no se para el viento, atraviesa mi cuerpo y mi cuerpo está en todos lados. Da vueltas y vueltas, sube y baja, entra y se va, traspasa y se vacía. Se vacía con suspiros.</p>
+      </div>
+    </article>
+
+    <!-- Artista 9 -->
+    <article class="artist-card">
+      <div class="video-container">
+        <iframe src="https://player.vimeo.com/video/1015192878?autoplay=1&loop=1&muted=1&background=1" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div class="text-content">
+        <h2>Alimentar la tierra</h2>
+        <h3 style="font-family: 'Share Tech Mono', monospace; font-size: 0.9rem; color: #a8b0c0; margin-top: -5px; margin-bottom: 20px;">Henry Lamiña</h3>
+        
+        <p>Imagino que aprendemos a descargar nuestras conciencias en los micelios subterráneos, a ser el compost de la tierra que alimenta las raíces de las selvas, a leer las texturas que recorren el planeta. Imagino que aprendemos a sentir la humedad de los bosques a través de sus hojas, el calor de los desiertos a través de cada granito de arena, el aire de la atmósfera a través de cada pulmón que respira. Imagino que aprendemos a ser como las rocas que filtran el agua de los ríos y como los mares que viajan por las corrientes submarinas. Imagino que aprendemos a sumarnos al tiempo cíclico.</p>
+      </div>
+    </article>
+
+  </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const container = document.querySelector('.horizontal-scroll-container');
+      const cards = Array.from(container.querySelectorAll('.artist-card'));
+      
+      // Algoritmo Fisher-Yates para un mezclado aleatorio perfecto
+      for (let i = cards.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [cards[i], cards[j]] = [cards[j], cards[i]];
+      }
+      
+      // Volver a insertar las tarjetas en el nuevo orden aleatorio
+      // (appendChild mueve el elemento existente al final)
+      cards.forEach(card => container.appendChild(card));
+    });
+  </script>
+</body>
+</html>

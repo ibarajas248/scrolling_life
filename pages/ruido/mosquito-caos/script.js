@@ -1,4 +1,4 @@
-﻿const stage = document.getElementById('chaosStage');
+const stage = document.getElementById('chaosStage');
 const field = document.getElementById('frameField');
 const shockField = document.getElementById('shockField');
 const reshuffleButton = document.getElementById('reshuffleButton');
@@ -8,16 +8,19 @@ const metricSpeed = document.getElementById('metricSpeed');
 const metricPressure = document.getElementById('metricPressure');
 const metricMode = document.getElementById('metricMode');
 
-const YOUTUBE_IDS = [
-  'M7lc1UVf-VE',
-  'jNQXAC9IVRw',
-  'aqz-KE-bpKQ',
-  'ysz5S6PUM-U',
-  '21X5lGlDOfg',
-  'dQw4w9WgXcQ',
-  'ScMzIvxBSi4',
-  'M7FIvfx5J10'
-];
+const mediaUrls = Array.from({length: 40}, (_, i) => `https://picsum.photos/400/300?random=${i}`);
+
+async function fetchGifs() {
+  try {
+    const response = await fetch('https://api.thecatapi.com/v1/images/search?mime_types=gif&limit=20');
+    const data = await response.json();
+    if (data && Array.isArray(data)) {
+      data.forEach(item => mediaUrls.push(item.url));
+    }
+  } catch (e) {
+    console.warn('GIF API failed, using static fallback images only.');
+  }
+}
 
 const LABELS = [
   'enjambre',
@@ -66,9 +69,8 @@ function clamp(value, min, max) {
   return Math.min(max, Math.max(min, value));
 }
 
-function buildSrc(videoId) {
-  const start = Math.floor(Math.random() * 180);
-  return `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${videoId}&start=${start}&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1`;
+function buildSrc() {
+  return pick(mediaUrls);
 }
 
 function setCursorPosition(x, y) {
@@ -114,25 +116,26 @@ function teleportFrame(frame) {
 
 function createFrame(index) {
   const wrapper = document.createElement('div');
-  const iframe = document.createElement('iframe');
+  const media = document.createElement('img');
 
   wrapper.className = 'frame-wrapper';
   wrapper.dataset.label = pick(LABELS);
   wrapper.style.zIndex = String(zCounter + index);
 
-  iframe.src = buildSrc(pick(YOUTUBE_IDS));
-  iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-  iframe.loading = 'eager';
-  iframe.referrerPolicy = 'strict-origin-when-cross-origin';
-  iframe.allowFullscreen = true;
-  iframe.title = `Video caotico ${index + 1}`;
+  media.src = buildSrc();
+  media.loading = 'eager';
+  media.alt = `Caos visual ${index + 1}`;
+  media.style.width = '100%';
+  media.style.height = '100%';
+  media.style.objectFit = 'cover';
+  media.style.pointerEvents = 'none';
 
-  wrapper.append(iframe);
+  wrapper.append(media);
   field.append(wrapper);
 
   const frame = {
     wrapper,
-    iframe,
+    media,
     width: randomBetween(98, 236),
     height: 0,
     aspect: randomBetween(0.54, 0.76),
@@ -216,7 +219,7 @@ function randomizeFrame(frame, hard = false) {
 
   let shouldGlitch = false;
   if (hard || Math.random() < mode.glitch) {
-    frame.iframe.src = buildSrc(pick(YOUTUBE_IDS));
+    frame.media.src = buildSrc();
     shouldGlitch = true;
   }
 
@@ -325,7 +328,9 @@ function rebuildLayout() {
   });
 }
 
-function init() {
+async function init() {
+  await fetchGifs();
+
   document.body.dataset.chaosMode = currentMode.id;
   setCursorPosition(window.innerWidth * 0.5, window.innerHeight * 0.52);
 

@@ -19,11 +19,18 @@
   <div class="scan-field" aria-hidden="true"></div>
   <div class="grain-field" aria-hidden="true"></div>
 
+  <div id="floatingTextPanel" class="floating-text-panel" aria-hidden="true">
+    <p id="floatingTextContent"></p>
+  </div>
+
   <main class="lab-shell" id="pcaSpace">
     <section class="pca-stage" aria-label="Mapa PCA 3D de embeddings visuales">
       <canvas id="pcaCanvas" class="pca-canvas" aria-hidden="true"></canvas>
       <div class="map-overlay" id="mapOverlay" aria-hidden="true"></div>
       <div class="rain-layer" id="rainLayer" aria-hidden="true"></div>
+      <svg id="connectionOverlay" aria-hidden="true">
+        <path id="constellationPath" class="constellation-path" d=""></path>
+      </svg>
     </section>
   </main>
 

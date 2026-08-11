@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ruido</title>
+  <link rel="stylesheet" href="../../assets/fonts/local-fonts.css" />
+  <link rel="stylesheet" href="../../assets/styles/home.css" />
+  <style>
+    body {
+      background: #020304;
+      color: #f7f8fb;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      padding: 40px 20px;
+      line-height: 1.6;
+    }
+    .content-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    h1 {
+      font-family: 'Disket Mono', monospace;
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+      color: #9eff71;
+    }
+    .author-meta {
+      font-family: 'Share Tech Mono', monospace;
+      color: #a8b0c0;
+      margin-bottom: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    p {
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+      color: #d8e7ef;
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 2rem;
+      font-family: 'Share Tech Mono', monospace;
+      color: #ee7d59;
+      text-decoration: none;
+      border: 1px solid #ee7d59;
+      padding: 8px 16px;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+    .back-link:hover {
+      background: rgba(238, 125, 89, 0.2);
+    }
+    .projects-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4rem;
+      margin-top: 3rem;
+    }
+    .project-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+      color: var(--accent);
+      font-family: 'Share Tech Mono', monospace;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+    .project-card:hover {
+      transform: translateY(-8px) scale(1.05);
+      filter: drop-shadow(0 0 15px var(--accent));
+      color: #fff;
+    }
+    .project-card img {
+      width: 120px;
+      height: 120px;
+      object-fit: contain;
+      image-rendering: pixelated;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="content-container">
+    <h1>Ruido</h1>
+    <div class="author-meta">
+      <span>Nueva subsección</span>
+    </div>
+
+    <p>
+      El "ruido" en la época digital ya no es simplemente una interferencia estática, sino una sobreabundancia de señal. Cuando todo grita al mismo tiempo en el *scroll* de nuestras redes sociales, el mensaje se pierde y lo único que queda es la textura del caos.
+    </p>
+    <p>
+      Esta sección recopila fragmentos sonoros y textuales de esa textura. Voces desconectadas, algoritmos tratando de ordenar lo inordenable, y la cacofonía de miles de personas interactuando en el vacío virtual.
+    </p>
+
+    <div class="projects-grid">
+      <a href="./comentarios-instagram/index.html" class="project-card" style="--accent: #9eff71;">
+        <img src="../../assets/images/icon_comentarios_8bit.jpg" alt="Icono 8-bit Comentarios" />
+        <span>Comentarios</span>
+      </a>
+      <a href="./mosquito-caos/index.html" class="project-card" style="--accent: #00e5ff;">
+        <img src="../../assets/images/icon_mosquito_8bit.jpg" alt="Icono 8-bit Mosquito Caos" />
+        <span>Mosquito Caos</span>
+      </a>
+    </div>
+
+    <div style="margin-top: 4rem;">
+      <a href="../../index.html" class="back-link" style="margin-top: 0;">&lt; Volver al menú principal</a>
+    </div>
+  </div>
+</body>
+</html>

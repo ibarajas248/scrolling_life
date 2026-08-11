@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Scrolling Life</title>
   <meta
     name="description"
@@ -10,6 +10,22 @@
   />
   <link rel="stylesheet" href="./assets/fonts/local-fonts.css" />
   <link rel="stylesheet" href="./assets/styles/home.css" />
+  <style>
+    .submenu-container {
+      display: flex;
+      flex-direction: column;
+    }
+    .submenu-item {
+      display: none !important; /* Oculto por defecto */
+      padding-left: 2.5rem; 
+      background-color: rgba(255, 255, 255, 0.02); 
+      border-left: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .submenu-container:hover .submenu-item,
+    .submenu-container:focus-within .submenu-item {
+      display: flex !important; /* Muestra al hacer hover o enfocar */
+    }
+  </style>
 </head>
 <body id="top">
   <a class="skip-link" href="#main-content">Saltar al contenido principal</a>
@@ -23,6 +39,17 @@
       <div class="progress-track">
         <div class="progress-bar" id="progressBar"></div>
       </div>
+    </div>
+
+    <div class="radio-float" aria-label="Emisora Scrolling Life">
+      <iframe
+        class="radio-button-frame"
+        src="https://radio.testivanbarajas.cloud/radio"
+        title="Botón de reproducción de la emisora Scrolling Life"
+        loading="eager"
+        allow="autoplay; encrypted-media"
+        referrerpolicy="strict-origin-when-cross-origin"
+      ></iframe>
     </div>
 
     <details class="site-menu" aria-label="Otras salas">
@@ -40,10 +67,6 @@
             <span>Juego</span>
             <small>Escapar del mounstro del scroll</small>
           </a>
-          <a class="site-menu-link" href="./pages/comentarios-instagram/">
-            <span>Comentarios</span>
-            <small>archivo de voces</small>
-          </a>
           <a class="site-menu-link" href="./pages/fantasmagorias/">
             <span>Fantasmagorias</span>
             <small>deriva visual</small>
@@ -56,13 +79,38 @@
             <span>Embedding Rain</span>
             <small>modelo + PCA 3D</small>
           </a>
-          <a class="site-menu-link" href="./pages/terminal-scroll/">
-            <span>Terminal Scroll</span>
-            <small>simulacion linux</small>
+          <a class="site-menu-link" href="./maqutacion/">
+            <span>Maquetacion Instagram</span>
+            <small>post 1:1</small>
           </a>
-          <a class="site-menu-link" href="./pages/mosquito-caos/">
-            <span>Mosquito Caos</span>
-            <small>enjambre interactivo</small>
+          
+          <div class="submenu-container">
+            <a class="site-menu-link" href="./pages/ruido/">
+              <span>Ruido</span>
+              <small>texto curatorial</small>
+            </a>
+            <a class="site-menu-link submenu-item" href="./pages/ruido/comentarios-instagram/">
+              <span>↳ Comentarios</span>
+              <small>archivo de voces</small>
+            </a>
+            <a class="site-menu-link submenu-item" href="./pages/ruido/mosquito-caos/">
+              <span>↳ Mosquito Caos</span>
+              <small>sonido molesto</small>
+            </a>
+          </div>
+          <div class="submenu-container">
+            <a class="site-menu-link" href="./pages/archivo/">
+              <span>Archivo</span>
+              <small>texto curatorial</small>
+            </a>
+            <a class="site-menu-link submenu-item" href="./pages/archivo/inteligencias-colectivas/">
+              <span>↳ Inteligencias Colectivas</span>
+              <small>por Henry Lamiña</small>
+            </a>
+          </div>
+          <a class="site-menu-link" href="./pages/cuerpo/">
+            <span>Cuerpo</span>
+            <small>lorem ipsum</small>
           </a>
         </div>
       </nav>
@@ -74,10 +122,15 @@
         <span class="hero-strip hero-strip-b"></span>
         <span class="hero-strip hero-strip-c"></span>
         <span class="hero-strip hero-strip-d"></span>
+        <span class="hero-strip hero-strip-i"></span>
+        <span class="hero-strip hero-strip-j"></span>
+        <span class="hero-strip hero-strip-k"></span>
+        <span class="hero-strip hero-strip-l"></span>
         <span class="hero-strip hero-strip-e"></span>
         <span class="hero-strip hero-strip-f"></span>
         <span class="hero-strip hero-strip-g"></span>
         <span class="hero-strip hero-strip-h"></span>
+        <span class="hero-spotlight"></span>
       </div>
       <div class="hero-copy reveal">
         <p class="sr-only" id="heroSummary">Scrolling Life es una pieza web sobre el scroll como gesto cultural, ritmo corporal y forma contemporanea de mirar.</p>
@@ -136,7 +189,7 @@
             <div class="setup-content">
               <div class="setup-brand">
                 <span>SCROLLING</span>
-                <strong>LIFE 98</strong>
+                <strong>LIFE </strong>
               </div>
               <div class="setup-main">
                 <p class="setup-kicker">Setup is configuring vertical experience.</p>
@@ -239,18 +292,11 @@
         </div>
       </section>
 
-      <section class="section atlas-section" id="fuerzas" aria-labelledby="fuerzasTitle">
-        <div class="atlas-intro reveal">
-          <p class="eyebrow">cartografia conceptual</p>
-          <h2 id="fuerzasTitle">Cuatro fuerzas sostienen la vida en scroll.</h2>
-          <p class="atlas-lead">
-            Este mapa no enumera ideas: muestra tensiones que aparecen al mismo tiempo
-            mientras deslizamos la pantalla.
-          </p>
-        </div>
+      
 
-        <div class="card-grid atlas-grid">
-          <article class="concept-card concept-card-body reveal">
+        <div class="win98-desktop-container reveal">
+          <div class="win98-desktop" id="win98Desktop">
+            <article class="concept-card concept-card-body win-draggable" id="winCuerpo" style="top: 20px; left: 30px; z-index: 5;">
             <div class="win-titlebar">
               <span>C:\SCROLL\CUERPO.TXT</span>
               <span class="win-controls" aria-hidden="true">
@@ -258,22 +304,15 @@
               </span>
             </div>
             <div class="concept-window-body">
-              <div class="concept-head">
-                <div class="card-index" aria-hidden="true">A</div>
-                <span class="concept-meta">presencia</span>
-              </div>
+              
               <h3>Cuerpo</h3>
               <p>
-                El scroll empieza en el cuerpo: dedo, mirada, postura y respiracion
-                quedan atrapados en un ritmo minimo frente a la pantalla.
+                Texto
               </p>
-              <dl class="concept-readout">
-                <div><dt>input</dt><dd>dedo / retina</dd></div>
-                <div><dt>pulso</dt><dd>ritmo minimo</dd></div>
-              </dl>
+              
             </div>
           </article>
-          <article class="concept-card concept-card-infinite reveal">
+            <article class="concept-card concept-card-infinite win-draggable" id="winInfinito" style="top: 60px; left: 80px; z-index: 4;">
             <div class="win-titlebar">
               <span>C:\SCROLL\INFINITO.SYS</span>
               <span class="win-controls" aria-hidden="true">
@@ -281,22 +320,15 @@
               </span>
             </div>
             <div class="concept-window-body">
-              <div class="concept-head">
-                <div class="card-index" aria-hidden="true">B</div>
-                <span class="concept-meta">descenso</span>
-              </div>
+              
               <h3>Infinito</h3>
               <p>
-                La pagina promete un fondo que nunca llega. Cada desplazamiento abre
-                otro tramo, otra imagen, otra espera.
+                Texto
               </p>
-              <dl class="concept-readout">
-                <div><dt>loop</dt><dd>sin cierre</dd></div>
-                <div><dt>estado</dt><dd>cargando</dd></div>
-              </dl>
+              
             </div>
           </article>
-          <article class="concept-card concept-card-noise reveal">
+            <article class="concept-card concept-card-noise win-draggable" id="winRuido" style="top: 100px; left: 130px; z-index: 3;">
             <div class="win-titlebar">
               <span>C:\SCROLL\RUIDO.DLL</span>
               <span class="win-controls" aria-hidden="true">
@@ -304,22 +336,15 @@
               </span>
             </div>
             <div class="concept-window-body">
-              <div class="concept-head">
-                <div class="card-index" aria-hidden="true">C</div>
-                <span class="concept-meta">saturacion</span>
-              </div>
+              
               <h3>Ruido</h3>
               <p>
-                Entre imagenes, datos y estimulos, la senal se vuelve inestable. El exceso
-                tambien compone una forma de lectura.
+                Texto
               </p>
-              <dl class="concept-readout">
-                <div><dt>senal</dt><dd>interferencia</dd></div>
-                <div><dt>nivel</dt><dd>alto</dd></div>
-              </dl>
+              
             </div>
           </article>
-          <article class="concept-card concept-card-archive reveal">
+            <article class="concept-card concept-card-archive win-draggable" id="winArchivo" style="top: 30px; left: 450px; z-index: 2;">
             <div class="win-titlebar">
               <span>C:\SCROLL\ARCHIVO.LOG</span>
               <span class="win-controls" aria-hidden="true">
@@ -327,74 +352,69 @@
               </span>
             </div>
             <div class="concept-window-body">
-              <div class="concept-head">
-                <div class="card-index" aria-hidden="true">D</div>
-                <span class="concept-meta">memoria</span>
-              </div>
+              
               <h3>Archivo</h3>
               <p>
-                El flujo guarda restos: capturas, comentarios, gestos y fragmentos que
-                regresan como capas de una misma superficie.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna
               </p>
-              <dl class="concept-readout">
-                <div><dt>cache</dt><dd>fragmentos</dd></div>
-                <div><dt>modo</dt><dd>residual</dd></div>
-              </dl>
+              
             </div>
           </article>
-        </div>
-      </section>
-
-      
-
-      <section class="section quote-section reveal" aria-labelledby="quoteTitle">
-        <h2 class="sr-only" id="quoteTitle">Cita central</h2>
-        <blockquote>
-          “Deslizar hacia abajo” parece una acción banal.
-          <br />
-          En realidad es una pedagogia del presente.
-        </blockquote>
-      </section>
-
-      <section class="section gallery-section" id="lineas" aria-labelledby="lineasTitle">
-        <div class="gallery-copy reveal">
-          <p class="eyebrow">lineas de lectura</p>
-          <h2 id="lineasTitle">El scroll como materia artistica.</h2>
-        </div>
-
-        <div class="gallery-stack" aria-label="Lineas de lectura">
-          <div class="gallery-line reveal">
-            <div class="gallery-line-inner">
-              <p class="gallery-line-no" aria-hidden="true">01</p>
-              <h3>Pantalla infinita</h3>
-              <p>
-                La obra se despliega como una superficie que nunca termina del todo. Cada pausa
-                es una decision contra la corriente.
-              </p>
+            <article class="concept-card concept-card-pausa is-visible win-draggable" id="winPausa" style="top: 160px; left: 320px; z-index: 1;">
+            <div class="win-titlebar">
+              <span>C:\SCROLL\PAUSA.EXE</span>
+              <span class="win-controls" aria-hidden="true">
+                <span></span><span></span><span></span>
+              </span>
             </div>
-          </div>
-          <div class="gallery-line reveal">
-            <div class="gallery-line-inner">
-              <p class="gallery-line-no" aria-hidden="true">02</p>
-              <h3>Cuerpo entrenado</h3>
+            <div class="concept-window-body">
+              
+              <h3>Pausa</h3>
               <p>
-                La repeticion vuelve automatico el gesto. La automatizacion construye subjetividad.
+               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
               </p>
+              
             </div>
+          </article>
           </div>
-          <div class="gallery-line reveal">
-            <div class="gallery-line-inner">
-              <p class="gallery-line-no" aria-hidden="true">03</p>
-              <h3>Economia afectiva</h3>
-              <p>
-                El scroll administra ansiedad, curiosidad, comparacion y agotamiento en una sola cadena continua.
-              </p>
+          <div class="win98-taskbar">
+            <button class="taskbar-start" type="button">
+              <span class="start-icon" aria-hidden="true">❖</span>
+              <strong>Start</strong>
+            </button>
+            <div class="taskbar-tasks">
+              <button class="taskbar-tab is-active" data-target="winCuerpo" type="button">C:\SCROLL\CUERPO.TXT</button>
+              <button class="taskbar-tab" data-target="winInfinito" type="button">C:\SCROLL\INFINITO.SYS</button>
+              <button class="taskbar-tab" data-target="winRuido" type="button">C:\SCROLL\RUIDO.DLL</button>
+              <button class="taskbar-tab" data-target="winArchivo" type="button">C:\SCROLL\ARCHIVO.LOG</button>
+              <button class="taskbar-tab" data-target="winPausa" type="button">C:\SCROLL\PAUSA.EXE</button>
+            </div>
+            <div class="taskbar-tray">
+              <span id="taskbarTime">6:30 PM</span>
             </div>
           </div>
         </div>
       </section>
 
       
+
+      <section class="section reveal paint-section" aria-labelledby="iframeTitle">
+        <h2 class="sr-only" id="iframeTitle">Paint Interactivo</h2>
+        <div id="paintContainer" class="paint-container">
+          <div class="paint-toolbar">
+            <button id="btnFullscreenPaint" class="button button-solid paint-fullscreen-button" type="button">Pantalla Completa</button>
+          </div>
+          <iframe 
+            src="https://2-24-99-177.sslip.io/otro_paint_prueba_2" 
+            class="paint-frame"
+            title="Paint Interactivo"
+            loading="lazy"
+            allow="fullscreen"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </section>
+
     </main>
   </div>
 

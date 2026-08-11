@@ -1,4 +1,4 @@
-﻿const cloud = document.getElementById('commentCloud');
+const cloud = document.getElementById('commentCloud');
 const scrollSpace = document.getElementById('scrollSpace');
 const intro = document.getElementById('intro');
 const visibleCount = document.getElementById('visibleCount');
@@ -41,7 +41,7 @@ const BASE_SCROLL_SCREENS = 10;
 const EXTEND_SCROLL_SCREENS = 5;
 const STEP_SIZE = 96;
 const MAX_VISIBLE = 420;
-const INITIAL_WAVES = 4;
+const INITIAL_WAVES = window.innerWidth < 720 ? 10 : 18;
 const MAX_WAVES_PER_FRAME = 4;
 
 let virtualHeight = 0;
