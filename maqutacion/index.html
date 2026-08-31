@@ -6,13 +6,14 @@
   <title>Maquetacion Instagram - Scrolling Life</title>
   <meta
     name="description"
-    content="Formatos 1:1 para publicaciones de Instagram basados en la imagen principal de Scrolling Life."
+    content="Formatos 1:1, 4:5 y 9:16 para publicaciones de Scrolling Life."
   />
   <link rel="stylesheet" href="../assets/fonts/local-fonts.css" />
-  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="./styles.css?v=20260829-poster-16" />
+  <script src="../assets/scripts/maintenance-gate.js" defer></script>
 </head>
 <body>
-  <a class="skip-link" href="#formatos">Saltar al formato 1:1</a>
+  <a class="skip-link" href="#formatos">Saltar a los formatos</a>
 
   <header class="page-top">
     <a class="brand-link" href="../index.html">Scrolling Life</a>
@@ -21,7 +22,13 @@
 
   <main class="layout-screen" id="formatos">
     <section class="format-recycler" aria-label="Formatos disponibles">
-      <button class="format-item is-active" type="button" data-template="home" aria-pressed="true">
+      <button class="format-item is-active" type="button" data-template="poster" data-label="POST_16_AFICHE_GSF" data-aspect="4:5" aria-pressed="true">
+        <span class="format-thumb thumb-poster" aria-hidden="true"></span>
+        <span class="format-index">16</span>
+        <strong>Afiche GSF</strong>
+        <small>1080 x 1350</small>
+      </button>
+      <button class="format-item" type="button" data-template="home" aria-pressed="false">
         <span class="format-thumb thumb-home" aria-hidden="true"></span>
         <span class="format-index">01</span>
         <strong>Home 1:1</strong>
@@ -57,15 +64,69 @@
         <strong>Historia</strong>
         <small>1080 x 1920</small>
       </button>
+      <button class="format-item" type="button" data-template="home" data-bg-only="true" data-label="BG_07_HOME" aria-pressed="false">
+        <span class="format-thumb thumb-home" aria-hidden="true"></span>
+        <span class="format-index">07</span>
+        <strong>Fondo Home</strong>
+        <small>sin texto</small>
+      </button>
+      <button class="format-item" type="button" data-template="archive" data-bg-only="true" data-label="BG_08_ARCHIVO" aria-pressed="false">
+        <span class="format-thumb thumb-archive" aria-hidden="true"></span>
+        <span class="format-index">08</span>
+        <strong>Fondo Archivo</strong>
+        <small>sin texto</small>
+      </button>
+      <button class="format-item" type="button" data-template="date" data-bg-only="true" data-label="BG_09_FECHA" aria-pressed="false">
+        <span class="format-thumb thumb-date" aria-hidden="true"></span>
+        <span class="format-index">09</span>
+        <strong>Fondo Fecha</strong>
+        <small>sin texto</small>
+      </button>
+      <button class="format-item" type="button" data-template="clean" data-bg-only="true" data-label="BG_10_LIMPIO" aria-pressed="false">
+        <span class="format-thumb thumb-clean" aria-hidden="true"></span>
+        <span class="format-index">10</span>
+        <strong>Fondo Limpio</strong>
+        <small>sin texto</small>
+      </button>
+      <button class="format-item" type="button" data-template="reel" data-bg-only="true" data-label="BG_11_REEL" aria-pressed="false" data-aspect="9:16">
+        <span class="format-thumb thumb-date" aria-hidden="true"></span>
+        <span class="format-index">11</span>
+        <strong>Fondo Reel</strong>
+        <small>sin texto</small>
+      </button>
+      <button class="format-item" type="button" data-template="story" data-bg-only="true" data-label="BG_12_HISTORIA" aria-pressed="false" data-aspect="9:16">
+        <span class="format-thumb thumb-archive" aria-hidden="true"></span>
+        <span class="format-index">12</span>
+        <strong>Fondo Historia</strong>
+        <small>sin texto</small>
+      </button>
+      <button class="format-item" type="button" data-template="story-blue" data-bg-only="true" data-label="BG_13_HISTORIA_AZUL" aria-pressed="false" data-aspect="9:16">
+        <span class="format-thumb thumb-archive thumb-blue" aria-hidden="true"></span>
+        <span class="format-index">13</span>
+        <strong>Historia Azul</strong>
+        <small>sin texto</small>
+      </button>
+      <button class="format-item" type="button" data-template="story-glitch" data-bg-only="true" data-label="BG_14_HISTORIA_GLITCH" aria-pressed="false" data-aspect="9:16">
+        <span class="format-thumb thumb-archive thumb-blue thumb-glitch" aria-hidden="true"></span>
+        <span class="format-index">14</span>
+        <strong>Historia Glitch</strong>
+        <small>azul + glitch</small>
+      </button>
+      <button class="format-item" type="button" data-template="story-binary" data-bg-only="true" data-label="BG_15_HISTORIA_BINARIA" aria-pressed="false" data-aspect="9:16">
+        <span class="format-thumb thumb-archive thumb-blue thumb-glitch thumb-binary" aria-hidden="true"></span>
+        <span class="format-index">15</span>
+        <strong>Historia Binaria</strong>
+        <small>glitch + 1/0</small>
+      </button>
     </section>
 
     <section class="preview-stage" aria-label="Vista previa de publicacion">
       <div class="preview-header">
-        <span id="activeFormat">POST_01_HOME</span>
-        <span id="activeAspect">1:1</span>
+        <span id="activeFormat">POST_16_AFICHE_GSF</span>
+        <span id="activeAspect">4:5</span>
       </div>
 
-      <article class="ig-post template-home" id="igPost" aria-label="Publicacion cuadrada Scrolling Life">
+      <article class="ig-post template-poster aspect-4-5" id="igPost" aria-label="Afiche vertical Scrolling Life">
         <div class="post-archive" aria-hidden="true">
           <span class="post-strip post-strip-a"></span>
           <span class="post-strip post-strip-b"></span>
@@ -85,11 +146,47 @@
           <p class="post-author">&gt; Ivan Barajas Hurtado</p>
           <p class="post-date">17 de septiembre de 2026</p>
         </div>
+
+        <div class="poster-art" aria-hidden="true">
+          <span class="poster-shape poster-blue-top"></span>
+          <span class="poster-shape poster-black-top"></span>
+          <span class="poster-shape poster-blue-main"></span>
+          <span class="poster-shape poster-blue-stem"></span>
+          <span class="poster-shape poster-title-slab"></span>
+          <span class="poster-shape poster-green-left"></span>
+          <span class="poster-shape poster-green-foot"></span>
+          <span class="poster-shape poster-green-right"></span>
+          <span class="poster-shape poster-green-bottom"></span>
+          <span class="poster-shape poster-dark-date"></span>
+          <span class="poster-shape poster-black-footer"></span>
+          <span class="poster-shape poster-black-step"></span>
+          <span class="poster-shape poster-yellow-line"></span>
+          <span class="poster-shape poster-yellow-square"></span>
+          <span class="poster-shape poster-green-square"></span>
+          <span class="poster-checker"></span>
+          <span class="poster-horizontal-lines"></span>
+          <span class="poster-top-green-lines"></span>
+          <span class="poster-top-bars"></span>
+          <span class="poster-top-blue-lines"></span>
+          <span class="poster-circuit-lines"></span>
+
+          <img class="poster-logo poster-logo-campaign" src="./assets/bogota-mi-ciudad-mi-casa-blanco.png" alt="" />
+          <img class="poster-logo poster-logo-bogota" src="./assets/bogota-blanco.png" alt="" />
+
+          <h2 class="poster-title"><span>Scrolling</span><span>Life</span></h2>
+          <span class="poster-letter">S</span>
+          <p class="poster-date-copy"><span>sept.17</span><span>2026</span></p>
+          <p class="poster-grant-copy">Proyecto ganador de la beca de programación<br />virtual en artes plásticas y visuales<br />GSF</p>
+
+          <p class="poster-gallery-name">Galería<br />Santa Fe<br />desde 1948</p>
+          <span class="poster-gsf-mark">GSF</span>
+          <p class="poster-idartes">Instituto<br />Distrital de las Artes<br />Idartes</p>
+        </div>
       </article>
 
       <div class="preview-footer">
-        <span id="formatText">Formato para feed</span>
-        <span id="rgbText">RGB / cuadrado</span>
+        <span id="formatText">Afiche vertical para feed</span>
+        <span id="rgbText">RGB / 1080 x 1350</span>
       </div>
 
       <div class="download-actions" aria-label="Acciones de descarga">
@@ -103,12 +200,17 @@
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
           </svg>
-          Descargar Video
+          Descargar MP4 Fluido
         </button>
       </div>
     </section>
   </main>
 
-  <script src="./script.js"></script>
+  <script src="./script.js?v=20260829-poster-16"></script>
+
+  <!-- Cloudflare Web Analytics -->
+  <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "4ae4ff73465943b788027815f6676ab3"}'></script>
+  <!-- End Cloudflare Web Analytics -->
+  <script src="/assets/scripts/traffic-tracker.js" defer></script>
 </body>
 </html>

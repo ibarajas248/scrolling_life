@@ -1,0 +1,180 @@
+:root {
+  --bg: #010204;
+  --green: #9eff71;
+  --cyan: #73e9ff;
+  --blue: #0734a8;
+  --paper: #eef2ea;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+body {
+  color: var(--paper);
+  font-family: 'Share Tech Mono', 'IBM Plex Mono', 'Courier New', monospace;
+}
+
+.sculpture-stage {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 52%, rgba(158, 255, 113, 0.08), transparent 31%),
+    radial-gradient(ellipse at 50% 30%, rgba(115, 233, 255, 0.07), transparent 36%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.98), rgba(2, 6, 16, 0.78) 28%, rgba(2, 6, 16, 0.78) 72%, rgba(0, 0, 0, 0.98)),
+    #010204;
+  isolation: isolate;
+}
+
+.sculpture-canvas,
+.fallback-sculpture,
+.scan-field,
+.vignette {
+  position: absolute;
+  inset: 0;
+}
+
+.sculpture-canvas {
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.fallback-sculpture {
+  z-index: 1;
+  display: none;
+  perspective: 1100px;
+  transform-style: preserve-3d;
+}
+
+.fallback-sculpture.is-active {
+  display: block;
+}
+
+.fallback-node {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--w, 120px);
+  height: var(--h, 160px);
+  overflow: hidden;
+  border: 1px solid rgba(238, 242, 234, 0.17);
+  background: rgba(0, 0, 0, 0.58);
+  box-shadow:
+    0 24px 62px rgba(0, 0, 0, 0.46),
+    0 0 26px rgba(115, 233, 255, 0.11),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  opacity: var(--opacity, 0.72);
+  transform:
+    translate(-50%, -50%)
+    rotateY(var(--orbit, 0deg))
+    translateZ(var(--radius, 340px))
+    translateY(var(--y, 0px))
+    rotateY(var(--face, 0deg))
+    rotateZ(var(--tilt, 0deg));
+  transform-style: preserve-3d;
+  animation: fallbackFloat var(--float-speed, 7s) ease-in-out infinite alternate;
+}
+
+.fallback-node img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.86;
+  filter: grayscale(0.82) contrast(1.18) brightness(0.82) saturate(0.94);
+}
+
+.fallback-sculpture::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(66vw, 720px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(158, 255, 113, 0.18);
+  transform: translate(-50%, -50%) rotateX(68deg);
+  box-shadow: 0 0 54px rgba(158, 255, 113, 0.08);
+}
+
+.fallback-sculpture.is-active {
+  animation: fallbackRotate 36s linear infinite;
+}
+
+.scan-field {
+  z-index: 2;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle, rgba(238, 246, 252, 0.13) 0 1px, transparent 1.4px),
+    repeating-linear-gradient(90deg, rgba(158, 255, 113, 0.06) 0 1px, transparent 1px 75px),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.028) 0 1px, transparent 1px 4px);
+  background-size: 12px 12px, 75px 100%, 100% 4px;
+  mix-blend-mode: screen;
+  opacity: 0.26;
+}
+
+.vignette {
+  z-index: 3;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at center, transparent 0 39%, rgba(0, 0, 0, 0.5) 72%, rgba(0, 0, 0, 0.98) 100%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.88), transparent 14%, transparent 86%, rgba(0, 0, 0, 0.92)),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.58), transparent 20%, transparent 80%, rgba(0, 0, 0, 0.76));
+  box-shadow: inset 0 0 170px rgba(0, 0, 0, 0.98);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@keyframes fallbackRotate {
+  from {
+    transform: rotateX(-6deg) rotateY(0deg);
+  }
+
+  to {
+    transform: rotateX(-6deg) rotateY(360deg);
+  }
+}
+
+@keyframes fallbackFloat {
+  from {
+    margin-top: -14px;
+  }
+
+  to {
+    margin-top: 18px;
+  }
+}
+
+@media (max-width: 720px) {
+  .fallback-node {
+    width: calc(var(--w, 120px) * 0.78);
+    height: calc(var(--h, 160px) * 0.78);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fallback-sculpture.is-active,
+  .fallback-node {
+    animation-duration: 90s;
+  }
+}

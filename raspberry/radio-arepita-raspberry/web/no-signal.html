@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="refresh" content="20">
+  <title>Radio Arepita - No Signal</title>
+  <style>
+    :root {
+      --green: #9eff71;
+      --paper: #edf4ff;
+      --alert: #ee7d59;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      background:
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.04) 0 1px, transparent 1px 68px),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.035) 0 1px, transparent 1px 5px),
+        radial-gradient(ellipse at center, rgba(158,255,113,0.08), transparent 44%),
+        #010204;
+      color: var(--paper);
+      font-family: "Courier New", monospace;
+      text-transform: uppercase;
+    }
+
+    main {
+      width: min(760px, calc(100vw - 44px));
+      text-align: center;
+    }
+
+    .status {
+      color: var(--alert);
+      font-size: clamp(2.6rem, 9vw, 7rem);
+      letter-spacing: 0.14em;
+      text-shadow: 0 0 22px rgba(238,125,89,0.4);
+    }
+
+    .name {
+      margin-top: 22px;
+      color: var(--green);
+      font-size: clamp(1rem, 2vw, 1.4rem);
+      letter-spacing: 0.22em;
+      text-shadow: 0 0 16px rgba(158,255,113,0.3);
+    }
+
+    .hint {
+      margin-top: 12px;
+      color: rgba(237,244,255,0.72);
+      font-size: 0.85rem;
+      letter-spacing: 0.14em;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="status">no signal</div>
+    <div class="name">radio arepita</div>
+    <div class="hint">checking stream every 20 seconds</div>
+  </main>
+
+  <!-- Cloudflare Web Analytics -->
+  <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "4ae4ff73465943b788027815f6676ab3"}'></script>
+  <!-- End Cloudflare Web Analytics -->
+</body>
+</html>

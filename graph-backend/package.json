@@ -1,0 +1,12 @@
+{
+  "name": "scrolling-life-graph-backend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "mysql2": "^3.11.5"
+  },
+  "scripts": {
+    "start": "node server.mjs"
+  }
+}

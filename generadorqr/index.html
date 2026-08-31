@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Convierte una URL en un código QR. Personaliza colores, tamaño y margen, y descarga en PNG o SVG. Gratis y sin enviar tu URL a terceros.">
+  <meta name="theme-color" content="#0c0f14">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' blob: data:; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>Generador QR — Scrolling Life</title>
+  <link rel="canonical" href="https://scrollinglife.com/generadorqr/">
+  <link rel="stylesheet" href="/assets/fonts/local-fonts.css">
+  <link rel="stylesheet" href="/generadorqr/styles.css?v=20260830-1">
+  <script src="/generadorqr/vendor/qrcode-2.0.4.js" defer></script>
+  <script type="module" src="/generadorqr/app.js?v=20260830-1"></script>
+</head>
+<body>
+  <a class="skip-link" href="#generator">Saltar al generador</a>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Volver a Scrolling Life">scrolling life<span aria-hidden="true">↗</span></a>
+      <span class="topbar-note">herramientas / 01</span>
+    </header>
+    <main id="generator">
+      <div class="intro">
+        <div><p class="eyebrow">DE UN ENLACE A CUALQUIER LUGAR</p><h1>Generador <span>QR.</span></h1></div>
+        <p class="intro-copy">Pega una URL. Hazla tuya.<br>Descárgala y llévala fuera de la pantalla.</p>
+      </div>
+      <div class="workspace">
+        <form id="qrForm" class="editor" novalidate>
+          <section class="section destination-section" aria-labelledby="destinationTitle">
+            <h2 id="destinationTitle"><span class="step">01</span> El destino</h2>
+            <label for="urlInput">URL del sitio</label>
+            <input id="urlInput" name="url" type="text" inputmode="url" autocomplete="off" spellcheck="false" autocapitalize="off" maxlength="2000" value="https://scrollinglife.com/" placeholder="https://tu-sitio.com" aria-describedby="urlHint formMessage" required>
+            <p class="hint" id="urlHint">Puedes pegar el enlace completo o escribir el dominio.</p>
+          </section>
+          <section class="section" aria-labelledby="designTitle">
+            <h2 id="designTitle"><span class="step">02</span> El aspecto</h2>
+            <fieldset class="presets"><legend>Paletas rápidas</legend>
+              <button type="button" class="preset" data-preset="classic" aria-pressed="true"><span class="swatch swatch-classic" aria-hidden="true"></span>Clásico</button>
+              <button type="button" class="preset" data-preset="scroll" aria-pressed="false"><span class="swatch swatch-scroll" aria-hidden="true"></span>Scroll</button>
+              <button type="button" class="preset" data-preset="ink" aria-pressed="false"><span class="swatch swatch-ink" aria-hidden="true"></span>Tinta</button>
+              <button type="button" class="preset" data-preset="paper" aria-pressed="false"><span class="swatch swatch-paper" aria-hidden="true"></span>Papel</button>
+            </fieldset>
+            <div class="two-columns color-fields">
+              <div><label for="foreground">Color del código</label><div class="color-control"><input type="color" id="foreground" value="#111111"><output id="foregroundValue" for="foreground">#111111</output></div></div>
+              <div><label for="background">Color del fondo</label><div class="color-control"><input type="color" id="background" value="#ffffff"><output id="backgroundValue" for="background">#FFFFFF</output></div></div>
+            </div>
+            <div class="two-columns">
+              <div><label for="size">Tamaño de descarga</label><select id="size"><option value="384">384 × 384 px</option><option value="768">768 × 768 px</option><option value="1024" selected>1024 × 1024 px</option><option value="2048">2048 × 2048 px</option></select></div>
+              <div><label for="margin">Margen de seguridad</label><select id="margin"><option value="4" selected>Normal · 4 módulos</option><option value="6">Amplio · 6 módulos</option><option value="8">Extra · 8 módulos</option></select></div>
+            </div>
+            <label for="correction">Corrección de errores</label>
+            <select id="correction" aria-describedby="correctionHint"><option value="L">L · Básica</option><option value="M" selected>M · Equilibrada</option><option value="Q">Q · Alta</option><option value="H">H · Máxima</option></select>
+            <p class="hint" id="correctionHint">Un nivel mayor añade redundancia y puede crear un código más denso.</p>
+          </section>
+          <div class="form-actions"><button class="generate-button" type="submit">Generar QR <span aria-hidden="true">↗</span></button><button class="reset-button" type="reset">Restablecer</button></div>
+          <p id="formMessage" class="form-message" role="status" aria-live="polite">Preparando el generador…</p>
+        </form>
+        <section class="preview-panel" aria-labelledby="previewTitle">
+          <div class="preview-top"><h2 id="previewTitle">Tu código</h2><span class="live-tag" id="previewStatus">PREPARANDO</span></div>
+          <div class="preview-stage" id="previewStage"><canvas id="qrCanvas" width="1024" height="1024" role="img" aria-label="Vista previa del código QR" hidden></canvas><p id="emptyPreview">Tu QR aparecerá aquí.</p></div>
+          <div class="preview-meta"><span id="dimensions">1024 × 1024 px</span><span id="matrixInfo">PNG / SVG</span></div>
+          <div class="destination"><span class="eyebrow">ENLACE CODIFICADO</span><p id="encodedUrl">—</p></div>
+          <div class="download-actions"><button id="downloadPng" class="download-primary" type="button" disabled>Descargar PNG <span aria-hidden="true">↓</span></button><button id="downloadSvg" class="download-secondary" type="button" disabled>SVG <span aria-hidden="true">↓</span></button></div>
+          <p class="download-note">PNG para compartir. SVG para ampliar e imprimir.</p>
+          <p class="scan-note">Prueba el QR con la cámara de tu celular antes de imprimirlo.</p>
+        </section>
+      </div>
+      <footer class="footer"><p><span class="privacy-dot" aria-hidden="true"></span>Sin registro. Sin enviar tu URL. Se genera en tu navegador.</p><p>QR estático · Sin caducidad propia</p></footer>
+      <p class="footnote">El QR conserva este enlace: si el sitio de destino cambia o deja de existir, el QR no lo actualiza.</p>
+      <noscript><p class="noscript">Activa JavaScript para generar el QR. La generación se realiza localmente en tu navegador.</p></noscript>
+    </main>
+  </div>
+</body>
+</html>

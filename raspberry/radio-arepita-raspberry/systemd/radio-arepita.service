@@ -1,0 +1,14 @@
+[Unit]
+Description=Radio Arepita Raspberry Kiosk
+After=graphical-session.target network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+EnvironmentFile=%h/.config/radio-arepita/radio-arepita.env
+ExecStart=%h/.local/bin/start-radio-arepita.sh
+Restart=always
+RestartSec=8
+
+[Install]
+WantedBy=default.target

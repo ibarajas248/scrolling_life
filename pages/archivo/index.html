@@ -51,7 +51,30 @@
     .back-link:hover {
       background: rgba(238, 125, 89, 0.2);
     }
+    .archive-subpages {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 3rem;
+    }
+    .archive-subpage-link {
+      display: inline-block;
+      padding: 12px 24px;
+      background: #9eff71;
+      color: #020304;
+      text-decoration: none;
+      font-weight: bold;
+      font-family: 'Share Tech Mono', monospace;
+      border-radius: 4px;
+      transition: opacity 0.3s ease, background 0.3s ease;
+    }
+    .archive-subpage-link:hover,
+    .archive-subpage-link:focus {
+      background: #80e9ff;
+    }
   </style>
+  <script src="../../assets/scripts/maintenance-gate.js" defer></script>
 </head>
 <body>
   <div class="content-container">
@@ -69,10 +92,16 @@
 
     <p>Donec consequat metus at nibh semper, ac sodales neque cursus. Praesent id augue sed enim auctor tempus. Aenean aliquet risus lectus, sed consequat ligula blandit a. Suspendisse potenti. Nam non nisl eu ex varius finibus eget sed nisi. Cras efficitur, enim ut bibendum luctus, ante purus dapibus risus, ac ullamcorper felis lectus in ex. Aenean tristique leo eu neque eleifend condimentum vel eget enim.</p>
     
-    <div style="margin-top: 3rem; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
-      <a href="./inteligencias-colectivas/index.html" style="display: inline-block; padding: 12px 24px; background: #9eff71; color: #020304; text-decoration: none; font-weight: bold; font-family: 'Share Tech Mono', monospace; border-radius: 4px; transition: opacity 0.3s;">Inteligencias Colectivas &rarr;</a>
+    <div class="archive-subpages">
+      <a href="./inteligencias-colectivas/index.html" class="archive-subpage-link">Inteligencias Colectivas &rarr;</a>
+      <a href="./precipitacion-critica/" class="archive-subpage-link">Precipitaci&oacute;n cr&iacute;tica &rarr;</a>
       <a href="../../index.html" class="back-link" style="margin-top: 0;">&lt; Volver al menú principal</a>
     </div>
   </div>
+
+  <!-- Cloudflare Web Analytics -->
+  <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "4ae4ff73465943b788027815f6676ab3"}'></script>
+  <!-- End Cloudflare Web Analytics -->
+  <script src="/assets/scripts/traffic-tracker.js" defer></script>
 </body>
 </html>

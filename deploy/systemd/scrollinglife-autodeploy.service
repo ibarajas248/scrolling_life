@@ -1,0 +1,8 @@
+[Unit]
+Description=Auto deploy Scrolling Life from GitHub
+Wants=network-online.target docker.service
+After=network-online.target docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/scrollinglife-github-pull-deploy

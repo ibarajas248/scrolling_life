@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Scroll colectivo - Scrolling Life</title>
+  <meta name="description" content="Espacio de escritura colectiva de Scrolling Life." />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="paper-field" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="https://test.scrollinglife.com/">
+      <span>Scrolling Life</span>
+      <small>test</small>
+    </a>
+    <div class="status-pill" id="connectionStatus" data-state="connecting">
+      <span class="status-dot"></span>
+      <span data-status-copy>conectando</span>
+    </div>
+  </header>
+
+  <main class="collective-shell">
+    <section class="writer-panel" aria-labelledby="writerTitle">
+      <div class="panel-heading">
+        <p>escritura colectiva</p>
+        <h1 id="writerTitle">Scroll literario</h1>
+      </div>
+
+      <form class="writer-form" id="writerForm">
+        <label class="field">
+          <span>firma</span>
+          <input id="authorInput" name="author" maxlength="48" autocomplete="nickname" placeholder="anonimo" />
+        </label>
+
+        <label class="field field-text">
+          <span>texto</span>
+          <textarea
+            id="textInput"
+            name="text"
+            maxlength="2400"
+            rows="10"
+            required
+            placeholder="Continua el texto. Una frase, una imagen mental, una interrupcion."
+          ></textarea>
+        </label>
+
+        <div class="form-actions">
+          <span class="counter" id="textCounter">0 / 2400</span>
+          <button class="submit-button" type="submit">
+            <span>Agregar</span>
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <section class="scroll-stage" aria-labelledby="scrollTitle">
+      <div class="scroll-head">
+        <div>
+          <p>texto en curso</p>
+          <h2 id="scrollTitle">Manuscrito abierto</h2>
+        </div>
+        <span class="fragment-count" id="fragmentCount">0</span>
+      </div>
+
+      <ol class="fragment-list" id="fragmentList"></ol>
+
+      <div class="empty-state" id="emptyState">
+        <span></span>
+        <p>La pagina espera la primera frase.</p>
+      </div>
+    </section>
+  </main>
+
+  <template id="fragmentTemplate">
+    <li class="fragment-item">
+      <article class="fragment-card">
+        <div class="fragment-meta">
+          <span data-fragment-author></span>
+          <time data-fragment-time></time>
+        </div>
+        <p class="fragment-text" data-fragment-text></p>
+        <form class="edit-form" data-edit-form hidden>
+          <textarea data-edit-text maxlength="2400" rows="7"></textarea>
+          <div class="edit-actions">
+            <button type="submit" class="icon-button text-command">Guardar</button>
+            <button type="button" class="icon-button text-command" data-cancel-edit>Cancelar</button>
+          </div>
+        </form>
+        <div class="fragment-actions">
+          <button type="button" class="icon-button" data-edit-fragment aria-label="Editar fragmento" title="Editar">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 20h9" />
+              <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z" />
+            </svg>
+          </button>
+          <button type="button" class="icon-button danger" data-delete-fragment aria-label="Borrar fragmento" title="Borrar">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M3 6h18" />
+              <path d="M8 6V4h8v2" />
+              <path d="M19 6l-1 14H6L5 6" />
+              <path d="M10 11v5" />
+              <path d="M14 11v5" />
+            </svg>
+          </button>
+        </div>
+      </article>
+    </li>
+  </template>
+
+  <script src="./app.js"></script>
+  <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "4ae4ff73465943b788027815f6676ab3"}'></script>
+  <script src="/assets/scripts/traffic-tracker.js" defer></script>
+</body>
+</html>

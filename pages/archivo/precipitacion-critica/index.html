@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Precipitaci&oacute;n cr&iacute;tica - Scrolling Life</title>
+  <meta
+    name="description"
+    content="Obra de net art de Scrolling Life que convierte art&iacute;culos recientes de Esfera P&uacute;blica en una lluvia veloz de t&iacute;tulos, autores y fechas."
+  />
+  <link rel="stylesheet" href="./styles.css?v=20260828-c" />
+  <link rel="icon" href="data:," />
+  <script src="../../../assets/scripts/maintenance-gate.js" defer></script>
+</head>
+<body>
+  <canvas class="rain-canvas" data-rain-canvas aria-hidden="true"></canvas>
+  <div class="field-noise" aria-hidden="true"></div>
+  <div class="edge-vignette" aria-hidden="true"></div>
+
+  <main class="work-surface" aria-labelledby="obra" aria-describedby="obra-descripcion">
+    <h1 class="sr-only" id="obra">Precipitaci&oacute;n cr&iacute;tica</h1>
+    <p class="sr-only" id="obra-descripcion">
+      Los t&iacute;tulos de art&iacute;culos recientes atraviesan la pantalla como una lluvia informativa r&aacute;pida.
+      Al detener uno aparece su autor, fecha y enlace al art&iacute;culo original.
+    </p>
+  </main>
+
+  <script src="./script.js?v=20260828-c" defer></script>
+
+  <!-- Cloudflare Web Analytics -->
+  <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "4ae4ff73465943b788027815f6676ab3"}'></script>
+  <!-- End Cloudflare Web Analytics -->
+  <script src="/assets/scripts/traffic-tracker.js" defer></script>
+</body>
+</html>

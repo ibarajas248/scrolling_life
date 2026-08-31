@@ -1,0 +1,181 @@
+name: scrollinglife
+
+services:
+  web:
+    container_name: scrolling_life
+    image: scrolling_life:latest
+    build:
+      context: ${SCROLLING_LIFE_WEB_CONTEXT:-.}
+      dockerfile: Dockerfile
+    ports:
+      - "${SCROLLING_LIFE_WEB_PORT:-127.0.0.1:8080}:80"
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /var/cache/nginx
+      - /var/run
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      scrollinglife_net:
+        aliases:
+          - scrolling_life
+    depends_on:
+      graph-backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1/site-status.json"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+
+  graph-backend:
+    container_name: graph_backend
+    image: graph_backend:latest
+    build:
+      context: ${GRAPH_BACKEND_CONTEXT:-./graph-backend}
+      dockerfile: Dockerfile
+    env_file:
+      - path: ${GRAPH_ENV_FILE:-./graph-backend/.env}
+        required: false
+    environment:
+      GRAPH_PORT: "8092"
+      GRAPH_HOST: 0.0.0.0
+      GRAPH_SEED_PATH: /seed/grafo-3d.seed.json
+      TZ: America/Bogota
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - graph_3d_data:/data
+    networks:
+      scrollinglife_net:
+        aliases:
+          - graph_backend
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8092/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+
+  traffic-tracker:
+    container_name: traffic_tracker
+    image: traffic_tracker:latest
+    build:
+      context: ${TRAFFIC_TRACKER_CONTEXT:-./traffic-tracker}
+      dockerfile: Dockerfile
+    env_file:
+      - path: ${TRAFFIC_TRACKER_ENV_FILE:-./traffic-tracker/.env}
+        required: false
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      scrollinglife_net:
+        aliases:
+          - traffic_tracker
+
+  traffic-dashboard:
+    container_name: traffic_dashboard
+    image: traffic_dashboard:latest
+    build:
+      context: ${TRAFFIC_DASHBOARD_CONTEXT:-./traffic-dashboard}
+      dockerfile: Dockerfile
+    env_file:
+      - path: ${TRAFFIC_DASHBOARD_ENV_FILE:-./traffic-dashboard/.env}
+        required: false
+    environment:
+      API_BASE_URL: http://traffic_tracker:8090
+      SERVER_METRICS_URL: http://server_metrics:8091
+      TZ: America/Bogota
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    depends_on:
+      traffic-tracker:
+        condition: service_healthy
+      server-metrics:
+        condition: service_healthy
+    networks:
+      scrollinglife_net:
+        aliases:
+          - traffic_dashboard
+
+  server-metrics:
+    container_name: server_metrics
+    image: server_metrics:latest
+    build:
+      context: ${SERVER_METRICS_CONTEXT:-./server-metrics}
+      dockerfile: Dockerfile
+    env_file:
+      - path: ${SERVER_METRICS_ENV_FILE:-./server-metrics/.env}
+        required: false
+    environment:
+      HOST_PROC: /host/proc
+      HOST_ROOT: /host/root
+      DB_PATH: /data/server_metrics.sqlite
+      SAMPLE_INTERVAL_SECONDS: "30"
+      TZ: America/Bogota
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - server_metrics_data:/data
+      - ${HOST_PROC_MOUNT:-/proc}:/host/proc:ro
+      - ${HOST_ROOT_MOUNT:-/}:/host/root:ro
+    networks:
+      scrollinglife_net:
+        aliases:
+          - server_metrics
+
+  escritura-colectiva:
+    container_name: escritura_colectiva
+    image: escritura_colectiva:latest
+    build:
+      context: ${ESCRITURA_COLECTIVA_CONTEXT:-./escritura-colectiva}
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - escritura_colectiva_data:/data
+    networks:
+      scrollinglife_net:
+        aliases:
+          - escritura_colectiva
+
+networks:
+  scrollinglife_net:
+    name: ${SCROLLINGLIFE_NETWORK_NAME:-scrollinglife_net}
+    external: ${SCROLLINGLIFE_NETWORK_EXTERNAL:-false}
+
+volumes:
+  escritura_colectiva_data:
+    name: ${ESCRITURA_COLECTIVA_VOLUME_NAME:-escritura_colectiva_data}
+    external: ${ESCRITURA_COLECTIVA_VOLUME_EXTERNAL:-false}
+  server_metrics_data:
+    name: ${SERVER_METRICS_VOLUME_NAME:-scrollinglife_server_metrics_data}
+    external: ${SERVER_METRICS_VOLUME_EXTERNAL:-false}
+  graph_3d_data:
+    name: ${GRAPH_3D_VOLUME_NAME:-scrollinglife_graph_3d_data}
+    external: ${GRAPH_3D_VOLUME_EXTERNAL:-false}

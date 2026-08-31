@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Infinito - Scrolling Life</title>
+  <meta
+    name="description"
+    content="Pagina de Infinito para Scrolling Life con texto placeholder en formato curatorial."
+  />
+  <link rel="stylesheet" href="../../assets/fonts/local-fonts.css" />
+  <link rel="stylesheet" href="../../assets/styles/home.css" />
+  <style>
+    body {
+      background: #020304;
+      color: #f7f8fb;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      padding: 40px 20px;
+      line-height: 1.6;
+    }
+
+    .content-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      margin: 0 0 0.5rem;
+      color: #9eff71;
+      font-family: 'Disket Mono', monospace;
+      font-size: clamp(2.4rem, 8vw, 3rem);
+      line-height: 1;
+    }
+
+    .author-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      color: #a8b0c0;
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    p {
+      margin: 0 0 1.5rem;
+      color: #d8e7ef;
+      font-size: 1.1rem;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 8px 16px;
+      border: 1px solid #ee7d59;
+      border-radius: 4px;
+      color: #ee7d59;
+      font-family: 'Share Tech Mono', monospace;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+
+    .back-link:hover,
+    .back-link:focus {
+      background: rgba(238, 125, 89, 0.2);
+    }
+
+    .infinite-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 2rem;
+    }
+
+    .infinite-actions .back-link {
+      margin-top: 0;
+    }
+
+    .drawing-link {
+      border-color: #9eff71;
+      color: #9eff71;
+    }
+
+    .drawing-link:hover,
+    .drawing-link:focus {
+      background: rgba(158, 255, 113, 0.18);
+    }
+  </style>
+  <script src="../../assets/scripts/maintenance-gate.js" defer></script>
+</head>
+<body>
+  <div class="content-container">
+    <h1>Infinito</h1>
+    <div class="author-meta">
+      <span>Texto Curatorial</span>
+      <span>A&ntilde;o: 2026</span>
+    </div>
+
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vitae massa nec magna cursus commodo. Vestibulum in sapien nec ipsum convallis dignissim. Aliquam erat volutpat. Nulla facilisi. Donec suscipit neque vitae lectus lacinia, vitae consequat mi gravida.</p>
+
+    <p>Morbi ut sem at justo vestibulum faucibus. Integer a orci vitae augue rhoncus dictum. Sed sodales urna id justo lacinia, ac vulputate lacus gravida. Fusce elementum, neque vitae ultrices tincidunt, nisl enim tincidunt dolor, nec gravida massa ligula in odio.</p>
+
+    <p>Vivamus sed tempor arcu. Nunc iaculis, nibh at tristique pretium, magna lorem blandit mi, sit amet pellentesque mauris neque sed eros. Duis consequat turpis in justo efficitur, vel porttitor sem viverra. Curabitur sit amet metus sed urna bibendum consequat.</p>
+
+    <p>Phasellus luctus eros ut ante tincidunt, a aliquam augue bibendum. Suspendisse potenti. Cras euismod nisl sed est volutpat, eget feugiat leo luctus. Integer non risus sed lacus gravida semper. Donec non sapien at neque dictum pellentesque.</p>
+
+    <p>Maecenas volutpat, metus vitae dictum tincidunt, est velit suscipit orci, sed fermentum risus massa id tellus. Praesent volutpat tellus vitae metus elementum, vitae tristique justo lacinia. Sed finibus dui eu nunc tempor, at interdum odio tristique.</p>
+
+    <div class="infinite-actions">
+      <a href="https://thescrollingdrawing.scrollinglife.com/" class="back-link drawing-link">Abrir The Scrolling Drawing</a>
+      <a href="../../index.html" class="back-link">&lt; Volver al men&uacute; principal</a>
+    </div>
+  </div>
+
+  <!-- Cloudflare Web Analytics -->
+  <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "4ae4ff73465943b788027815f6676ab3"}'></script>
+  <!-- End Cloudflare Web Analytics -->
+  <script src="/assets/scripts/traffic-tracker.js" defer></script>
+</body>
+</html>

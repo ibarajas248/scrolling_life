@@ -3,33 +3,67 @@
   const renderCtx = renderCanvas.getContext('2d', { alpha: false });
   const video = document.getElementById('cameraFeed');
 
-  const gate = document.getElementById('gate');
-  const gateNote = document.getElementById('gateNote');
-  const statusToast = document.getElementById('statusToast');
-  const startButton = document.getElementById('startButton');
-  const fullscreenButton = document.getElementById('fullscreenButton');
-  const toggleButton = document.getElementById('toggleButton');
-  const saveButton = document.getElementById('saveButton');
-  const resetButton = document.getElementById('resetButton');
-
-  const sourceLabel = document.getElementById('sourceLabel');
-  const sequenceLabel = document.getElementById('sequenceLabel');
-  const modeLabel = document.getElementById('modeLabel');
-  const halfLifeLabel = document.getElementById('halfLifeLabel');
-  const strengthLabel = document.getElementById('strengthLabel');
-  const scrollLabel = document.getElementById('scrollLabel');
-  const bodyLabel = document.getElementById('bodyLabel');
-  const motionLabel = document.getElementById('motionLabel');
-  const playLabel = document.getElementById('playLabel');
-  const stateLabel = document.getElementById('stateLabel');
-  const bodyBar = document.getElementById('bodyBar');
-  const motionBar = document.getElementById('motionBar');
-
   renderCtx.imageSmoothingEnabled = false;
 
   let SOURCE_IMAGES = [];
+  const RECENT_IMAGE_LIMIT = 40;
+  const LOCAL_IMAGE_MANIFEST = '../../assets/images/netart-cache/manifest.json';
+
+  function resolveManifestImageUrl(entry, manifestUrl) {
+    const value = String(entry || '').trim();
+    if (!value) {
+      return null;
+    }
+
+    if (/^(?:https?:|data:|blob:)/i.test(value)) {
+      return value;
+    }
+
+    if (/^(?:\.\/)?assets\//i.test(value)) {
+      const siteRoot = new URL('../../', window.location.href);
+      return new URL(value.replace(/^\.\//, ''), siteRoot).href;
+    }
+
+    return new URL(value, manifestUrl).href;
+  }
+
+  async function fetchRecentLocalImages() {
+    const manifestUrl = new URL(LOCAL_IMAGE_MANIFEST, window.location.href);
+    manifestUrl.searchParams.set('fresh', Date.now().toString());
+
+    const response = await fetch(manifestUrl, { cache: 'no-store' });
+    if (!response.ok) {
+      throw new Error(`El archivo de imagenes respondio ${response.status}.`);
+    }
+
+    const manifest = await response.json();
+    const entries = Array.isArray(manifest?.images) ? manifest.images : [];
+    const recentImages = [];
+    const seen = new Set();
+
+    for (let index = entries.length - 1; index >= 0 && recentImages.length < RECENT_IMAGE_LIMIT; index -= 1) {
+      const url = resolveManifestImageUrl(entries[index], manifestUrl);
+      if (url && !seen.has(url)) {
+        seen.add(url);
+        recentImages.push(url);
+      }
+    }
+
+    if (!recentImages.length) {
+      throw new Error('El archivo local no contiene imagenes utilizables.');
+    }
+
+    return recentImages;
+  }
 
   async function fetchApiImages() {
+    try {
+      SOURCE_IMAGES = await fetchRecentLocalImages();
+      return;
+    } catch (error) {
+      console.warn('Fallo el archivo de imagenes recientes; usando respaldo externo.', error);
+    }
+
     let newImages = [];
     try {
       const endpoint = "https://en.wikipedia.org/w/api.php";
@@ -122,7 +156,6 @@
     activeArea: 0,
     motionLevel: 0,
     scrollAccum: 0,
-    overlayTimer: 0,
     lastFrameTime: 0,
     lastSourceSwitch: 0,
     segmenter: null,
@@ -138,69 +171,6 @@
 
   function clamp(value, min, max) {
     return Math.max(min, Math.min(max, value));
-  }
-
-  function setBarValue(barElement, ratio) {
-    if (!(barElement instanceof HTMLElement)) {
-      return;
-    }
-    const safeRatio = clamp(ratio, 0, 1);
-    barElement.style.width = `${(safeRatio * 100).toFixed(1)}%`;
-  }
-
-  function setText(element, value) {
-    if (element) {
-      element.textContent = value;
-    }
-  }
-
-  function setToast(message, duration = 900) {
-    if (!statusToast) {
-      return;
-    }
-    statusToast.textContent = message;
-    statusToast.classList.add('is-visible');
-    clearTimeout(state.overlayTimer);
-    state.overlayTimer = window.setTimeout(() => {
-      statusToast.classList.remove('is-visible');
-    }, duration);
-  }
-
-  function setGateMessage(message) {
-    setText(gateNote, message);
-  }
-
-  function sourceName(path) {
-    return path.split('/').pop() || path;
-  }
-
-  function currentModeLabel() {
-    if (config.motionOnly) {
-      return 'solo movimiento';
-    }
-    return config.useMotionBoost ? 'motion boost' : 'solo silueta';
-  }
-
-  function updateUi() {
-    const total = state.sourceFrames.length;
-    const safeIndex = total ? state.sourceIndex + 1 : 0;
-
-    setText(sourceLabel, total ? sourceName(SOURCE_IMAGES[state.sourceIndex]) : '--');
-    setText(sequenceLabel, `${safeIndex} / ${total}`);
-    setText(modeLabel, currentModeLabel());
-    setText(halfLifeLabel, `${config.halfLifeSec.toFixed(0)}s`);
-    setText(strengthLabel, config.paintStrength.toFixed(2));
-    setText(scrollLabel, `${config.scrollScreenPxPerSec.toFixed(0)} px/s`);
-    setText(bodyLabel, `${(state.activeArea * 100).toFixed(1)}%`);
-    setText(motionLabel, state.motionLevel.toFixed(2));
-    setText(playLabel, state.play ? 'PLAY' : 'PAUSE');
-    setText(toggleButton, state.play ? 'Pause' : 'Play');
-    document.body.dataset.playState = state.play ? 'play' : 'pause';
-    setBarValue(bodyBar, state.activeArea);
-    setBarValue(motionBar, state.motionLevel * 8);
-    setText(stateLabel, state.started
-      ? 'Camara activa, build generativo corriendo.'
-      : 'Esperando activacion de camara y segmentacion.');
   }
 
   function resizeDisplayCanvas() {
@@ -479,15 +449,12 @@
     renderCtx.restore();
   }
 
-  function clearBuild(showToast = true) {
+  function clearBuild() {
     if (!state.buildCtx) {
       return;
     }
     state.buildCtx.clearRect(0, 0, state.procW, state.procH);
     state.prevGray = null;
-    if (showToast) {
-      setToast('build limpio', 800);
-    }
   }
 
   function saveSnapshot() {
@@ -497,7 +464,6 @@
 
     renderCanvas.toBlob((blob) => {
       if (!blob) {
-        setToast('no pude guardar', 900);
         return;
       }
 
@@ -507,7 +473,6 @@
       link.download = `scroll_fantasmagorias_${Date.now()}.png`;
       link.click();
       window.setTimeout(() => URL.revokeObjectURL(url), 1200);
-      setToast('snapshot guardado', 900);
     }, 'image/png');
   }
 
@@ -524,7 +489,6 @@
     if (now - state.lastSourceSwitch >= config.secondsPerImage * 1000) {
       state.lastSourceSwitch = now;
       state.sourceIndex = (state.sourceIndex + 1) % state.sourceFrames.length;
-      setToast(sourceName(SOURCE_IMAGES[state.sourceIndex]), 700);
     }
   }
 
@@ -564,7 +528,6 @@
     updateAlphaMask();
     paintBuild();
     renderBuild();
-    updateUi();
   }
 
   async function pumpSegmentation() {
@@ -581,11 +544,8 @@
       await state.segmenter.send({ image: video });
     } catch (error) {
       console.error(error);
-      setGateMessage('La segmentacion fallo durante la ejecucion. Revisa permisos, red o recarga la pagina.');
       stopCameraStream();
-      gate.hidden = false;
       state.started = false;
-      updateUi();
       return;
     }
 
@@ -655,15 +615,11 @@
     }
 
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-      setGateMessage('Este navegador no soporta getUserMedia.');
+      console.error('Este navegador no soporta getUserMedia.');
       return;
     }
 
     state.loading = true;
-    setGateMessage('Cargando imagenes, camara y segmentacion...');
-    if (startButton instanceof HTMLButtonElement) {
-      startButton.disabled = true;
-    }
 
     try {
       if (!state.sourceImages.length) {
@@ -672,7 +628,7 @@
         state.sourceImages = loaded.filter((entry) => entry.ok).map((entry) => entry.image);
 
         if (!state.sourceImages.length) {
-          throw new Error('No pude cargar imagenes desde la API.');
+          throw new Error('No pude cargar las imagenes recientes.');
         }
       }
 
@@ -686,21 +642,12 @@
       state.sourceIndex = 0;
       state.lastFrameTime = 0;
       state.lastSourceSwitch = performance.now();
-      gate.hidden = true;
-      setToast('camara activa', 900);
-      updateUi();
       requestAnimationFrame(pumpSegmentation);
     } catch (error) {
       console.error(error);
-      setGateMessage(error.message || 'No se pudo iniciar la experiencia.');
       stopCameraStream();
-      gate.hidden = false;
     } finally {
       state.loading = false;
-      if (startButton instanceof HTMLButtonElement) {
-        startButton.disabled = false;
-      }
-      updateUi();
     }
   }
 
@@ -709,8 +656,6 @@
       return;
     }
     state.play = !state.play;
-    setToast(state.play ? 'play' : 'pause', 700);
-    updateUi();
   }
 
   async function toggleFullscreen() {
@@ -727,20 +672,14 @@
 
   function adjustHalfLife(delta) {
     config.halfLifeSec = clamp(config.halfLifeSec + delta, 5, 300);
-    setToast(`half-life ${config.halfLifeSec.toFixed(0)}s`, 800);
-    updateUi();
   }
 
   function adjustPaintStrength(delta) {
     config.paintStrength = clamp(config.paintStrength + delta, 0.01, 1.0);
-    setToast(`strength ${config.paintStrength.toFixed(2)}`, 800);
-    updateUi();
   }
 
   function adjustScrollSpeed(delta) {
     config.scrollScreenPxPerSec = clamp(config.scrollScreenPxPerSec + delta, 0, 600);
-    setToast(`scroll ${config.scrollScreenPxPerSec.toFixed(0)} px/s`, 800);
-    updateUi();
   }
 
   function toggleMotionBoost() {
@@ -748,8 +687,6 @@
     if (config.useMotionBoost) {
       config.motionOnly = false;
     }
-    setToast(config.useMotionBoost ? 'motion boost on' : 'motion boost off', 900);
-    updateUi();
   }
 
   function toggleMotionOnly() {
@@ -757,8 +694,6 @@
     if (config.motionOnly) {
       config.useMotionBoost = false;
     }
-    setToast(config.motionOnly ? 'solo movimiento' : 'modo silueta', 900);
-    updateUi();
   }
 
   const keyActions = new Map([
@@ -799,7 +734,6 @@
     resizeDisplayCanvas();
     if (state.started) {
       resetProcessingBuffers();
-      setToast('superficie reajustada', 700);
     } else {
       renderCtx.fillStyle = '#020304';
       renderCtx.fillRect(0, 0, renderCanvas.width, renderCanvas.height);
@@ -807,21 +741,7 @@
   }
 
   function bindEvents() {
-    if (startButton instanceof HTMLButtonElement) {
-      startButton.addEventListener('click', startExperience);
-    }
-    if (fullscreenButton instanceof HTMLButtonElement) {
-      fullscreenButton.addEventListener('click', toggleFullscreen);
-    }
-    if (toggleButton instanceof HTMLButtonElement) {
-      toggleButton.addEventListener('click', togglePlay);
-    }
-    if (saveButton instanceof HTMLButtonElement) {
-      saveButton.addEventListener('click', saveSnapshot);
-    }
-    if (resetButton instanceof HTMLButtonElement) {
-      resetButton.addEventListener('click', () => clearBuild());
-    }
+    renderCanvas.addEventListener('pointerdown', startExperience);
     window.addEventListener('beforeunload', stopCameraStream);
     window.addEventListener('resize', handleResize);
     window.addEventListener('keydown', handleKeydown);
@@ -829,5 +749,5 @@
 
   bindEvents();
   handleResize();
-  updateUi();
+  startExperience();
 })();

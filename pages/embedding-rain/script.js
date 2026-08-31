@@ -1,8 +1,6 @@
 (() => {
-  const API_URL = 'https://commons.wikimedia.org/w/api.php';
   const BATCH_SIZE = 20;
   const REFILL_AT = 6;
-  const MAX_OFFSET = 460;
   const THUMB_WIDTH = 420;
   const PROCESS_MS = 1800; // Antes 1050 - Se aumenta para dar respiro al CPU
   const MAX_ACTIVE_RAIN = 32; // Antes 72 - Reducción drástica
@@ -14,6 +12,8 @@
   const THREE_TIMEOUT_MS = 3600;
   const FETCH_TIMEOUT_MS = 6500;
   const STORAGE_KEY = 'scrolling_life_embedding_rain_memory_v1';
+  const LOCAL_CACHE_MANIFEST = '../../assets/images/netart-cache/manifest.json';
+  const LOCAL_THREE_MODULE = '../../assets/vendor/three.module.js';
 
   const MODEL_SCRIPTS = [
     {
@@ -78,7 +78,8 @@
   let isProcessing = false;
   let launchCount = 0;
   let fallbackIndex = 0;
-  let localFallbackBatch = 0;
+  let localImageCursor = 0;
+  let localImagesCache = null;
   let memory = [];
   let pcaDirty = true;
   let pcaScheduled = false;
@@ -306,6 +307,77 @@
     return modelState.promise;
   };
 
+  const shuffle = (items) => {
+    const out = [...items];
+    for (let index = out.length - 1; index > 0; index -= 1) {
+      const randomIndex = Math.floor(Math.random() * (index + 1));
+      [out[index], out[randomIndex]] = [out[randomIndex], out[index]];
+    }
+    return out;
+  };
+
+  const normalizeLocalImagePath = (value) => {
+    const clean = String(value || '').trim().replace(/^\.?\//, '');
+    return clean ? `/${clean}` : '';
+  };
+
+  const localPathToImage = (url, index) => {
+    const filename = decodeURIComponent(String(url).split('/').pop() || `imagen-${index}`);
+    return {
+      id: `local-${hashString(url)}-${index}`,
+      title: filename.replace(/\.[a-z0-9]+$/i, '').replace(/[_-]+/g, ' '),
+      credit: 'Scrolling Life',
+      license: 'cache local',
+      url,
+      width: THUMB_WIDTH,
+      height: Math.round(THUMB_WIDTH * 0.72),
+      ready: false,
+      failed: false,
+      element: null,
+      loadingPromise: null
+    };
+  };
+
+  const loadLocalImageCache = async () => {
+    if (localImagesCache) return localImagesCache;
+
+    const response = await fetch(`${LOCAL_CACHE_MANIFEST}?ts=${Date.now()}`, { cache: 'no-store' });
+    if (!response.ok) {
+      throw new Error(`Manifest local ${response.status}`);
+    }
+
+    const manifest = await response.json();
+    const images = Array.isArray(manifest.images)
+      ? manifest.images.map(normalizeLocalImagePath).filter(Boolean)
+      : [];
+
+    if (!images.length) {
+      throw new Error('Manifest local sin imagenes');
+    }
+
+    localImagesCache = shuffle(images);
+    localImageCursor = 0;
+    return localImagesCache;
+  };
+
+  const takeLocalImages = async () => {
+    const images = await loadLocalImageCache();
+    const batch = [];
+
+    for (let index = 0; index < BATCH_SIZE; index += 1) {
+      if (localImageCursor >= images.length) {
+        localImagesCache = shuffle(images);
+        localImageCursor = 0;
+      }
+
+      const source = localImagesCache[localImageCursor];
+      localImageCursor += 1;
+      batch.push(localPathToImage(source, localImageCursor + launchCount));
+    }
+
+    return batch;
+  };
+
   const pageToImage = (item) => {
     if (!item || !item.download_url) return null;
 
@@ -334,25 +406,14 @@
     return pool[Math.floor(Math.random() * pool.length)] || RANDOM_QUERIES[0];
   };
 
-  const buildLocalFallbackImages = () => {
-    localFallbackBatch += 1;
-    return Array.from({ length: BATCH_SIZE }, (_, index) => {
-      const source = LOCAL_FALLBACK_IMAGES[index % LOCAL_FALLBACK_IMAGES.length];
-      return {
-        ...source,
-        id: `${source.id}-${localFallbackBatch}-${index}`,
-        title: `${source.title} ${String(index + 1).padStart(2, '0')}`,
-        width: THUMB_WIDTH,
-        height: Math.round(THUMB_WIDTH * 0.72),
-        ready: false,
-        failed: false,
-        element: null,
-        loadingPromise: null
-      };
-    });
-  };
-
   const fetchImages = async (query, offset) => {
+    try {
+      return await takeLocalImages();
+    } catch (error) {
+      console.warn(error);
+      addLearningLine('cache', 'local: no disponible | usando respaldo remoto');
+    }
+
     const controller = new AbortController();
     const timer = window.setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
 
@@ -424,8 +485,7 @@
 
     loadingPromise = (async () => {
       try {
-        const randomOffset = Math.floor(Math.random() * MAX_OFFSET);
-        let images = await fetchImages(query, randomOffset);
+        let images = await fetchImages(query, 0);
 
         if (!images.length) {
           images = await fetchImages(query, 0);
@@ -449,10 +509,10 @@
           seenImages.add(image.id);
           imagePool.push(image);
         });
-        addLearningLine('cache', `api: wikimedia | lote: ${cached.length}/20 | query: ${truncateText(activeQuery, 26)}`);
+        addLearningLine('cache', `cache local: ${cached.length}/20 | fuente: netart-cache`);
       } catch (error) {
         console.warn(error);
-        addLearningLine('err', 'api: error de conexion | reintentando...');
+        addLearningLine('err', 'imagenes: no disponibles | reintentando...');
       } finally {
         isLoadingBatch = false;
         loadingPromise = null;
@@ -1039,7 +1099,7 @@
   const initThree = async () => {
     try {
       const module = await Promise.race([
-        import('https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js'),
+        import(LOCAL_THREE_MODULE),
         new Promise((_, reject) => window.setTimeout(() => reject(new Error('three timeout')), THREE_TIMEOUT_MS))
       ]);
       const THREE = module;

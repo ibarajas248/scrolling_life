@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Grafo 3D - Scrolling Life</title>
+  <meta
+    name="description"
+    content="Grafo tridimensional interactivo de frases relacionadas para Scrolling Life."
+  />
+  <link rel="stylesheet" href="../assets/fonts/local-fonts.css" />
+  <link rel="stylesheet" href="./styles.css?v=20260828-clean" />
+  <script src="../assets/scripts/maintenance-gate.js" defer></script>
+</head>
+<body>
+  <main class="graph-stage" aria-label="Grafo tridimensional de frases relacionadas">
+    <canvas id="graphCanvas" class="graph-canvas" aria-hidden="true"></canvas>
+    <div class="grid-field" aria-hidden="true"></div>
+    <div class="depth-fog" aria-hidden="true"></div>
+
+    <section class="node-panel" id="nodePanel" aria-live="polite" hidden>
+      <p id="nodePhrase" class="node-phrase"></p>
+      <form id="nodeForm" class="node-form">
+        <input
+          id="nodeInput"
+          name="text"
+          type="text"
+          maxlength="260"
+          autocomplete="off"
+          aria-label="Nueva frase relacionada"
+          required
+        />
+      </form>
+    </section>
+
+    <h1 class="sr-only">Grafo 3D de frases relacionadas</h1>
+  </main>
+
+  <script type="module" src="./script.js?v=20260830-server-ready"></script>
+
+  <!-- Cloudflare Web Analytics -->
+  <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "4ae4ff73465943b788027815f6676ab3"}'></script>
+  <!-- End Cloudflare Web Analytics -->
+  <script src="/assets/scripts/traffic-tracker.js" defer></script>
+</body>
+</html>

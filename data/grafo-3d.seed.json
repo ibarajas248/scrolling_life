@@ -1,0 +1,4742 @@
+{
+  "version": 2,
+  "updatedAt": "2026-08-29T02:04:41.000Z",
+  "nodes": [
+    {
+      "id": "n_scroll",
+      "text": "El scroll no avanza: nos absorbe.",
+      "createdAt": "2026-08-26T00:00:00.000Z"
+    },
+    {
+      "id": "n_cuerpo",
+      "text": "El dedo empuja una superficie que nunca termina.",
+      "parentId": "n_scroll",
+      "createdAt": "2026-08-26T00:00:00.000Z"
+    },
+    {
+      "id": "n_memoria",
+      "text": "La memoria digital aparece como una capa de restos encendidos.",
+      "parentId": "n_scroll",
+      "createdAt": "2026-08-26T00:00:00.000Z"
+    },
+    {
+      "id": "n_ruido",
+      "text": "El ruido no interrumpe la imagen: la vuelve habitable.",
+      "parentId": "n_scroll",
+      "createdAt": "2026-08-26T00:00:00.000Z"
+    },
+    {
+      "id": "n_deseo",
+      "text": "Cada imagen promete una salida y abre otra espera.",
+      "parentId": "n_scroll",
+      "createdAt": "2026-08-26T00:00:00.000Z"
+    },
+    {
+      "id": "n_archivo",
+      "text": "El archivo no guarda el pasado: lo deja seguir moviendose.",
+      "parentId": "n_memoria",
+      "createdAt": "2026-08-26T00:00:00.000Z"
+    },
+    {
+      "id": "n_respiro",
+      "text": "Respirar frente a la pantalla tambien produce datos.",
+      "parentId": "n_cuerpo",
+      "createdAt": "2026-08-26T00:00:00.000Z"
+    },
+    {
+      "id": "n_fatiga",
+      "text": "La fatiga es una forma lenta de conocimiento.",
+      "parentId": "n_cuerpo",
+      "createdAt": "2026-08-26T00:00:00.000Z"
+    },
+    {
+      "id": "n_fosforo",
+      "text": "Un brillo verde insiste como si la pagina tuviera pulso.",
+      "parentId": "n_ruido",
+      "createdAt": "2026-08-26T00:00:00.000Z"
+    },
+    {
+      "id": "n_vacio",
+      "text": "El vacio entre imagenes tambien organiza la mirada.",
+      "parentId": "n_deseo",
+      "createdAt": "2026-08-26T00:00:00.000Z"
+    },
+    {
+      "id": "n_testigo",
+      "text": "Mirar es dejar una huella que no siempre aceptamos.",
+      "parentId": "n_archivo",
+      "createdAt": "2026-08-26T00:00:00.000Z"
+    },
+    {
+      "id": "n_noche",
+      "text": "La noche digital no oscurece: multiplica pequenas senales.",
+      "parentId": "n_fosforo",
+      "createdAt": "2026-08-26T00:00:00.000Z"
+    },
+    {
+      "id": "n_red",
+      "text": "Una relacion nace cuando dos fragmentos se reconocen a distancia.",
+      "parentId": "n_memoria",
+      "createdAt": "2026-08-26T00:00:00.000Z"
+    },
+    {
+      "id": "n_tiempo",
+      "text": "El tiempo del scroll es circular aunque parezca linea.",
+      "parentId": "n_deseo",
+      "createdAt": "2026-08-26T00:00:00.000Z"
+    },
+    {
+      "id": "n_infinito",
+      "text": "Lo infinito se vuelve domestico cuando cabe en el pulgar.",
+      "parentId": "n_tiempo",
+      "createdAt": "2026-08-26T00:00:00.000Z"
+    },
+    {
+      "id": "n_pixel",
+      "text": "El pixel recuerda mas de lo que muestra.",
+      "parentId": "n_archivo",
+      "createdAt": "2026-08-26T00:00:00.000Z"
+    },
+    {
+      "id": "n_silencio",
+      "text": "El silencio de una interfaz tambien es una decision politica.",
+      "parentId": "n_ruido",
+      "createdAt": "2026-08-26T00:00:00.000Z"
+    },
+    {
+      "id": "n_contacto",
+      "text": "Tocar la pantalla es tocar una promesa lejana.",
+      "parentId": "n_cuerpo",
+      "createdAt": "2026-08-26T00:00:00.000Z"
+    },
+    {
+      "id": "n_desborde",
+      "text": "El exceso visual no llena: desborda.",
+      "parentId": "n_fatiga",
+      "createdAt": "2026-08-26T00:00:00.000Z"
+    },
+    {
+      "id": "n_latencia",
+      "text": "La latencia es el fantasma pequeno de toda conexion.",
+      "parentId": "n_red",
+      "createdAt": "2026-08-26T00:00:00.000Z"
+    },
+    {
+      "id": "n_ventana",
+      "text": "Una ventana abierta siempre contiene otra ventana posible.",
+      "parentId": "n_archivo",
+      "createdAt": "2026-08-26T00:00:00.000Z"
+    },
+    {
+      "id": "n_bios",
+      "text": "El azul de la BIOS parece recordar cuando la pantalla todavia arrancaba.",
+      "parentId": "n_noche",
+      "createdAt": "2026-08-26T00:00:00.000Z"
+    },
+    {
+      "id": "n_lluvia",
+      "text": "La lluvia de imagenes cae sin mojar, pero deja residuo.",
+      "parentId": "n_desborde",
+      "createdAt": "2026-08-26T00:00:00.000Z"
+    },
+    {
+      "id": "n_tira",
+      "text": "Una tira vertical convierte el archivo en paisaje.",
+      "parentId": "n_archivo",
+      "createdAt": "2026-08-26T00:00:00.000Z"
+    },
+    {
+      "id": "n_grafo",
+      "text": "El grafo dibuja una conversacion que no quiere cerrarse.",
+      "parentId": "n_red",
+      "createdAt": "2026-08-26T00:00:00.000Z"
+    },
+    {
+      "id": "n_respuesta",
+      "text": "Responder es empujar un nodo hacia una orbita nueva.",
+      "parentId": "n_grafo",
+      "createdAt": "2026-08-26T00:00:00.000Z"
+    },
+    {
+      "id": "n_desvio",
+      "text": "Toda lectura profunda empieza como un desvio pequeno.",
+      "parentId": "n_vacio",
+      "createdAt": "2026-08-26T00:00:00.000Z"
+    },
+    {
+      "id": "n_marco",
+      "text": "El marco tecnologico no encierra: administra el temblor.",
+      "parentId": "n_pixel",
+      "createdAt": "2026-08-26T00:00:00.000Z"
+    },
+    {
+      "id": "n_colectivo",
+      "text": "La obra aprende cuando alguien agrega una frase que no esperaba.",
+      "parentId": "n_respuesta",
+      "createdAt": "2026-08-26T00:00:00.000Z"
+    },
+    {
+      "id": "n_interferencia",
+      "text": "La interferencia vuelve visible la maquinaria de la mirada.",
+      "parentId": "n_ruido",
+      "createdAt": "2026-08-26T00:00:00.000Z"
+    },
+    {
+      "id": "n_sombra",
+      "text": "Cada brillo proyecta una sombra de informacion.",
+      "parentId": "n_fosforo",
+      "createdAt": "2026-08-26T00:00:00.000Z"
+    },
+    {
+      "id": "n_deriva",
+      "text": "Derivar es permitir que el archivo piense con otros cuerpos.",
+      "parentId": "n_contacto",
+      "createdAt": "2026-08-26T00:00:00.000Z"
+    },
+    {
+      "id": "n_ritual",
+      "text": "Volver a mirar la misma superficie puede ser un ritual.",
+      "parentId": "n_respiro",
+      "createdAt": "2026-08-26T00:00:00.000Z"
+    },
+    {
+      "id": "n_mtafah6y_0puxgp",
+      "text": "ruido, ruido",
+      "parentId": "n_ruido",
+      "createdAt": "2026-08-26T18:24:02.698Z"
+    },
+    {
+      "id": "n_mtafar2x_yg4xjo",
+      "text": "visual...",
+      "parentId": "n_desborde",
+      "createdAt": "2026-08-26T18:24:15.513Z"
+    },
+    {
+      "id": "n_mtafbere_svi94h",
+      "text": "ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
+      "parentId": "n_fatiga",
+      "createdAt": "2026-08-26T18:24:46.202Z"
+    },
+    {
+      "id": "n_mtafcfyp_1ghi5s",
+      "text": "ssssssssssssssssssssssssssssssssssssss sssssssssssss sssssssssssssssss sssssssssssssssssssssss",
+      "parentId": "n_mtafar2x_yg4xjo",
+      "createdAt": "2026-08-26T18:25:34.417Z"
+    },
+    {
+      "id": "n_mtafcm9h_nf7mtm",
+      "text": "a",
+      "parentId": "n_mtafcfyp_1ghi5s",
+      "createdAt": "2026-08-26T18:25:42.581Z"
+    },
+    {
+      "id": "n_mtafcpim_uu8zrz",
+      "text": "aaa",
+      "parentId": "n_mtafcm9h_nf7mtm",
+      "createdAt": "2026-08-26T18:25:46.798Z"
+    },
+    {
+      "id": "n_mtafcrfl_zpzgv3",
+      "text": "aaaa",
+      "parentId": "n_mtafcpim_uu8zrz",
+      "createdAt": "2026-08-26T18:25:49.281Z"
+    },
+    {
+      "id": "n_mtafcswx_3j0nih",
+      "text": "aaaaa",
+      "parentId": "n_mtafcrfl_zpzgv3",
+      "createdAt": "2026-08-26T18:25:51.201Z"
+    },
+    {
+      "id": "n_mtafcug1_9gxi9y",
+      "text": "aaaaa",
+      "parentId": "n_mtafcswx_3j0nih",
+      "createdAt": "2026-08-26T18:25:53.185Z"
+    },
+    {
+      "id": "n_mtafcvs7_lu2y6t",
+      "text": "aaaaa",
+      "parentId": "n_mtafcug1_9gxi9y",
+      "createdAt": "2026-08-26T18:25:54.919Z"
+    },
+    {
+      "id": "n_mtafcx8d_wsj31w",
+      "text": "aaaaa",
+      "parentId": "n_mtafcvs7_lu2y6t",
+      "createdAt": "2026-08-26T18:25:56.797Z"
+    },
+    {
+      "id": "n_mtafd4jl_9jq0gu",
+      "text": "aaaaa",
+      "parentId": "n_mtafcx8d_wsj31w",
+      "createdAt": "2026-08-26T18:26:06.273Z"
+    },
+    {
+      "id": "n_mtafd663_8s9zml",
+      "text": "aaaa",
+      "parentId": "n_mtafd4jl_9jq0gu",
+      "createdAt": "2026-08-26T18:26:08.379Z"
+    },
+    {
+      "id": "n_mtafd7v7_hymd6p",
+      "text": "sssss",
+      "parentId": "n_mtafd663_8s9zml",
+      "createdAt": "2026-08-26T18:26:10.579Z"
+    },
+    {
+      "id": "n_mtagcdin_nqflj4",
+      "text": "ruido",
+      "parentId": "n_ruido",
+      "createdAt": "2026-08-26T18:53:30.863Z"
+    },
+    {
+      "id": "n_mtagcklq_6jewpg",
+      "text": "scroll y ruido",
+      "parentId": "n_mtagcdin_nqflj4",
+      "createdAt": "2026-08-26T18:53:40.046Z"
+    },
+    {
+      "id": "n_mtagdhi5_n18lju",
+      "text": "aaaa",
+      "parentId": "n_mtafd7v7_hymd6p",
+      "createdAt": "2026-08-26T18:54:22.685Z"
+    },
+    {
+      "id": "n_mtagdlnb_a0felt",
+      "text": "aaa",
+      "parentId": "n_mtagdhi5_n18lju",
+      "createdAt": "2026-08-26T18:54:28.055Z"
+    },
+    {
+      "id": "n_mtagdra4_q7ne17",
+      "text": "aaaaa",
+      "parentId": "n_mtagdlnb_a0felt",
+      "createdAt": "2026-08-26T18:54:35.356Z"
+    },
+    {
+      "id": "n_mtagdu6b_hmpoa0",
+      "text": "aaa",
+      "parentId": "n_mtagdra4_q7ne17",
+      "createdAt": "2026-08-26T18:54:39.107Z"
+    },
+    {
+      "id": "n_mtagdylz_ypgr7u",
+      "text": "aaaa",
+      "parentId": "n_mtagdu6b_hmpoa0",
+      "createdAt": "2026-08-26T18:54:44.855Z"
+    },
+    {
+      "id": "n_mtage06w_4fozy1",
+      "text": "aaaa",
+      "parentId": "n_mtagdylz_ypgr7u",
+      "createdAt": "2026-08-26T18:54:46.904Z"
+    },
+    {
+      "id": "n_mtage1p5_ncn3uo",
+      "text": "aaaaa",
+      "parentId": "n_mtage06w_4fozy1",
+      "createdAt": "2026-08-26T18:54:48.857Z"
+    },
+    {
+      "id": "n_mtage35x_3kfm9e",
+      "text": "aaaaa",
+      "parentId": "n_mtage1p5_ncn3uo",
+      "createdAt": "2026-08-26T18:54:50.757Z"
+    },
+    {
+      "id": "n_mtage5c7_7799h1",
+      "text": "aaaaa",
+      "parentId": "n_mtage35x_3kfm9e",
+      "createdAt": "2026-08-26T18:54:53.575Z"
+    },
+    {
+      "id": "n_exp_001",
+      "text": "Una imagen sin origen atraviesa la memoria de quien mira.",
+      "parentId": "n_fatiga",
+      "createdAt": "2026-08-29T02:00:00.000Z"
+    },
+    {
+      "id": "n_exp_002",
+      "text": "El archivo que respira atraviesa un paisaje construido con latencia.",
+      "parentId": "n_desborde",
+      "createdAt": "2026-08-29T02:00:01.000Z"
+    },
+    {
+      "id": "n_exp_003",
+      "text": "La pantalla nocturna atraviesa la sombra de todos los enlaces.",
+      "parentId": "n_interferencia",
+      "createdAt": "2026-08-29T02:00:02.000Z"
+    },
+    {
+      "id": "n_exp_004",
+      "text": "Cada gesto detenido atraviesa la textura de una ausencia digital.",
+      "parentId": "n_mtafcswx_3j0nih",
+      "createdAt": "2026-08-29T02:00:03.000Z"
+    },
+    {
+      "id": "n_exp_005",
+      "text": "Un fragmento de memoria atraviesa una pregunta que no termina.",
+      "parentId": "n_mtagdra4_q7ne17",
+      "createdAt": "2026-08-29T02:00:04.000Z"
+    },
+    {
+      "id": "n_exp_006",
+      "text": "La sombra de un píxel atraviesa el archivo común de la noche.",
+      "parentId": "n_deseo",
+      "createdAt": "2026-08-29T02:00:05.000Z"
+    },
+    {
+      "id": "n_exp_007",
+      "text": "El cuerpo frente al flujo atraviesa el ritmo incompleto de la espera.",
+      "parentId": "n_pixel",
+      "createdAt": "2026-08-29T02:00:06.000Z"
+    },
+    {
+      "id": "n_exp_008",
+      "text": "La señal más débil atraviesa un borde todavía sin nombre.",
+      "parentId": "n_desvio",
+      "createdAt": "2026-08-29T02:00:07.000Z"
+    },
+    {
+      "id": "n_exp_009",
+      "text": "Una ventana abandonada atraviesa la promesa de otra imagen.",
+      "parentId": "n_mtafcm9h_nf7mtm",
+      "createdAt": "2026-08-29T02:00:08.000Z"
+    },
+    {
+      "id": "n_exp_010",
+      "text": "El ruido del presente atraviesa el deseo de seguir desplazándose.",
+      "parentId": "n_mtagcklq_6jewpg",
+      "createdAt": "2026-08-29T02:00:09.000Z"
+    },
+    {
+      "id": "n_exp_011",
+      "text": "La pausa entre dos imágenes atraviesa el eco de cuerpos conectados.",
+      "parentId": "n_cuerpo",
+      "createdAt": "2026-08-29T02:00:10.000Z"
+    },
+    {
+      "id": "n_exp_012",
+      "text": "El brillo que queda atraviesa los restos de una navegación anterior.",
+      "parentId": "n_red",
+      "createdAt": "2026-08-29T02:00:11.000Z"
+    },
+    {
+      "id": "n_exp_013",
+      "text": "Una huella anónima atraviesa la respiración escondida del sistema.",
+      "parentId": "n_tira",
+      "createdAt": "2026-08-29T02:00:12.000Z"
+    },
+    {
+      "id": "n_exp_014",
+      "text": "El borde de la interfaz atraviesa la profundidad azul de la interfaz.",
+      "parentId": "n_mtafar2x_yg4xjo",
+      "createdAt": "2026-08-29T02:00:13.000Z"
+    },
+    {
+      "id": "n_exp_015",
+      "text": "La mirada que regresa atraviesa la distancia entre dos pulsos.",
+      "parentId": "n_mtafd663_8s9zml",
+      "createdAt": "2026-08-29T02:00:14.000Z"
+    },
+    {
+      "id": "n_exp_016",
+      "text": "Un dato sin dueño atraviesa el espacio que deja el dedo.",
+      "parentId": "n_mtage35x_3kfm9e",
+      "createdAt": "2026-08-29T02:00:15.000Z"
+    },
+    {
+      "id": "n_exp_017",
+      "text": "La noche del dispositivo atraviesa una pequeña reserva de ruido.",
+      "parentId": "n_vacio",
+      "createdAt": "2026-08-29T02:00:16.000Z"
+    },
+    {
+      "id": "n_exp_018",
+      "text": "El pulso de la red atraviesa una salida que vuelve a empezar.",
+      "parentId": "n_ventana",
+      "createdAt": "2026-08-29T02:00:17.000Z"
+    },
+    {
+      "id": "n_exp_019",
+      "text": "Una superficie infinita atraviesa la forma secreta del cansancio.",
+      "parentId": "n_deriva",
+      "createdAt": "2026-08-29T02:00:18.000Z"
+    },
+    {
+      "id": "n_exp_020",
+      "text": "El fantasma de la conexión atraviesa un mapa hecho de interrupciones.",
+      "parentId": "n_mtafcvs7_lu2y6t",
+      "createdAt": "2026-08-29T02:00:19.000Z"
+    },
+    {
+      "id": "n_exp_021",
+      "text": "La memoria de la máquina atraviesa un presente dividido en ventanas.",
+      "parentId": "n_mtagdylz_ypgr7u",
+      "createdAt": "2026-08-29T02:00:20.000Z"
+    },
+    {
+      "id": "n_exp_022",
+      "text": "Un movimiento casi invisible atraviesa el silencio de la siguiente pantalla.",
+      "parentId": "n_respiro",
+      "createdAt": "2026-08-29T02:00:21.000Z"
+    },
+    {
+      "id": "n_exp_023",
+      "text": "La luz detrás del vidrio atraviesa una órbita de señales dispersas.",
+      "parentId": "n_contacto",
+      "createdAt": "2026-08-29T02:00:22.000Z"
+    },
+    {
+      "id": "n_exp_024",
+      "text": "El tiempo acumulado atraviesa la geometría incierta del recuerdo.",
+      "parentId": "n_colectivo",
+      "createdAt": "2026-08-29T02:00:23.000Z"
+    },
+    {
+      "id": "n_exp_025",
+      "text": "Una imagen sin origen rodea un borde todavía sin nombre.",
+      "parentId": "n_mtafcrfl_zpzgv3",
+      "createdAt": "2026-08-29T02:00:24.000Z"
+    },
+    {
+      "id": "n_exp_026",
+      "text": "El archivo que respira rodea la promesa de otra imagen.",
+      "parentId": "n_mtagdlnb_a0felt",
+      "createdAt": "2026-08-29T02:00:25.000Z"
+    },
+    {
+      "id": "n_exp_027",
+      "text": "La pantalla nocturna rodea el deseo de seguir desplazándose.",
+      "parentId": "n_ruido",
+      "createdAt": "2026-08-29T02:00:26.000Z"
+    },
+    {
+      "id": "n_exp_028",
+      "text": "Cada gesto detenido rodea el eco de cuerpos conectados.",
+      "parentId": "n_infinito",
+      "createdAt": "2026-08-29T02:00:27.000Z"
+    },
+    {
+      "id": "n_exp_029",
+      "text": "Un fragmento de memoria rodea los restos de una navegación anterior.",
+      "parentId": "n_respuesta",
+      "createdAt": "2026-08-29T02:00:28.000Z"
+    },
+    {
+      "id": "n_exp_030",
+      "text": "La sombra de un píxel rodea la respiración escondida del sistema.",
+      "parentId": "n_mtafcfyp_1ghi5s",
+      "createdAt": "2026-08-29T02:00:29.000Z"
+    },
+    {
+      "id": "n_exp_031",
+      "text": "El cuerpo frente al flujo rodea la profundidad azul de la interfaz.",
+      "parentId": "n_mtagcdin_nqflj4",
+      "createdAt": "2026-08-29T02:00:30.000Z"
+    },
+    {
+      "id": "n_exp_032",
+      "text": "La señal más débil rodea la distancia entre dos pulsos.",
+      "parentId": "n_scroll",
+      "createdAt": "2026-08-29T02:00:31.000Z"
+    },
+    {
+      "id": "n_exp_033",
+      "text": "Una ventana abandonada rodea el espacio que deja el dedo.",
+      "parentId": "n_noche",
+      "createdAt": "2026-08-29T02:00:32.000Z"
+    },
+    {
+      "id": "n_exp_034",
+      "text": "El ruido del presente rodea una pequeña reserva de ruido.",
+      "parentId": "n_lluvia",
+      "createdAt": "2026-08-29T02:00:33.000Z"
+    },
+    {
+      "id": "n_exp_035",
+      "text": "La pausa entre dos imágenes rodea una salida que vuelve a empezar.",
+      "parentId": "n_mtafah6y_0puxgp",
+      "createdAt": "2026-08-29T02:00:34.000Z"
+    },
+    {
+      "id": "n_exp_036",
+      "text": "El brillo que queda rodea la forma secreta del cansancio.",
+      "parentId": "n_mtafd4jl_9jq0gu",
+      "createdAt": "2026-08-29T02:00:35.000Z"
+    },
+    {
+      "id": "n_exp_037",
+      "text": "Una huella anónima rodea un mapa hecho de interrupciones.",
+      "parentId": "n_mtage1p5_ncn3uo",
+      "createdAt": "2026-08-29T02:00:36.000Z"
+    },
+    {
+      "id": "n_exp_038",
+      "text": "El borde de la interfaz rodea un presente dividido en ventanas.",
+      "parentId": "n_fosforo",
+      "createdAt": "2026-08-29T02:00:37.000Z"
+    },
+    {
+      "id": "n_exp_039",
+      "text": "La mirada que regresa rodea el silencio de la siguiente pantalla.",
+      "parentId": "n_latencia",
+      "createdAt": "2026-08-29T02:00:38.000Z"
+    },
+    {
+      "id": "n_exp_040",
+      "text": "Un dato sin dueño rodea una órbita de señales dispersas.",
+      "parentId": "n_sombra",
+      "createdAt": "2026-08-29T02:00:39.000Z"
+    },
+    {
+      "id": "n_exp_041",
+      "text": "La noche del dispositivo rodea la geometría incierta del recuerdo.",
+      "parentId": "n_mtafcug1_9gxi9y",
+      "createdAt": "2026-08-29T02:00:40.000Z"
+    },
+    {
+      "id": "n_exp_042",
+      "text": "El pulso de la red rodea la memoria de quien mira.",
+      "parentId": "n_mtagdu6b_hmpoa0",
+      "createdAt": "2026-08-29T02:00:41.000Z"
+    },
+    {
+      "id": "n_exp_043",
+      "text": "Una superficie infinita rodea un paisaje construido con latencia.",
+      "parentId": "n_archivo",
+      "createdAt": "2026-08-29T02:00:42.000Z"
+    },
+    {
+      "id": "n_exp_044",
+      "text": "El fantasma de la conexión rodea la sombra de todos los enlaces.",
+      "parentId": "n_silencio",
+      "createdAt": "2026-08-29T02:00:43.000Z"
+    },
+    {
+      "id": "n_exp_045",
+      "text": "La memoria de la máquina rodea la textura de una ausencia digital.",
+      "parentId": "n_marco",
+      "createdAt": "2026-08-29T02:00:44.000Z"
+    },
+    {
+      "id": "n_exp_046",
+      "text": "Un movimiento casi invisible rodea una pregunta que no termina.",
+      "parentId": "n_mtafcpim_uu8zrz",
+      "createdAt": "2026-08-29T02:00:45.000Z"
+    },
+    {
+      "id": "n_exp_047",
+      "text": "La luz detrás del vidrio rodea el archivo común de la noche.",
+      "parentId": "n_mtagdhi5_n18lju",
+      "createdAt": "2026-08-29T02:00:46.000Z"
+    },
+    {
+      "id": "n_exp_048",
+      "text": "El tiempo acumulado rodea el ritmo incompleto de la espera.",
+      "parentId": "n_memoria",
+      "createdAt": "2026-08-29T02:00:47.000Z"
+    },
+    {
+      "id": "n_exp_049",
+      "text": "Una imagen sin origen desordena la distancia entre dos pulsos.",
+      "parentId": "n_tiempo",
+      "createdAt": "2026-08-29T02:00:48.000Z"
+    },
+    {
+      "id": "n_exp_050",
+      "text": "El archivo que respira desordena el espacio que deja el dedo.",
+      "parentId": "n_grafo",
+      "createdAt": "2026-08-29T02:00:49.000Z"
+    },
+    {
+      "id": "n_exp_051",
+      "text": "La pantalla nocturna desordena una pequeña reserva de ruido.",
+      "parentId": "n_mtafbere_svi94h",
+      "createdAt": "2026-08-29T02:00:50.000Z"
+    },
+    {
+      "id": "n_exp_052",
+      "text": "Cada gesto detenido desordena una salida que vuelve a empezar.",
+      "parentId": "n_mtafd7v7_hymd6p",
+      "createdAt": "2026-08-29T02:00:51.000Z"
+    },
+    {
+      "id": "n_exp_053",
+      "text": "Un fragmento de memoria desordena la forma secreta del cansancio.",
+      "parentId": "n_mtage5c7_7799h1",
+      "createdAt": "2026-08-29T02:00:52.000Z"
+    },
+    {
+      "id": "n_exp_054",
+      "text": "La sombra de un píxel desordena un mapa hecho de interrupciones.",
+      "parentId": "n_testigo",
+      "createdAt": "2026-08-29T02:00:53.000Z"
+    },
+    {
+      "id": "n_exp_055",
+      "text": "El cuerpo frente al flujo desordena un presente dividido en ventanas.",
+      "parentId": "n_bios",
+      "createdAt": "2026-08-29T02:00:54.000Z"
+    },
+    {
+      "id": "n_exp_056",
+      "text": "La señal más débil desordena el silencio de la siguiente pantalla.",
+      "parentId": "n_ritual",
+      "createdAt": "2026-08-29T02:00:55.000Z"
+    },
+    {
+      "id": "n_exp_057",
+      "text": "Una ventana abandonada desordena una órbita de señales dispersas.",
+      "parentId": "n_mtafcx8d_wsj31w",
+      "createdAt": "2026-08-29T02:00:56.000Z"
+    },
+    {
+      "id": "n_exp_058",
+      "text": "El ruido del presente desordena la geometría incierta del recuerdo.",
+      "parentId": "n_mtage06w_4fozy1",
+      "createdAt": "2026-08-29T02:00:57.000Z"
+    },
+    {
+      "id": "n_exp_059",
+      "text": "La pausa entre dos imágenes desordena la memoria de quien mira.",
+      "parentId": "n_exp_001",
+      "createdAt": "2026-08-29T02:00:58.000Z"
+    },
+    {
+      "id": "n_exp_060",
+      "text": "El brillo que queda desordena un paisaje construido con latencia.",
+      "parentId": "n_exp_001",
+      "createdAt": "2026-08-29T02:00:59.000Z"
+    },
+    {
+      "id": "n_exp_061",
+      "text": "Una huella anónima desordena la sombra de todos los enlaces.",
+      "parentId": "n_exp_002",
+      "createdAt": "2026-08-29T02:01:00.000Z"
+    },
+    {
+      "id": "n_exp_062",
+      "text": "El borde de la interfaz desordena la textura de una ausencia digital.",
+      "parentId": "n_exp_002",
+      "createdAt": "2026-08-29T02:01:01.000Z"
+    },
+    {
+      "id": "n_exp_063",
+      "text": "La mirada que regresa desordena una pregunta que no termina.",
+      "parentId": "n_exp_003",
+      "createdAt": "2026-08-29T02:01:02.000Z"
+    },
+    {
+      "id": "n_exp_064",
+      "text": "Un dato sin dueño desordena el archivo común de la noche.",
+      "parentId": "n_exp_003",
+      "createdAt": "2026-08-29T02:01:03.000Z"
+    },
+    {
+      "id": "n_exp_065",
+      "text": "La noche del dispositivo desordena el ritmo incompleto de la espera.",
+      "parentId": "n_exp_004",
+      "createdAt": "2026-08-29T02:01:04.000Z"
+    },
+    {
+      "id": "n_exp_066",
+      "text": "El pulso de la red desordena un borde todavía sin nombre.",
+      "parentId": "n_exp_004",
+      "createdAt": "2026-08-29T02:01:05.000Z"
+    },
+    {
+      "id": "n_exp_067",
+      "text": "Una superficie infinita desordena la promesa de otra imagen.",
+      "parentId": "n_exp_005",
+      "createdAt": "2026-08-29T02:01:06.000Z"
+    },
+    {
+      "id": "n_exp_068",
+      "text": "El fantasma de la conexión desordena el deseo de seguir desplazándose.",
+      "parentId": "n_exp_005",
+      "createdAt": "2026-08-29T02:01:07.000Z"
+    },
+    {
+      "id": "n_exp_069",
+      "text": "La memoria de la máquina desordena el eco de cuerpos conectados.",
+      "parentId": "n_exp_006",
+      "createdAt": "2026-08-29T02:01:08.000Z"
+    },
+    {
+      "id": "n_exp_070",
+      "text": "Un movimiento casi invisible desordena los restos de una navegación anterior.",
+      "parentId": "n_exp_006",
+      "createdAt": "2026-08-29T02:01:09.000Z"
+    },
+    {
+      "id": "n_exp_071",
+      "text": "La luz detrás del vidrio desordena la respiración escondida del sistema.",
+      "parentId": "n_exp_007",
+      "createdAt": "2026-08-29T02:01:10.000Z"
+    },
+    {
+      "id": "n_exp_072",
+      "text": "El tiempo acumulado desordena la profundidad azul de la interfaz.",
+      "parentId": "n_exp_007",
+      "createdAt": "2026-08-29T02:01:11.000Z"
+    },
+    {
+      "id": "n_exp_073",
+      "text": "Una imagen sin origen recorre el silencio de la siguiente pantalla.",
+      "parentId": "n_exp_008",
+      "createdAt": "2026-08-29T02:01:12.000Z"
+    },
+    {
+      "id": "n_exp_074",
+      "text": "El archivo que respira recorre una órbita de señales dispersas.",
+      "parentId": "n_exp_008",
+      "createdAt": "2026-08-29T02:01:13.000Z"
+    },
+    {
+      "id": "n_exp_075",
+      "text": "La pantalla nocturna recorre la geometría incierta del recuerdo.",
+      "parentId": "n_exp_009",
+      "createdAt": "2026-08-29T02:01:14.000Z"
+    },
+    {
+      "id": "n_exp_076",
+      "text": "Cada gesto detenido recorre la memoria de quien mira.",
+      "parentId": "n_exp_009",
+      "createdAt": "2026-08-29T02:01:15.000Z"
+    },
+    {
+      "id": "n_exp_077",
+      "text": "Un fragmento de memoria recorre un paisaje construido con latencia.",
+      "parentId": "n_exp_010",
+      "createdAt": "2026-08-29T02:01:16.000Z"
+    },
+    {
+      "id": "n_exp_078",
+      "text": "La sombra de un píxel recorre la sombra de todos los enlaces.",
+      "parentId": "n_exp_010",
+      "createdAt": "2026-08-29T02:01:17.000Z"
+    },
+    {
+      "id": "n_exp_079",
+      "text": "El cuerpo frente al flujo recorre la textura de una ausencia digital.",
+      "parentId": "n_exp_011",
+      "createdAt": "2026-08-29T02:01:18.000Z"
+    },
+    {
+      "id": "n_exp_080",
+      "text": "La señal más débil recorre una pregunta que no termina.",
+      "parentId": "n_exp_011",
+      "createdAt": "2026-08-29T02:01:19.000Z"
+    },
+    {
+      "id": "n_exp_081",
+      "text": "Una ventana abandonada recorre el archivo común de la noche.",
+      "parentId": "n_exp_012",
+      "createdAt": "2026-08-29T02:01:20.000Z"
+    },
+    {
+      "id": "n_exp_082",
+      "text": "El ruido del presente recorre el ritmo incompleto de la espera.",
+      "parentId": "n_exp_012",
+      "createdAt": "2026-08-29T02:01:21.000Z"
+    },
+    {
+      "id": "n_exp_083",
+      "text": "La pausa entre dos imágenes recorre un borde todavía sin nombre.",
+      "parentId": "n_exp_013",
+      "createdAt": "2026-08-29T02:01:22.000Z"
+    },
+    {
+      "id": "n_exp_084",
+      "text": "El brillo que queda recorre la promesa de otra imagen.",
+      "parentId": "n_exp_013",
+      "createdAt": "2026-08-29T02:01:23.000Z"
+    },
+    {
+      "id": "n_exp_085",
+      "text": "Una huella anónima recorre el deseo de seguir desplazándose.",
+      "parentId": "n_exp_014",
+      "createdAt": "2026-08-29T02:01:24.000Z"
+    },
+    {
+      "id": "n_exp_086",
+      "text": "El borde de la interfaz recorre el eco de cuerpos conectados.",
+      "parentId": "n_exp_014",
+      "createdAt": "2026-08-29T02:01:25.000Z"
+    },
+    {
+      "id": "n_exp_087",
+      "text": "La mirada que regresa recorre los restos de una navegación anterior.",
+      "parentId": "n_exp_015",
+      "createdAt": "2026-08-29T02:01:26.000Z"
+    },
+    {
+      "id": "n_exp_088",
+      "text": "Un dato sin dueño recorre la respiración escondida del sistema.",
+      "parentId": "n_exp_015",
+      "createdAt": "2026-08-29T02:01:27.000Z"
+    },
+    {
+      "id": "n_exp_089",
+      "text": "La noche del dispositivo recorre la profundidad azul de la interfaz.",
+      "parentId": "n_exp_016",
+      "createdAt": "2026-08-29T02:01:28.000Z"
+    },
+    {
+      "id": "n_exp_090",
+      "text": "El pulso de la red recorre la distancia entre dos pulsos.",
+      "parentId": "n_exp_016",
+      "createdAt": "2026-08-29T02:01:29.000Z"
+    },
+    {
+      "id": "n_exp_091",
+      "text": "Una superficie infinita recorre el espacio que deja el dedo.",
+      "parentId": "n_exp_017",
+      "createdAt": "2026-08-29T02:01:30.000Z"
+    },
+    {
+      "id": "n_exp_092",
+      "text": "El fantasma de la conexión recorre una pequeña reserva de ruido.",
+      "parentId": "n_exp_017",
+      "createdAt": "2026-08-29T02:01:31.000Z"
+    },
+    {
+      "id": "n_exp_093",
+      "text": "La memoria de la máquina recorre una salida que vuelve a empezar.",
+      "parentId": "n_exp_018",
+      "createdAt": "2026-08-29T02:01:32.000Z"
+    },
+    {
+      "id": "n_exp_094",
+      "text": "Un movimiento casi invisible recorre la forma secreta del cansancio.",
+      "parentId": "n_exp_018",
+      "createdAt": "2026-08-29T02:01:33.000Z"
+    },
+    {
+      "id": "n_exp_095",
+      "text": "La luz detrás del vidrio recorre un mapa hecho de interrupciones.",
+      "parentId": "n_exp_019",
+      "createdAt": "2026-08-29T02:01:34.000Z"
+    },
+    {
+      "id": "n_exp_096",
+      "text": "El tiempo acumulado recorre un presente dividido en ventanas.",
+      "parentId": "n_exp_019",
+      "createdAt": "2026-08-29T02:01:35.000Z"
+    },
+    {
+      "id": "n_exp_097",
+      "text": "Una imagen sin origen interrumpe una pregunta que no termina.",
+      "parentId": "n_exp_020",
+      "createdAt": "2026-08-29T02:01:36.000Z"
+    },
+    {
+      "id": "n_exp_098",
+      "text": "El archivo que respira interrumpe el archivo común de la noche.",
+      "parentId": "n_exp_020",
+      "createdAt": "2026-08-29T02:01:37.000Z"
+    },
+    {
+      "id": "n_exp_099",
+      "text": "La pantalla nocturna interrumpe el ritmo incompleto de la espera.",
+      "parentId": "n_exp_021",
+      "createdAt": "2026-08-29T02:01:38.000Z"
+    },
+    {
+      "id": "n_exp_100",
+      "text": "Cada gesto detenido interrumpe un borde todavía sin nombre.",
+      "parentId": "n_exp_021",
+      "createdAt": "2026-08-29T02:01:39.000Z"
+    },
+    {
+      "id": "n_exp_101",
+      "text": "Un fragmento de memoria interrumpe la promesa de otra imagen.",
+      "parentId": "n_exp_022",
+      "createdAt": "2026-08-29T02:01:40.000Z"
+    },
+    {
+      "id": "n_exp_102",
+      "text": "La sombra de un píxel interrumpe el deseo de seguir desplazándose.",
+      "parentId": "n_exp_022",
+      "createdAt": "2026-08-29T02:01:41.000Z"
+    },
+    {
+      "id": "n_exp_103",
+      "text": "El cuerpo frente al flujo interrumpe el eco de cuerpos conectados.",
+      "parentId": "n_exp_023",
+      "createdAt": "2026-08-29T02:01:42.000Z"
+    },
+    {
+      "id": "n_exp_104",
+      "text": "La señal más débil interrumpe los restos de una navegación anterior.",
+      "parentId": "n_exp_023",
+      "createdAt": "2026-08-29T02:01:43.000Z"
+    },
+    {
+      "id": "n_exp_105",
+      "text": "Una ventana abandonada interrumpe la respiración escondida del sistema.",
+      "parentId": "n_exp_024",
+      "createdAt": "2026-08-29T02:01:44.000Z"
+    },
+    {
+      "id": "n_exp_106",
+      "text": "El ruido del presente interrumpe la profundidad azul de la interfaz.",
+      "parentId": "n_exp_024",
+      "createdAt": "2026-08-29T02:01:45.000Z"
+    },
+    {
+      "id": "n_exp_107",
+      "text": "La pausa entre dos imágenes interrumpe la distancia entre dos pulsos.",
+      "parentId": "n_exp_025",
+      "createdAt": "2026-08-29T02:01:46.000Z"
+    },
+    {
+      "id": "n_exp_108",
+      "text": "El brillo que queda interrumpe el espacio que deja el dedo.",
+      "parentId": "n_exp_025",
+      "createdAt": "2026-08-29T02:01:47.000Z"
+    },
+    {
+      "id": "n_exp_109",
+      "text": "Una huella anónima interrumpe una pequeña reserva de ruido.",
+      "parentId": "n_exp_026",
+      "createdAt": "2026-08-29T02:01:48.000Z"
+    },
+    {
+      "id": "n_exp_110",
+      "text": "El borde de la interfaz interrumpe una salida que vuelve a empezar.",
+      "parentId": "n_exp_026",
+      "createdAt": "2026-08-29T02:01:49.000Z"
+    },
+    {
+      "id": "n_exp_111",
+      "text": "La mirada que regresa interrumpe la forma secreta del cansancio.",
+      "parentId": "n_exp_027",
+      "createdAt": "2026-08-29T02:01:50.000Z"
+    },
+    {
+      "id": "n_exp_112",
+      "text": "Un dato sin dueño interrumpe un mapa hecho de interrupciones.",
+      "parentId": "n_exp_027",
+      "createdAt": "2026-08-29T02:01:51.000Z"
+    },
+    {
+      "id": "n_exp_113",
+      "text": "La noche del dispositivo interrumpe un presente dividido en ventanas.",
+      "parentId": "n_exp_028",
+      "createdAt": "2026-08-29T02:01:52.000Z"
+    },
+    {
+      "id": "n_exp_114",
+      "text": "El pulso de la red interrumpe el silencio de la siguiente pantalla.",
+      "parentId": "n_exp_028",
+      "createdAt": "2026-08-29T02:01:53.000Z"
+    },
+    {
+      "id": "n_exp_115",
+      "text": "Una superficie infinita interrumpe una órbita de señales dispersas.",
+      "parentId": "n_exp_029",
+      "createdAt": "2026-08-29T02:01:54.000Z"
+    },
+    {
+      "id": "n_exp_116",
+      "text": "El fantasma de la conexión interrumpe la geometría incierta del recuerdo.",
+      "parentId": "n_exp_029",
+      "createdAt": "2026-08-29T02:01:55.000Z"
+    },
+    {
+      "id": "n_exp_117",
+      "text": "La memoria de la máquina interrumpe la memoria de quien mira.",
+      "parentId": "n_exp_030",
+      "createdAt": "2026-08-29T02:01:56.000Z"
+    },
+    {
+      "id": "n_exp_118",
+      "text": "Un movimiento casi invisible interrumpe un paisaje construido con latencia.",
+      "parentId": "n_exp_030",
+      "createdAt": "2026-08-29T02:01:57.000Z"
+    },
+    {
+      "id": "n_exp_119",
+      "text": "La luz detrás del vidrio interrumpe la sombra de todos los enlaces.",
+      "parentId": "n_exp_031",
+      "createdAt": "2026-08-29T02:01:58.000Z"
+    },
+    {
+      "id": "n_exp_120",
+      "text": "El tiempo acumulado interrumpe la textura de una ausencia digital.",
+      "parentId": "n_exp_031",
+      "createdAt": "2026-08-29T02:01:59.000Z"
+    },
+    {
+      "id": "n_exp_121",
+      "text": "Una imagen sin origen duplica los restos de una navegación anterior.",
+      "parentId": "n_exp_032",
+      "createdAt": "2026-08-29T02:02:00.000Z"
+    },
+    {
+      "id": "n_exp_122",
+      "text": "El archivo que respira duplica la respiración escondida del sistema.",
+      "parentId": "n_exp_032",
+      "createdAt": "2026-08-29T02:02:01.000Z"
+    },
+    {
+      "id": "n_exp_123",
+      "text": "La pantalla nocturna duplica la profundidad azul de la interfaz.",
+      "parentId": "n_exp_033",
+      "createdAt": "2026-08-29T02:02:02.000Z"
+    },
+    {
+      "id": "n_exp_124",
+      "text": "Cada gesto detenido duplica la distancia entre dos pulsos.",
+      "parentId": "n_exp_033",
+      "createdAt": "2026-08-29T02:02:03.000Z"
+    },
+    {
+      "id": "n_exp_125",
+      "text": "Un fragmento de memoria duplica el espacio que deja el dedo.",
+      "parentId": "n_exp_034",
+      "createdAt": "2026-08-29T02:02:04.000Z"
+    },
+    {
+      "id": "n_exp_126",
+      "text": "La sombra de un píxel duplica una pequeña reserva de ruido.",
+      "parentId": "n_exp_034",
+      "createdAt": "2026-08-29T02:02:05.000Z"
+    },
+    {
+      "id": "n_exp_127",
+      "text": "El cuerpo frente al flujo duplica una salida que vuelve a empezar.",
+      "parentId": "n_exp_035",
+      "createdAt": "2026-08-29T02:02:06.000Z"
+    },
+    {
+      "id": "n_exp_128",
+      "text": "La señal más débil duplica la forma secreta del cansancio.",
+      "parentId": "n_exp_035",
+      "createdAt": "2026-08-29T02:02:07.000Z"
+    },
+    {
+      "id": "n_exp_129",
+      "text": "Una ventana abandonada duplica un mapa hecho de interrupciones.",
+      "parentId": "n_exp_036",
+      "createdAt": "2026-08-29T02:02:08.000Z"
+    },
+    {
+      "id": "n_exp_130",
+      "text": "El ruido del presente duplica un presente dividido en ventanas.",
+      "parentId": "n_exp_036",
+      "createdAt": "2026-08-29T02:02:09.000Z"
+    },
+    {
+      "id": "n_exp_131",
+      "text": "La pausa entre dos imágenes duplica el silencio de la siguiente pantalla.",
+      "parentId": "n_exp_037",
+      "createdAt": "2026-08-29T02:02:10.000Z"
+    },
+    {
+      "id": "n_exp_132",
+      "text": "El brillo que queda duplica una órbita de señales dispersas.",
+      "parentId": "n_exp_037",
+      "createdAt": "2026-08-29T02:02:11.000Z"
+    },
+    {
+      "id": "n_exp_133",
+      "text": "Una huella anónima duplica la geometría incierta del recuerdo.",
+      "parentId": "n_exp_038",
+      "createdAt": "2026-08-29T02:02:12.000Z"
+    },
+    {
+      "id": "n_exp_134",
+      "text": "El borde de la interfaz duplica la memoria de quien mira.",
+      "parentId": "n_exp_038",
+      "createdAt": "2026-08-29T02:02:13.000Z"
+    },
+    {
+      "id": "n_exp_135",
+      "text": "La mirada que regresa duplica un paisaje construido con latencia.",
+      "parentId": "n_exp_039",
+      "createdAt": "2026-08-29T02:02:14.000Z"
+    },
+    {
+      "id": "n_exp_136",
+      "text": "Un dato sin dueño duplica la sombra de todos los enlaces.",
+      "parentId": "n_exp_039",
+      "createdAt": "2026-08-29T02:02:15.000Z"
+    },
+    {
+      "id": "n_exp_137",
+      "text": "La noche del dispositivo duplica la textura de una ausencia digital.",
+      "parentId": "n_exp_040",
+      "createdAt": "2026-08-29T02:02:16.000Z"
+    },
+    {
+      "id": "n_exp_138",
+      "text": "El pulso de la red duplica una pregunta que no termina.",
+      "parentId": "n_exp_040",
+      "createdAt": "2026-08-29T02:02:17.000Z"
+    },
+    {
+      "id": "n_exp_139",
+      "text": "Una superficie infinita duplica el archivo común de la noche.",
+      "parentId": "n_exp_041",
+      "createdAt": "2026-08-29T02:02:18.000Z"
+    },
+    {
+      "id": "n_exp_140",
+      "text": "El fantasma de la conexión duplica el ritmo incompleto de la espera.",
+      "parentId": "n_exp_041",
+      "createdAt": "2026-08-29T02:02:19.000Z"
+    },
+    {
+      "id": "n_exp_141",
+      "text": "La memoria de la máquina duplica un borde todavía sin nombre.",
+      "parentId": "n_exp_042",
+      "createdAt": "2026-08-29T02:02:20.000Z"
+    },
+    {
+      "id": "n_exp_142",
+      "text": "Un movimiento casi invisible duplica la promesa de otra imagen.",
+      "parentId": "n_exp_042",
+      "createdAt": "2026-08-29T02:02:21.000Z"
+    },
+    {
+      "id": "n_exp_143",
+      "text": "La luz detrás del vidrio duplica el deseo de seguir desplazándose.",
+      "parentId": "n_exp_043",
+      "createdAt": "2026-08-29T02:02:22.000Z"
+    },
+    {
+      "id": "n_exp_144",
+      "text": "El tiempo acumulado duplica el eco de cuerpos conectados.",
+      "parentId": "n_exp_043",
+      "createdAt": "2026-08-29T02:02:23.000Z"
+    },
+    {
+      "id": "n_exp_145",
+      "text": "Una imagen sin origen roza la forma secreta del cansancio.",
+      "parentId": "n_exp_044",
+      "createdAt": "2026-08-29T02:02:24.000Z"
+    },
+    {
+      "id": "n_exp_146",
+      "text": "El archivo que respira roza un mapa hecho de interrupciones.",
+      "parentId": "n_exp_044",
+      "createdAt": "2026-08-29T02:02:25.000Z"
+    },
+    {
+      "id": "n_exp_147",
+      "text": "La pantalla nocturna roza un presente dividido en ventanas.",
+      "parentId": "n_exp_045",
+      "createdAt": "2026-08-29T02:02:26.000Z"
+    },
+    {
+      "id": "n_exp_148",
+      "text": "Cada gesto detenido roza el silencio de la siguiente pantalla.",
+      "parentId": "n_exp_045",
+      "createdAt": "2026-08-29T02:02:27.000Z"
+    },
+    {
+      "id": "n_exp_149",
+      "text": "Un fragmento de memoria roza una órbita de señales dispersas.",
+      "parentId": "n_exp_046",
+      "createdAt": "2026-08-29T02:02:28.000Z"
+    },
+    {
+      "id": "n_exp_150",
+      "text": "La sombra de un píxel roza la geometría incierta del recuerdo.",
+      "parentId": "n_exp_046",
+      "createdAt": "2026-08-29T02:02:29.000Z"
+    },
+    {
+      "id": "n_exp_151",
+      "text": "El cuerpo frente al flujo roza la memoria de quien mira.",
+      "parentId": "n_exp_047",
+      "createdAt": "2026-08-29T02:02:30.000Z"
+    },
+    {
+      "id": "n_exp_152",
+      "text": "La señal más débil roza un paisaje construido con latencia.",
+      "parentId": "n_exp_047",
+      "createdAt": "2026-08-29T02:02:31.000Z"
+    },
+    {
+      "id": "n_exp_153",
+      "text": "Una ventana abandonada roza la sombra de todos los enlaces.",
+      "parentId": "n_exp_048",
+      "createdAt": "2026-08-29T02:02:32.000Z"
+    },
+    {
+      "id": "n_exp_154",
+      "text": "El ruido del presente roza la textura de una ausencia digital.",
+      "parentId": "n_exp_048",
+      "createdAt": "2026-08-29T02:02:33.000Z"
+    },
+    {
+      "id": "n_exp_155",
+      "text": "La pausa entre dos imágenes roza una pregunta que no termina.",
+      "parentId": "n_exp_049",
+      "createdAt": "2026-08-29T02:02:34.000Z"
+    },
+    {
+      "id": "n_exp_156",
+      "text": "El brillo que queda roza el archivo común de la noche.",
+      "parentId": "n_exp_049",
+      "createdAt": "2026-08-29T02:02:35.000Z"
+    },
+    {
+      "id": "n_exp_157",
+      "text": "Una huella anónima roza el ritmo incompleto de la espera.",
+      "parentId": "n_exp_050",
+      "createdAt": "2026-08-29T02:02:36.000Z"
+    },
+    {
+      "id": "n_exp_158",
+      "text": "El borde de la interfaz roza un borde todavía sin nombre.",
+      "parentId": "n_exp_050",
+      "createdAt": "2026-08-29T02:02:37.000Z"
+    },
+    {
+      "id": "n_exp_159",
+      "text": "La mirada que regresa roza la promesa de otra imagen.",
+      "parentId": "n_exp_051",
+      "createdAt": "2026-08-29T02:02:38.000Z"
+    },
+    {
+      "id": "n_exp_160",
+      "text": "Un dato sin dueño roza el deseo de seguir desplazándose.",
+      "parentId": "n_exp_051",
+      "createdAt": "2026-08-29T02:02:39.000Z"
+    },
+    {
+      "id": "n_exp_161",
+      "text": "La noche del dispositivo roza el eco de cuerpos conectados.",
+      "parentId": "n_exp_052",
+      "createdAt": "2026-08-29T02:02:40.000Z"
+    },
+    {
+      "id": "n_exp_162",
+      "text": "El pulso de la red roza los restos de una navegación anterior.",
+      "parentId": "n_exp_052",
+      "createdAt": "2026-08-29T02:02:41.000Z"
+    },
+    {
+      "id": "n_exp_163",
+      "text": "Una superficie infinita roza la respiración escondida del sistema.",
+      "parentId": "n_exp_053",
+      "createdAt": "2026-08-29T02:02:42.000Z"
+    },
+    {
+      "id": "n_exp_164",
+      "text": "El fantasma de la conexión roza la profundidad azul de la interfaz.",
+      "parentId": "n_exp_053",
+      "createdAt": "2026-08-29T02:02:43.000Z"
+    },
+    {
+      "id": "n_exp_165",
+      "text": "La memoria de la máquina roza la distancia entre dos pulsos.",
+      "parentId": "n_exp_054",
+      "createdAt": "2026-08-29T02:02:44.000Z"
+    },
+    {
+      "id": "n_exp_166",
+      "text": "Un movimiento casi invisible roza el espacio que deja el dedo.",
+      "parentId": "n_exp_054",
+      "createdAt": "2026-08-29T02:02:45.000Z"
+    },
+    {
+      "id": "n_exp_167",
+      "text": "La luz detrás del vidrio roza una pequeña reserva de ruido.",
+      "parentId": "n_exp_055",
+      "createdAt": "2026-08-29T02:02:46.000Z"
+    },
+    {
+      "id": "n_exp_168",
+      "text": "El tiempo acumulado roza una salida que vuelve a empezar.",
+      "parentId": "n_exp_055",
+      "createdAt": "2026-08-29T02:02:47.000Z"
+    },
+    {
+      "id": "n_exp_169",
+      "text": "Una imagen sin origen oculta un paisaje construido con latencia.",
+      "parentId": "n_exp_056",
+      "createdAt": "2026-08-29T02:02:48.000Z"
+    },
+    {
+      "id": "n_exp_170",
+      "text": "El archivo que respira oculta la sombra de todos los enlaces.",
+      "parentId": "n_exp_056",
+      "createdAt": "2026-08-29T02:02:49.000Z"
+    },
+    {
+      "id": "n_exp_171",
+      "text": "La pantalla nocturna oculta la textura de una ausencia digital.",
+      "parentId": "n_exp_057",
+      "createdAt": "2026-08-29T02:02:50.000Z"
+    },
+    {
+      "id": "n_exp_172",
+      "text": "Cada gesto detenido oculta una pregunta que no termina.",
+      "parentId": "n_exp_057",
+      "createdAt": "2026-08-29T02:02:51.000Z"
+    },
+    {
+      "id": "n_exp_173",
+      "text": "Un fragmento de memoria oculta el archivo común de la noche.",
+      "parentId": "n_exp_058",
+      "createdAt": "2026-08-29T02:02:52.000Z"
+    },
+    {
+      "id": "n_exp_174",
+      "text": "La sombra de un píxel oculta el ritmo incompleto de la espera.",
+      "parentId": "n_exp_058",
+      "createdAt": "2026-08-29T02:02:53.000Z"
+    },
+    {
+      "id": "n_exp_175",
+      "text": "El cuerpo frente al flujo oculta un borde todavía sin nombre.",
+      "parentId": "n_exp_059",
+      "createdAt": "2026-08-29T02:02:54.000Z"
+    },
+    {
+      "id": "n_exp_176",
+      "text": "La señal más débil oculta la promesa de otra imagen.",
+      "parentId": "n_exp_059",
+      "createdAt": "2026-08-29T02:02:55.000Z"
+    },
+    {
+      "id": "n_exp_177",
+      "text": "Una ventana abandonada oculta el deseo de seguir desplazándose.",
+      "parentId": "n_exp_060",
+      "createdAt": "2026-08-29T02:02:56.000Z"
+    },
+    {
+      "id": "n_exp_178",
+      "text": "El ruido del presente oculta el eco de cuerpos conectados.",
+      "parentId": "n_exp_060",
+      "createdAt": "2026-08-29T02:02:57.000Z"
+    },
+    {
+      "id": "n_exp_179",
+      "text": "La pausa entre dos imágenes oculta los restos de una navegación anterior.",
+      "parentId": "n_exp_061",
+      "createdAt": "2026-08-29T02:02:58.000Z"
+    },
+    {
+      "id": "n_exp_180",
+      "text": "El brillo que queda oculta la respiración escondida del sistema.",
+      "parentId": "n_exp_061",
+      "createdAt": "2026-08-29T02:02:59.000Z"
+    },
+    {
+      "id": "n_exp_181",
+      "text": "Una huella anónima oculta la profundidad azul de la interfaz.",
+      "parentId": "n_exp_062",
+      "createdAt": "2026-08-29T02:03:00.000Z"
+    },
+    {
+      "id": "n_exp_182",
+      "text": "El borde de la interfaz oculta la distancia entre dos pulsos.",
+      "parentId": "n_exp_062",
+      "createdAt": "2026-08-29T02:03:01.000Z"
+    },
+    {
+      "id": "n_exp_183",
+      "text": "La mirada que regresa oculta el espacio que deja el dedo.",
+      "parentId": "n_exp_063",
+      "createdAt": "2026-08-29T02:03:02.000Z"
+    },
+    {
+      "id": "n_exp_184",
+      "text": "Un dato sin dueño oculta una pequeña reserva de ruido.",
+      "parentId": "n_exp_063",
+      "createdAt": "2026-08-29T02:03:03.000Z"
+    },
+    {
+      "id": "n_exp_185",
+      "text": "La noche del dispositivo oculta una salida que vuelve a empezar.",
+      "parentId": "n_exp_064",
+      "createdAt": "2026-08-29T02:03:04.000Z"
+    },
+    {
+      "id": "n_exp_186",
+      "text": "El pulso de la red oculta la forma secreta del cansancio.",
+      "parentId": "n_exp_064",
+      "createdAt": "2026-08-29T02:03:05.000Z"
+    },
+    {
+      "id": "n_exp_187",
+      "text": "Una superficie infinita oculta un mapa hecho de interrupciones.",
+      "parentId": "n_exp_065",
+      "createdAt": "2026-08-29T02:03:06.000Z"
+    },
+    {
+      "id": "n_exp_188",
+      "text": "El fantasma de la conexión oculta un presente dividido en ventanas.",
+      "parentId": "n_exp_065",
+      "createdAt": "2026-08-29T02:03:07.000Z"
+    },
+    {
+      "id": "n_exp_189",
+      "text": "La memoria de la máquina oculta el silencio de la siguiente pantalla.",
+      "parentId": "n_exp_066",
+      "createdAt": "2026-08-29T02:03:08.000Z"
+    },
+    {
+      "id": "n_exp_190",
+      "text": "Un movimiento casi invisible oculta una órbita de señales dispersas.",
+      "parentId": "n_exp_066",
+      "createdAt": "2026-08-29T02:03:09.000Z"
+    },
+    {
+      "id": "n_exp_191",
+      "text": "La luz detrás del vidrio oculta la geometría incierta del recuerdo.",
+      "parentId": "n_exp_067",
+      "createdAt": "2026-08-29T02:03:10.000Z"
+    },
+    {
+      "id": "n_exp_192",
+      "text": "El tiempo acumulado oculta la memoria de quien mira.",
+      "parentId": "n_exp_067",
+      "createdAt": "2026-08-29T02:03:11.000Z"
+    },
+    {
+      "id": "n_exp_193",
+      "text": "Una imagen sin origen ilumina la promesa de otra imagen.",
+      "parentId": "n_exp_068",
+      "createdAt": "2026-08-29T02:03:12.000Z"
+    },
+    {
+      "id": "n_exp_194",
+      "text": "El archivo que respira ilumina el deseo de seguir desplazándose.",
+      "parentId": "n_exp_068",
+      "createdAt": "2026-08-29T02:03:13.000Z"
+    },
+    {
+      "id": "n_exp_195",
+      "text": "La pantalla nocturna ilumina el eco de cuerpos conectados.",
+      "parentId": "n_exp_069",
+      "createdAt": "2026-08-29T02:03:14.000Z"
+    },
+    {
+      "id": "n_exp_196",
+      "text": "Cada gesto detenido ilumina los restos de una navegación anterior.",
+      "parentId": "n_exp_069",
+      "createdAt": "2026-08-29T02:03:15.000Z"
+    },
+    {
+      "id": "n_exp_197",
+      "text": "Un fragmento de memoria ilumina la respiración escondida del sistema.",
+      "parentId": "n_exp_070",
+      "createdAt": "2026-08-29T02:03:16.000Z"
+    },
+    {
+      "id": "n_exp_198",
+      "text": "La sombra de un píxel ilumina la profundidad azul de la interfaz.",
+      "parentId": "n_exp_070",
+      "createdAt": "2026-08-29T02:03:17.000Z"
+    },
+    {
+      "id": "n_exp_199",
+      "text": "El cuerpo frente al flujo ilumina la distancia entre dos pulsos.",
+      "parentId": "n_exp_071",
+      "createdAt": "2026-08-29T02:03:18.000Z"
+    },
+    {
+      "id": "n_exp_200",
+      "text": "La señal más débil ilumina el espacio que deja el dedo.",
+      "parentId": "n_exp_071",
+      "createdAt": "2026-08-29T02:03:19.000Z"
+    },
+    {
+      "id": "n_exp_201",
+      "text": "Una ventana abandonada ilumina una pequeña reserva de ruido.",
+      "parentId": "n_exp_072",
+      "createdAt": "2026-08-29T02:03:20.000Z"
+    },
+    {
+      "id": "n_exp_202",
+      "text": "El ruido del presente ilumina una salida que vuelve a empezar.",
+      "parentId": "n_exp_072",
+      "createdAt": "2026-08-29T02:03:21.000Z"
+    },
+    {
+      "id": "n_exp_203",
+      "text": "La pausa entre dos imágenes ilumina la forma secreta del cansancio.",
+      "parentId": "n_exp_073",
+      "createdAt": "2026-08-29T02:03:22.000Z"
+    },
+    {
+      "id": "n_exp_204",
+      "text": "El brillo que queda ilumina un mapa hecho de interrupciones.",
+      "parentId": "n_exp_073",
+      "createdAt": "2026-08-29T02:03:23.000Z"
+    },
+    {
+      "id": "n_exp_205",
+      "text": "Una huella anónima ilumina un presente dividido en ventanas.",
+      "parentId": "n_exp_074",
+      "createdAt": "2026-08-29T02:03:24.000Z"
+    },
+    {
+      "id": "n_exp_206",
+      "text": "El borde de la interfaz ilumina el silencio de la siguiente pantalla.",
+      "parentId": "n_exp_074",
+      "createdAt": "2026-08-29T02:03:25.000Z"
+    },
+    {
+      "id": "n_exp_207",
+      "text": "La mirada que regresa ilumina una órbita de señales dispersas.",
+      "parentId": "n_exp_075",
+      "createdAt": "2026-08-29T02:03:26.000Z"
+    },
+    {
+      "id": "n_exp_208",
+      "text": "Un dato sin dueño ilumina la geometría incierta del recuerdo.",
+      "parentId": "n_exp_075",
+      "createdAt": "2026-08-29T02:03:27.000Z"
+    },
+    {
+      "id": "n_exp_209",
+      "text": "La noche del dispositivo ilumina la memoria de quien mira.",
+      "parentId": "n_exp_076",
+      "createdAt": "2026-08-29T02:03:28.000Z"
+    },
+    {
+      "id": "n_exp_210",
+      "text": "El pulso de la red ilumina un paisaje construido con latencia.",
+      "parentId": "n_exp_076",
+      "createdAt": "2026-08-29T02:03:29.000Z"
+    },
+    {
+      "id": "n_exp_211",
+      "text": "Una superficie infinita ilumina la sombra de todos los enlaces.",
+      "parentId": "n_exp_077",
+      "createdAt": "2026-08-29T02:03:30.000Z"
+    },
+    {
+      "id": "n_exp_212",
+      "text": "El fantasma de la conexión ilumina la textura de una ausencia digital.",
+      "parentId": "n_exp_077",
+      "createdAt": "2026-08-29T02:03:31.000Z"
+    },
+    {
+      "id": "n_exp_213",
+      "text": "La memoria de la máquina ilumina una pregunta que no termina.",
+      "parentId": "n_exp_078",
+      "createdAt": "2026-08-29T02:03:32.000Z"
+    },
+    {
+      "id": "n_exp_214",
+      "text": "Un movimiento casi invisible ilumina el archivo común de la noche.",
+      "parentId": "n_exp_078",
+      "createdAt": "2026-08-29T02:03:33.000Z"
+    },
+    {
+      "id": "n_exp_215",
+      "text": "La luz detrás del vidrio ilumina el ritmo incompleto de la espera.",
+      "parentId": "n_exp_079",
+      "createdAt": "2026-08-29T02:03:34.000Z"
+    },
+    {
+      "id": "n_exp_216",
+      "text": "El tiempo acumulado ilumina un borde todavía sin nombre.",
+      "parentId": "n_exp_079",
+      "createdAt": "2026-08-29T02:03:35.000Z"
+    },
+    {
+      "id": "n_exp_217",
+      "text": "Una imagen sin origen deforma el espacio que deja el dedo.",
+      "parentId": "n_exp_080",
+      "createdAt": "2026-08-29T02:03:36.000Z"
+    },
+    {
+      "id": "n_exp_218",
+      "text": "El archivo que respira deforma una pequeña reserva de ruido.",
+      "parentId": "n_exp_080",
+      "createdAt": "2026-08-29T02:03:37.000Z"
+    },
+    {
+      "id": "n_exp_219",
+      "text": "La pantalla nocturna deforma una salida que vuelve a empezar.",
+      "parentId": "n_exp_081",
+      "createdAt": "2026-08-29T02:03:38.000Z"
+    },
+    {
+      "id": "n_exp_220",
+      "text": "Cada gesto detenido deforma la forma secreta del cansancio.",
+      "parentId": "n_exp_081",
+      "createdAt": "2026-08-29T02:03:39.000Z"
+    },
+    {
+      "id": "n_exp_221",
+      "text": "Un fragmento de memoria deforma un mapa hecho de interrupciones.",
+      "parentId": "n_exp_082",
+      "createdAt": "2026-08-29T02:03:40.000Z"
+    },
+    {
+      "id": "n_exp_222",
+      "text": "La sombra de un píxel deforma un presente dividido en ventanas.",
+      "parentId": "n_exp_082",
+      "createdAt": "2026-08-29T02:03:41.000Z"
+    },
+    {
+      "id": "n_exp_223",
+      "text": "El cuerpo frente al flujo deforma el silencio de la siguiente pantalla.",
+      "parentId": "n_exp_083",
+      "createdAt": "2026-08-29T02:03:42.000Z"
+    },
+    {
+      "id": "n_exp_224",
+      "text": "La señal más débil deforma una órbita de señales dispersas.",
+      "parentId": "n_exp_083",
+      "createdAt": "2026-08-29T02:03:43.000Z"
+    },
+    {
+      "id": "n_exp_225",
+      "text": "Una ventana abandonada deforma la geometría incierta del recuerdo.",
+      "parentId": "n_exp_084",
+      "createdAt": "2026-08-29T02:03:44.000Z"
+    },
+    {
+      "id": "n_exp_226",
+      "text": "El ruido del presente deforma la memoria de quien mira.",
+      "parentId": "n_exp_084",
+      "createdAt": "2026-08-29T02:03:45.000Z"
+    },
+    {
+      "id": "n_exp_227",
+      "text": "La pausa entre dos imágenes deforma un paisaje construido con latencia.",
+      "parentId": "n_exp_085",
+      "createdAt": "2026-08-29T02:03:46.000Z"
+    },
+    {
+      "id": "n_exp_228",
+      "text": "El brillo que queda deforma la sombra de todos los enlaces.",
+      "parentId": "n_exp_085",
+      "createdAt": "2026-08-29T02:03:47.000Z"
+    },
+    {
+      "id": "n_exp_229",
+      "text": "Una huella anónima deforma la textura de una ausencia digital.",
+      "parentId": "n_exp_086",
+      "createdAt": "2026-08-29T02:03:48.000Z"
+    },
+    {
+      "id": "n_exp_230",
+      "text": "El borde de la interfaz deforma una pregunta que no termina.",
+      "parentId": "n_exp_086",
+      "createdAt": "2026-08-29T02:03:49.000Z"
+    },
+    {
+      "id": "n_exp_231",
+      "text": "La mirada que regresa deforma el archivo común de la noche.",
+      "parentId": "n_exp_087",
+      "createdAt": "2026-08-29T02:03:50.000Z"
+    },
+    {
+      "id": "n_exp_232",
+      "text": "Un dato sin dueño deforma el ritmo incompleto de la espera.",
+      "parentId": "n_exp_087",
+      "createdAt": "2026-08-29T02:03:51.000Z"
+    },
+    {
+      "id": "n_exp_233",
+      "text": "La noche del dispositivo deforma un borde todavía sin nombre.",
+      "parentId": "n_exp_088",
+      "createdAt": "2026-08-29T02:03:52.000Z"
+    },
+    {
+      "id": "n_exp_234",
+      "text": "El pulso de la red deforma la promesa de otra imagen.",
+      "parentId": "n_exp_088",
+      "createdAt": "2026-08-29T02:03:53.000Z"
+    },
+    {
+      "id": "n_exp_235",
+      "text": "Una superficie infinita deforma el deseo de seguir desplazándose.",
+      "parentId": "n_exp_089",
+      "createdAt": "2026-08-29T02:03:54.000Z"
+    },
+    {
+      "id": "n_exp_236",
+      "text": "El fantasma de la conexión deforma el eco de cuerpos conectados.",
+      "parentId": "n_exp_089",
+      "createdAt": "2026-08-29T02:03:55.000Z"
+    },
+    {
+      "id": "n_exp_237",
+      "text": "La memoria de la máquina deforma los restos de una navegación anterior.",
+      "parentId": "n_exp_090",
+      "createdAt": "2026-08-29T02:03:56.000Z"
+    },
+    {
+      "id": "n_exp_238",
+      "text": "Un movimiento casi invisible deforma la respiración escondida del sistema.",
+      "parentId": "n_exp_090",
+      "createdAt": "2026-08-29T02:03:57.000Z"
+    },
+    {
+      "id": "n_exp_239",
+      "text": "La luz detrás del vidrio deforma la profundidad azul de la interfaz.",
+      "parentId": "n_exp_091",
+      "createdAt": "2026-08-29T02:03:58.000Z"
+    },
+    {
+      "id": "n_exp_240",
+      "text": "El tiempo acumulado deforma la distancia entre dos pulsos.",
+      "parentId": "n_exp_091",
+      "createdAt": "2026-08-29T02:03:59.000Z"
+    },
+    {
+      "id": "n_exp_241",
+      "text": "Una imagen sin origen escucha una órbita de señales dispersas.",
+      "parentId": "n_exp_092",
+      "createdAt": "2026-08-29T02:04:00.000Z"
+    },
+    {
+      "id": "n_exp_242",
+      "text": "El archivo que respira escucha la geometría incierta del recuerdo.",
+      "parentId": "n_exp_092",
+      "createdAt": "2026-08-29T02:04:01.000Z"
+    },
+    {
+      "id": "n_exp_243",
+      "text": "La pantalla nocturna escucha la memoria de quien mira.",
+      "parentId": "n_exp_093",
+      "createdAt": "2026-08-29T02:04:02.000Z"
+    },
+    {
+      "id": "n_exp_244",
+      "text": "Cada gesto detenido escucha un paisaje construido con latencia.",
+      "parentId": "n_exp_093",
+      "createdAt": "2026-08-29T02:04:03.000Z"
+    },
+    {
+      "id": "n_exp_245",
+      "text": "Un fragmento de memoria escucha la sombra de todos los enlaces.",
+      "parentId": "n_exp_094",
+      "createdAt": "2026-08-29T02:04:04.000Z"
+    },
+    {
+      "id": "n_exp_246",
+      "text": "La sombra de un píxel escucha la textura de una ausencia digital.",
+      "parentId": "n_exp_094",
+      "createdAt": "2026-08-29T02:04:05.000Z"
+    },
+    {
+      "id": "n_exp_247",
+      "text": "El cuerpo frente al flujo escucha una pregunta que no termina.",
+      "parentId": "n_exp_095",
+      "createdAt": "2026-08-29T02:04:06.000Z"
+    },
+    {
+      "id": "n_exp_248",
+      "text": "La señal más débil escucha el archivo común de la noche.",
+      "parentId": "n_exp_095",
+      "createdAt": "2026-08-29T02:04:07.000Z"
+    },
+    {
+      "id": "n_exp_249",
+      "text": "Una ventana abandonada escucha el ritmo incompleto de la espera.",
+      "parentId": "n_exp_096",
+      "createdAt": "2026-08-29T02:04:08.000Z"
+    },
+    {
+      "id": "n_exp_250",
+      "text": "El ruido del presente escucha un borde todavía sin nombre.",
+      "parentId": "n_exp_096",
+      "createdAt": "2026-08-29T02:04:09.000Z"
+    },
+    {
+      "id": "n_exp_251",
+      "text": "La pausa entre dos imágenes escucha la promesa de otra imagen.",
+      "parentId": "n_exp_097",
+      "createdAt": "2026-08-29T02:04:10.000Z"
+    },
+    {
+      "id": "n_exp_252",
+      "text": "El brillo que queda escucha el deseo de seguir desplazándose.",
+      "parentId": "n_exp_097",
+      "createdAt": "2026-08-29T02:04:11.000Z"
+    },
+    {
+      "id": "n_exp_253",
+      "text": "Una huella anónima escucha el eco de cuerpos conectados.",
+      "parentId": "n_exp_098",
+      "createdAt": "2026-08-29T02:04:12.000Z"
+    },
+    {
+      "id": "n_exp_254",
+      "text": "El borde de la interfaz escucha los restos de una navegación anterior.",
+      "parentId": "n_exp_098",
+      "createdAt": "2026-08-29T02:04:13.000Z"
+    },
+    {
+      "id": "n_exp_255",
+      "text": "La mirada que regresa escucha la respiración escondida del sistema.",
+      "parentId": "n_exp_099",
+      "createdAt": "2026-08-29T02:04:14.000Z"
+    },
+    {
+      "id": "n_exp_256",
+      "text": "Un dato sin dueño escucha la profundidad azul de la interfaz.",
+      "parentId": "n_exp_099",
+      "createdAt": "2026-08-29T02:04:15.000Z"
+    },
+    {
+      "id": "n_exp_257",
+      "text": "La noche del dispositivo escucha la distancia entre dos pulsos.",
+      "parentId": "n_exp_100",
+      "createdAt": "2026-08-29T02:04:16.000Z"
+    },
+    {
+      "id": "n_exp_258",
+      "text": "El pulso de la red escucha el espacio que deja el dedo.",
+      "parentId": "n_exp_100",
+      "createdAt": "2026-08-29T02:04:17.000Z"
+    },
+    {
+      "id": "n_exp_259",
+      "text": "Una superficie infinita escucha una pequeña reserva de ruido.",
+      "parentId": "n_exp_101",
+      "createdAt": "2026-08-29T02:04:18.000Z"
+    },
+    {
+      "id": "n_exp_260",
+      "text": "El fantasma de la conexión escucha una salida que vuelve a empezar.",
+      "parentId": "n_exp_101",
+      "createdAt": "2026-08-29T02:04:19.000Z"
+    },
+    {
+      "id": "n_exp_261",
+      "text": "La memoria de la máquina escucha la forma secreta del cansancio.",
+      "parentId": "n_exp_102",
+      "createdAt": "2026-08-29T02:04:20.000Z"
+    },
+    {
+      "id": "n_exp_262",
+      "text": "Un movimiento casi invisible escucha un mapa hecho de interrupciones.",
+      "parentId": "n_exp_102",
+      "createdAt": "2026-08-29T02:04:21.000Z"
+    },
+    {
+      "id": "n_exp_263",
+      "text": "La luz detrás del vidrio escucha un presente dividido en ventanas.",
+      "parentId": "n_exp_103",
+      "createdAt": "2026-08-29T02:04:22.000Z"
+    },
+    {
+      "id": "n_exp_264",
+      "text": "El tiempo acumulado escucha el silencio de la siguiente pantalla.",
+      "parentId": "n_exp_103",
+      "createdAt": "2026-08-29T02:04:23.000Z"
+    },
+    {
+      "id": "n_exp_265",
+      "text": "Una imagen sin origen prolonga el archivo común de la noche.",
+      "parentId": "n_exp_104",
+      "createdAt": "2026-08-29T02:04:24.000Z"
+    },
+    {
+      "id": "n_exp_266",
+      "text": "El archivo que respira prolonga el ritmo incompleto de la espera.",
+      "parentId": "n_exp_104",
+      "createdAt": "2026-08-29T02:04:25.000Z"
+    },
+    {
+      "id": "n_exp_267",
+      "text": "La pantalla nocturna prolonga un borde todavía sin nombre.",
+      "parentId": "n_exp_105",
+      "createdAt": "2026-08-29T02:04:26.000Z"
+    },
+    {
+      "id": "n_exp_268",
+      "text": "Cada gesto detenido prolonga la promesa de otra imagen.",
+      "parentId": "n_exp_105",
+      "createdAt": "2026-08-29T02:04:27.000Z"
+    },
+    {
+      "id": "n_exp_269",
+      "text": "Un fragmento de memoria prolonga el deseo de seguir desplazándose.",
+      "parentId": "n_exp_106",
+      "createdAt": "2026-08-29T02:04:28.000Z"
+    },
+    {
+      "id": "n_exp_270",
+      "text": "La sombra de un píxel prolonga el eco de cuerpos conectados.",
+      "parentId": "n_exp_106",
+      "createdAt": "2026-08-29T02:04:29.000Z"
+    },
+    {
+      "id": "n_exp_271",
+      "text": "El cuerpo frente al flujo prolonga los restos de una navegación anterior.",
+      "parentId": "n_exp_107",
+      "createdAt": "2026-08-29T02:04:30.000Z"
+    },
+    {
+      "id": "n_exp_272",
+      "text": "La señal más débil prolonga la respiración escondida del sistema.",
+      "parentId": "n_exp_107",
+      "createdAt": "2026-08-29T02:04:31.000Z"
+    },
+    {
+      "id": "n_exp_273",
+      "text": "Una ventana abandonada prolonga la profundidad azul de la interfaz.",
+      "parentId": "n_exp_108",
+      "createdAt": "2026-08-29T02:04:32.000Z"
+    },
+    {
+      "id": "n_exp_274",
+      "text": "El ruido del presente prolonga la distancia entre dos pulsos.",
+      "parentId": "n_exp_108",
+      "createdAt": "2026-08-29T02:04:33.000Z"
+    },
+    {
+      "id": "n_exp_275",
+      "text": "La pausa entre dos imágenes prolonga el espacio que deja el dedo.",
+      "parentId": "n_exp_109",
+      "createdAt": "2026-08-29T02:04:34.000Z"
+    },
+    {
+      "id": "n_exp_276",
+      "text": "El brillo que queda prolonga una pequeña reserva de ruido.",
+      "parentId": "n_exp_109",
+      "createdAt": "2026-08-29T02:04:35.000Z"
+    },
+    {
+      "id": "n_exp_277",
+      "text": "Una huella anónima prolonga una salida que vuelve a empezar.",
+      "parentId": "n_exp_110",
+      "createdAt": "2026-08-29T02:04:36.000Z"
+    },
+    {
+      "id": "n_exp_278",
+      "text": "El borde de la interfaz prolonga la forma secreta del cansancio.",
+      "parentId": "n_exp_110",
+      "createdAt": "2026-08-29T02:04:37.000Z"
+    },
+    {
+      "id": "n_exp_279",
+      "text": "La mirada que regresa prolonga un mapa hecho de interrupciones.",
+      "parentId": "n_exp_111",
+      "createdAt": "2026-08-29T02:04:38.000Z"
+    },
+    {
+      "id": "n_exp_280",
+      "text": "Un dato sin dueño prolonga un presente dividido en ventanas.",
+      "parentId": "n_exp_111",
+      "createdAt": "2026-08-29T02:04:39.000Z"
+    },
+    {
+      "id": "n_exp_281",
+      "text": "La noche del dispositivo prolonga el silencio de la siguiente pantalla.",
+      "parentId": "n_exp_112",
+      "createdAt": "2026-08-29T02:04:40.000Z"
+    },
+    {
+      "id": "n_exp_282",
+      "text": "El pulso de la red prolonga una órbita de señales dispersas.",
+      "parentId": "n_exp_112",
+      "createdAt": "2026-08-29T02:04:41.000Z"
+    }
+  ],
+  "edges": [
+    {
+      "source": "n_scroll",
+      "target": "n_cuerpo",
+      "relation": "gesto"
+    },
+    {
+      "source": "n_scroll",
+      "target": "n_memoria",
+      "relation": "archivo"
+    },
+    {
+      "source": "n_scroll",
+      "target": "n_ruido",
+      "relation": "senal"
+    },
+    {
+      "source": "n_scroll",
+      "target": "n_deseo",
+      "relation": "promesa"
+    },
+    {
+      "source": "n_memoria",
+      "target": "n_archivo",
+      "relation": "resto"
+    },
+    {
+      "source": "n_cuerpo",
+      "target": "n_respiro",
+      "relation": "ritmo"
+    },
+    {
+      "source": "n_cuerpo",
+      "target": "n_fatiga",
+      "relation": "cansancio"
+    },
+    {
+      "source": "n_ruido",
+      "target": "n_fosforo",
+      "relation": "brillo"
+    },
+    {
+      "source": "n_deseo",
+      "target": "n_vacio",
+      "relation": "espera"
+    },
+    {
+      "source": "n_archivo",
+      "target": "n_testigo",
+      "relation": "huella"
+    },
+    {
+      "source": "n_fosforo",
+      "target": "n_noche",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_memoria",
+      "target": "n_red",
+      "relation": "conexion"
+    },
+    {
+      "source": "n_deseo",
+      "target": "n_tiempo",
+      "relation": "duracion"
+    },
+    {
+      "source": "n_tiempo",
+      "target": "n_infinito",
+      "relation": "bucle"
+    },
+    {
+      "source": "n_archivo",
+      "target": "n_pixel",
+      "relation": "detalle"
+    },
+    {
+      "source": "n_ruido",
+      "target": "n_silencio",
+      "relation": "contraste"
+    },
+    {
+      "source": "n_cuerpo",
+      "target": "n_contacto",
+      "relation": "tacto"
+    },
+    {
+      "source": "n_fatiga",
+      "target": "n_desborde",
+      "relation": "exceso"
+    },
+    {
+      "source": "n_red",
+      "target": "n_latencia",
+      "relation": "espera"
+    },
+    {
+      "source": "n_vacio",
+      "target": "n_silencio",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_pixel",
+      "target": "n_fosforo",
+      "relation": "luz"
+    },
+    {
+      "source": "n_desborde",
+      "target": "n_ruido",
+      "relation": "retorno"
+    },
+    {
+      "source": "n_archivo",
+      "target": "n_ventana",
+      "relation": "interfaz"
+    },
+    {
+      "source": "n_noche",
+      "target": "n_bios",
+      "relation": "arranque"
+    },
+    {
+      "source": "n_desborde",
+      "target": "n_lluvia",
+      "relation": "caida"
+    },
+    {
+      "source": "n_archivo",
+      "target": "n_tira",
+      "relation": "vertical"
+    },
+    {
+      "source": "n_red",
+      "target": "n_grafo",
+      "relation": "mapa"
+    },
+    {
+      "source": "n_grafo",
+      "target": "n_respuesta",
+      "relation": "apertura"
+    },
+    {
+      "source": "n_vacio",
+      "target": "n_desvio",
+      "relation": "fuga"
+    },
+    {
+      "source": "n_pixel",
+      "target": "n_marco",
+      "relation": "estructura"
+    },
+    {
+      "source": "n_respuesta",
+      "target": "n_colectivo",
+      "relation": "participacion"
+    },
+    {
+      "source": "n_ruido",
+      "target": "n_interferencia",
+      "relation": "glitch"
+    },
+    {
+      "source": "n_fosforo",
+      "target": "n_sombra",
+      "relation": "contraluz"
+    },
+    {
+      "source": "n_contacto",
+      "target": "n_deriva",
+      "relation": "recorrido"
+    },
+    {
+      "source": "n_respiro",
+      "target": "n_ritual",
+      "relation": "repeticion"
+    },
+    {
+      "source": "n_bios",
+      "target": "n_interferencia",
+      "relation": "senal"
+    },
+    {
+      "source": "n_lluvia",
+      "target": "n_tira",
+      "relation": "archivo"
+    },
+    {
+      "source": "n_colectivo",
+      "target": "n_memoria",
+      "relation": "retorno"
+    },
+    {
+      "source": "n_deriva",
+      "target": "n_deseo",
+      "relation": "atraccion"
+    },
+    {
+      "source": "n_marco",
+      "target": "n_silencio",
+      "relation": "borde"
+    },
+    {
+      "source": "n_ritual",
+      "target": "n_tiempo",
+      "relation": "ciclo"
+    },
+    {
+      "source": "n_sombra",
+      "target": "n_vacio",
+      "relation": "ausencia"
+    },
+    {
+      "source": "n_ruido",
+      "target": "n_mtafah6y_0puxgp",
+      "relation": "respuesta"
+    },
+    {
+      "source": "n_desborde",
+      "target": "n_mtafar2x_yg4xjo",
+      "relation": "respuesta"
+    },
+    {
+      "source": "n_fatiga",
+      "target": "n_mtafbere_svi94h",
+      "relation": "respuesta"
+    },
+    {
+      "source": "n_mtafar2x_yg4xjo",
+      "target": "n_mtafcfyp_1ghi5s",
+      "relation": "respuesta"
+    },
+    {
+      "source": "n_mtafcfyp_1ghi5s",
+      "target": "n_mtafcm9h_nf7mtm",
+      "relation": "respuesta"
+    },
+    {
+      "source": "n_mtafcm9h_nf7mtm",
+      "target": "n_mtafcpim_uu8zrz",
+      "relation": "respuesta"
+    },
+    {
+      "source": "n_mtafcpim_uu8zrz",
+      "target": "n_mtafcrfl_zpzgv3",
+      "relation": "respuesta"
+    },
+    {
+      "source": "n_mtafcrfl_zpzgv3",
+      "target": "n_mtafcswx_3j0nih",
+      "relation": "respuesta"
+    },
+    {
+      "source": "n_mtafcswx_3j0nih",
+      "target": "n_mtafcug1_9gxi9y",
+      "relation": "respuesta"
+    },
+    {
+      "source": "n_mtafcug1_9gxi9y",
+      "target": "n_mtafcvs7_lu2y6t",
+      "relation": "respuesta"
+    },
+    {
+      "source": "n_mtafcvs7_lu2y6t",
+      "target": "n_mtafcx8d_wsj31w",
+      "relation": "respuesta"
+    },
+    {
+      "source": "n_mtafcx8d_wsj31w",
+      "target": "n_mtafd4jl_9jq0gu",
+      "relation": "respuesta"
+    },
+    {
+      "source": "n_mtafd4jl_9jq0gu",
+      "target": "n_mtafd663_8s9zml",
+      "relation": "respuesta"
+    },
+    {
+      "source": "n_mtafd663_8s9zml",
+      "target": "n_mtafd7v7_hymd6p",
+      "relation": "respuesta"
+    },
+    {
+      "source": "n_ruido",
+      "target": "n_mtagcdin_nqflj4",
+      "relation": "respuesta"
+    },
+    {
+      "source": "n_mtagcdin_nqflj4",
+      "target": "n_mtagcklq_6jewpg",
+      "relation": "respuesta"
+    },
+    {
+      "source": "n_mtafd7v7_hymd6p",
+      "target": "n_mtagdhi5_n18lju",
+      "relation": "respuesta"
+    },
+    {
+      "source": "n_mtagdhi5_n18lju",
+      "target": "n_mtagdlnb_a0felt",
+      "relation": "respuesta"
+    },
+    {
+      "source": "n_mtagdlnb_a0felt",
+      "target": "n_mtagdra4_q7ne17",
+      "relation": "respuesta"
+    },
+    {
+      "source": "n_mtagdra4_q7ne17",
+      "target": "n_mtagdu6b_hmpoa0",
+      "relation": "respuesta"
+    },
+    {
+      "source": "n_mtagdu6b_hmpoa0",
+      "target": "n_mtagdylz_ypgr7u",
+      "relation": "respuesta"
+    },
+    {
+      "source": "n_mtagdylz_ypgr7u",
+      "target": "n_mtage06w_4fozy1",
+      "relation": "respuesta"
+    },
+    {
+      "source": "n_mtage06w_4fozy1",
+      "target": "n_mtage1p5_ncn3uo",
+      "relation": "respuesta"
+    },
+    {
+      "source": "n_mtage1p5_ncn3uo",
+      "target": "n_mtage35x_3kfm9e",
+      "relation": "respuesta"
+    },
+    {
+      "source": "n_mtage35x_3kfm9e",
+      "target": "n_mtage5c7_7799h1",
+      "relation": "respuesta"
+    },
+    {
+      "source": "n_fatiga",
+      "target": "n_exp_001",
+      "relation": "deriva"
+    },
+    {
+      "source": "n_desborde",
+      "target": "n_exp_002",
+      "relation": "eco"
+    },
+    {
+      "source": "n_interferencia",
+      "target": "n_exp_003",
+      "relation": "memoria"
+    },
+    {
+      "source": "n_mtafcswx_3j0nih",
+      "target": "n_exp_004",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_mtagdra4_q7ne17",
+      "target": "n_exp_005",
+      "relation": "latencia"
+    },
+    {
+      "source": "n_deseo",
+      "target": "n_exp_006",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_pixel",
+      "target": "n_exp_007",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_desvio",
+      "target": "n_exp_008",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_mtafcm9h_nf7mtm",
+      "target": "n_exp_009",
+      "relation": "repetición"
+    },
+    {
+      "source": "n_mtagcklq_6jewpg",
+      "target": "n_exp_010",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_cuerpo",
+      "target": "n_exp_011",
+      "relation": "deriva"
+    },
+    {
+      "source": "n_exp_011",
+      "target": "n_exp_004",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_red",
+      "target": "n_exp_012",
+      "relation": "eco"
+    },
+    {
+      "source": "n_tira",
+      "target": "n_exp_013",
+      "relation": "memoria"
+    },
+    {
+      "source": "n_exp_013",
+      "target": "n_exp_004",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_mtafar2x_yg4xjo",
+      "target": "n_exp_014",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_mtafd663_8s9zml",
+      "target": "n_exp_015",
+      "relation": "latencia"
+    },
+    {
+      "source": "n_exp_015",
+      "target": "n_exp_004",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_mtage35x_3kfm9e",
+      "target": "n_exp_016",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_016",
+      "target": "n_desborde",
+      "relation": "eco"
+    },
+    {
+      "source": "n_vacio",
+      "target": "n_exp_017",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_017",
+      "target": "n_exp_004",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_ventana",
+      "target": "n_exp_018",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_deriva",
+      "target": "n_exp_019",
+      "relation": "repetición"
+    },
+    {
+      "source": "n_exp_019",
+      "target": "n_exp_004",
+      "relation": "eco"
+    },
+    {
+      "source": "n_mtafcvs7_lu2y6t",
+      "target": "n_exp_020",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_mtagdylz_ypgr7u",
+      "target": "n_exp_021",
+      "relation": "deriva"
+    },
+    {
+      "source": "n_exp_021",
+      "target": "n_exp_004",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_021",
+      "target": "n_mtafcx8d_wsj31w",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_respiro",
+      "target": "n_exp_022",
+      "relation": "eco"
+    },
+    {
+      "source": "n_contacto",
+      "target": "n_exp_023",
+      "relation": "memoria"
+    },
+    {
+      "source": "n_exp_023",
+      "target": "n_exp_004",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_colectivo",
+      "target": "n_exp_024",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_mtafcrfl_zpzgv3",
+      "target": "n_exp_025",
+      "relation": "latencia"
+    },
+    {
+      "source": "n_exp_025",
+      "target": "n_exp_004",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_mtagdlnb_a0felt",
+      "target": "n_exp_026",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_026",
+      "target": "n_testigo",
+      "relation": "eco"
+    },
+    {
+      "source": "n_ruido",
+      "target": "n_exp_027",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_027",
+      "target": "n_exp_004",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_infinito",
+      "target": "n_exp_028",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_respuesta",
+      "target": "n_exp_029",
+      "relation": "repetición"
+    },
+    {
+      "source": "n_exp_029",
+      "target": "n_exp_004",
+      "relation": "eco"
+    },
+    {
+      "source": "n_mtafcfyp_1ghi5s",
+      "target": "n_exp_030",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_mtagcdin_nqflj4",
+      "target": "n_exp_031",
+      "relation": "deriva"
+    },
+    {
+      "source": "n_exp_031",
+      "target": "n_exp_004",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_031",
+      "target": "n_mtafbere_svi94h",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_scroll",
+      "target": "n_exp_032",
+      "relation": "eco"
+    },
+    {
+      "source": "n_noche",
+      "target": "n_exp_033",
+      "relation": "memoria"
+    },
+    {
+      "source": "n_exp_033",
+      "target": "n_exp_004",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_lluvia",
+      "target": "n_exp_034",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_mtafah6y_0puxgp",
+      "target": "n_exp_035",
+      "relation": "latencia"
+    },
+    {
+      "source": "n_exp_035",
+      "target": "n_exp_004",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_mtafd4jl_9jq0gu",
+      "target": "n_exp_036",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_036",
+      "target": "n_memoria",
+      "relation": "eco"
+    },
+    {
+      "source": "n_mtage1p5_ncn3uo",
+      "target": "n_exp_037",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_037",
+      "target": "n_exp_004",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_fosforo",
+      "target": "n_exp_038",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_latencia",
+      "target": "n_exp_039",
+      "relation": "repetición"
+    },
+    {
+      "source": "n_exp_039",
+      "target": "n_exp_004",
+      "relation": "eco"
+    },
+    {
+      "source": "n_sombra",
+      "target": "n_exp_040",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_mtafcug1_9gxi9y",
+      "target": "n_exp_041",
+      "relation": "deriva"
+    },
+    {
+      "source": "n_exp_041",
+      "target": "n_exp_004",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_041",
+      "target": "n_marco",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_mtagdu6b_hmpoa0",
+      "target": "n_exp_042",
+      "relation": "eco"
+    },
+    {
+      "source": "n_archivo",
+      "target": "n_exp_043",
+      "relation": "memoria"
+    },
+    {
+      "source": "n_exp_043",
+      "target": "n_exp_004",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_silencio",
+      "target": "n_exp_044",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_marco",
+      "target": "n_exp_045",
+      "relation": "latencia"
+    },
+    {
+      "source": "n_exp_045",
+      "target": "n_exp_004",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_mtafcpim_uu8zrz",
+      "target": "n_exp_046",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_046",
+      "target": "n_mtagdu6b_hmpoa0",
+      "relation": "eco"
+    },
+    {
+      "source": "n_mtagdhi5_n18lju",
+      "target": "n_exp_047",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_047",
+      "target": "n_exp_004",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_memoria",
+      "target": "n_exp_048",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_tiempo",
+      "target": "n_exp_049",
+      "relation": "repetición"
+    },
+    {
+      "source": "n_exp_049",
+      "target": "n_exp_004",
+      "relation": "eco"
+    },
+    {
+      "source": "n_grafo",
+      "target": "n_exp_050",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_mtafbere_svi94h",
+      "target": "n_exp_051",
+      "relation": "deriva"
+    },
+    {
+      "source": "n_exp_051",
+      "target": "n_exp_004",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_051",
+      "target": "n_latencia",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_mtafd7v7_hymd6p",
+      "target": "n_exp_052",
+      "relation": "eco"
+    },
+    {
+      "source": "n_mtage5c7_7799h1",
+      "target": "n_exp_053",
+      "relation": "memoria"
+    },
+    {
+      "source": "n_exp_053",
+      "target": "n_exp_004",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_testigo",
+      "target": "n_exp_054",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_bios",
+      "target": "n_exp_055",
+      "relation": "latencia"
+    },
+    {
+      "source": "n_exp_055",
+      "target": "n_exp_004",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_ritual",
+      "target": "n_exp_056",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_056",
+      "target": "n_mtafd4jl_9jq0gu",
+      "relation": "eco"
+    },
+    {
+      "source": "n_mtafcx8d_wsj31w",
+      "target": "n_exp_057",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_057",
+      "target": "n_exp_004",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_mtage06w_4fozy1",
+      "target": "n_exp_058",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_001",
+      "target": "n_exp_059",
+      "relation": "repetición"
+    },
+    {
+      "source": "n_exp_059",
+      "target": "n_exp_004",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_001",
+      "target": "n_exp_060",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_002",
+      "target": "n_exp_061",
+      "relation": "deriva"
+    },
+    {
+      "source": "n_exp_061",
+      "target": "n_exp_004",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_061",
+      "target": "n_noche",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_002",
+      "target": "n_exp_062",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_003",
+      "target": "n_exp_063",
+      "relation": "memoria"
+    },
+    {
+      "source": "n_exp_063",
+      "target": "n_exp_004",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_003",
+      "target": "n_exp_064",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_004",
+      "target": "n_exp_065",
+      "relation": "latencia"
+    },
+    {
+      "source": "n_exp_065",
+      "target": "n_exp_004",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_004",
+      "target": "n_exp_066",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_066",
+      "target": "n_mtafcfyp_1ghi5s",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_005",
+      "target": "n_exp_067",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_067",
+      "target": "n_exp_004",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_005",
+      "target": "n_exp_068",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_006",
+      "target": "n_exp_069",
+      "relation": "repetición"
+    },
+    {
+      "source": "n_exp_069",
+      "target": "n_exp_004",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_006",
+      "target": "n_exp_070",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_007",
+      "target": "n_exp_071",
+      "relation": "deriva"
+    },
+    {
+      "source": "n_exp_071",
+      "target": "n_exp_004",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_071",
+      "target": "n_ruido",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_007",
+      "target": "n_exp_072",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_008",
+      "target": "n_exp_073",
+      "relation": "memoria"
+    },
+    {
+      "source": "n_exp_073",
+      "target": "n_exp_004",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_008",
+      "target": "n_exp_074",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_009",
+      "target": "n_exp_075",
+      "relation": "latencia"
+    },
+    {
+      "source": "n_exp_075",
+      "target": "n_exp_004",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_009",
+      "target": "n_exp_076",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_076",
+      "target": "n_colectivo",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_010",
+      "target": "n_exp_077",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_077",
+      "target": "n_exp_004",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_010",
+      "target": "n_exp_078",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_011",
+      "target": "n_exp_079",
+      "relation": "repetición"
+    },
+    {
+      "source": "n_exp_079",
+      "target": "n_exp_004",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_011",
+      "target": "n_exp_080",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_012",
+      "target": "n_exp_081",
+      "relation": "deriva"
+    },
+    {
+      "source": "n_exp_081",
+      "target": "n_exp_004",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_081",
+      "target": "n_mtagdylz_ypgr7u",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_012",
+      "target": "n_exp_082",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_013",
+      "target": "n_exp_083",
+      "relation": "memoria"
+    },
+    {
+      "source": "n_exp_083",
+      "target": "n_exp_004",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_013",
+      "target": "n_exp_084",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_014",
+      "target": "n_exp_085",
+      "relation": "latencia"
+    },
+    {
+      "source": "n_exp_085",
+      "target": "n_exp_004",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_014",
+      "target": "n_exp_086",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_086",
+      "target": "n_ventana",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_015",
+      "target": "n_exp_087",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_087",
+      "target": "n_exp_004",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_015",
+      "target": "n_exp_088",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_016",
+      "target": "n_exp_089",
+      "relation": "repetición"
+    },
+    {
+      "source": "n_exp_089",
+      "target": "n_exp_004",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_016",
+      "target": "n_exp_090",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_017",
+      "target": "n_exp_091",
+      "relation": "deriva"
+    },
+    {
+      "source": "n_exp_091",
+      "target": "n_exp_004",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_091",
+      "target": "n_mtafd663_8s9zml",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_017",
+      "target": "n_exp_092",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_018",
+      "target": "n_exp_093",
+      "relation": "memoria"
+    },
+    {
+      "source": "n_exp_093",
+      "target": "n_exp_004",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_018",
+      "target": "n_exp_094",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_019",
+      "target": "n_exp_095",
+      "relation": "latencia"
+    },
+    {
+      "source": "n_exp_095",
+      "target": "n_exp_004",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_019",
+      "target": "n_exp_096",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_096",
+      "target": "n_red",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_020",
+      "target": "n_exp_097",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_097",
+      "target": "n_exp_004",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_020",
+      "target": "n_exp_098",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_021",
+      "target": "n_exp_099",
+      "relation": "repetición"
+    },
+    {
+      "source": "n_exp_099",
+      "target": "n_exp_004",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_021",
+      "target": "n_exp_100",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_022",
+      "target": "n_exp_101",
+      "relation": "deriva"
+    },
+    {
+      "source": "n_exp_101",
+      "target": "n_exp_004",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_101",
+      "target": "n_mtafcm9h_nf7mtm",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_022",
+      "target": "n_exp_102",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_023",
+      "target": "n_exp_103",
+      "relation": "memoria"
+    },
+    {
+      "source": "n_exp_103",
+      "target": "n_exp_004",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_023",
+      "target": "n_exp_104",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_024",
+      "target": "n_exp_105",
+      "relation": "latencia"
+    },
+    {
+      "source": "n_exp_105",
+      "target": "n_exp_004",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_024",
+      "target": "n_exp_106",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_106",
+      "target": "n_deseo",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_025",
+      "target": "n_exp_107",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_107",
+      "target": "n_exp_004",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_025",
+      "target": "n_exp_108",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_026",
+      "target": "n_exp_109",
+      "relation": "repetición"
+    },
+    {
+      "source": "n_exp_109",
+      "target": "n_exp_004",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_026",
+      "target": "n_exp_110",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_027",
+      "target": "n_exp_111",
+      "relation": "deriva"
+    },
+    {
+      "source": "n_exp_111",
+      "target": "n_exp_004",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_111",
+      "target": "n_interferencia",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_027",
+      "target": "n_exp_112",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_028",
+      "target": "n_exp_113",
+      "relation": "memoria"
+    },
+    {
+      "source": "n_exp_113",
+      "target": "n_exp_004",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_028",
+      "target": "n_exp_114",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_029",
+      "target": "n_exp_115",
+      "relation": "latencia"
+    },
+    {
+      "source": "n_exp_115",
+      "target": "n_exp_004",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_029",
+      "target": "n_exp_116",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_116",
+      "target": "n_mtage06w_4fozy1",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_030",
+      "target": "n_exp_117",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_117",
+      "target": "n_exp_004",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_030",
+      "target": "n_exp_118",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_031",
+      "target": "n_exp_119",
+      "relation": "repetición"
+    },
+    {
+      "source": "n_exp_119",
+      "target": "n_exp_004",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_031",
+      "target": "n_exp_120",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_032",
+      "target": "n_exp_121",
+      "relation": "deriva"
+    },
+    {
+      "source": "n_exp_121",
+      "target": "n_exp_004",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_121",
+      "target": "n_bios",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_032",
+      "target": "n_exp_122",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_033",
+      "target": "n_exp_123",
+      "relation": "memoria"
+    },
+    {
+      "source": "n_exp_123",
+      "target": "n_exp_004",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_033",
+      "target": "n_exp_124",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_034",
+      "target": "n_exp_125",
+      "relation": "latencia"
+    },
+    {
+      "source": "n_exp_125",
+      "target": "n_exp_004",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_034",
+      "target": "n_exp_126",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_126",
+      "target": "n_mtafd7v7_hymd6p",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_035",
+      "target": "n_exp_127",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_127",
+      "target": "n_exp_004",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_035",
+      "target": "n_exp_128",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_036",
+      "target": "n_exp_129",
+      "relation": "repetición"
+    },
+    {
+      "source": "n_exp_129",
+      "target": "n_exp_004",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_036",
+      "target": "n_exp_130",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_037",
+      "target": "n_exp_131",
+      "relation": "deriva"
+    },
+    {
+      "source": "n_exp_131",
+      "target": "n_exp_004",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_131",
+      "target": "n_tiempo",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_037",
+      "target": "n_exp_132",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_038",
+      "target": "n_exp_133",
+      "relation": "memoria"
+    },
+    {
+      "source": "n_exp_133",
+      "target": "n_exp_004",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_038",
+      "target": "n_exp_134",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_039",
+      "target": "n_exp_135",
+      "relation": "latencia"
+    },
+    {
+      "source": "n_exp_135",
+      "target": "n_exp_004",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_039",
+      "target": "n_exp_136",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_136",
+      "target": "n_mtafcpim_uu8zrz",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_040",
+      "target": "n_exp_137",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_137",
+      "target": "n_exp_004",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_040",
+      "target": "n_exp_138",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_041",
+      "target": "n_exp_139",
+      "relation": "repetición"
+    },
+    {
+      "source": "n_exp_139",
+      "target": "n_exp_004",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_041",
+      "target": "n_exp_140",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_042",
+      "target": "n_exp_141",
+      "relation": "deriva"
+    },
+    {
+      "source": "n_exp_141",
+      "target": "n_exp_004",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_141",
+      "target": "n_archivo",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_042",
+      "target": "n_exp_142",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_043",
+      "target": "n_exp_143",
+      "relation": "memoria"
+    },
+    {
+      "source": "n_exp_143",
+      "target": "n_exp_004",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_043",
+      "target": "n_exp_144",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_044",
+      "target": "n_exp_145",
+      "relation": "latencia"
+    },
+    {
+      "source": "n_exp_145",
+      "target": "n_exp_004",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_044",
+      "target": "n_exp_146",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_146",
+      "target": "n_sombra",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_045",
+      "target": "n_exp_147",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_147",
+      "target": "n_exp_004",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_045",
+      "target": "n_exp_148",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_046",
+      "target": "n_exp_149",
+      "relation": "repetición"
+    },
+    {
+      "source": "n_exp_149",
+      "target": "n_exp_004",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_046",
+      "target": "n_exp_150",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_047",
+      "target": "n_exp_151",
+      "relation": "deriva"
+    },
+    {
+      "source": "n_exp_151",
+      "target": "n_exp_004",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_151",
+      "target": "n_mtage1p5_ncn3uo",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_047",
+      "target": "n_exp_152",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_048",
+      "target": "n_exp_153",
+      "relation": "memoria"
+    },
+    {
+      "source": "n_exp_153",
+      "target": "n_exp_004",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_048",
+      "target": "n_exp_154",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_049",
+      "target": "n_exp_155",
+      "relation": "latencia"
+    },
+    {
+      "source": "n_exp_155",
+      "target": "n_exp_004",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_049",
+      "target": "n_exp_156",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_156",
+      "target": "n_lluvia",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_050",
+      "target": "n_exp_157",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_157",
+      "target": "n_exp_004",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_050",
+      "target": "n_exp_158",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_051",
+      "target": "n_exp_159",
+      "relation": "repetición"
+    },
+    {
+      "source": "n_exp_159",
+      "target": "n_exp_004",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_051",
+      "target": "n_exp_160",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_052",
+      "target": "n_exp_161",
+      "relation": "deriva"
+    },
+    {
+      "source": "n_exp_161",
+      "target": "n_exp_004",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_161",
+      "target": "n_mtagcdin_nqflj4",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_052",
+      "target": "n_exp_162",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_053",
+      "target": "n_exp_163",
+      "relation": "memoria"
+    },
+    {
+      "source": "n_exp_163",
+      "target": "n_exp_004",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_053",
+      "target": "n_exp_164",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_054",
+      "target": "n_exp_165",
+      "relation": "latencia"
+    },
+    {
+      "source": "n_exp_165",
+      "target": "n_exp_004",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_054",
+      "target": "n_exp_166",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_166",
+      "target": "n_infinito",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_055",
+      "target": "n_exp_167",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_167",
+      "target": "n_exp_004",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_055",
+      "target": "n_exp_168",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_056",
+      "target": "n_exp_169",
+      "relation": "repetición"
+    },
+    {
+      "source": "n_exp_169",
+      "target": "n_exp_004",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_056",
+      "target": "n_exp_170",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_057",
+      "target": "n_exp_171",
+      "relation": "deriva"
+    },
+    {
+      "source": "n_exp_171",
+      "target": "n_exp_004",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_171",
+      "target": "n_mtafcrfl_zpzgv3",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_057",
+      "target": "n_exp_172",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_058",
+      "target": "n_exp_173",
+      "relation": "memoria"
+    },
+    {
+      "source": "n_exp_173",
+      "target": "n_exp_004",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_058",
+      "target": "n_exp_174",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_059",
+      "target": "n_exp_175",
+      "relation": "latencia"
+    },
+    {
+      "source": "n_exp_175",
+      "target": "n_exp_004",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_059",
+      "target": "n_exp_176",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_176",
+      "target": "n_respiro",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_060",
+      "target": "n_exp_177",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_177",
+      "target": "n_exp_004",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_060",
+      "target": "n_exp_178",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_061",
+      "target": "n_exp_179",
+      "relation": "repetición"
+    },
+    {
+      "source": "n_exp_179",
+      "target": "n_exp_004",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_061",
+      "target": "n_exp_180",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_062",
+      "target": "n_exp_181",
+      "relation": "deriva"
+    },
+    {
+      "source": "n_exp_181",
+      "target": "n_exp_004",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_181",
+      "target": "n_deriva",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_062",
+      "target": "n_exp_182",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_063",
+      "target": "n_exp_183",
+      "relation": "memoria"
+    },
+    {
+      "source": "n_exp_183",
+      "target": "n_exp_004",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_063",
+      "target": "n_exp_184",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_064",
+      "target": "n_exp_185",
+      "relation": "latencia"
+    },
+    {
+      "source": "n_exp_185",
+      "target": "n_exp_004",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_064",
+      "target": "n_exp_186",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_186",
+      "target": "n_mtage35x_3kfm9e",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_065",
+      "target": "n_exp_187",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_187",
+      "target": "n_exp_004",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_065",
+      "target": "n_exp_188",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_066",
+      "target": "n_exp_189",
+      "relation": "repetición"
+    },
+    {
+      "source": "n_exp_189",
+      "target": "n_exp_004",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_066",
+      "target": "n_exp_190",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_067",
+      "target": "n_exp_191",
+      "relation": "deriva"
+    },
+    {
+      "source": "n_exp_191",
+      "target": "n_exp_004",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_191",
+      "target": "n_tira",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_067",
+      "target": "n_exp_192",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_068",
+      "target": "n_exp_193",
+      "relation": "memoria"
+    },
+    {
+      "source": "n_exp_193",
+      "target": "n_exp_004",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_068",
+      "target": "n_exp_194",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_069",
+      "target": "n_exp_195",
+      "relation": "latencia"
+    },
+    {
+      "source": "n_exp_195",
+      "target": "n_exp_004",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_069",
+      "target": "n_exp_196",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_196",
+      "target": "n_mtagcklq_6jewpg",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_070",
+      "target": "n_exp_197",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_197",
+      "target": "n_exp_004",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_070",
+      "target": "n_exp_198",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_071",
+      "target": "n_exp_199",
+      "relation": "repetición"
+    },
+    {
+      "source": "n_exp_199",
+      "target": "n_exp_004",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_071",
+      "target": "n_exp_200",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_072",
+      "target": "n_exp_201",
+      "relation": "deriva"
+    },
+    {
+      "source": "n_exp_201",
+      "target": "n_exp_004",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_201",
+      "target": "n_pixel",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_072",
+      "target": "n_exp_202",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_073",
+      "target": "n_exp_203",
+      "relation": "memoria"
+    },
+    {
+      "source": "n_exp_203",
+      "target": "n_exp_004",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_073",
+      "target": "n_exp_204",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_074",
+      "target": "n_exp_205",
+      "relation": "latencia"
+    },
+    {
+      "source": "n_exp_205",
+      "target": "n_exp_004",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_074",
+      "target": "n_exp_206",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_206",
+      "target": "n_mtafcswx_3j0nih",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_075",
+      "target": "n_exp_207",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_207",
+      "target": "n_exp_004",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_075",
+      "target": "n_exp_208",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_076",
+      "target": "n_exp_209",
+      "relation": "repetición"
+    },
+    {
+      "source": "n_exp_209",
+      "target": "n_exp_004",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_076",
+      "target": "n_exp_210",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_077",
+      "target": "n_exp_211",
+      "relation": "deriva"
+    },
+    {
+      "source": "n_exp_211",
+      "target": "n_exp_004",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_211",
+      "target": "n_fatiga",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_077",
+      "target": "n_exp_212",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_078",
+      "target": "n_exp_213",
+      "relation": "memoria"
+    },
+    {
+      "source": "n_exp_213",
+      "target": "n_exp_004",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_078",
+      "target": "n_exp_214",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_079",
+      "target": "n_exp_215",
+      "relation": "latencia"
+    },
+    {
+      "source": "n_exp_215",
+      "target": "n_exp_004",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_079",
+      "target": "n_exp_216",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_216",
+      "target": "n_ritual",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_080",
+      "target": "n_exp_217",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_217",
+      "target": "n_exp_004",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_080",
+      "target": "n_exp_218",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_081",
+      "target": "n_exp_219",
+      "relation": "repetición"
+    },
+    {
+      "source": "n_exp_219",
+      "target": "n_exp_004",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_081",
+      "target": "n_exp_220",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_082",
+      "target": "n_exp_221",
+      "relation": "deriva"
+    },
+    {
+      "source": "n_exp_221",
+      "target": "n_exp_004",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_221",
+      "target": "n_mtage5c7_7799h1",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_082",
+      "target": "n_exp_222",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_083",
+      "target": "n_exp_223",
+      "relation": "memoria"
+    },
+    {
+      "source": "n_exp_223",
+      "target": "n_exp_004",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_083",
+      "target": "n_exp_224",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_084",
+      "target": "n_exp_225",
+      "relation": "latencia"
+    },
+    {
+      "source": "n_exp_225",
+      "target": "n_exp_004",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_084",
+      "target": "n_exp_226",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_226",
+      "target": "n_grafo",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_085",
+      "target": "n_exp_227",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_227",
+      "target": "n_exp_004",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_085",
+      "target": "n_exp_228",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_086",
+      "target": "n_exp_229",
+      "relation": "repetición"
+    },
+    {
+      "source": "n_exp_229",
+      "target": "n_exp_004",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_086",
+      "target": "n_exp_230",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_087",
+      "target": "n_exp_231",
+      "relation": "deriva"
+    },
+    {
+      "source": "n_exp_231",
+      "target": "n_exp_004",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_231",
+      "target": "n_mtagdhi5_n18lju",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_087",
+      "target": "n_exp_232",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_088",
+      "target": "n_exp_233",
+      "relation": "memoria"
+    },
+    {
+      "source": "n_exp_233",
+      "target": "n_exp_004",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_088",
+      "target": "n_exp_234",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_089",
+      "target": "n_exp_235",
+      "relation": "latencia"
+    },
+    {
+      "source": "n_exp_235",
+      "target": "n_exp_004",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_089",
+      "target": "n_exp_236",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_236",
+      "target": "n_silencio",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_090",
+      "target": "n_exp_237",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_237",
+      "target": "n_exp_004",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_090",
+      "target": "n_exp_238",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_091",
+      "target": "n_exp_239",
+      "relation": "repetición"
+    },
+    {
+      "source": "n_exp_239",
+      "target": "n_exp_004",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_091",
+      "target": "n_exp_240",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_092",
+      "target": "n_exp_241",
+      "relation": "deriva"
+    },
+    {
+      "source": "n_exp_241",
+      "target": "n_exp_004",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_241",
+      "target": "n_mtafcug1_9gxi9y",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_092",
+      "target": "n_exp_242",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_093",
+      "target": "n_exp_243",
+      "relation": "memoria"
+    },
+    {
+      "source": "n_exp_243",
+      "target": "n_exp_004",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_093",
+      "target": "n_exp_244",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_094",
+      "target": "n_exp_245",
+      "relation": "latencia"
+    },
+    {
+      "source": "n_exp_245",
+      "target": "n_exp_004",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_094",
+      "target": "n_exp_246",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_246",
+      "target": "n_fosforo",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_095",
+      "target": "n_exp_247",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_247",
+      "target": "n_exp_004",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_095",
+      "target": "n_exp_248",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_096",
+      "target": "n_exp_249",
+      "relation": "repetición"
+    },
+    {
+      "source": "n_exp_249",
+      "target": "n_exp_004",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_096",
+      "target": "n_exp_250",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_097",
+      "target": "n_exp_251",
+      "relation": "deriva"
+    },
+    {
+      "source": "n_exp_251",
+      "target": "n_exp_004",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_251",
+      "target": "n_mtafah6y_0puxgp",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_097",
+      "target": "n_exp_252",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_098",
+      "target": "n_exp_253",
+      "relation": "memoria"
+    },
+    {
+      "source": "n_exp_253",
+      "target": "n_exp_004",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_098",
+      "target": "n_exp_254",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_099",
+      "target": "n_exp_255",
+      "relation": "latencia"
+    },
+    {
+      "source": "n_exp_255",
+      "target": "n_exp_004",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_099",
+      "target": "n_exp_256",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_256",
+      "target": "n_scroll",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_100",
+      "target": "n_exp_257",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_257",
+      "target": "n_exp_004",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_100",
+      "target": "n_exp_258",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_101",
+      "target": "n_exp_259",
+      "relation": "repetición"
+    },
+    {
+      "source": "n_exp_259",
+      "target": "n_exp_004",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_101",
+      "target": "n_exp_260",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_102",
+      "target": "n_exp_261",
+      "relation": "deriva"
+    },
+    {
+      "source": "n_exp_261",
+      "target": "n_exp_004",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_261",
+      "target": "n_respuesta",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_102",
+      "target": "n_exp_262",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_103",
+      "target": "n_exp_263",
+      "relation": "memoria"
+    },
+    {
+      "source": "n_exp_263",
+      "target": "n_exp_004",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_103",
+      "target": "n_exp_264",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_104",
+      "target": "n_exp_265",
+      "relation": "latencia"
+    },
+    {
+      "source": "n_exp_265",
+      "target": "n_exp_004",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_104",
+      "target": "n_exp_266",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_266",
+      "target": "n_mtagdlnb_a0felt",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_105",
+      "target": "n_exp_267",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_267",
+      "target": "n_exp_004",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_105",
+      "target": "n_exp_268",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_106",
+      "target": "n_exp_269",
+      "relation": "repetición"
+    },
+    {
+      "source": "n_exp_269",
+      "target": "n_exp_004",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_106",
+      "target": "n_exp_270",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_107",
+      "target": "n_exp_271",
+      "relation": "deriva"
+    },
+    {
+      "source": "n_exp_271",
+      "target": "n_exp_004",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_271",
+      "target": "n_contacto",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_107",
+      "target": "n_exp_272",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_108",
+      "target": "n_exp_273",
+      "relation": "memoria"
+    },
+    {
+      "source": "n_exp_273",
+      "target": "n_exp_004",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_108",
+      "target": "n_exp_274",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_109",
+      "target": "n_exp_275",
+      "relation": "latencia"
+    },
+    {
+      "source": "n_exp_275",
+      "target": "n_exp_004",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_109",
+      "target": "n_exp_276",
+      "relation": "resonancia"
+    },
+    {
+      "source": "n_exp_276",
+      "target": "n_mtafcvs7_lu2y6t",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_110",
+      "target": "n_exp_277",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_277",
+      "target": "n_exp_004",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_110",
+      "target": "n_exp_278",
+      "relation": "contacto"
+    },
+    {
+      "source": "n_exp_111",
+      "target": "n_exp_279",
+      "relation": "repetición"
+    },
+    {
+      "source": "n_exp_279",
+      "target": "n_exp_004",
+      "relation": "eco"
+    },
+    {
+      "source": "n_exp_111",
+      "target": "n_exp_280",
+      "relation": "interferencia"
+    },
+    {
+      "source": "n_exp_112",
+      "target": "n_exp_281",
+      "relation": "deriva"
+    },
+    {
+      "source": "n_exp_281",
+      "target": "n_exp_004",
+      "relation": "pulso"
+    },
+    {
+      "source": "n_exp_281",
+      "target": "n_vacio",
+      "relation": "desvío"
+    },
+    {
+      "source": "n_exp_112",
+      "target": "n_exp_282",
+      "relation": "eco"
+    }
+  ]
+}

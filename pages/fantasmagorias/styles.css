@@ -21,15 +21,12 @@ body {
 body {
   overflow: hidden;
   color: var(--ink);
-  font-family: 'Bricolage Grotesque', sans-serif;
+  cursor: none;
+  touch-action: none;
   background:
     radial-gradient(circle at 14% 14%, rgba(255, 141, 98, 0.16), transparent 0 32%),
     radial-gradient(circle at 84% 10%, rgba(124, 232, 208, 0.14), transparent 0 30%),
     linear-gradient(180deg, #0d121a 0%, var(--bg) 44%, var(--bg-deep) 100%);
-}
-
-button {
-  font: inherit;
 }
 
 .sr-only {
@@ -92,134 +89,6 @@ button {
 
 .aura-b {
   background: radial-gradient(circle at 82% 14%, rgba(124, 232, 208, 0.18), transparent 32%);
-}
-
-.quick-action,
-.start-button {
-  appearance: none;
-  border-radius: 999px;
-  border: 1px solid var(--line);
-  color: var(--ink);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  font-weight: 700;
-  cursor: pointer;
-  transition: transform 160ms ease, border-color 160ms ease, background-color 160ms ease, color 160ms ease;
-}
-
-.quick-action:hover,
-.start-button:hover {
-  transform: translateY(-1px);
-}
-
-.quick-action {
-  position: fixed;
-  right: 14px;
-  top: 14px;
-  z-index: 11;
-  min-height: 38px;
-  padding: 0 14px;
-  background: rgba(8, 12, 18, 0.66);
-}
-
-.quick-action:hover {
-  border-color: rgba(124, 232, 208, 0.46);
-  background: rgba(124, 232, 208, 0.16);
-  color: #041915;
-}
-
-.status-pill {
-  position: fixed;
-  left: 14px;
-  top: 14px;
-  z-index: 11;
-  max-width: min(76vw, 560px);
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  background: rgba(8, 12, 18, 0.72);
-  padding: 10px 14px;
-  font-size: 0.74rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(244, 239, 230, 0.9);
-}
-
-.toast {
-  position: fixed;
-  left: 50%;
-  top: 20px;
-  transform: translate(-50%, -18px);
-  z-index: 14;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(6, 9, 13, 0.9);
-  padding: 11px 14px;
-  font-size: 0.76rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 180ms ease, transform 180ms ease;
-}
-
-.toast.is-visible {
-  opacity: 1;
-  transform: translate(-50%, 0);
-}
-
-.gate {
-  position: fixed;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  gap: 14px;
-  padding: 20px;
-  background: rgba(3, 5, 8, 0.5);
-  backdrop-filter: blur(6px);
-  z-index: 13;
-}
-
-.gate[hidden] {
-  display: none;
-}
-
-.start-button {
-  min-height: 52px;
-  padding: 0 24px;
-  border-color: rgba(255, 141, 98, 0.5);
-  background: linear-gradient(135deg, var(--ember), #ffac86);
-  color: #1c110c;
-}
-
-.gate-note {
-  margin: 0;
-  max-width: min(88vw, 720px);
-  text-align: center;
-  color: var(--muted);
-  font-size: 0.76rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  line-height: 1.55;
-}
-
-@media (max-width: 760px) {
-  .status-pill {
-    top: 10px;
-    left: 10px;
-    max-width: calc(100vw - 20px);
-    border-radius: 14px;
-    letter-spacing: 0.08em;
-  }
-
-  .quick-action {
-    top: auto;
-    right: 10px;
-    bottom: 10px;
-  }
-
-  .gate-note {
-    font-size: 0.7rem;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

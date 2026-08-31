@@ -6,6 +6,10 @@ const netArtLayer = document.querySelector('.netart-layer');
 const pageContent = document.querySelector('.page-content');
 const siteMenu = document.querySelector('.site-menu');
 const siteMenuSummary = siteMenu?.querySelector('summary');
+const radioFloat = document.querySelector('.radio-float');
+const radioFrame = document.querySelector('.radio-button-frame');
+const radioSignal = document.querySelector('[data-radio-signal]');
+const radioName = document.querySelector('[data-radio-name]');
 const mosquitoLink = document.querySelector('.mosquito-link');
 const hero = document.querySelector('.hero');
 const heroArchive = document.querySelector('.hero-archive');
@@ -16,6 +20,7 @@ const MOSQUITO_ACTIVE_MS = 20000;
 const RAIN_PHASE_MS = 3000;
 const MOSQUITO_SOUND_ENABLED = false;
 const MOSQUITO_AUDIO_SRC = './assets/audio/mosquito-buzz.mp3';
+const NETART_CACHE_MANIFEST = './assets/images/netart-cache/manifest.json';
 
 let netArtStartTime = performance.now();
 let mosquitoCycleTimer = null;
@@ -45,6 +50,41 @@ let netArtImages = [
   './assets/images/netart/Screenshot_20250108-144156.jpg'
 ];
 
+const shuffleImages = (images) => {
+  const shuffled = [...images];
+
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const randomIndex = Math.floor(Math.random() * (index + 1));
+    [shuffled[index], shuffled[randomIndex]] = [shuffled[randomIndex], shuffled[index]];
+  }
+
+  return shuffled;
+};
+
+const loadLocalNetArtImages = async () => {
+  try {
+    const response = await fetch(`${NETART_CACHE_MANIFEST}?ts=${Date.now()}`, { cache: 'no-store' });
+    if (!response.ok) return null;
+
+    const manifest = await response.json();
+    const images = Array.isArray(manifest.images) ? manifest.images : [];
+    const validImages = images.filter((image) => typeof image === 'string' && image.length > 0);
+
+    return validImages.length > 0 ? shuffleImages(validImages) : null;
+  } catch (error) {
+    console.warn('Cache local de imagenes no disponible, usando fallback.', error);
+    return null;
+  }
+};
+
+const loadRemoteNetArtImages = async () => {
+  const randomPage = Math.floor(Math.random() * 20) + 1;
+  const response = await fetch(`https://picsum.photos/v2/list?page=${randomPage}&limit=30`);
+  const data = await response.json();
+
+  return Array.isArray(data) ? data.map((item) => item.download_url).filter(Boolean) : [];
+};
+
 const randomBetween = (min, max) => min + Math.random() * (max - min);
 
 const wrapValue = (value, min, max) => {
@@ -73,11 +113,15 @@ const initNetArt = async () => {
   const vh = window.innerHeight;
 
   try {
-    const randomPage = Math.floor(Math.random() * 20) + 1;
-    const response = await fetch(`https://picsum.photos/v2/list?page=${randomPage}&limit=30`);
-    const data = await response.json();
-    if (data && data.length > 0) {
-      netArtImages = data.map(item => item.download_url);
+    const localImages = await loadLocalNetArtImages();
+
+    if (localImages) {
+      netArtImages = localImages;
+    } else {
+      const remoteImages = await loadRemoteNetArtImages();
+      if (remoteImages.length > 0) {
+        netArtImages = remoteImages;
+      }
     }
   } catch (e) {
     console.warn('API de imágenes falló, usando imágenes locales de respaldo.', e);
@@ -117,6 +161,46 @@ const updateProgress = () => {
   const scrollable = document.documentElement.scrollHeight - window.innerHeight;
   const ratio = scrollable <= 0 ? 0 : (window.scrollY / scrollable) * 100;
   progressBar.style.height = `${Math.min(100, Math.max(0, ratio))}%`;
+};
+
+const setRadioState = (state) => {
+  if (!radioFloat || !radioSignal || !radioName) return;
+
+  radioFloat.dataset.radioState = state;
+
+  if (state === 'live') {
+    radioSignal.textContent = 'señal en vivo';
+    radioName.textContent = 'radio scroll';
+    radioFloat.setAttribute('aria-label', 'Señal en vivo Radio Scroll');
+    return;
+  }
+
+  radioSignal.textContent = 'no signal';
+  radioName.textContent = '';
+  radioFloat.setAttribute('aria-label', 'Radio Scroll sin señal');
+};
+
+const initRadioSignal = () => {
+  if (!radioFrame || !radioFloat) return;
+
+  let frameLoaded = false;
+  const signalTimeout = window.setTimeout(() => {
+    if (!frameLoaded) {
+      setRadioState('no-signal');
+    }
+  }, 6500);
+
+  radioFrame.addEventListener('load', () => {
+    frameLoaded = true;
+    window.clearTimeout(signalTimeout);
+    setRadioState('live');
+  });
+
+  radioFrame.addEventListener('error', () => {
+    frameLoaded = false;
+    window.clearTimeout(signalTimeout);
+    setRadioState('no-signal');
+  });
 };
 
 const initHeroArchiveSpotlight = () => {
@@ -168,6 +252,11 @@ const initHeroArchiveSpotlight = () => {
 const terminalSequences = document.querySelectorAll('[data-terminal-sequence]');
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const reducedMotionEnabled = prefersReducedMotion.matches;
+const canAnimateReveals = !reducedMotionEnabled && 'IntersectionObserver' in window;
+
+if (canAnimateReveals) {
+  document.body.classList.add('js-motion-ready');
+}
 
 const wait = (ms) => new Promise((resolve) => window.setTimeout(resolve, ms));
 
@@ -352,25 +441,48 @@ const playTerminalSequence = async (sequence) => {
 
   sequence.classList.add('terminal-complete');
 };
-const revealObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
+const revealObserver = canAnimateReveals
+  ? new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
 
-        if (entry.target.hasAttribute('data-terminal-sequence')) {
-          playTerminalSequence(entry.target);
+          if (entry.target.hasAttribute('data-terminal-sequence')) {
+            playTerminalSequence(entry.target);
+          }
+
+          revealObserver.unobserve(entry.target);
         }
+      });
+    },
+    {
+      threshold: 0.16,
+      rootMargin: '0px 0px -40px 0px',
+    }
+  )
+  : null;
 
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  },
-  {
-    threshold: 0.16,
-    rootMargin: '0px 0px -40px 0px',
-  }
-);
+const revealViewportNodes = () => {
+  const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
+
+  revealNodes.forEach((node) => {
+    if (node.classList.contains('is-visible')) return;
+
+    const rect = node.getBoundingClientRect();
+    const startsInViewport = rect.top < viewportHeight * 0.92 && rect.bottom > 0;
+
+    if (!startsInViewport) return;
+
+    node.classList.add('is-visible');
+
+    if (node.hasAttribute('data-terminal-sequence')) {
+      playTerminalSequence(node);
+    }
+
+    revealObserver?.unobserve(node);
+  });
+};
 
 const startMosquitoSound = async () => {
   if (!mosquitoAudio) {
@@ -518,7 +630,7 @@ const startMosquitoCycle = () => {
 terminalSequences.forEach((sequence) => prepareTerminalSequence(sequence));
 initSiteMenu();
 
-if (reducedMotionEnabled) {
+if (!canAnimateReveals) {
   revealNodes.forEach((node) => node.classList.add('is-visible'));
   terminalSequences.forEach((sequence) => revealTerminalSequence(sequence));
 
@@ -531,6 +643,7 @@ if (reducedMotionEnabled) {
   }
 } else {
   revealNodes.forEach((node) => revealObserver.observe(node));
+  window.requestAnimationFrame(revealViewportNodes);
   initNetArt();
   registerMosquitoAudioUnlock();
   startMosquitoCycle();
@@ -638,6 +751,7 @@ const animate = () => {
 };
 
 updateProgress();
+initRadioSignal();
 initHeroArchiveSpotlight();
 
 if (!reducedMotionEnabled) {

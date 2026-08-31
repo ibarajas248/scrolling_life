@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Scroll en construcción - Scrolling Life</title>
+  <meta
+    name="description"
+    content="Scrolling Life se encuentra temporalmente en mantenimiento."
+  />
+  <link rel="stylesheet" href="../assets/fonts/local-fonts.css" />
+  <link rel="stylesheet" href="./styles.css" />
+  <script src="../assets/scripts/maintenance-gate.js" defer></script>
+</head>
+<body>
+  <main class="maintenance-screen" aria-labelledby="maintenanceTitle">
+    <div class="maintenance-archive" aria-hidden="true">
+      <span class="strip strip-a"></span>
+      <span class="strip strip-b"></span>
+      <span class="strip strip-c"></span>
+      <span class="strip strip-d"></span>
+      <span class="strip strip-i"></span>
+      <span class="strip strip-j"></span>
+      <span class="strip strip-k"></span>
+      <span class="strip strip-l"></span>
+      <span class="strip strip-e"></span>
+      <span class="strip strip-f"></span>
+      <span class="strip strip-g"></span>
+      <span class="strip strip-h"></span>
+      <span class="maintenance-spotlight"></span>
+    </div>
+
+    <section class="maintenance-copy">
+      <p class="maintenance-award">&gt; Proyecto ganador de la Beca de Programación Virtual en Artes Plásticas y Visuales Red Galería Santa Fe 2026</p>
+      <h1 id="maintenanceTitle">Scroll en construcción</h1>
+      <p class="maintenance-author">Iván Barajas</p>
+    </section>
+  </main>
+  <script>
+    const maintenanceScreen = document.querySelector('.maintenance-screen');
+    const maintenanceArchive = document.querySelector('.maintenance-archive');
+
+    if (maintenanceScreen && maintenanceArchive) {
+      const canTrackPointer = window.matchMedia?.('(hover: hover) and (pointer: fine)').matches ?? true;
+      let pendingPointer = null;
+      let rafId = null;
+
+      const updateSpotlight = () => {
+        rafId = null;
+        if (!pendingPointer) return;
+
+        const rect = maintenanceArchive.getBoundingClientRect();
+        const x = ((pendingPointer.clientX - rect.left) / rect.width) * 100;
+        const y = ((pendingPointer.clientY - rect.top) / rect.height) * 100;
+
+        maintenanceArchive.style.setProperty('--archive-cursor-x', `${Math.min(100, Math.max(0, x)).toFixed(2)}%`);
+        maintenanceArchive.style.setProperty('--archive-cursor-y', `${Math.min(100, Math.max(0, y)).toFixed(2)}%`);
+      };
+
+      const requestSpotlightUpdate = (event) => {
+        pendingPointer = event;
+        if (!rafId) {
+          rafId = window.requestAnimationFrame(updateSpotlight);
+        }
+      };
+
+      if (canTrackPointer) {
+        maintenanceScreen.addEventListener('pointerenter', (event) => {
+          maintenanceArchive.classList.add('is-pointer-active');
+          requestSpotlightUpdate(event);
+        }, { passive: true });
+
+        maintenanceScreen.addEventListener('pointermove', requestSpotlightUpdate, { passive: true });
+
+        maintenanceScreen.addEventListener('pointerleave', () => {
+          maintenanceArchive.classList.remove('is-pointer-active');
+          pendingPointer = null;
+
+          if (rafId) {
+            window.cancelAnimationFrame(rafId);
+            rafId = null;
+          }
+        });
+      }
+    }
+  </script>
+
+  <!-- Cloudflare Web Analytics -->
+  <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "4ae4ff73465943b788027815f6676ab3"}'></script>
+  <!-- End Cloudflare Web Analytics -->
+  <script src="/assets/scripts/traffic-tracker.js" defer></script>
+</body>
+</html>

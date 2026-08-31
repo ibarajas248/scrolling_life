@@ -9,7 +9,8 @@
     content="Scrolling Life es una pieza web sobre el scroll como gesto cultural, ritmo corporal y forma contemporanea de mirar."
   />
   <link rel="stylesheet" href="./assets/fonts/local-fonts.css" />
-  <link rel="stylesheet" href="./assets/styles/home.css" />
+  <link rel="stylesheet" href="./assets/styles/home.css?v=20260830-drawing-link" />
+  <script src="./assets/scripts/maintenance-gate.js" defer></script>
   <style>
     .submenu-container {
       display: flex;
@@ -41,15 +42,21 @@
       </div>
     </div>
 
-    <div class="radio-float" aria-label="Emisora Scrolling Life">
-      <iframe
-        class="radio-button-frame"
-        src="https://radio.testivanbarajas.cloud/radio"
-        title="Botón de reproducción de la emisora Scrolling Life"
-        loading="eager"
-        allow="autoplay; encrypted-media"
-        referrerpolicy="strict-origin-when-cross-origin"
-      ></iframe>
+    <div class="radio-float" data-radio-state="loading" aria-label="Señal en vivo Radio Scroll">
+      <div class="radio-player-shell">
+        <iframe
+          class="radio-button-frame"
+          src="https://radio.testivanbarajas.cloud/radio"
+          title="Botón de reproducción de la emisora Scrolling Life"
+          loading="eager"
+          allow="autoplay; encrypted-media"
+          referrerpolicy="strict-origin-when-cross-origin"
+        ></iframe>
+      </div>
+      <div class="radio-live-copy" aria-live="polite">
+        <span class="radio-signal" data-radio-signal>no signal</span>
+        <span class="radio-name" data-radio-name>radio scroll</span>
+      </div>
     </div>
 
     <details class="site-menu" aria-label="Otras salas">
@@ -63,21 +70,71 @@
             <span>línea continua</span>
             <small>recorrido vertical</small>
           </a>
+          <div class="submenu-container">
+            <a class="site-menu-link" href="./pages/infinito/">
+              <span>Infinito</span>
+              <small>texto curatorial</small>
+            </a>
+            <a class="site-menu-link submenu-item" href="https://thescrollingdrawing.scrollinglife.com/">
+              <span>↳ The Scrolling Drawing</span>
+              <small>dibujo infinito</small>
+            </a>
+          </div>
           <a class="site-menu-link" href="./pages/sala-3d/">
             <span>Juego</span>
             <small>Escapar del mounstro del scroll</small>
-          </a>
-          <a class="site-menu-link" href="./pages/fantasmagorias/">
-            <span>Fantasmagorias</span>
-            <small>deriva visual</small>
           </a>
           <a class="site-menu-link" href="./pages/consulta-imagenes/">
             <span>Lluvia de Imagenes</span>
             <small>cache 20 + scroll</small>
           </a>
+          <a class="site-menu-link" href="./pages/catalogo-gif/">
+            <span>Catalogo GIF</span>
+            <small>indice de urls</small>
+          </a>
+          <a class="site-menu-link" href="./pages/mundo-gif/">
+            <span>Mundo GIF</span>
+            <small>web collage / pixel 90s</small>
+          </a>
+          <div class="submenu-container">
+            <a class="site-menu-link" href="./pages/pausa/">
+              <span>Pausa</span>
+              <small>texto curatorial</small>
+            </a>
+            <a class="site-menu-link submenu-item" href="./pages/pausa/in-case-you-come-back/">
+              <span>In Case You Come Back</span>
+              <small>poema / recetas / rosa 90s</small>
+            </a>
+          </div>
+          <div class="submenu-container">
+            <a class="site-menu-link" href="./lluvia_imagenes2/">
+              <span>pruebaslluvia</span>
+              <small>experimentos visuales</small>
+            </a>
+            <a class="site-menu-link submenu-item" href="./lluvia_imagenes2/">
+              <span>prueba1</span>
+              <small>lluvia permanente</small>
+            </a>
+            <a class="site-menu-link submenu-item" href="./pruebaslluvia/prueba2/">
+              <span>prueba2</span>
+              <small>tiras 150px</small>
+            </a>
+            <a class="site-menu-link submenu-item" href="./pruebaslluvia/prueba3/">
+              <span>prueba3</span>
+              <small>escultura 3D</small>
+            </a>
+          </div>
+          <a class="site-menu-link" href="./grafo_3d/">
+            <span>Grafo 3D</span>
+            <small>frases conectadas</small>
+          </a>
           <a class="site-menu-link" href="./pages/embedding-rain/">
             <span>Embedding Rain</span>
             <small>modelo + PCA 3D</small>
+          </a>
+          <a class="site-menu-link" href="./maqutacion/">
+            <span>Maquetacion Instagram</span>
+            <small>formatos 1:1 + fondos</small>
           </a>
           <div class="submenu-container">
             <a class="site-menu-link" href="./pages/ruido/">
@@ -102,11 +159,21 @@
               <span>↳ Inteligencias Colectivas</span>
               <small>por Henry Lamiña</small>
             </a>
+            <a class="site-menu-link submenu-item" href="./pages/archivo/precipitacion-critica/">
+              <span>↳ Precipitaci&oacute;n cr&iacute;tica</span>
+              <small>lluvia de Esfera P&uacute;blica</small>
+            </a>
           </div>
-          <a class="site-menu-link" href="./pages/cuerpo/">
-            <span>Cuerpo</span>
-            <small>lorem ipsum</small>
-          </a>
+          <div class="submenu-container">
+            <a class="site-menu-link" href="./pages/cuerpo/">
+              <span>Cuerpo</span>
+              <small>lorem ipsum</small>
+            </a>
+            <a class="site-menu-link submenu-item" href="./pages/fantasmagorias/">
+              <span>↳ Fantasmagorías</span>
+              <small>deriva visual</small>
+            </a>
+          </div>
         </div>
       </nav>
     </details>
@@ -136,8 +203,8 @@
             <span class="title-accent-word">Life</span>
             <a
               class="mosquito-link"
-              href="./pages/mosquito-caos/"
-              title="seguir hacia el enjambre de ventanas"
+              href="https://thescrollingdrawing.scrollinglife.com/"
+              title="seguir hacia The Scrolling Drawing"
               aria-hidden="true"
               tabindex="-1"
             >
@@ -148,7 +215,7 @@
                 <span class="mosquito-head"></span>
                 <span class="mosquito-legs"></span>
               </span>
-              <span class="mosquito-call">seguir</span><span class="sr-only"> hacia el enjambre de ventanas</span>
+              <span class="mosquito-call">seguir</span><span class="sr-only"> hacia The Scrolling Drawing</span>
             </a>
           </span>
         </h1>
@@ -291,7 +358,7 @@
 
         <div class="win98-desktop-container reveal">
           <div class="win98-desktop" id="win98Desktop">
-            <article class="concept-card concept-card-body win-draggable" id="winCuerpo" style="top: 20px; left: 30px; z-index: 5;">
+            <article class="concept-card concept-card-body win-draggable" id="winCuerpo">
             <div class="win-titlebar">
               <span>C:\SCROLL\CUERPO.TXT</span>
               <span class="win-controls" aria-hidden="true">
@@ -304,10 +371,11 @@
               <p>
                 Texto
               </p>
+              <a class="concept-card-link" href="./pages/cuerpo/">Abrir Cuerpo</a>
               
             </div>
           </article>
-            <article class="concept-card concept-card-infinite win-draggable" id="winInfinito" style="top: 60px; left: 80px; z-index: 4;">
+            <article class="concept-card concept-card-infinite win-draggable" id="winInfinito">
             <div class="win-titlebar">
               <span>C:\SCROLL\INFINITO.SYS</span>
               <span class="win-controls" aria-hidden="true">
@@ -320,10 +388,14 @@
               <p>
                 Texto
               </p>
+              <div class="concept-card-actions">
+                <a class="concept-card-link" href="./pages/infinito/">Abrir Infinito</a>
+                <a class="concept-card-link" href="https://thescrollingdrawing.scrollinglife.com/">Abrir The Scrolling Drawing</a>
+              </div>
               
             </div>
           </article>
-            <article class="concept-card concept-card-noise win-draggable" id="winRuido" style="top: 100px; left: 130px; z-index: 3;">
+            <article class="concept-card concept-card-noise win-draggable" id="winRuido">
             <div class="win-titlebar">
               <span>C:\SCROLL\RUIDO.DLL</span>
               <span class="win-controls" aria-hidden="true">
@@ -336,10 +408,11 @@
               <p>
                 Texto
               </p>
+              <a class="concept-card-link" href="./pages/ruido/">Abrir Ruido</a>
               
             </div>
           </article>
-            <article class="concept-card concept-card-archive win-draggable" id="winArchivo" style="top: 30px; left: 450px; z-index: 2;">
+            <article class="concept-card concept-card-archive win-draggable" id="winArchivo">
             <div class="win-titlebar">
               <span>C:\SCROLL\ARCHIVO.LOG</span>
               <span class="win-controls" aria-hidden="true">
@@ -352,10 +425,11 @@
               <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna
               </p>
+              <a class="concept-card-link" href="./pages/archivo/">Abrir Archivo</a>
               
             </div>
           </article>
-            <article class="concept-card concept-card-pausa is-visible win-draggable" id="winPausa" style="top: 160px; left: 320px; z-index: 1;">
+            <article class="concept-card concept-card-pausa is-visible win-draggable" id="winPausa">
             <div class="win-titlebar">
               <span>C:\SCROLL\PAUSA.EXE</span>
               <span class="win-controls" aria-hidden="true">
@@ -368,6 +442,7 @@
               <p>
                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
               </p>
+              <a class="concept-card-link" href="./pages/pausa/">Abrir Pausa</a>
               
             </div>
           </article>
@@ -413,6 +488,11 @@
     </main>
   </div>
 
-  <script src="./assets/scripts/home.js"></script>
+  <script src="./assets/scripts/home.js?v=20260821-visibility"></script>
+
+  <!-- Cloudflare Web Analytics -->
+  <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "4ae4ff73465943b788027815f6676ab3"}'></script>
+  <!-- End Cloudflare Web Analytics -->
+  <script src="/assets/scripts/traffic-tracker.js" defer></script>
 </body>
 </html>

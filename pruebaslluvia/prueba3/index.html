@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>prueba3 - escultura de imagenes</title>
+  <meta
+    name="description"
+    content="Escultura tridimensional de imagenes locales del archivo Scrolling Life."
+  />
+  <link rel="stylesheet" href="../../assets/fonts/local-fonts.css" />
+  <link rel="stylesheet" href="./styles.css" />
+  <script src="../../assets/scripts/maintenance-gate.js" defer></script>
+</head>
+<body>
+  <main class="sculpture-stage" aria-label="Escultura tridimensional de imagenes">
+    <canvas id="sculptureCanvas" class="sculpture-canvas" aria-hidden="true"></canvas>
+    <div class="fallback-sculpture" id="fallbackSculpture" aria-hidden="true"></div>
+    <div class="scan-field" aria-hidden="true"></div>
+    <div class="vignette" aria-hidden="true"></div>
+    <h1 class="sr-only">prueba3 escultura de imagenes</h1>
+  </main>
+
+  <script type="module" src="./script.js"></script>
+
+  <!-- Cloudflare Web Analytics -->
+  <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "4ae4ff73465943b788027815f6676ab3"}'></script>
+  <!-- End Cloudflare Web Analytics -->
+  <script src="/assets/scripts/traffic-tracker.js" defer></script>
+</body>
+</html>

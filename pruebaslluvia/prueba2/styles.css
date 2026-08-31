@@ -1,0 +1,214 @@
+:root {
+  --bg: #020304;
+  --strip-width: 150px;
+  --green: #9eff71;
+  --blue: #083bba;
+  --paper: #eef2ea;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+body {
+  color: var(--paper);
+  font-family: 'Share Tech Mono', 'IBM Plex Mono', 'Courier New', monospace;
+}
+
+.strip-stage {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(158, 255, 113, 0.08), transparent 27%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.96), rgba(4, 8, 20, 0.7) 28%, rgba(4, 8, 20, 0.72) 72%, rgba(0, 0, 0, 0.96)),
+    #010204;
+  isolation: isolate;
+}
+
+.strip-field {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: block;
+  overflow: hidden;
+}
+
+.scroll-strip {
+  position: absolute;
+  top: -18vh;
+  bottom: -18vh;
+  left: var(--left, 0px);
+  width: var(--strip-width);
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.64), rgba(8, 59, 186, 0.2), rgba(0, 0, 0, 0.68));
+  border-left: 1px solid rgba(238, 242, 234, 0.08);
+  border-right: 1px solid rgba(158, 255, 113, 0.12);
+  opacity: var(--strip-opacity, 0.72);
+  filter:
+    grayscale(var(--strip-gray, 0.85))
+    contrast(var(--strip-contrast, 1.2))
+    brightness(var(--strip-brightness, 0.78))
+    saturate(var(--strip-sat, 0.92));
+  transform: translate3d(0, 0, 0) skewX(var(--strip-skew, 0deg));
+}
+
+.scroll-strip:nth-child(3n + 1) {
+  mix-blend-mode: screen;
+}
+
+.scroll-strip:nth-child(4n + 2) {
+  opacity: var(--strip-opacity, 0.58);
+  filter:
+    grayscale(0.96)
+    contrast(var(--strip-contrast, 1.34))
+    brightness(var(--strip-brightness, 0.66))
+    saturate(0.7);
+}
+
+.scroll-strip:nth-child(5n + 3) {
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.78), rgba(0, 54, 180, 0.34), rgba(0, 0, 0, 0.72));
+}
+
+.strip-track {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 200vh;
+  will-change: transform;
+  animation: stripScroll var(--speed, 28s) linear infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+.scroll-strip[data-direction='reverse'] .strip-track {
+  animation-direction: reverse;
+}
+
+.strip-set {
+  display: flex;
+  flex-direction: column;
+  min-height: 118vh;
+}
+
+.strip-frame {
+  position: relative;
+  flex: 0 0 auto;
+  width: 100%;
+  height: var(--frame-height, 190px);
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.72);
+}
+
+.strip-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: var(--frame-opacity, 0.82);
+  filter:
+    grayscale(var(--frame-gray, 0.86))
+    contrast(var(--frame-contrast, 1.18))
+    brightness(var(--frame-brightness, 0.9))
+    saturate(var(--frame-sat, 0.9));
+  transform: scale(var(--frame-scale, 1.04));
+}
+
+.strip-frame::before,
+.strip-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.strip-frame::before {
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.18), transparent 18%, transparent 82%, rgba(255, 255, 255, 0.1)),
+    repeating-linear-gradient(0deg, transparent 0 21px, rgba(255, 255, 255, 0.08) 22px, transparent 23px);
+  mix-blend-mode: screen;
+  opacity: 0.28;
+}
+
+.strip-frame::after {
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.54), transparent 28%, transparent 72%, rgba(0, 0, 0, 0.58)),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.5), transparent 18%, transparent 82%, rgba(0, 0, 0, 0.54));
+  opacity: 0.9;
+}
+
+.screen-mesh,
+.screen-mask {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.screen-mesh {
+  z-index: 2;
+  background-image:
+    radial-gradient(circle, rgba(238, 246, 252, 0.13) 0 1px, transparent 1.4px),
+    repeating-linear-gradient(90deg, rgba(158, 255, 113, 0.06) 0 1px, transparent 1px 75px),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 4px);
+  background-size: 12px 12px, 75px 100%, 100% 4px;
+  mix-blend-mode: screen;
+  opacity: 0.28;
+}
+
+.screen-mask {
+  z-index: 3;
+  background:
+    radial-gradient(ellipse at center, transparent 0 38%, rgba(0, 0, 0, 0.48) 72%, rgba(0, 0, 0, 0.98) 100%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.86), transparent 13%, transparent 87%, rgba(0, 0, 0, 0.9)),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.46), transparent 18%, transparent 82%, rgba(0, 0, 0, 0.72));
+  box-shadow: inset 0 0 180px rgba(0, 0, 0, 0.98);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@keyframes stripScroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(0, -50%, 0);
+  }
+}
+
+@media (max-width: 680px) {
+  :root {
+    --strip-width: 150px;
+  }
+
+  .scroll-strip {
+    top: -24vh;
+    bottom: -24vh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .strip-track {
+    animation-duration: 70s;
+  }
+}

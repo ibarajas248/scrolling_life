@@ -1,0 +1,12 @@
+assets/images/netart-cache/*.jpg
+assets/images/netart-cache/*.jpeg
+assets/images/netart-cache/*.webp
+data/grafo-3d.local.json
+credenciales_scrolling_life_privado.docx
+.codex-deploy-*.tar.gz
+.deploy/
+.env
+.env.*
+*.env
+!.env.example
+!**/.env.example

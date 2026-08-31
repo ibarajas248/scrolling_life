@@ -1,0 +1,58 @@
+{
+  "meta": {
+    "dataset": "esfera-publica-fallback-example",
+    "description": "Archivo local de respaldo con estructura de ejemplo para Precipitacion critica. Reemplazar posts por datos reales si se desea conservar una copia local.",
+    "source": "example",
+    "fields": ["id", "date", "link", "slug", "title", "authorName"]
+  },
+  "posts": [
+    {
+      "id": "fallback-001",
+      "date": "2026-01-01T08:00:00",
+      "link": "https://esferapublica.org/",
+      "slug": "ejemplo-discusion-que-cae",
+      "title": "Ejemplo de respaldo: una discusion que cae demasiado rapido",
+      "authorName": "archivo local"
+    },
+    {
+      "id": "fallback-002",
+      "date": "2026-01-02T09:15:00",
+      "link": "https://esferapublica.org/",
+      "slug": "ejemplo-archivo-y-ruido",
+      "title": "Ejemplo de respaldo: archivo, ruido y atencion fragmentada",
+      "authorName": "archivo local"
+    },
+    {
+      "id": "fallback-003",
+      "date": "2026-01-03T10:30:00",
+      "link": "https://esferapublica.org/",
+      "slug": "ejemplo-velocidad-lectura",
+      "title": "Ejemplo de respaldo: leer contra la velocidad de la interfaz",
+      "authorName": "archivo local"
+    },
+    {
+      "id": "fallback-004",
+      "date": "2026-01-04T12:00:00",
+      "link": "https://esferapublica.org/",
+      "slug": "ejemplo-masa-de-palabras",
+      "title": "Ejemplo de respaldo: una masa de palabras superpuestas",
+      "authorName": "archivo local"
+    },
+    {
+      "id": "fallback-005",
+      "date": "2026-01-05T14:20:00",
+      "link": "https://esferapublica.org/",
+      "slug": "ejemplo-publicacion-detenida",
+      "title": "Ejemplo de respaldo: detener una publicacion para volver a verla",
+      "authorName": "archivo local"
+    },
+    {
+      "id": "fallback-006",
+      "date": "2026-01-06T18:45:00",
+      "link": "https://esferapublica.org/",
+      "slug": "ejemplo-precipitacion",
+      "title": "Ejemplo de respaldo: precipitacion critica sin final evidente",
+      "authorName": "archivo local"
+    }
+  ]
+}

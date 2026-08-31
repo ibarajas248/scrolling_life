@@ -1,0 +1,7 @@
+{
+  "name": "scrollinglife-qr-tests",
+  "private": true,
+  "type": "module",
+  "scripts": { "test": "node --test test.mjs" },
+  "devDependencies": { "jsqr": "1.4.0" }
+}

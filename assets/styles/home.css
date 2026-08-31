@@ -174,6 +174,83 @@ a {
   transition: height 120ms linear;
 }
 
+.radio-float {
+  position: fixed;
+  top: 28px;
+  left: 150px;
+  z-index: 25;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  max-width: calc(100vw - 176px);
+  color: #edf4ff;
+  text-transform: uppercase;
+  isolation: isolate;
+}
+
+.radio-player-shell {
+  position: relative;
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  overflow: hidden;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(158, 255, 113, 0.26), rgba(35, 199, 139, 0.2) 46%, transparent 72%),
+    rgba(0, 0, 0, 0.24);
+  box-shadow:
+    0 0 20px rgba(35, 199, 139, 0.2),
+    0 0 0 1px rgba(158, 255, 113, 0.16);
+}
+
+.radio-button-frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 150px;
+  border: 0;
+  transform: translate(-40px, -9px) scale(0.36);
+  transform-origin: 0 0;
+}
+
+.radio-live-copy {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+  pointer-events: none;
+  font-family: 'Share Tech Mono', 'IBM Plex Mono', 'Courier New', monospace;
+  line-height: 1;
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.9),
+    0 0 9px rgba(158, 255, 113, 0.12);
+}
+
+.radio-signal {
+  color: #9eff71;
+  font-size: 0.58rem;
+  letter-spacing: 0.18em;
+  white-space: nowrap;
+}
+
+.radio-name {
+  color: rgba(237, 244, 255, 0.86);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  white-space: nowrap;
+}
+
+.radio-float[data-radio-state='loading'] .radio-signal,
+.radio-float[data-radio-state='no-signal'] .radio-signal {
+  color: #ee7d59;
+}
+
+.radio-float[data-radio-state='loading'] .radio-name,
+.radio-float[data-radio-state='no-signal'] .radio-name {
+  display: none;
+}
+
 .site-menu {
   position: fixed;
   top: 26px;
@@ -1960,6 +2037,37 @@ a {
   display: none;
 }
 
+.concept-card-link {
+  align-self: flex-start;
+  margin-top: auto;
+  padding: 7px 10px;
+  color: #111417;
+  background: #9eff71;
+  border: 1px solid #111417;
+  box-shadow:
+    inset 1px 1px 0 #ffffff,
+    inset -1px -1px 0 #4d8f35;
+  font-family: 'Share Tech Mono', 'IBM Plex Mono', 'Courier New', monospace;
+  font-size: 0.75rem;
+  text-decoration: none;
+}
+
+.concept-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: auto;
+}
+
+.concept-card-actions .concept-card-link {
+  margin-top: 0;
+}
+
+.concept-card-link:hover,
+.concept-card-link:focus {
+  background: #80e9ff;
+}
+
 .concept-head {
   display: flex;
   align-items: center;
@@ -2375,12 +2483,17 @@ a {
 }
 
 .reveal {
-  opacity: 0;
-  transform: translateY(28px);
+  opacity: 1;
+  transform: translateY(0);
   transition: opacity 650ms ease, transform 650ms ease;
 }
 
-.reveal.is-visible {
+body.js-motion-ready .reveal {
+  opacity: 0;
+  transform: translateY(28px);
+}
+
+body.js-motion-ready .reveal.is-visible {
   opacity: 1;
   transform: translateY(0);
 }
@@ -2515,6 +2628,32 @@ a {
   .site-menu-panel {
     width: min(276px, calc(100vw - 24px));
     padding: 10px;
+  }
+
+  .radio-float {
+    top: 17px;
+    left: 126px;
+    gap: 8px;
+    max-width: calc(100vw - 154px);
+  }
+
+  .radio-player-shell {
+    width: 32px;
+    height: 32px;
+  }
+
+  .radio-button-frame {
+    transform: translate(-43px, -10px) scale(0.32);
+  }
+
+  .radio-signal {
+    font-size: 0.52rem;
+    letter-spacing: 0.14em;
+  }
+
+  .radio-name {
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
   }
 
   .progress-shell {
@@ -2880,8 +3019,8 @@ p {
 .win98-desktop-container {
   position: relative;
   width: 100%;
-  max-width: var(--max-width);
-  height: 85vh; /* Simula monitor */
+  max-width: none;
+  height: clamp(670px, 78vh, 760px);
   margin: 0 auto 60px;
   display: flex;
   flex-direction: column;
@@ -2902,13 +3041,52 @@ p {
   margin: 0;
   width: 320px;
   max-width: 85vw;
-  /* User requested changes: no dark card around the window */
+  height: auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
   padding: 3px;
   border-radius: 0;
   border: none;
   background: #c0c0c0;
   backdrop-filter: none;
   box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #dfdfdf, inset -2px -2px gray, inset 2px 2px #fff, 0 14px 40px rgba(0,0,0,0.5) !important;
+}
+
+#winCuerpo {
+  top: 24px;
+  left: 24px;
+  z-index: 5;
+}
+
+#winInfinito {
+  top: 24px;
+  left: calc(50% - 160px);
+  z-index: 4;
+}
+
+#winRuido {
+  top: 24px;
+  right: 24px;
+  z-index: 3;
+}
+
+#winArchivo {
+  top: 260px;
+  left: calc(50% - 360px);
+  z-index: 2;
+}
+
+#winPausa {
+  top: 260px;
+  left: calc(50% + 40px);
+  z-index: 1;
+}
+
+.win98-desktop .concept-window-body {
+  flex: 0 0 auto;
+  margin: 4px;
+  min-height: 154px;
 }
 
 .win98-desktop .concept-card:focus-within,
@@ -3008,4 +3186,76 @@ p {
   font-family: 'Disket Mono', monospace;
   color: #000;
   box-shadow: inset -1px -1px #fff, inset 1px 1px #0a0a0a, inset -2px -2px #dfdfdf, inset 2px 2px grey;
+}
+
+@media (max-width: 1120px) {
+  .win98-desktop-container {
+    height: 880px;
+  }
+
+  .win98-desktop .concept-card {
+    width: min(320px, calc(50% - 36px));
+  }
+
+  #winCuerpo {
+    top: 22px;
+    left: 24px;
+  }
+
+  #winInfinito {
+    top: 22px;
+    left: auto;
+    right: 24px;
+  }
+
+  #winRuido {
+    top: 250px;
+    left: 24px;
+    right: auto;
+  }
+
+  #winArchivo {
+    top: 250px;
+    left: auto;
+    right: 24px;
+  }
+
+  #winPausa {
+    top: 478px;
+    left: calc(50% - 160px);
+  }
+}
+
+@media (max-width: 720px) {
+  .win98-desktop-container {
+    height: auto;
+    min-height: 0;
+  }
+
+  .win98-desktop {
+    display: grid;
+    gap: 12px;
+    padding: 12px;
+    overflow: visible;
+  }
+
+  .win98-desktop .concept-card {
+    position: relative !important;
+    top: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+    width: 100%;
+    max-width: none;
+    height: auto;
+    min-height: 240px;
+  }
+}
+
+@media (max-width: 430px) {
+  .radio-float {
+    top: 64px;
+    left: 12px;
+    max-width: calc(100vw - 24px);
+  }
 }
