@@ -261,14 +261,47 @@
       background: #050706;
     }
 
-    .video-frame {
+    .video-stage {
       position: absolute;
       top: 50%;
       left: 50%;
       z-index: 0;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: #050706;
+      transform: translate(-50%, -50%);
+    }
+
+    .video-frame {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
       border: 0;
       pointer-events: none;
-      transform: translate(-50%, -50%);
+    }
+
+    .video-stage::before,
+    .video-stage::after {
+      position: absolute;
+      right: 0;
+      left: 0;
+      z-index: 2;
+      pointer-events: none;
+      content: "";
+    }
+
+    .video-stage::before {
+      top: 0;
+      height: 14%;
+      background: linear-gradient(180deg, #050706 0%, #050706 64%, transparent 100%);
+    }
+
+    .video-stage::after {
+      bottom: 0;
+      height: 18%;
+      background: linear-gradient(0deg, #050706 0%, #050706 62%, transparent 100%);
     }
 
     .video-vignette {
@@ -312,6 +345,20 @@
       pointer-events: none;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.86' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.28'/%3E%3C/svg%3E");
       mix-blend-mode: soft-light;
+    }
+
+    .video-curtain {
+      position: absolute;
+      inset: 0;
+      z-index: 6;
+      pointer-events: none;
+      background: #050706;
+      opacity: 1;
+      transition: opacity 1.2s ease;
+    }
+
+    .video-panel.is-ready .video-curtain {
+      opacity: 0;
     }
 
     @keyframes mistMove {
@@ -427,16 +474,19 @@
     </section>
 
     <section class="video-panel" id="video-panel" aria-label="Video de la experiencia">
-      <iframe
-        class="video-frame"
-        id="video-frame"
-        title="Video de la experiencia"
-        allow="autoplay; encrypted-media; picture-in-picture"
-        referrerpolicy="strict-origin-when-cross-origin"
-        tabindex="-1"
-      ></iframe>
+      <div class="video-stage">
+        <iframe
+          class="video-frame"
+          id="video-frame"
+          title="Video de la experiencia"
+          allow="autoplay; encrypted-media; picture-in-picture"
+          referrerpolicy="strict-origin-when-cross-origin"
+          tabindex="-1"
+        ></iframe>
+      </div>
       <div class="video-vignette" aria-hidden="true"></div>
       <div class="video-grain" aria-hidden="true"></div>
+      <div class="video-curtain" aria-hidden="true"></div>
     </section>
   </main>
 
@@ -452,8 +502,6 @@
     const totalImages = 100;
     const baseUrl = "https://ibarajas248.github.io/scrolleandowdwd/imagen";
     const youtubeVideoId = "vOrh8h4npq8";
-    const videoAspectRatio = 16 / 9;
-    const videoCrop = 1.12;
 
     const frases = [
       "el scroll también sueña",
@@ -525,23 +573,6 @@
       }
     }
 
-    function fitVideoFrame() {
-      const { width, height } = videoPanel.getBoundingClientRect();
-      let frameWidth;
-      let frameHeight;
-
-      if (width / height > videoAspectRatio) {
-        frameWidth = width * videoCrop;
-        frameHeight = frameWidth / videoAspectRatio;
-      } else {
-        frameHeight = height * videoCrop;
-        frameWidth = frameHeight * videoAspectRatio;
-      }
-
-      videoFrame.style.width = `${Math.ceil(frameWidth)}px`;
-      videoFrame.style.height = `${Math.ceil(frameHeight)}px`;
-    }
-
     function updateScrollProgress() {
       const isStacked = window.matchMedia("(max-width: 900px)").matches;
       const scroller = isStacked ? document.documentElement : scrollPanel;
@@ -553,18 +584,17 @@
     }
 
     videoFrame.src = `https://www.youtube-nocookie.com/embed/${youtubeVideoId}?autoplay=1&mute=1&controls=0&disablekb=1&fs=0&iv_load_policy=3&rel=0&modestbranding=1&playsinline=1&loop=1&playlist=${youtubeVideoId}`;
+    videoFrame.addEventListener("load", () => {
+      window.setTimeout(() => videoPanel.classList.add("is-ready"), 4200);
+    });
 
     scrollPanel.addEventListener("scroll", updateScrollProgress, { passive: true });
     window.addEventListener("scroll", updateScrollProgress, { passive: true });
     window.addEventListener("resize", updateScrollProgress);
 
-    const videoResizeObserver = new ResizeObserver(fitVideoFrame);
-    videoResizeObserver.observe(videoPanel);
-
     loadImages();
     createFloatingTexts();
     createGhostImages();
-    fitVideoFrame();
     updateScrollProgress();
   </script>
 
