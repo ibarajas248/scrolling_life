@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scrolling Life</title>
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="preconnect" href="https://www.tiktok.com" crossorigin />
+    <link rel="preconnect" href="https://www.tiktokcdn.com" crossorigin />
+    <link rel="preconnect" href="https://unavatar.io" crossorigin />
+    <link rel="dns-prefetch" href="https://www.tiktok.com" />
+    <link rel="dns-prefetch" href="https://www.tiktokcdn.com" />
+    <link rel="dns-prefetch" href="https://unavatar.io" />
+    <link rel="preload" as="image" href="./img/neutral.png" />
+    <link rel="modulepreload" href="data:text/javascript;base64,LyoqDQogKiBQcmVjYXJnYSBkZSB2w61kZW9zIGxvY2FsZXMgcGFyYSBlbCBsb29wIGluZmluaXRvLg0KICogTWFudGllbmUgYmxvYnMvZWxlbWVudG9zIGxpc3RvcyBzaW4gZGVwZW5kZXIgZGUgVGlrVG9rLg0KICovDQoNCmNvbnN0IGNhY2hlID0gbmV3IE1hcCgpOyAvLyBzcmMgLT4gSFRNTFZpZGVvRWxlbWVudCAob2ZmLURPTSkNCg0KZnVuY3Rpb24gbWFrZVZpZGVvRWwoKSB7DQogIGNvbnN0IHYgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCd2aWRlbycpOw0KICB2Lm11dGVkID0gdHJ1ZTsNCiAgdi5wbGF5c0lubGluZSA9IHRydWU7DQogIHYucHJlbG9hZCA9ICdhdXRvJzsNCiAgdi5sb29wID0gZmFsc2U7DQogIHYuc2V0QXR0cmlidXRlKCdwbGF5c2lubGluZScsICcnKTsNCiAgdi5zZXRBdHRyaWJ1dGUoJ3dlYmtpdC1wbGF5c2lubGluZScsICcnKTsNCiAgT2JqZWN0LmFzc2lnbih2LnN0eWxlLCB7DQogICAgcG9zaXRpb246ICdhYnNvbHV0ZScsDQogICAgaW5zZXQ6ICcwJywNCiAgICB3aWR0aDogJzEwMCUnLA0KICAgIGhlaWdodDogJzEwMCUnLA0KICAgIG9iamVjdEZpdDogJ2NvdmVyJywNCiAgICBiYWNrZ3JvdW5kOiAnIzAwMCcsDQogIH0pOw0KICByZXR1cm4gdjsNCn0NCg0KZXhwb3J0IGZ1bmN0aW9uIGVuc3VyZVdhcm1pbmcoc3JjLCB7IHByaW9yaXR5ID0gZmFsc2UgfSA9IHt9KSB7DQogIGlmICghc3JjIHx8IGNhY2hlLmhhcyhzcmMpKSByZXR1cm4gY2FjaGUuZ2V0KHNyYykgfHwgbnVsbDsNCiAgY29uc3QgdiA9IG1ha2VWaWRlb0VsKCk7DQogIHYuc3JjID0gc3JjOw0KICB2Lm11dGVkID0gdHJ1ZTsNCiAgdi52b2x1bWUgPSAwOw0KICB2LmxvYWQoKTsNCiAgY2FjaGUuc2V0KHNyYywgdik7DQogIC8vIExpbWl0YXIgY2FjaMOpDQogIGlmIChjYWNoZS5zaXplID4gMTIpIHsNCiAgICBjb25zdCBmaXJzdCA9IGNhY2hlLmtleXMoKS5uZXh0KCkudmFsdWU7DQogICAgaWYgKGZpcnN0ICYmIGZpcnN0ICE9PSBzcmMpIHsNCiAgICAgIGNvbnN0IG9sZCA9IGNhY2hlLmdldChmaXJzdCk7DQogICAgICBvbGQ/LnJlbW92ZUF0dHJpYnV0ZSgnc3JjJyk7DQogICAgICBvbGQ/LmxvYWQoKTsNCiAgICAgIGNhY2hlLmRlbGV0ZShmaXJzdCk7DQogICAgfQ0KICB9DQogIHJldHVybiB2Ow0KfQ0KDQpleHBvcnQgZnVuY3Rpb24gd2FybUFoZWFkKGl0ZW1zID0gW10pIHsNCiAgaXRlbXMuZm9yRWFjaCgoaXRlbSwgaSkgPT4gew0KICAgIGlmIChpdGVtPy5zcmMpIGVuc3VyZVdhcm1pbmcoaXRlbS5zcmMsIHsgcHJpb3JpdHk6IGkgPT09IDAgfSk7DQogIH0pOw0KfQ0KDQpleHBvcnQgZnVuY3Rpb24gY3JlYXRlU2xpZGVWaWRlbygpIHsNCiAgcmV0dXJuIG1ha2VWaWRlb0VsKCk7DQp9DQo=" />
+    <link rel="modulepreload" href="./assets/feed-CtMKThNy.js" />
+    <link rel="modulepreload" href="data:text/javascript;base64,aW1wb3J0ICcuL3dhcm1Qb29sLmpzJzsNCmltcG9ydCB7IGNyZWF0ZVBob25lU3RhZ2UsIFBIT05FX1dJRFRILCBQSE9ORV9IRUlHSFQgfSBmcm9tICcuL3Bob25lU3RhZ2UuanMnOw0KaW1wb3J0IHsNCiAgbG9hZExvY2FsTWFuaWZlc3QsDQogIHJlYnVpbGRQbGF5bGlzdCwNCiAgY3JlYXRlRmVlZFNjcm9sbGVyLA0KICBleHByZXNzaW9uRnJvbUNhdGFsb2csDQogIHdhdGNoTGlicmFyeSwNCn0gZnJvbSAnLi9mZWVkLmpzJzsNCg0KY29uc3QgeyBzdGFnZTogcGhvbmVTdGFnZSB9ID0gY3JlYXRlUGhvbmVTdGFnZSgpOw0KDQovKiogw5psdGltYSBlbW9jacOzbiDigJQgc2UgYXBsaWNhIGN1YW5kbyBUaHJlZS5qcyBlc3TDqSBsaXN0by4gKi8NCmxldCBwZW5kaW5nRXhwcmVzc2lvbiA9ICduZXV0cmFsJzsNCmxldCBhcHBseUV4cHJlc3Npb24gPSAoY2F0KSA9PiB7DQogIHBlbmRpbmdFeHByZXNzaW9uID0gY2F0IHx8ICduZXV0cmFsJzsNCn07DQoNCmZ1bmN0aW9uIGVtb3Rpb25Gcm9tVmlkZW8odmlkZW8pIHsNCiAgcmV0dXJuIHZpZGVvPy5jYXRlZ29yaWEgfHwgZXhwcmVzc2lvbkZyb21DYXRhbG9nKHZpZGVvPy5jYXRhbG9nbykgfHwgJ25ldXRyYWwnOw0KfQ0KDQphc3luYyBmdW5jdGlvbiBib290KCkgew0KICBhd2FpdCBsb2FkTG9jYWxNYW5pZmVzdCgpOw0KICBjb25zdCBwbGF5bGlzdCA9IHJlYnVpbGRQbGF5bGlzdCgpOw0KDQogIGNvbnN0IHsgY3JlYXRlRmVlZE92ZXJsYXkgfSA9IGF3YWl0IGltcG9ydCgnLi9zY3JlZW4uanMnKTsNCiAgY29uc3QgZmVlZCA9IGNyZWF0ZUZlZWRPdmVybGF5KHsgbW91bnQ6IHBob25lU3RhZ2UsIHBsYXlsaXN0IH0pOw0KDQogIGxldCBzY3JvbGxlciA9IG51bGw7DQoNCiAgZnVuY3Rpb24gc3RhcnRGZWVkKCkgew0KICAgIGlmIChzY3JvbGxlcikgcmV0dXJuOw0KDQogICAgZnVuY3Rpb24gZ29OZXh0KCkgew0KICAgICAgaWYgKHNjcm9sbGVyKSBzY3JvbGxlci5uZXh0KCk7DQogICAgfQ0KDQogICAgc2Nyb2xsZXIgPSBjcmVhdGVGZWVkU2Nyb2xsZXIoew0KICAgICAgaW50ZXJ2YWxNczogMTIwMDAsDQogICAgICBvbkNoYW5nZSh2aWRlbykgew0KICAgICAgICBmZWVkLnNob3dWaWRlbyh2aWRlbywgew0KICAgICAgICAgIG9uVmlzaWJsZShpdGVtKSB7DQogICAgICAgICAgICBhcHBseUV4cHJlc3Npb24oZW1vdGlvbkZyb21WaWRlbyhpdGVtKSk7DQogICAgICAgICAgfSwNCiAgICAgICAgfSk7DQogICAgICB9LA0KICAgICAgb25QcmVsb2FkKHZpZGVvKSB7DQogICAgICAgIGZlZWQucHJlbG9hZCh2aWRlbyk7DQogICAgICB9LA0KICAgIH0pOw0KDQogICAgZmVlZC5vblZpZGVvRW5kZWQoZ29OZXh0KTsNCiAgICBzY3JvbGxlci5zdGFydCgpOw0KDQogICAgLy8gQ2FkYSAzMCBtaW46IHNpIHJlZnJlc2gtdmlkZW9zLnB5IGVzY3JpYmnDsyBsaWJyYXJ5IG51ZXZhLCBlbnRyYSBhbCBsb29wIHNpbiByZWluaWNpYXINCiAgICB3YXRjaExpYnJhcnkoew0KICAgICAgaW50ZXJ2YWxNczogMzAgKiA2MCAqIDEwMDAsDQogICAgICBvblVwZGF0ZSh7IHZpZGVvcyB9KSB7DQogICAgICAgIHNjcm9sbGVyPy5yZWZyZXNoUG9vbCgpOw0KICAgICAgICBjb25zb2xlLmluZm8oDQogICAgICAgICAgYFtsaWJyYXJ5XSBwb29sIGFjdHVhbGl6YWRvOiAke3ZpZGVvcy5sZW5ndGh9IGNsaXBzIOKAlCBlbCBsb29wIHNpZ3VlIHNpbiBjb3J0YXJgLA0KICAgICAgICApOw0KICAgICAgfSwNCiAgICB9KTsNCiAgfQ0KDQogIGZlZWQud2hlblVubG9ja2VkKHN0YXJ0RmVlZCk7DQogIGJvb3RTY2VuZSgpOw0KfQ0KDQphc3luYyBmdW5jdGlvbiBib290U2NlbmUoKSB7DQogIGNvbnN0IFt0aHJlZSwgeyBjcmVhdGVDaGFyYWN0ZXIgfSwgeyBzZXRFeHByZXNzaW9uIH1dID0gYXdhaXQgUHJvbWlzZS5hbGwoWw0KICAgIGltcG9ydCgndGhyZWUnKSwNCiAgICBpbXBvcnQoJy4vY2hhcmFjdGVyLmpzJyksDQogICAgaW1wb3J0KCcuL2V4cHJlc3Npb25zLmpzJyksDQogIF0pOw0KDQogIGNvbnN0IHsNCiAgICBTY2VuZSwNCiAgICBQZXJzcGVjdGl2ZUNhbWVyYSwNCiAgICBXZWJHTFJlbmRlcmVyLA0KICAgIENvbG9yLA0KICAgIEFtYmllbnRMaWdodCwNCiAgICBDbG9jaywNCiAgICBTUkdCQ29sb3JTcGFjZSwNCiAgfSA9IHRocmVlOw0KDQogIGNvbnN0IHNjZW5lID0gbmV3IFNjZW5lKCk7DQogIHNjZW5lLmJhY2tncm91bmQgPSBuZXcgQ29sb3IoMHgwMDAwMDApOw0KDQogIGNvbnN0IHBob25lQXNwZWN0ID0gUEhPTkVfV0lEVEggLyBQSE9ORV9IRUlHSFQ7DQogIGNvbnN0IGNhbWVyYSA9IG5ldyBQZXJzcGVjdGl2ZUNhbWVyYSg0MCwgcGhvbmVBc3BlY3QsIDAuMSwgNTApOw0KICBjYW1lcmEucG9zaXRpb24uc2V0KDAsIDAuMDUsIDMuMSk7DQogIGNhbWVyYS5sb29rQXQoMCwgMC4wNSwgMCk7DQoNCiAgY29uc3QgcmVuZGVyZXIgPSBuZXcgV2ViR0xSZW5kZXJlcih7DQogICAgYW50aWFsaWFzOiBmYWxzZSwNCiAgICBwb3dlclByZWZlcmVuY2U6ICdoaWdoLXBlcmZvcm1hbmNlJywNCiAgICBhbHBoYTogZmFsc2UsDQogIH0pOw0KICByZW5kZXJlci5zZXRTaXplKFBIT05FX1dJRFRILCBQSE9ORV9IRUlHSFQpOw0KICByZW5kZXJlci5zZXRQaXhlbFJhdGlvKDEpOw0KICByZW5kZXJlci5vdXRwdXRDb2xvclNwYWNlID0gU1JHQkNvbG9yU3BhY2U7DQogIHJlbmRlcmVyLmRvbUVsZW1lbnQuc3R5bGUuekluZGV4ID0gJzEnOw0KICBwaG9uZVN0YWdlLmFwcGVuZENoaWxkKHJlbmRlcmVyLmRvbUVsZW1lbnQpOw0KDQogIHNjZW5lLmFkZChuZXcgQW1iaWVudExpZ2h0KDB4ZmZmZmZmLCAwLjkpKTsNCg0KICBjb25zdCB7IGdyb3VwOiBucGMsIGZhY2VQYXJ0cyB9ID0gY3JlYXRlQ2hhcmFjdGVyKCk7DQogIHNjZW5lLmFkZChucGMpOw0KDQogIGFwcGx5RXhwcmVzc2lvbiA9IChjYXQpID0+IHsNCiAgICBwZW5kaW5nRXhwcmVzc2lvbiA9IGNhdCB8fCAnbmV1dHJhbCc7DQogICAgc2V0RXhwcmVzc2lvbihmYWNlUGFydHMsIHBlbmRpbmdFeHByZXNzaW9uKTsNCiAgfTsNCiAgc2V0RXhwcmVzc2lvbihmYWNlUGFydHMsIHBlbmRpbmdFeHByZXNzaW9uKTsNCg0KICBjb25zdCBjbG9jayA9IG5ldyBDbG9jaygpOw0KICBmdW5jdGlvbiBhbmltYXRlKCkgew0KICAgIHJlcXVlc3RBbmltYXRpb25GcmFtZShhbmltYXRlKTsNCiAgICBucGMucG9zaXRpb24ueSA9IE1hdGguc2luKGNsb2NrLmVsYXBzZWRUaW1lICogMS4wNSkgKiAwLjAxNTsNCiAgICByZW5kZXJlci5yZW5kZXIoc2NlbmUsIGNhbWVyYSk7DQogIH0NCiAgYW5pbWF0ZSgpOw0KfQ0KDQpib290KCk7DQo=" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #0a0a0a;
+      }
+      #phone-shell {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: radial-gradient(ellipse at center, #151515 0%, #050505 72%);
+      }
+      #phone-stage {
+        position: relative;
+        width: 1080px;
+        height: 1920px;
+        flex-shrink: 0;
+        overflow: hidden;
+        background: #000;
+        border-radius: 36px;
+        transform-origin: center center;
+        --ui-scale: 2.51;
+        box-shadow:
+          0 0 0 2px #252528,
+          0 0 0 5px #111,
+          inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+          0 28px 80px rgba(0, 0, 0, 0.85);
+      }
+      #phone-stage::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        z-index: 12;
+        width: 210px;
+        height: 32px;
+        transform: translateX(-50%);
+        border-radius: 0 0 20px 20px;
+        background: #000;
+        pointer-events: none;
+      }
+      #phone-stage canvas {
+        display: block;
+        position: absolute;
+        inset: 0;
+        width: 100% !important;
+        height: 100% !important;
+      }
+    </style>
+    <script type="module" crossorigin src="./assets/index-DeIiI3_E.js"></script>
+  </head>
+  <body>
+  </body>
+</html>
