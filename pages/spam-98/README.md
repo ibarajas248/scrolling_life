@@ -9,10 +9,9 @@ Ruta: `/pages/spam-98/`. HTML, CSS y JavaScript estaticos, sin compilacion.
 `AAAAAAAAAAAA.txt-20260902T172055Z-1-001.zip`. Los archivos URL.txt son datos:
 solo sus enlaces HTTPS forman parte de la pieza. No se ejecuta contenido del ZIP.
 
-- INICIO: imagen original conservada como fuente, sin mostrarse como fondo.
-  A peticion del usuario, el fondo es una pagina web HTML de 1998, con enlaces
-  subrayados, publicidad, GIF, contador de visitas y un directorio. Los anuncios
-  y enlaces de esta pagina disparan nuevos pop-ups.
+- INICIO: `inicio.jpg` es el fondo persistente de toda la pieza, tal como fue
+  entregado. La imagen se muestra completa, sin recortes ni deformacion; las
+  proporciones de pantalla diferentes dejan margenes oscuros.
 - C1-C8: cada imagen avanza a la siguiente subcarpeta al pulsarla o cerrarla.
   C6 -Mid- aparece al completar cuatro clusters o a los 90 segundos.
 - ALEATORIO: 32 ventanas independientes, barajadas sin repeticion hasta agotar
@@ -35,7 +34,9 @@ parte de una superficie interactiva que avanza el recorrido.
 El final aparece al completar los ocho clusters o a los 210 segundos de
 actividad visible. Este limite y el ritmo son decisiones de esta primera
 version, no indicaciones incluidas en el ZIP. Opciones > Finalizar sesion permite
-ver el final directamente. Reiniciar limpia ventanas y recorridos.
+ver el final directamente. Al llegar al final se retiran todos los anuncios,
+cesan las apariciones y sus sonidos, y se reproduce el Notepad de FINAL sobre
+el mismo fondo de INICIO. Reiniciar limpia ventanas y recorridos.
 
 La barra inferior mantiene sonido, pausa y salida accesibles. Escape pausa
 las apariciones y el sonido; los GIF originales conservan su animacion.

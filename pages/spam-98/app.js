@@ -170,6 +170,7 @@
       else if (!options.cluster && options.kind !== 'final') return null;
     }
     const record = { id: `popup-${++serial}`, item, kind: 'random', step: 0, ...options };
+    if (record.kind !== 'final') stage.dataset.phase = 'invasion';
     const node = document.createElement('section');
     record.node = node;
     node.id = record.id;
@@ -332,6 +333,7 @@
   function finish() {
     if (mode === 'finished') return;
     mode = 'finished';
+    stage.dataset.phase = 'final';
     epoch++;
     stopSounds();
     [...windows.values()].forEach(removeWindow);
@@ -393,6 +395,7 @@
     topZ = 0;
     bag = [];
     mode = 'running';
+    stage.dataset.phase = 'inicio';
     lastTick = performance.now();
     $('#pause').disabled = false;
     updatePause();
@@ -445,10 +448,6 @@
       else togglePause();
     }
   });
-  document.querySelectorAll('[data-web]').forEach((node) => node.addEventListener('click', () => {
-    if (node.dataset.web === 'internet') nextCluster();
-    else inbox(node.dataset.web === 'burst' ? 4 : 3);
-  }));
   document.querySelectorAll('[data-command]').forEach((node) => node.addEventListener('click', () => {
     setMenu(false);
     if (node.dataset.command === 'restart') restart();

@@ -3,7 +3,7 @@
   font-family: Tahoma, "MS Sans Serif", Arial, sans-serif;
   font-size: 12px;
   color: #111;
-  background: #fff;
+  background: #080a0c;
   --silver: #c0c0c0;
   --page-controls-height: 38px;
 }
@@ -24,60 +24,7 @@ button:disabled img { opacity: .4; }
 .sunken { border: 1px solid; border-color: #808080 #fff #fff #808080; }
 .raised:active:not(.art-window) { border-color: #111 #fff #fff #111; box-shadow: inset 1px 1px #808080; }
 #popup-stage { position: fixed; inset: 0 0 var(--page-controls-height); overflow: hidden; isolation: isolate; }
-.retro-page { height: 100%; overflow: auto; background: #fff; font: 16px/1.4 "Times New Roman", Times, serif; color: #111; }
-.retro-page button { border: 0; padding: 0; background: none; font: inherit; color: #00e; text-decoration: underline; }
-.retro-page button:hover { color: #d00000; }
-.retro-page button:focus-visible { outline: 2px dotted #00e; outline-offset: 3px; }
-.web-strip { display: flex; justify-content: space-between; gap: 12px; padding: 5px 18px; background: #000080; color: #fff; font: 11px "Courier New", monospace; }
-.homepage { width: min(1060px, calc(100% - 36px)); margin: 0 auto; }
-.web-heading { text-align: center; padding: 18px 0 12px; }
-.welcome-line { margin: 0 0 4px; font: bold 12px "Courier New", monospace; color: #c00000; }
-.web-heading h1 { margin: 0; color: #000080; font: bold 52px/1.15 "Times New Roman", Times, serif; text-shadow: 2px 2px #bfc4dc; }
-.web-byline { margin: 7px 0 14px; font: 12px "Courier New", monospace; }
-.web-nav { display: flex; justify-content: center; gap: 9px 24px; flex-wrap: wrap; border-top: 3px double #888; border-bottom: 3px double #888; padding: 8px 0; font-size: 14px; }
-.retro-page .ticker { display: block; overflow: hidden; width: 100%; background: #ff0; color: #b00000; font: bold 13px/30px Arial, sans-serif; text-align: left; text-decoration: none; border: 1px solid #b00000; }
-.ticker span { display: block; width: max-content; animation: ticker-scroll 25s linear infinite; }
-.web-columns { display: grid; grid-template-columns: 165px minmax(0, 1fr) 200px; gap: 26px; padding: 24px 0; }
-.directory { border-right: 1px solid #a1a1a1; padding-right: 17px; font-size: 14px; }
-.directory h2 { margin: 0 0 15px; font: bold 13px "Courier New", monospace; border-bottom: 2px solid #000080; padding-bottom: 6px; }
-.directory nav { display: flex; flex-direction: column; align-items: flex-start; gap: 11px; }
-.new-label { display: inline-block; color: #d00000; font: bold italic 12px Arial, sans-serif; }
-.retro-page hr { border: 0; border-top: 1px solid #b0b0b0; border-bottom: 1px solid #eee; margin: 20px 0; }
-.visitor-label, .visitor-note { text-align: center; margin: 8px 0; font-size: 12px; }
-.retro-page .visitor-counter { display: block; width: 100%; padding: 3px 4px; background: #000; border: 3px ridge #b0b0b0; font: bold 18px/1.1 "Courier New", monospace; color: #0f0; text-align: center; text-decoration: none; }
-.retro-page .web-badge { display: flex; align-items: center; gap: 5px; padding: 4px; border: 2px outset #aaa; color: #000; text-decoration: none; font: 8px/1.3 Arial, sans-serif; background: #ddd; margin: 0 auto; }
-.web-badge img { width: 25px; height: 25px; }
-.construction { margin: 24px 0 0; background: #ff0; color: #111; border: 4px dashed #111; padding: 5px; text-align: center; font: bold 12px/1.15 Arial, sans-serif; transform: rotate(-3deg); }
-.web-main { min-width: 0; text-align: center; }
-.web-main h2 { font-size: 28px; line-height: 1.15; color: #a00000; margin: 0 0 12px; }
-.intro-copy { margin: 0 0 20px; }
-.retro-page .prize-banner { display: flex; align-items: center; justify-content: center; gap: 14px; width: 100%; min-height: 108px; padding: 6px; background: #ffecec; border: 2px solid #c00; text-decoration: none; color: #a00000; }
-.prize-banner img { width: min(58%, 235px); height: auto; object-fit: contain; }
-.prize-banner span { max-width: 120px; font: bold 17px/1.2 Arial, sans-serif; }
-.prize-banner b { display: block; font-size: 24px; }
-.offer-note { margin: 8px 0 16px; color: #c00; font: bold 11px "Courier New", monospace; }
-.web-main h3 { margin: 0 0 12px; font-size: 19px; }
-.web-link-list { text-align: left; padding-left: 21px; font-size: 16px; margin: 0; }
-.web-link-list li { margin: 10px 0; }
-.web-link-list small { display: block; color: #555; font-size: 12px; }
-.retro-page .free-banner { width: 100%; padding: 9px 5px; background: #000080; color: #ff0; border: 3px ridge #c0c0c0; text-decoration: none; }
-.free-banner strong { display: block; font: bold italic 26px/1 Arial, sans-serif; }
-.free-banner span { display: block; margin-top: 6px; color: #fff; font: 10px "Courier New", monospace; }
-.guestbook { padding-top: 20px; }
-.guestbook h3 { margin-bottom: 3px; font-size: 16px; }
-.guestbook button { font-size: 14px; }
-.sponsor-column { border-left: 1px solid #a1a1a1; padding-left: 17px; text-align: center; min-width: 0; }
-.sponsor-label { margin: 0 0 10px; color: #555; font: 10px Arial, sans-serif; }
-.retro-page .sponsor-image { display: block; width: 100%; }
-.sponsor-image img { display: block; width: 100%; height: auto; border: 1px solid #000; }
-.retro-page .ad-link { font: bold 12px Arial, sans-serif; margin-top: 8px; }
-.sponsor-small { font-size: 11px; color: #555; }
-.retro-page .mail-link { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; margin-top: 10px; }
-.mail-link img { width: 27px; height: 27px; }
-.web-footer { padding: 16px 0 24px; border-top: 3px double #888; text-align: center; font-size: 13px; }
-.web-footer p { margin: 0 0 8px; }
-.web-footer nav { display: flex; justify-content: center; gap: 22px; flex-wrap: wrap; }
-.web-footer .web-signature { margin: 18px 0 0; color: #666; font: 10px "Courier New", monospace; }
+.piece-background { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: contain; object-position: center; user-select: none; }
 #windows { position: absolute; inset: 0; pointer-events: none; }
 .art-window { position: absolute; padding: 3px; max-width: calc(100% - 12px); pointer-events: auto; filter: drop-shadow(3px 3px 0 #0005); }
 .art-window.is-new { animation: arrive 130ms steps(2, end); }
@@ -110,8 +57,8 @@ button:disabled img { opacity: .4; }
 .notepad-video { width: 100%; aspect-ratio: 1078 / 720; max-height: calc(100dvh - 215px); object-fit: contain; display: block; background: #fff; }
 .notepad-footer { display: flex; justify-content: flex-end; padding: 8px; gap: 8px; }
 .notepad-footer button, .notepad-footer a { padding: 6px 12px; text-decoration: none; color: #000; }
-.page-controls { position: fixed; z-index: 100000; bottom: 0; left: 0; width: 100%; height: var(--page-controls-height); background: #fff; border-top: 1px solid #aaa; padding: 3px 12px; display: flex; align-items: center; gap: 18px; }
-.page-controls a, .text-link { font: 12px "Times New Roman", Times, serif; color: #00e; text-decoration: underline; background: none; border: 0; padding: 0; white-space: nowrap; }
+.page-controls { position: fixed; z-index: 100000; bottom: 0; left: 0; width: 100%; height: var(--page-controls-height); background: #c0c0c0; border-top: 1px solid #fff; padding: 3px 12px; display: flex; align-items: center; gap: 18px; }
+.page-controls a, .text-link { font: 12px Tahoma, Arial, sans-serif; color: #111; text-decoration: underline; background: none; border: 0; padding: 0; white-space: nowrap; }
 .page-controls a:hover, .text-link:hover { color: #c00; }
 .playback-controls { display: flex; gap: 5px; margin-left: auto; }
 .window-tabs { border-top: 1px solid #ccc; max-height: 34dvh; overflow-y: auto; }
@@ -131,31 +78,8 @@ button:disabled img { opacity: .4; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 .noscript { position: fixed; top: 20%; left: 10%; right: 10%; padding: 25px; }
 @keyframes arrive { from { transform: scale(.97); } to { transform: scale(1); } }
-@keyframes ticker-scroll { to { transform: translateX(-50%); } }
-@media (max-width: 850px) {
-  .web-columns { grid-template-columns: 132px minmax(0, 1fr) 155px; gap: 16px; }
-  .web-main h2 { font-size: 23px; }
-  .prize-banner span { font-size: 13px; }
-}
 @media (max-width: 600px) {
   :root { --page-controls-height: calc(43px + env(safe-area-inset-bottom)); }
-  .homepage { width: calc(100% - 24px); }
-  .web-strip { font-size: 9px; padding: 5px 10px; }
-  .welcome-line { font-size: 9px; }
-  .web-heading { padding-top: 14px; }
-  .web-heading h1 { font-size: 31px; }
-  .web-byline { font-size: 10px; margin-bottom: 12px; }
-  .web-nav { font-size: 12px; gap: 7px 12px; }
-  .web-columns { grid-template-columns: minmax(0, 1fr); gap: 25px; padding-top: 20px; }
-  .web-main { grid-row: 1; }
-  .directory { grid-row: 2; border-right: 0; padding-right: 0; border-top: 1px solid #aaa; padding-top: 18px; }
-  .directory nav { flex-direction: row; flex-wrap: wrap; gap: 12px 22px; }
-  .visitor-counter { max-width: 180px; margin: 0 auto; }
-  .construction { max-width: 155px; margin: 20px auto 0; }
-  .sponsor-column { border-left: 0; padding-left: 0; width: min(260px, 100%); margin: 0 auto; }
-  .prize-banner span { font-size: 15px; }
-  .web-main h2 { font-size: 24px; }
-  .free-banner strong { font-size: 24px; }
   .page-controls { padding: 3px 8px calc(3px + env(safe-area-inset-bottom)); gap: 12px; }
   .page-controls a, .text-link { font-size: 11px; }
   .playback-controls { gap: 0; }
@@ -168,8 +92,7 @@ button:disabled img { opacity: .4; }
   .notepad-footer { flex-wrap: wrap; }
 }
 @media (max-width: 350px) {
-  .web-heading h1 { font-size: 27px; }
   .page-controls { gap: 9px; }
   .page-controls .return-link { max-width: 81px; overflow: hidden; text-overflow: ellipsis; }
 }
-@media (prefers-reduced-motion: reduce) { .art-window.is-new, .ticker span { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .art-window.is-new { animation: none; } }
