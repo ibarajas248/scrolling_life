@@ -6,8 +6,9 @@
     '../assets/images/scroll-strips/strip_000003.jpg',
     '../assets/images/scroll-strips/strip_000004.jpg'
   ];
-  const MAX_ACTIVE_DROPS = 92;
-  const PRELOAD_COUNT = 42;
+  const MAX_ACTIVE_DROPS = 64;
+  const PRELOAD_COUNT = 14;
+  const REMOTE_IMAGE_SIZE = 420;
   const BASE_INTERVAL_MS = 118;
   const BURST_INTERVAL_MS = 1100;
 
@@ -41,12 +42,12 @@
     const fileName = src.split('/').pop() || '';
     const idMatch = fileName.match(/^picsum_0*(\d+)_(\d+)x(\d+)\.jpe?g$/i);
     if (idMatch) {
-      return `https://picsum.photos/id/${idMatch[1]}/${idMatch[2]}/${idMatch[3]}`;
+      return `https://picsum.photos/id/${idMatch[1]}/${REMOTE_IMAGE_SIZE}/${REMOTE_IMAGE_SIZE}`;
     }
 
     const seedMatch = fileName.match(/^picsum_seed-([^_]+)_(\d+)x(\d+)\.jpe?g$/i);
     if (seedMatch) {
-      return `https://picsum.photos/seed/${encodeURIComponent(seedMatch[1])}/${seedMatch[2]}/${seedMatch[3]}`;
+      return `https://picsum.photos/seed/${encodeURIComponent(seedMatch[1])}/${REMOTE_IMAGE_SIZE}/${REMOTE_IMAGE_SIZE}`;
     }
 
     return null;
@@ -210,7 +211,7 @@
 
     preloadSomeImages();
 
-    const initialBurst = prefersReducedMotion.matches ? 8 : 34;
+    const initialBurst = prefersReducedMotion.matches ? 6 : 22;
     for (let index = 0; index < initialBurst; index += 1) {
       window.setTimeout(() => spawnDrop(index < 12 ? 'burst' : 'normal'), index * 44);
     }
