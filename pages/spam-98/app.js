@@ -10,11 +10,10 @@
   const completed = new Set();
   const audioCache = new Map();
   const voices = new Set();
-  const schedule = [['C1', 1800], ['C2', 15000], ['C3', 32000], ['C4', 50000], ['C5', 69000], ['C6', 90000], ['C7', 110000], ['C8', 132000]];
-  const finaleAt = 210000;
+  const initialDelay = 1800;
   let elapsed = 0;
   let lastTick = performance.now();
-  let nextSpam = 3200;
+  let nextSpam = Infinity;
   let serial = 0;
   let topZ = 0;
   let interactions = 0;
@@ -275,17 +274,17 @@
     return content;
   }
 
-  function launchCluster(id) {
-    if (mode !== 'running' || launched.has(id)) return;
-    launched.add(id);
-    const cluster = assets.clusters.find((entry) => entry.id === id);
-    createWindow(cluster.steps[0], { kind: 'cluster', cluster: id, step: 0 });
-  }
-
   function nextCluster() {
-    if (completed.size >= 4 && !launched.has('C6')) return launchCluster('C6');
-    const next = schedule.find(([id]) => id !== 'C6' && !launched.has(id));
-    if (next) launchCluster(next[0]);
+    // Only a completed folder can release the next root in the manifest.
+    if (mode !== 'running' || launched.size !== completed.size) return;
+    const cluster = assets.clusters[completed.size];
+    if (!cluster) return;
+    launched.add(cluster.id);
+    if (cluster.id === 'C3') {
+      nextSpam = elapsed + 3200;
+      $('[data-command="inbox"]').disabled = false;
+    }
+    return createWindow(cluster.steps[0], { kind: 'cluster', cluster: cluster.id, step: 0 });
   }
 
   function randomItem() {
@@ -300,7 +299,7 @@
   }
 
   function spawnRandom(near) {
-    if (mode === 'running') createWindow(randomItem(), { near });
+    if (mode === 'running' && launched.has('C3')) createWindow(randomItem(), { near });
   }
 
   function activate(record) {
@@ -320,14 +319,14 @@
       } else {
         completed.add(record.cluster);
         if (completed.size === assets.clusters.length) return finish();
-        nextCluster();
+        next = nextCluster();
       }
     } else if (item.links?.length) {
       next = createWindow(item.links[0], { kind: 'link', near });
     }
     spawnRandom(next ? undefined : near);
     if (interactions % 2 === 0) spawnRandom();
-    if (keyboard && next) focusWindow(next, true);
+    if (next) focusWindow(next, keyboard);
   }
 
   function finish() {
@@ -339,6 +338,7 @@
     [...windows.values()].forEach(removeWindow);
     $('#paused').hidden = true;
     $('#pause').disabled = true;
+    $('[data-command="inbox"]').disabled = true;
     $('#pause').setAttribute('aria-pressed', 'false');
     const record = createWindow({ title: 'AAAAAAAAAAAA.txt - Bloc de notas' }, { kind: 'final' });
     const body = record.node.querySelector('.window-body');
@@ -391,13 +391,14 @@
     completed.clear();
     elapsed = 0;
     interactions = 0;
-    nextSpam = 3200;
+    nextSpam = Infinity;
     topZ = 0;
     bag = [];
     mode = 'running';
     stage.dataset.phase = 'inicio';
     lastTick = performance.now();
     $('#pause').disabled = false;
+    $('[data-command="inbox"]').disabled = true;
     updatePause();
     $('#status').textContent = 'Nueva sesion.';
   }
@@ -479,9 +480,8 @@
     lastTick = now;
     if (mode !== 'running' || document.hidden || !$('#start-menu').hidden) return;
     elapsed += delta;
-    for (const [id, at] of schedule) if (elapsed >= at) launchCluster(id);
-    if (elapsed >= finaleAt) return finish();
-    if (elapsed >= nextSpam) {
+    if (!launched.size && elapsed >= initialDelay) nextCluster();
+    if (launched.has('C3') && elapsed >= nextSpam) {
       spawnRandom();
       const minimum = narrow() ? 1800 : 1100;
       nextSpam = elapsed + Math.max(minimum, 4800 - elapsed / 70 - interactions * 85) + Math.random() * 700;
