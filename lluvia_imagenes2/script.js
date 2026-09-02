@@ -35,9 +35,29 @@
     return shuffled;
   };
 
-  const normalizeImagePath = (src) => {
+  const fallbackImage = () => FALLBACK_IMAGES[Math.floor(Math.random() * FALLBACK_IMAGES.length)];
+
+  const picsumUrlFromCachePath = (src) => {
+    const fileName = src.split('/').pop() || '';
+    const idMatch = fileName.match(/^picsum_0*(\d+)_(\d+)x(\d+)\.jpe?g$/i);
+    if (idMatch) {
+      return `https://picsum.photos/id/${idMatch[1]}/${idMatch[2]}/${idMatch[3]}`;
+    }
+
+    const seedMatch = fileName.match(/^picsum_seed-([^_]+)_(\d+)x(\d+)\.jpe?g$/i);
+    if (seedMatch) {
+      return `https://picsum.photos/seed/${encodeURIComponent(seedMatch[1])}/${seedMatch[2]}/${seedMatch[3]}`;
+    }
+
+    return null;
+  };
+
+  const normalizeImagePath = (src, source = '') => {
     if (typeof src !== 'string' || !src.trim()) return null;
     const clean = src.trim();
+    const remotePicsumUrl = source.includes('picsum.photos') ? picsumUrlFromCachePath(clean) : null;
+
+    if (remotePicsumUrl) return remotePicsumUrl;
 
     if (clean.startsWith('./assets/')) return `../${clean.slice(2)}`;
     if (clean.startsWith('assets/')) return `../${clean}`;
@@ -52,7 +72,7 @@
 
       const manifest = await response.json();
       const localImages = Array.isArray(manifest.images)
-        ? manifest.images.map(normalizeImagePath).filter(Boolean)
+        ? manifest.images.map((src) => normalizeImagePath(src, manifest.source || '')).filter(Boolean)
         : [];
 
       return localImages.length ? shuffle(localImages) : null;
@@ -110,6 +130,10 @@
     drop.decoding = 'async';
     drop.loading = 'eager';
     drop.draggable = false;
+    drop.onerror = () => {
+      drop.onerror = null;
+      drop.src = fallbackImage();
+    };
     drop.style.setProperty('--w', `${baseSize.toFixed(0)}px`);
     drop.style.setProperty('--h', `${(baseSize * ratio).toFixed(0)}px`);
     drop.style.setProperty('--x-start', `${x.toFixed(2)}vw`);
