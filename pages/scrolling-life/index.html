@@ -1,78 +1,20 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Scrolling Life</title>
-    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
-    <link rel="preconnect" href="https://www.tiktok.com" crossorigin />
-    <link rel="preconnect" href="https://www.tiktokcdn.com" crossorigin />
-    <link rel="preconnect" href="https://unavatar.io" crossorigin />
-    <link rel="dns-prefetch" href="https://www.tiktok.com" />
-    <link rel="dns-prefetch" href="https://www.tiktokcdn.com" />
-    <link rel="dns-prefetch" href="https://unavatar.io" />
-    <link rel="preload" as="image" href="./img/neutral.png" />
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      html,
-      body {
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        background: #0a0a0a;
-      }
-      #phone-shell {
-        position: fixed;
-        inset: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: radial-gradient(ellipse at center, #151515 0%, #050505 72%);
-      }
-      #phone-stage {
-        position: relative;
-        width: 1080px;
-        height: 1920px;
-        flex-shrink: 0;
-        overflow: hidden;
-        background: #000;
-        border-radius: 36px;
-        transform-origin: center center;
-        --ui-scale: 2.51;
-        box-shadow:
-          0 0 0 2px #252528,
-          0 0 0 5px #111,
-          inset 0 0 0 1px rgba(255, 255, 255, 0.06),
-          0 28px 80px rgba(0, 0, 0, 0.85);
-      }
-      #phone-stage::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 50%;
-        z-index: 12;
-        width: 210px;
-        height: 32px;
-        transform: translateX(-50%);
-        border-radius: 0 0 20px 20px;
-        background: #000;
-        pointer-events: none;
-      }
-      #phone-stage canvas {
-        display: block;
-        position: absolute;
-        inset: 0;
-        width: 100% !important;
-        height: 100% !important;
-      }
-    </style>
-    <script type="module" crossorigin src="./assets/index-runtime-fix.js"></script>
-  </head>
-  <body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="refresh" content="0; url=../npc/" />
+  <link rel="canonical" href="../npc/" />
+  <title>Redirigiendo - NPC</title>
+  <script src="../../assets/scripts/maintenance-gate.js" defer></script>
+</head>
+<body>
+  <p>Redirigiendo a <a href="../npc/">NPC</a>.</p>
+  <script>window.location.replace('../npc/');</script>
 
-  </body>
+  <!-- Cloudflare Web Analytics -->
+  <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "4ae4ff73465943b788027815f6676ab3"}'></script>
+  <!-- End Cloudflare Web Analytics -->
+  <script src="/assets/scripts/traffic-tracker.js" defer></script>
+</body>
 </html>
