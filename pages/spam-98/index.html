@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#c0c0c0">
+  <title>AAAAAAAAAAAA.txt - Scrolling Life</title>
+  <meta name="description" content="Una pieza de Carmen y Javi. Publicidad, ventanas y recorridos que se acumulan en un escritorio de 1998.">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./assets.js" defer></script>
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <main id="desktop" aria-label="Escritorio AAAAAAAAAAAA.txt">
+    <img class="wallpaper" src="./assets/AAAAAAAAAAAA.txt/INICIO/inicio.jpg" alt="Escritorio original de la pieza, con un cielo de nubes y Windows Media Player" draggable="false">
+    <div class="desktop-label">
+      <h1>AAAAAAAAAAAA.txt</h1>
+      <span>Carmen + Javi</span>
+    </div>
+    <nav class="desktop-shortcuts" aria-label="Accesos del escritorio">
+      <button class="shortcut" data-desktop="internet" type="button"><img src="./icons/globe.svg" alt=""><span>Internet</span></button>
+      <button class="shortcut" data-desktop="inbox" type="button"><img src="./icons/mail.svg" alt=""><span>Bandeja de entrada</span></button>
+      <button class="shortcut" data-desktop="trash" type="button"><img src="./icons/trash-2.svg" alt=""><span>Papelera</span></button>
+    </nav>
+    <div id="windows" aria-label="Ventanas abiertas"></div>
+    <div id="paused" class="pause-indicator" hidden>En pausa</div>
+  </main>
+
+  <nav id="start-menu" class="start-menu raised" aria-label="Inicio" hidden>
+    <div class="start-banner" aria-hidden="true">Scrolling<span>98</span></div>
+    <div class="start-entries">
+      <button data-command="inbox" type="button"><img src="./icons/mail.svg" alt="">Bandeja de entrada</button>
+      <button data-command="restart" type="button"><img src="./icons/rotate-ccw.svg" alt="">Reiniciar</button>
+      <button data-command="finish" type="button"><img src="./icons/file-text.svg" alt="">Finalizar sesi&oacute;n</button>
+      <a href="../ruido/"><img src="./icons/log-out.svg" alt="">Volver a Ruido</a>
+    </div>
+  </nav>
+
+  <footer class="taskbar">
+    <button id="start" class="start-button raised" type="button" aria-expanded="false" aria-controls="start-menu"><img src="./icons/panels-top-left.svg" alt=""><b>Inicio</b></button>
+    <div class="taskbar-divider"></div>
+    <button id="session" class="session-button sunken" type="button" title="Traer la ventana activa al frente"><img src="./icons/file-text.svg" alt=""><span>AAAAAAAAAAAA.txt</span></button>
+    <div id="window-tabs" class="window-tabs" aria-label="Cambiar de ventana"></div>
+    <div class="system-tray sunken">
+      <span id="window-count" aria-label="Ventanas abiertas">00</span>
+      <button id="sound" class="tray-button" type="button" title="Activar sonido" aria-label="Activar sonido" aria-pressed="false"><img src="./icons/volume-x.svg" alt=""></button>
+      <button id="pause" class="tray-button" type="button" title="Pausar" aria-label="Pausar" aria-pressed="false"><img src="./icons/pause.svg" alt=""></button>
+      <time id="clock">00:00</time>
+    </div>
+  </footer>
+  <p id="status" class="sr-only" role="status"></p>
+  <noscript><p class="noscript raised">Esta pieza necesita JavaScript. <a href="../ruido/">Volver a Ruido</a></p></noscript>
+</body>
+</html>
