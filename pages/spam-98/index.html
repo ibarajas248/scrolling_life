@@ -3,49 +3,112 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#c0c0c0">
+  <meta name="theme-color" content="#ffffff">
   <title>AAAAAAAAAAAA.txt - Scrolling Life</title>
-  <meta name="description" content="Una pieza de Carmen y Javi. Publicidad, ventanas y recorridos que se acumulan en un escritorio de 1998.">
-  <link rel="stylesheet" href="./styles.css">
+  <meta name="description" content="Una pieza de Carmen y Javi. Una pagina web de 1998 invadida por publicidad, ventanas y recorridos.">
+  <link rel="stylesheet" href="./styles.css?v=20260902-web">
   <script src="./assets.js" defer></script>
-  <script src="./app.js" defer></script>
+  <script src="./app.js?v=20260902-web" defer></script>
 </head>
 <body>
-  <main id="desktop" aria-label="Escritorio AAAAAAAAAAAA.txt">
-    <img class="wallpaper" src="./assets/AAAAAAAAAAAA.txt/INICIO/inicio.jpg" alt="Escritorio original de la pieza, con un cielo de nubes y Windows Media Player" draggable="false">
-    <div class="desktop-label">
-      <h1>AAAAAAAAAAAA.txt</h1>
-      <span>Carmen + Javi</span>
+  <main id="popup-stage" aria-label="Pagina web AAAAAAAAAAAA.txt">
+    <div class="retro-page">
+      <div class="web-strip"><span>WORLD WIDE WEB</span><span>online desde 1998</span></div>
+      <div class="homepage">
+        <header class="web-heading">
+          <p class="welcome-line">* * * WELCOME TO MY HOMEPAGE * * *</p>
+          <h1>AAAAAAAAAAAA.txt</h1>
+          <p class="web-byline">LA P&Aacute;GINA DE CARMEN + JAVI</p>
+          <nav class="web-nav" aria-label="Enlaces de la pagina">
+            <button type="button" data-web="internet">[ inicio ]</button>
+            <button type="button" data-web="inbox">[ novedades ]</button>
+            <button type="button" data-web="inbox">[ descargas GRATIS ]</button>
+            <button type="button" data-web="burst">[ libro de visitas ]</button>
+          </nav>
+        </header>
+        <button class="ticker" type="button" data-web="burst"><span>!!! ENHORABUENA !!! HAS SIDO SELECCIONADO !!! TU PREMIO TE EST&Aacute; ESPERANDO !!! ENHORABUENA !!! HAS SIDO SELECCIONADO !!!</span></button>
+
+        <div class="web-columns">
+          <aside class="directory">
+            <h2>DIRECTORIO</h2>
+            <nav aria-label="Directorio web">
+              <button type="button" data-web="internet">Lo &uacute;ltimo <b class="new-label">NEW!</b></button>
+              <button type="button" data-web="inbox">M&uacute;sica gratis</button>
+              <button type="button" data-web="internet">Juegos online</button>
+              <button type="button" data-web="burst">Gana un premio</button>
+              <button type="button" data-web="inbox">Enlaces favoritos</button>
+              <button type="button" data-web="burst">No hagas clic aqu&iacute;</button>
+            </nav>
+            <hr>
+            <p class="visitor-label">Eres el visitante</p>
+            <button class="visitor-counter" type="button" data-web="burst" aria-label="Visitante 000100000, reclamar premio">000100000</button>
+            <p class="visitor-note">&iexcl;Gracias por tu visita!</p>
+            <hr>
+            <button class="web-badge" type="button" data-web="internet"><img src="./icons/globe.svg" alt=""><span>BEST VIEWED<br><b>ON THE INTERNET</b></span></button>
+            <p class="construction">UNDER<br>CONSTRUCTION</p>
+          </aside>
+
+          <section class="web-main" aria-labelledby="welcome-title">
+            <h2 id="welcome-title">&iexcl;Bienvenido a mi p&aacute;gina web!</h2>
+            <p class="intro-copy">Has llegado al lugar correcto.<br>Tenemos algo <em>muy especial</em> para ti.</p>
+            <button class="prize-banner" type="button" data-web="burst">
+              <img src="./assets/AAAAAAAAAAAA.txt/ALEATORIO/winner/Winner.JPG" alt="WINNER! You have won a free Apple iPod!" width="235" height="106">
+              <span>RECLAMA TU PREMIO <b>&gt;&gt;</b></span>
+            </button>
+            <p class="offer-note">100% GRATIS. &iexcl;S&Iacute;, GRATIS!</p>
+            <hr>
+            <h3><span class="new-label">NEW!</span> Lo mejor de la red</h3>
+            <ul class="web-link-list">
+              <li><button type="button" data-web="internet">Esto va a cambiar tu vida...</button><small> No te lo puedes perder.</small></li>
+              <li><button type="button" data-web="inbox">Descarga tu felicidad aqu&iacute;</button><small> Sin esperas. Sin l&iacute;mites.</small></li>
+              <li><button type="button" data-web="burst">Hay alguien esperando por ti</button><small> &iquest;Todav&iacute;a sigues ah&iacute;?</small></li>
+              <li><button type="button" data-web="internet">El enlace que estabas buscando</button><small> Just one more click.</small></li>
+            </ul>
+            <hr>
+            <button class="free-banner" type="button" data-web="burst"><strong>FREE! FREE! FREE!</strong><span>TODO LO QUE QUIERES EST&Aacute; A UN CLIC</span></button>
+            <div class="guestbook"><h3>Deja tu huella en Internet</h3><button type="button" data-web="burst">&gt;&gt; Firmar el libro de visitas &lt;&lt;</button></div>
+          </section>
+
+          <aside class="sponsor-column" aria-label="Publicidad">
+            <p class="sponsor-label">PUBLICIDAD</p>
+            <button class="sponsor-image" type="button" data-web="inbox"><img src="./assets/AAAAAAAAAAAA.txt/ALEATORIO/Neverpay.JPG" alt="Never Pay For Music. Always Illegally Download." width="500" height="326"></button>
+            <button class="ad-link" type="button" data-web="inbox">&gt;&gt; DOWNLOAD NOW &lt;&lt;</button>
+            <hr>
+            <button class="sponsor-image" type="button" data-web="burst"><img src="./assets/AAAAAAAAAAAA.txt/ALEATORIO/Showgirl.gif" alt="Showgirl" width="500" height="435"></button>
+            <button class="ad-link" type="button" data-web="burst">CLICK HERE!</button>
+            <p class="sponsor-small">Este espacio podr&iacute;a ser tuyo.</p>
+            <button class="mail-link" type="button" data-web="inbox"><img src="./icons/mail.svg" alt=""> YOU HAVE MAIL!</button>
+          </aside>
+        </div>
+
+        <footer class="web-footer">
+          <p>Esta p&aacute;gina pertenece al <b>AAAAAAAAAAAA WEBRING</b></p>
+          <nav aria-label="Webring"><button type="button" data-web="internet">&lt;&lt; anterior</button><button type="button" data-web="inbox">aleatorio</button><button type="button" data-web="internet">siguiente &gt;&gt;</button></nav>
+          <p class="web-signature">Carmen + Javi &middot; Scrolling Life &middot; All your attention reserved.</p>
+        </footer>
+      </div>
     </div>
-    <nav class="desktop-shortcuts" aria-label="Accesos del escritorio">
-      <button class="shortcut" data-desktop="internet" type="button"><img src="./icons/globe.svg" alt=""><span>Internet</span></button>
-      <button class="shortcut" data-desktop="inbox" type="button"><img src="./icons/mail.svg" alt=""><span>Bandeja de entrada</span></button>
-      <button class="shortcut" data-desktop="trash" type="button"><img src="./icons/trash-2.svg" alt=""><span>Papelera</span></button>
-    </nav>
     <div id="windows" aria-label="Ventanas abiertas"></div>
     <div id="paused" class="pause-indicator" hidden>En pausa</div>
   </main>
 
-  <nav id="start-menu" class="start-menu raised" aria-label="Inicio" hidden>
-    <div class="start-banner" aria-hidden="true">Scrolling<span>98</span></div>
-    <div class="start-entries">
+  <nav id="start-menu" class="site-options" aria-label="Opciones de la pagina" hidden>
+    <div class="site-commands">
       <button data-command="inbox" type="button"><img src="./icons/mail.svg" alt="">Bandeja de entrada</button>
       <button data-command="restart" type="button"><img src="./icons/rotate-ccw.svg" alt="">Reiniciar</button>
       <button data-command="finish" type="button"><img src="./icons/file-text.svg" alt="">Finalizar sesi&oacute;n</button>
       <a href="../ruido/"><img src="./icons/log-out.svg" alt="">Volver a Ruido</a>
     </div>
+    <div id="window-tabs" class="window-tabs" aria-label="Cambiar de ventana"></div>
   </nav>
 
-  <footer class="taskbar">
-    <button id="start" class="start-button raised" type="button" aria-expanded="false" aria-controls="start-menu"><img src="./icons/panels-top-left.svg" alt=""><b>Inicio</b></button>
-    <div class="taskbar-divider"></div>
-    <button id="session" class="session-button sunken" type="button" title="Traer la ventana activa al frente"><img src="./icons/file-text.svg" alt=""><span>AAAAAAAAAAAA.txt</span></button>
-    <div id="window-tabs" class="window-tabs" aria-label="Cambiar de ventana"></div>
-    <div class="system-tray sunken">
-      <span id="window-count" aria-label="Ventanas abiertas">00</span>
+  <footer class="page-controls">
+    <a href="../ruido/" class="return-link">&lt; Scrolling Life</a>
+    <button id="start" class="text-link" type="button" aria-expanded="false" aria-controls="start-menu">Opciones</button>
+    <button id="session" class="text-link" type="button" title="Recuperar una ventana">Ventanas (<span id="window-count">00</span>)</button>
+    <div class="playback-controls">
       <button id="sound" class="tray-button" type="button" title="Activar sonido" aria-label="Activar sonido" aria-pressed="false"><img src="./icons/volume-x.svg" alt=""></button>
       <button id="pause" class="tray-button" type="button" title="Pausar" aria-label="Pausar" aria-pressed="false"><img src="./icons/pause.svg" alt=""></button>
-      <time id="clock">00:00</time>
     </div>
   </footer>
   <p id="status" class="sr-only" role="status"></p>

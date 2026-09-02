@@ -3,18 +3,18 @@
 
   const assets = window.SPAM_ASSETS;
   const $ = (selector) => document.querySelector(selector);
-  const desktop = $('#desktop');
+  const stage = $('#popup-stage');
   const layer = $('#windows');
   const windows = new Map();
   const launched = new Set();
   const completed = new Set();
   const audioCache = new Map();
   const voices = new Set();
-  const schedule = [['C1', 700], ['C2', 15000], ['C3', 32000], ['C4', 50000], ['C5', 69000], ['C6', 90000], ['C7', 110000], ['C8', 132000]];
+  const schedule = [['C1', 1800], ['C2', 15000], ['C3', 32000], ['C4', 50000], ['C5', 69000], ['C6', 90000], ['C7', 110000], ['C8', 132000]];
   const finaleAt = 210000;
   let elapsed = 0;
   let lastTick = performance.now();
-  let nextSpam = 2400;
+  let nextSpam = 3200;
   let serial = 0;
   let topZ = 0;
   let interactions = 0;
@@ -26,7 +26,7 @@
   let bag = [];
   let finalVideo;
   let videoWasPlaying = false;
-  const narrow = () => desktop.clientWidth < 600;
+  const narrow = () => stage.clientWidth < 600;
 
   function icon(name) {
     const img = document.createElement('img');
@@ -126,16 +126,16 @@
   function positionWindow(record, near) {
     // Layout dimensions stay stable while the arrival animation is scaled.
     const rect = { width: record.node.offsetWidth, height: record.node.offsetHeight };
-    const maxX = Math.max(6, desktop.clientWidth - rect.width - 6);
-    const maxY = Math.max(6, desktop.clientHeight - rect.height - 6);
+    const maxX = Math.max(6, stage.clientWidth - rect.width - 6);
+    const maxY = Math.max(6, stage.clientHeight - rect.height - 6);
     let x = near ? near.x + 24 : 12 + Math.random() * Math.max(0, maxX - 20);
     let y = near ? near.y + 24 : 38 + Math.random() * Math.max(0, maxY - 45);
     if (record.kind === 'final') {
-      x = (desktop.clientWidth - rect.width) / 2;
-      y = (desktop.clientHeight - rect.height) / 2;
+      x = (stage.clientWidth - rect.width) / 2;
+      y = (stage.clientHeight - rect.height) / 2;
     } else if (record.cluster === 'C1' && record.step === 0) {
-      x = desktop.clientWidth * .2;
-      y = desktop.clientHeight * .16;
+      x = stage.clientWidth * .2;
+      y = stage.clientHeight * .16;
     }
     record.node.style.left = `${Math.max(6, Math.min(maxX, x))}px`;
     record.node.style.top = `${Math.max(6, Math.min(maxY, y))}px`;
@@ -153,8 +153,8 @@
     });
     handle.addEventListener('pointermove', (event) => {
       if (!drag) return;
-      record.node.style.left = `${Math.max(0, Math.min(desktop.clientWidth - record.node.offsetWidth, event.clientX - drag.x))}px`;
-      record.node.style.top = `${Math.max(0, Math.min(desktop.clientHeight - record.node.offsetHeight, event.clientY - drag.y))}px`;
+      record.node.style.left = `${Math.max(0, Math.min(stage.clientWidth - record.node.offsetWidth, event.clientX - drag.x))}px`;
+      record.node.style.top = `${Math.max(0, Math.min(stage.clientHeight - record.node.offsetHeight, event.clientY - drag.y))}px`;
     });
     const endDrag = () => { drag = null; };
     handle.addEventListener('pointerup', endDrag);
@@ -179,10 +179,10 @@
     if (record.cluster) { node.dataset.cluster = record.cluster; node.dataset.step = record.step; }
     node.dataset.asset = item.id || item.title;
     const naturalWidth = Math.min(item.width || 400, 490);
-    const maxHeight = desktop.clientHeight - 125;
+    const maxHeight = stage.clientHeight - 125;
     const scaledWidth = item.height ? Math.min(naturalWidth, maxHeight * item.width / item.height) : naturalWidth;
     const width = record.kind === 'final' ? 760 : Math.max(200, scaledWidth);
-    node.style.width = `${Math.min(width + 8, desktop.clientWidth - 18)}px`;
+    node.style.width = `${Math.min(width + 8, stage.clientWidth - 18)}px`;
 
     const titlebar = document.createElement('div');
     titlebar.className = 'titlebar';
@@ -230,7 +230,10 @@
     connection.textContent = record.kind === 'final' ? 'Fin' : '56 Kbps';
     status.append(message, connection);
     node.append(status);
-    const tab = button(item.title, 'app-window', () => focusWindow(record, true), 'window-tab raised');
+    const tab = button(item.title, 'app-window', () => {
+      setMenu(false);
+      focusWindow(record, true);
+    }, 'window-tab');
     const tabTitle = document.createElement('span');
     tabTitle.textContent = item.title;
     tab.append(tabTitle);
@@ -386,7 +389,7 @@
     completed.clear();
     elapsed = 0;
     interactions = 0;
-    nextSpam = 2400;
+    nextSpam = 3200;
     topZ = 0;
     bag = [];
     mode = 'running';
@@ -442,9 +445,9 @@
       else togglePause();
     }
   });
-  document.querySelectorAll('[data-desktop]').forEach((node) => node.addEventListener('click', () => {
-    if (node.dataset.desktop === 'internet') nextCluster();
-    else inbox(node.dataset.desktop === 'trash' ? 4 : 3);
+  document.querySelectorAll('[data-web]').forEach((node) => node.addEventListener('click', () => {
+    if (node.dataset.web === 'internet') nextCluster();
+    else inbox(node.dataset.web === 'burst' ? 4 : 3);
   }));
   document.querySelectorAll('[data-command]').forEach((node) => node.addEventListener('click', () => {
     setMenu(false);
@@ -475,7 +478,6 @@
     const now = performance.now();
     const delta = Math.min(now - lastTick, 1000);
     lastTick = now;
-    $('#clock').textContent = new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
     if (mode !== 'running' || document.hidden || !$('#start-menu').hidden) return;
     elapsed += delta;
     for (const [id, at] of schedule) if (elapsed >= at) launchCluster(id);

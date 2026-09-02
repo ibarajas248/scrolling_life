@@ -9,7 +9,10 @@ Ruta: `/pages/spam-98/`. HTML, CSS y JavaScript estaticos, sin compilacion.
 `AAAAAAAAAAAA.txt-20260902T172055Z-1-001.zip`. Los archivos URL.txt son datos:
 solo sus enlaces HTTPS forman parte de la pieza. No se ejecuta contenido del ZIP.
 
-- INICIO: imagen de fondo persistente.
+- INICIO: imagen original conservada como fuente, sin mostrarse como fondo.
+  A peticion del usuario, el fondo es una pagina web HTML de 1998, con enlaces
+  subrayados, publicidad, GIF, contador de visitas y un directorio. Los anuncios
+  y enlaces de esta pagina disparan nuevos pop-ups.
 - C1-C8: cada imagen avanza a la siguiente subcarpeta al pulsarla o cerrarla.
   C6 -Mid- aparece al completar cuatro clusters o a los 90 segundos.
 - ALEATORIO: 32 ventanas independientes, barajadas sin repeticion hasta agotar
@@ -25,13 +28,13 @@ solo sus enlaces HTTPS forman parte de la pieza. No se ejecuta contenido del ZIP
 Las apariciones programadas estan en `schedule`, en `app.js`. Los clusters
 tambien se encadenan al completar sus recorridos. Las ventanas aleatorias
 aceleran con el tiempo y las interacciones. Cerrar o pulsar provoca nuevas
-apariciones. Las ventanas se arrastran, minimizan y maximizan; la barra de
-tareas permite recuperarlas. Los botones dibujados en los assets forman parte
-de una superficie interactiva que avanza el recorrido.
+apariciones. Las ventanas se arrastran, minimizan y maximizan; el menu Opciones
+de la pagina permite recuperarlas. Los botones dibujados en los assets forman
+parte de una superficie interactiva que avanza el recorrido.
 
 El final aparece al completar los ocho clusters o a los 210 segundos de
 actividad visible. Este limite y el ritmo son decisiones de esta primera
-version, no indicaciones incluidas en el ZIP. Inicio > Finalizar sesion permite
+version, no indicaciones incluidas en el ZIP. Opciones > Finalizar sesion permite
 ver el final directamente. Reiniciar limpia ventanas y recorridos.
 
 La barra inferior mantiene sonido, pausa y salida accesibles. Escape pausa
