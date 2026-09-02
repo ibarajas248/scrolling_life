@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#09070b" />
+  <meta name="description" content="game_scroll: una huida pixelada por una escalera infinita de residuos digitales." />
+  <title>game_scroll - Scrolling Life</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <script src="../../assets/scripts/maintenance-gate.js" defer></script>
+  <script src="./audio.js" defer></script>
+  <script src="./game.js" defer></script>
+</head>
+<body>
+  <main class="experience" aria-labelledby="experienceTitle">
+    <header class="site-mark" aria-label="Identidad de la experiencia">
+      <span class="site-mark__brand">Scrolling Life</span>
+      <span class="site-mark__signal" aria-hidden="true"></span>
+      <span class="site-mark__name">game_scroll</span>
+    </header>
+
+    <section class="game-frame" aria-label="game_scroll">
+      <canvas
+        id="gameCanvas"
+        width="480"
+        height="640"
+        tabindex="0"
+        aria-label="Juego de descenso. Muévete con las flechas o A y D; usa Shift o Espacio para activar el impulso."
+      ></canvas>
+
+      <div class="screen-texture" aria-hidden="true"></div>
+
+      <div class="hud" id="hud" aria-live="polite">
+        <div class="hud__cluster hud__cluster--metrics">
+          <div class="hud-metric">
+            <span>Profundidad</span>
+            <strong id="depthLabel">0000 m</strong>
+          </div>
+          <div class="hud-metric">
+            <span>Mejor descenso</span>
+            <strong id="bestLabel">0000 m</strong>
+          </div>
+        </div>
+
+        <div class="hud__actions">
+          <button class="icon-button" id="soundButton" type="button" aria-label="Activar sonido" aria-pressed="false">
+            <span id="soundIcon" aria-hidden="true">◌</span>
+            <span class="icon-button__label">Sonido</span>
+          </button>
+          <button class="icon-button" id="pauseButton" type="button" aria-label="Pausar partida">
+            <span aria-hidden="true">Ⅱ</span>
+            <span class="icon-button__label">Pausa</span>
+          </button>
+        </div>
+
+        <div class="hud__cluster hud__cluster--meters">
+          <div class="meter-card monster-meter" id="monsterMeter">
+            <div class="meter-card__heading">
+              <span>Distancia del monstruo</span>
+              <strong id="leadLabel">Estable</strong>
+            </div>
+            <div class="distance-track" aria-hidden="true">
+              <span class="distance-track__monster">▣</span>
+              <span class="distance-track__line"><i id="distanceFill"></i></span>
+              <span class="distance-track__runner">◆</span>
+            </div>
+          </div>
+
+          <div class="meter-card energy-meter">
+            <div class="meter-card__heading">
+              <span>Energía de impulso</span>
+              <strong id="energyLabel">100%</strong>
+            </div>
+            <div class="energy-track" aria-hidden="true"><i id="energyFill"></i></div>
+          </div>
+        </div>
+
+        <p class="event-caption" id="statusLabel">La escalera espera.</p>
+      </div>
+
+      <section class="overlay overlay--start" id="startScreen" aria-labelledby="experienceTitle">
+        <div class="overlay-card overlay-card--start">
+          <p class="kicker">Cuerpo / Experiencia interactiva</p>
+          <h1 id="experienceTitle">game_<br />scroll</h1>
+          <p class="lead-copy">
+            Desciende. Evita los residuos del feed.<br />
+            No dejes que el scroll te alcance.
+          </p>
+          <button class="primary-button" id="startButton" type="button">Jugar</button>
+          <div class="control-guide" aria-label="Controles del juego">
+            <p><span>← → / A D</span> moverse</p>
+            <p><span>Shift / Espacio</span> impulso</p>
+            <p><span>Esc</span> pausa</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="overlay" id="pauseScreen" hidden aria-labelledby="pauseTitle">
+        <div class="overlay-card overlay-card--compact">
+          <p class="kicker">La imagen se detuvo</p>
+          <h2 id="pauseTitle">Pausa</h2>
+          <p>El monstruo también espera.</p>
+          <div class="button-row">
+            <button class="primary-button" id="resumeButton" type="button">Continuar</button>
+            <button class="secondary-button" id="pauseExitButton" type="button">Volver al inicio</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="overlay" id="gameOverScreen" hidden aria-labelledby="gameOverTitle">
+        <div class="overlay-card overlay-card--game-over">
+          <p class="kicker">Fin de la bajada</p>
+          <h2 id="gameOverTitle">Te alcanzó<br />el scroll</h2>
+          <p class="final-phrase" id="gameOverPhrase">Nunca existió el último contenido.</p>
+          <dl class="final-stats">
+            <div><dt>Profundidad alcanzada</dt><dd id="finalDepth">0000 m</dd></div>
+            <div><dt>Mejor descenso</dt><dd id="finalBest">0000 m</dd></div>
+          </dl>
+          <div class="button-row">
+            <button class="primary-button" id="restartButton" type="button">Volver a bajar</button>
+            <a class="secondary-button" href="../../">Salir</a>
+          </div>
+        </div>
+      </section>
+
+      <div class="touch-controls" id="touchControls" aria-label="Controles táctiles">
+        <button class="touch-button" id="leftButton" type="button" aria-label="Mover a la izquierda">
+          <span aria-hidden="true">←</span><small>Izquierda</small>
+        </button>
+        <button class="touch-button touch-button--dash" id="dashButton" type="button" aria-label="Usar impulso">
+          <span aria-hidden="true">◆</span><small>Impulso</small>
+        </button>
+        <button class="touch-button" id="rightButton" type="button" aria-label="Mover a la derecha">
+          <span aria-hidden="true">→</span><small>Derecha</small>
+        </button>
+      </div>
+    </section>
+
+    <footer class="experience-note">
+      <span>Desciende para escapar</span>
+      <span aria-hidden="true">↓</span>
+      <span>Desciende para alimentar</span>
+    </footer>
+  </main>
+
+  <!-- Cloudflare Web Analytics -->
+  <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "4ae4ff73465943b788027815f6676ab3"}'></script>
+  <!-- End Cloudflare Web Analytics -->
+  <script src="/assets/scripts/traffic-tracker.js" defer></script>
+</body>
+</html>

@@ -83,6 +83,52 @@
       margin-bottom: 1.5rem;
     }
 
+    .annex-link {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1rem;
+      align-items: center;
+      margin: 2rem 0;
+      padding: 1rem;
+      border: 1px solid rgba(82, 224, 255, 0.35);
+      border-radius: 8px;
+      background: rgba(82, 224, 255, 0.07);
+      color: var(--ink);
+      text-decoration: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .annex-link:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 18px rgba(82, 224, 255, 0.18);
+      transform: translateY(-1px);
+    }
+
+    .annex-link__icon {
+      display: grid;
+      place-items: center;
+      width: 2.75rem;
+      height: 2.75rem;
+      border: 1px solid var(--accent);
+      border-radius: 6px;
+      color: var(--accent);
+      font-family: var(--font-mono);
+      font-size: 1.35rem;
+    }
+
+    .annex-link__label {
+      display: block;
+      font-family: var(--font-mono);
+      color: var(--accent);
+      font-size: 0.95rem;
+    }
+
+    .annex-link__caption {
+      display: block;
+      margin-top: 0.25rem;
+      color: var(--muted);
+    }
+
     .back-link {
       display: inline-block;
       margin-top: 3rem;
@@ -117,6 +163,14 @@
       <p>Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque faucibus vestibulum.</p>
       
       <p>Nulla at nulla justo, eget luctus tortor. Nulla facilisi. Duis aliquet egestas purus in blandit. Curabitur vulputate, ligula lacinia scelerisque tempor, lacus lacus ornare ante, ac egestas est urna sit amet arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+
+      <a class="annex-link" href="../game_scroll/" aria-label="Abrir game_scroll, experiencia interactiva anexada a Cuerpo">
+        <span class="annex-link__icon" aria-hidden="true">▣</span>
+        <span>
+          <span class="annex-link__label">game_scroll</span>
+          <span class="annex-link__caption">experiencia interactiva anexada a Cuerpo</span>
+        </span>
+      </a>
       
       <p>Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing, commodo quis, gravida id, est. Sed lectus. Praesent elementum hendrerit tortor. Sed semper lorem at felis. Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl.</p>
     </div>

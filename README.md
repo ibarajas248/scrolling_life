@@ -17,7 +17,7 @@ Proyecto web de net art sobre el scroll como gesto cultural, archivo visual y ma
 ## Rutas
 
 - `pages/scroll-vertical/`
-- `pages/sala-3d/`
+- `pages/game_scroll/`
 - `pages/ruido/`
 - `pages/ruido/comentarios-instagram/`
 - `pages/fantasmagorias/`
