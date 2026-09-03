@@ -11,23 +11,28 @@
       background: #020304;
       color: #f7f8fb;
       font-family: 'Bricolage Grotesque', sans-serif;
-      padding: 40px 20px;
+      min-height: 100vh;
+      padding: 0;
       line-height: 1.6;
+      overflow-x: hidden;
     }
     .content-container {
-      max-width: 800px;
+      max-width: 1180px;
       margin: 0 auto;
+      padding: 28px 20px 56px;
     }
     h1 {
       font-family: 'Disket Mono', monospace;
-      font-size: 3rem;
+      font-size: clamp(2.7rem, 7vw, 4.7rem);
       margin-bottom: 0.5rem;
       color: #9eff71;
+      letter-spacing: 0;
+      text-transform: uppercase;
     }
     .author-meta {
       font-family: 'Share Tech Mono', monospace;
       color: #a8b0c0;
-      margin-bottom: 2rem;
+      margin-bottom: 1.75rem;
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
@@ -39,39 +44,262 @@
     }
     .back-link {
       display: inline-block;
-      margin-top: 2rem;
       font-family: 'Share Tech Mono', monospace;
-      color: #ee7d59;
+      color: #f7f8fb;
       text-decoration: none;
-      border: 1px solid #ee7d59;
-      padding: 8px 16px;
-      border-radius: 4px;
-      transition: all 0.3s ease;
+      border: 1px solid rgba(238, 125, 89, 0.78);
+      padding: 11px 16px;
+      border-radius: 0;
+      transition: color 0.25s ease, background 0.25s ease, transform 0.25s ease;
     }
     .back-link:hover {
       background: rgba(238, 125, 89, 0.2);
+      color: #ee7d59;
+      transform: translateY(-2px);
     }
     .archive-subpages {
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-      flex-wrap: wrap;
-      margin-top: 3rem;
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      grid-template-rows: repeat(8, 64px);
+      gap: 0;
+      min-height: 560px;
+      margin-top: 3.5rem;
+      border: 1px solid rgba(216, 231, 239, 0.2);
+      background:
+        radial-gradient(circle at 18% 31%, rgba(158, 255, 113, 0.16), transparent 20%),
+        radial-gradient(circle at 76% 68%, rgba(128, 233, 255, 0.12), transparent 22%),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.035), transparent 30% 70%, rgba(238, 125, 89, 0.05)),
+        #020304;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.035), 0 24px 80px rgba(0, 0, 0, 0.44);
+      overflow: hidden;
+      isolation: isolate;
     }
-    .archive-subpage-link {
-      display: inline-block;
-      padding: 12px 24px;
-      background: #9eff71;
-      color: #020304;
-      text-decoration: none;
-      font-weight: bold;
+    .archive-subpages::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 22% 38%, rgba(158, 255, 113, 0.12), transparent 28%),
+        radial-gradient(circle at 77% 49%, rgba(128, 233, 255, 0.1), transparent 26%);
+      opacity: 0.72;
+      z-index: 0;
+    }
+    .circuit-traces {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .circuit-traces path {
+      fill: none;
+      stroke-linecap: square;
+      stroke-linejoin: miter;
+      vector-effect: non-scaling-stroke;
+    }
+    .circuit-trace {
+      stroke: rgba(247, 248, 251, 0.68);
+      stroke-width: 2;
+      filter: drop-shadow(0 0 6px rgba(247, 248, 251, 0.28));
+    }
+    .circuit-trace--hot {
+      stroke: rgba(158, 255, 113, 0.9);
+      stroke-width: 1.35;
+      filter: drop-shadow(0 0 8px rgba(158, 255, 113, 0.5));
+    }
+    .circuit-trace--blue {
+      stroke: rgba(128, 233, 255, 0.82);
+      stroke-width: 1.35;
+      filter: drop-shadow(0 0 8px rgba(128, 233, 255, 0.42));
+    }
+    .circuit-trace--red {
+      stroke: rgba(238, 125, 89, 0.82);
+      stroke-width: 1.35;
+      filter: drop-shadow(0 0 8px rgba(238, 125, 89, 0.42));
+    }
+    .circuit-pad {
+      fill: #020304;
+      stroke: rgba(247, 248, 251, 0.8);
+      stroke-width: 1.4;
+      filter: drop-shadow(0 0 5px rgba(247, 248, 251, 0.22));
+    }
+    .circuit-pad--hot {
+      fill: #9eff71;
+      stroke: #9eff71;
+      filter: drop-shadow(0 0 9px rgba(158, 255, 113, 0.68));
+    }
+    .circuit-pad--blue {
+      fill: #80e9ff;
+      stroke: #80e9ff;
+      filter: drop-shadow(0 0 9px rgba(128, 233, 255, 0.62));
+    }
+    .circuit-pad--red {
+      fill: #ee7d59;
+      stroke: #ee7d59;
+      filter: drop-shadow(0 0 9px rgba(238, 125, 89, 0.62));
+    }
+    .circuit-chip {
+      fill: rgba(2, 3, 4, 0.68);
+      stroke: rgba(216, 231, 239, 0.28);
+      stroke-width: 1;
+    }
+    .graph-label {
+      position: absolute;
+      left: 24px;
+      top: 18px;
       font-family: 'Share Tech Mono', monospace;
-      border-radius: 4px;
-      transition: opacity 0.3s ease, background 0.3s ease;
+      color: rgba(216, 231, 239, 0.72);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      z-index: 3;
     }
-    .archive-subpage-link:hover,
-    .archive-subpage-link:focus {
-      background: #80e9ff;
+    .graph-status {
+      position: absolute;
+      right: 18px;
+      bottom: 18px;
+      max-width: min(280px, calc(100% - 36px));
+      border: 1px solid rgba(158, 255, 113, 0.58);
+      padding: 14px 16px;
+      font-family: 'Share Tech Mono', monospace;
+      color: rgba(216, 231, 239, 0.86);
+      background: rgba(2, 3, 4, 0.82);
+      z-index: 3;
+    }
+    .graph-status strong {
+      display: block;
+      color: #9eff71;
+      font-weight: 400;
+      margin-bottom: 0.25rem;
+    }
+    .archive-node {
+      --node-color: #9eff71;
+      position: relative;
+      display: flex;
+      grid-column: var(--col);
+      grid-row: var(--row);
+      align-self: center;
+      min-height: 118px;
+      padding: 18px 20px 16px;
+      flex-direction: column;
+      justify-content: center;
+      color: #f7f8fb;
+      text-decoration: none;
+      font-family: 'Share Tech Mono', monospace;
+      border: 1px solid rgba(247, 248, 251, 0.72);
+      background: rgba(2, 3, 4, 0.88);
+      box-shadow: 0 0 0 1px rgba(2, 3, 4, 0.8), 0 0 28px rgba(0, 0, 0, 0.42);
+      transition: border-color 0.25s ease, box-shadow 0.25s ease, color 0.25s ease, transform 0.25s ease;
+      z-index: 2;
+    }
+    .archive-node::before,
+    .archive-node::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 13px;
+      height: 13px;
+      border: 2px solid currentColor;
+      background: #020304;
+      transform: translateY(-50%);
+    }
+    .archive-node::before {
+      left: -8px;
+    }
+    .archive-node::after {
+      right: -8px;
+      background: var(--node-color);
+      box-shadow: 0 0 18px var(--node-color);
+    }
+    .archive-node:hover,
+    .archive-node:focus {
+      color: var(--node-color);
+      border-color: var(--node-color);
+      box-shadow: 0 0 0 1px var(--node-color), 0 0 34px rgba(158, 255, 113, 0.22);
+      transform: translateY(-4px);
+      outline: none;
+    }
+    .archive-node__code {
+      color: var(--node-color);
+      font-size: 0.8rem;
+      margin-bottom: 0.9rem;
+    }
+    .archive-node__title {
+      font-size: clamp(1rem, 1.8vw, 1.35rem);
+      line-height: 1.15;
+    }
+    .archive-node__meta {
+      margin-top: 1rem;
+      color: rgba(216, 231, 239, 0.58);
+      font-size: 0.78rem;
+    }
+    .archive-node--a {
+      --col: 2 / span 3;
+      --row: 2 / span 2;
+    }
+    .archive-node--b {
+      --node-color: #80e9ff;
+      --col: 7 / span 3;
+      --row: 3 / span 2;
+    }
+    .archive-node--c {
+      --node-color: #9eff71;
+      --col: 3 / span 3;
+      --row: 6 / span 2;
+    }
+    .archive-node--d {
+      --node-color: #ee7d59;
+      --col: 8 / span 3;
+      --row: 6 / span 2;
+    }
+    .archive-node--e {
+      --node-color: #d4a7ff;
+      --col: 10 / span 2;
+      --row: 1 / span 2;
+      min-height: 96px;
+    }
+    .archive-home {
+      position: absolute;
+      left: 18px;
+      bottom: 18px;
+      margin: 0;
+      background: rgba(2, 3, 4, 0.9);
+      z-index: 3;
+    }
+    @media (max-width: 860px) {
+      .content-container {
+        padding-top: 28px;
+      }
+      .archive-subpages {
+        display: flex;
+        min-height: auto;
+        flex-direction: column;
+        gap: 18px;
+        padding: 86px 18px 180px;
+      }
+      .archive-subpages::before {
+        inset: 0;
+      }
+      .circuit-traces {
+        opacity: 0.72;
+      }
+      .archive-node {
+        width: min(100%, 420px);
+        min-height: 104px;
+        align-self: stretch;
+      }
+      .archive-node:nth-of-type(even) {
+        align-self: flex-end;
+      }
+      .archive-home {
+        left: 18px;
+      }
+      .graph-status {
+        left: 18px;
+        right: 18px;
+      }
     }
   </style>
   <script src="../../assets/scripts/maintenance-gate.js" defer></script>
@@ -84,6 +312,64 @@
       <span>Año: 2026</span>
     </div>
 
+    <div class="archive-subpages" aria-label="Grafo navegable del archivo">
+      <span class="graph-label">Nodos / paginas conectadas</span>
+      <svg class="circuit-traces" viewBox="0 0 1200 560" preserveAspectRatio="none" aria-hidden="true">
+        <path class="circuit-trace circuit-trace--hot" d="M390 168 H470 V238 H596" />
+        <path class="circuit-trace" d="M390 196 H438 V308 H290 V380" />
+        <path class="circuit-trace circuit-trace--blue" d="M880 248 H962 V168 H1040" />
+        <path class="circuit-trace circuit-trace--red" d="M875 390 H958 V470 H1105" />
+        <path class="circuit-trace" d="M510 390 H616 V322 H700" />
+        <path class="circuit-trace circuit-trace--hot" d="M390 168 V128 H260 V96 H128" />
+        <path class="circuit-trace circuit-trace--blue" d="M880 248 V306 H1018 V338 H1142" />
+        <path class="circuit-trace circuit-trace--red" d="M510 390 V462 H410 V512 H205" />
+        <path class="circuit-trace" d="M128 504 H338 V486 H558 V512 H760" />
+        <path class="circuit-trace circuit-trace--hot" d="M1012 72 H1130 V126" />
+        <rect class="circuit-chip" x="548" y="244" width="68" height="68" />
+        <rect class="circuit-chip" x="1020" y="300" width="48" height="48" />
+        <circle class="circuit-pad circuit-pad--hot" cx="390" cy="168" r="6" />
+        <circle class="circuit-pad" cx="596" cy="238" r="6" />
+        <circle class="circuit-pad circuit-pad--blue" cx="880" cy="248" r="6" />
+        <circle class="circuit-pad circuit-pad--red" cx="875" cy="390" r="6" />
+        <circle class="circuit-pad circuit-pad--hot" cx="510" cy="390" r="6" />
+        <circle class="circuit-pad" cx="290" cy="380" r="5" />
+        <circle class="circuit-pad circuit-pad--blue" cx="1040" cy="168" r="5" />
+        <circle class="circuit-pad circuit-pad--red" cx="1105" cy="470" r="5" />
+        <circle class="circuit-pad circuit-pad--hot" cx="128" cy="96" r="5" />
+        <circle class="circuit-pad" cx="760" cy="512" r="5" />
+      </svg>
+      <a href="../../index.html" class="back-link archive-home">&lt; Menu principal</a>
+      <a href="./inteligencias-colectivas/index.html" class="archive-node archive-node--a">
+        <span class="archive-node__code">NODO 01</span>
+        <span class="archive-node__title">Inteligencias Colectivas</span>
+        <span class="archive-node__meta">archivo / texto / artistas</span>
+      </a>
+      <a href="./precipitacion-critica/" class="archive-node archive-node--b">
+        <span class="archive-node__code">NODO 02</span>
+        <span class="archive-node__title">Precipitaci&oacute;n cr&iacute;tica</span>
+        <span class="archive-node__meta">lectura / lluvia / esfera publica</span>
+      </a>
+      <a href="../scroll-vertical/" class="archive-node archive-node--c">
+        <span class="archive-node__code">NODO 03</span>
+        <span class="archive-node__title">Sedimento visual</span>
+        <span class="archive-node__meta">scroll / capas / imagen</span>
+      </a>
+      <a href="../mundo-gif/" class="archive-node archive-node--e">
+        <span class="archive-node__code">NODO 04</span>
+        <span class="archive-node__title">Mundo GIF</span>
+        <span class="archive-node__meta">bucle / imagen / ruido</span>
+      </a>
+      <a href="../../grafo_3d/" class="archive-node archive-node--d">
+        <span class="archive-node__code">NODO 05</span>
+        <span class="archive-node__title">Grafo 3D</span>
+        <span class="archive-node__meta">red / espacio / navegacion</span>
+      </a>
+      <div class="graph-status" aria-hidden="true">
+        <strong>ESTADO: OPERATIVO</strong>
+        Cada modulo abre una pagina del archivo.
+      </div>
+    </div>
+
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in odio et velit gravida viverra. Curabitur consectetur quam id felis dapibus, non interdum metus lacinia. Vivamus dignissim magna a scelerisque cursus. Aliquam in lorem non massa condimentum ultrices sit amet varius sem. Pellentesque quis libero tincidunt, faucibus felis egestas, viverra lectus. Nunc malesuada nisi risus, sed accumsan ligula tempor sit amet. In hac habitasse platea dictumst. Morbi tempor efficitur metus id vulputate.</p>
     
     <p>Maecenas id nisi eu dui pellentesque malesuada in scelerisque mi. Donec imperdiet ligula vitae erat volutpat, eget varius sapien ullamcorper. Nam varius nisl eget ex finibus vehicula. Praesent lobortis dolor nec magna fringilla commodo. Vestibulum tristique mi ut velit sollicitudin tincidunt. Suspendisse pulvinar interdum turpis, vel porta elit vulputate quis. Nulla in urna sit amet tortor volutpat ullamcorper id scelerisque velit.</p>
@@ -92,14 +378,6 @@
 
     <p>Donec consequat metus at nibh semper, ac sodales neque cursus. Praesent id augue sed enim auctor tempus. Aenean aliquet risus lectus, sed consequat ligula blandit a. Suspendisse potenti. Nam non nisl eu ex varius finibus eget sed nisi. Cras efficitur, enim ut bibendum luctus, ante purus dapibus risus, ac ullamcorper felis lectus in ex. Aenean tristique leo eu neque eleifend condimentum vel eget enim.</p>
     
-    <div class="archive-subpages">
-      <a href="./inteligencias-colectivas/index.html" class="archive-subpage-link">Inteligencias Colectivas &rarr;</a>
-      <a href="./precipitacion-critica/" class="archive-subpage-link">Precipitaci&oacute;n cr&iacute;tica &rarr;</a>
-      <a href="../scroll-vertical/" class="archive-subpage-link">Sedimento visual &rarr;</a>
-      <a href="../mundo-gif/" class="archive-subpage-link">Mundo GIF &rarr;</a>
-      <a href="../../grafo_3d/" class="archive-subpage-link">Grafo 3D &rarr;</a>
-      <a href="../../index.html" class="back-link" style="margin-top: 0;">&lt; Volver al menú principal</a>
-    </div>
   </div>
 
   <!-- Cloudflare Web Analytics -->
