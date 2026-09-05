@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ASCII - Scrolling Life</title>
+  <meta
+    name="description"
+    content="Poema visual y reflexión espacial en ASCII sobre el scroll, la velocidad y la desaparición de la imagen."
+  />
+  <link rel="stylesheet" href="../../assets/fonts/local-fonts.css" />
+  <link rel="stylesheet" href="../../assets/styles/home.css" />
+  <style>
+    :root {
+      --bg: #020304;
+      --green: #9eff71;
+      --coral: #ee7d59;
+      --teal: #5fd7df;
+      --muted: #a8b0c0;
+      --text: #d8e7ef;
+      --font-display: 'Disket Mono', monospace;
+      --font-mono: 'Share Tech Mono', 'IBM Plex Mono', 'Courier New', monospace;
+      --font-body: 'Bricolage Grotesque', sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: #f7f8fb;
+      font-family: var(--font-body);
+      padding: 40px 20px 80px;
+      line-height: 1.6;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .ascii-container {
+      width: 100%;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 2.5rem;
+      border-bottom: 1px solid rgba(231, 235, 245, 0.12);
+      padding-bottom: 1.5rem;
+    }
+
+    h1 {
+      margin: 0 0 0.5rem;
+      color: var(--green);
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 8vw, 3.2rem);
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    .author-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+    }
+
+    /* Scroll HUD / Barra de Progreso del Descenso */
+    .ascii-progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--green), var(--teal), var(--coral));
+      width: 0%;
+      z-index: 1000;
+      transition: width 0.1s ease-out;
+    }
+
+    .ascii-depth-badge {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: rgba(12, 15, 20, 0.9);
+      border: 1px solid rgba(231, 235, 245, 0.15);
+      border-radius: 4px;
+      padding: 6px 12px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--green);
+      letter-spacing: 0.08em;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+      user-select: none;
+    }
+
+    /* Lienzo ASCII con Monospace Perfecto */
+    .ascii-canvas {
+      margin: 3rem 0;
+      font-family: var(--font-mono);
+      font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+      line-height: 1.45;
+      color: var(--text);
+      white-space: pre;
+      overflow-x: auto;
+      padding: 2rem 1rem;
+      background: transparent;
+      user-select: text;
+    }
+
+    /* Resaltados Semánticos del Poema */
+    .hl-green {
+      color: var(--green);
+      font-weight: 700;
+      text-shadow: 0 0 10px rgba(158, 255, 113, 0.35);
+    }
+
+    .hl-coral {
+      color: var(--coral);
+      font-weight: 700;
+      text-shadow: 0 0 10px rgba(238, 125, 89, 0.35);
+    }
+
+    .hl-teal {
+      color: var(--teal);
+    }
+
+    .hl-dim {
+      color: rgba(168, 176, 192, 0.45);
+    }
+
+    .hl-block {
+      color: var(--green);
+      letter-spacing: -0.05em;
+      text-shadow: 0 0 12px rgba(158, 255, 113, 0.4);
+    }
+
+    /* Botones de Navegación */
+    .infinite-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(231, 235, 245, 0.12);
+    }
+
+    .back-link {
+      display: inline-block;
+      padding: 8px 16px;
+      border: 1px solid var(--coral);
+      border-radius: 4px;
+      color: var(--coral);
+      font-family: var(--font-mono);
+      text-decoration: none;
+      transition: background 0.3s ease, transform 0.2s ease;
+      font-size: 0.92rem;
+    }
+
+    .back-link:hover,
+    .back-link:focus {
+      background: rgba(238, 125, 89, 0.2);
+      transform: translateY(-1px);
+    }
+
+    .node-direct-link {
+      border-color: var(--green);
+      color: var(--green);
+    }
+
+    .node-direct-link:hover,
+    .node-direct-link:focus {
+      background: rgba(158, 255, 113, 0.18);
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 24px 16px 60px;
+      }
+      .ascii-canvas {
+        font-size: 0.82rem;
+        padding: 1rem 0;
+      }
+      .ascii-depth-badge {
+        bottom: 16px;
+        right: 16px;
+      }
+    }
+  </style>
+  <script src="../../assets/scripts/maintenance-gate.js" defer></script>
+</head>
+<body>
+
+  <!-- Barra de progreso del scroll -->
+  <div class="ascii-progress-bar" id="progressBar" aria-hidden="true"></div>
+  <div class="ascii-depth-badge" id="depthBadge" aria-live="polite">DESCENSO: 0%</div>
+
+  <div class="ascii-container">
+    <header>
+      <h1>ASCII</h1>
+      <div class="author-meta">
+        <span>Poema Visual // Descenso en Scroll</span>
+        <span>A&ntilde;o: 2026</span>
+      </div>
+    </header>
+
+    <!-- Poema en Scroll ASCII -->
+    <pre class="ascii-canvas">
+                     aparece
+                aparece
+           aparece
+      aparece
+ aparece
+
+      \
+
+        \
+
+          \
+
+            \
+
+               <span class="hl-dim">desaparece</span>
+                    <span class="hl-dim">desaparece</span>
+                         <span class="hl-dim">desaparece</span>
+                              <span class="hl-dim">desaparece</span>
+                                   <span class="hl-dim">desaparece</span>
+
+
+
+ <span class="hl-teal">ojo</span>
+  |
+  | mira
+  |      mira
+  |            mira
+  |                   mira
+  |                         <span class="hl-coral">ya no ve</span>
+  |
+  +---------------------------------------------> <span class="hl-green">velocidad</span>
+
+
+
+              imagen
+                 |
+                 v
+              imagen
+                 |
+                 v
+              imagen
+                 |
+                 v
+              imagen
+                 |
+                 v
+            [ <span class="hl-teal">intervalo</span> ]
+                 .
+                 .
+                 .
+                 .
+              <span class="hl-dim">borrado</span>
+
+
+
+     estoy
+        estoy
+           estoy
+              es-
+                toy
+                  e-
+                    ra
+                      rastro
+                         huella
+                            eco
+                               ruido
+                                  dato
+                                     <span class="hl-coral">nada</span>
+
+
+
+           <span class="hl-green">bajar</span>
+              <span class="hl-green">bajar</span>
+                 <span class="hl-green">bajar</span>
+                    <span class="hl-green">bajar</span>
+                       <span class="hl-green">bajar</span>
+                          <span class="hl-green">bajar</span>
+                             <span class="hl-green">bajar</span>
+
+                                  sin llegar
+                                       al final
+
+
+
+        una imagen aparece
+
+                 otra desaparece
+
+        una imagen aparece
+
+                 otra desaparece
+
+        una imagen aparece
+
+                 otra desaparece
+
+
+
+                 más rápido
+
+                      más rápido
+
+                           más rápido
+
+                                más rápido
+
+
+
+ mirar
+
+      mirar
+
+           mirar
+
+                mirar
+
+                     mirar
+
+                          mirar
+
+                               mirar
+
+
+
+                          <span class="hl-coral">ya no recordar</span>
+
+
+
+          presente
+             |
+             |
+             v
+
+          presente
+             |
+             |
+             v
+
+          presente
+             |
+             |
+             v
+
+          presente
+             |
+             |
+             v
+
+          <span class="hl-dim">ausencia</span>
+
+
+
+     ahora
+
+          ahora
+
+               ahora
+
+                    aho-
+
+                       ra
+
+                          a-
+
+                            h-
+
+                              .
+
+                              .
+
+                              .
+
+
+
+         la distancia
+
+              se acorta
+
+                   se acorta
+
+                        se acorta
+
+                             hasta
+
+                               <span class="hl-dim">desaparecer</span>
+
+
+
+<span class="hl-green">CUERPO</span> --------------------------------------> <span class="hl-teal">ACONTECIMIENTO</span>
+
+                     distancia
+
+
+                         espera
+
+
+                             trayecto
+
+<span class="hl-green">CUERPO</span> &lt;--------------- imagen -------------- <span class="hl-teal">ACONTECIMIENTO</span>
+
+            ya no voy
+
+            ya no llego
+
+            ya no espero
+
+
+            recibo
+
+
+
+                     imagen
+
+                          imagen
+
+                               imagen
+
+                                    imagen
+
+
+
+                     <span class="hl-coral">impacto</span>
+
+                          <span class="hl-coral">impacto</span>
+
+                               <span class="hl-coral">impacto</span>
+
+
+
+         cargar
+
+            cargar
+
+               cargar
+
+                  cargar
+
+                     cargar
+
+                        cargar
+
+                           cargar
+
+
+
+                               pero nunca
+
+                                    llegar
+
+
+
+   debajo de esta pantalla
+
+          hay otra pantalla
+
+                 debajo de esa pantalla
+
+                        hay otra pantalla
+
+                               debajo
+
+                                      otra
+
+                                          otra
+
+                                              otra
+
+
+
+<span class="hl-green">scroll</span>
+|
+v
+<span class="hl-green">scroll</span>
+|
+v
+<span class="hl-green">scroll</span>
+|
+v
+<span class="hl-green">scroll</span>
+|
+v
+<span class="hl-green">scroll</span>
+|
+v
+<span class="hl-green">scroll</span>
+|
+v
+<span class="hl-green">scroll</span>
+|
+v
+<span class="hl-green">scroll</span>
+|
+v
+<span class="hl-green">scroll</span>
+
+
+
+cada gesto
+
+    hace aparecer
+
+cada gesto
+
+    hace desaparecer
+
+cada gesto
+
+    promete otra imagen
+
+cada gesto
+
+    expulsa la anterior
+
+
+
+         notificación
+
+              miniatura
+
+                   anuncio
+
+                        video
+
+                             comentario
+
+                                  ruido
+
+                                       dato
+
+                                            resto
+
+                                                 archivo
+
+                                                      eco
+
+                                                           <span class="hl-coral">nada</span>
+
+
+
+    estoy
+
+         estoy
+
+              estoy
+
+                   est-
+
+                      oy
+
+                        e-
+
+                          ra
+
+                            rastro
+
+                              huella
+
+                                ruido
+
+                                  píxel
+
+                                    dato
+
+                                      <span class="hl-coral">nada</span>
+
+
+
+     la velocidad no corre
+
+
+     la velocidad gobierna
+
+
+
+                acelera la visión
+
+                     recorta el mundo
+
+                          borra el intervalo
+
+                               rompe la continuidad
+
+                                    reemplaza la memoria
+
+
+
+ver
+
+ver
+
+ver
+
+ver
+
+ver
+
+ver
+
+ver
+
+ver
+
+ver
+
+sin retener
+
+sin tocar
+
+sin durar
+
+
+
+          lo que cae
+
+                por la pantalla
+
+                      no cae
+
+                           al vacío
+
+
+
+          cae
+
+               a la memoria incompleta
+
+                    al archivo roto
+
+                         al fondo sin fondo
+
+                              a la parte de abajo
+
+                                   que siempre
+
+                                        se aleja
+
+
+
+más abajo
+
+ más abajo
+
+      más abajo
+
+           más abajo
+
+                más abajo
+
+                     más abajo
+
+                          más abajo
+
+                               más abajo
+
+
+
+                                     sin final
+
+
+
+     aparece
+
+            desaparece
+
+                   aparece
+
+                          desaparece
+
+                                 aparece
+
+                                        desaparece
+
+
+
+          entre una imagen
+
+                    y otra
+
+
+          hay un pequeño
+
+                    <span class="hl-coral">apagón</span>
+
+
+
+          entre una mirada
+
+                    y otra
+
+
+          algo
+
+               deja
+
+                    de
+
+                      estar
+
+
+
+[ <span class="hl-green">presencia</span> ]
+
+  |
+  |
+  v
+
+[ <span class="hl-teal">transmisión</span> ]
+
+  |
+  |
+  v
+
+[ <span class="hl-coral">velocidad</span> ]
+
+  |
+  |
+  v
+
+[ <span class="hl-dim">desaparición</span> ]
+
+
+
+<span class="hl-coral">error 404:</span>
+
+intervalo no encontrado
+
+memoria buffering...
+
+presencia buffering...
+
+conciencia buffering...
+
+
+
+<span class="hl-block">████████████████████████████████████████████</span>
+
+<span class="hl-block">██████████████████████████████</span>
+
+<span class="hl-block">██████████████████</span>
+
+<span class="hl-block">██████████</span>
+
+<span class="hl-block">█████</span>
+
+<span class="hl-block">██</span>
+
+<span class="hl-block">█</span>
+
+.
+
+.
+
+.
+
+
+
+        la pantalla no termina
+
+
+
+        <span class="hl-green">yo desaparezco</span>
+
+                 <span class="hl-coral">primero</span>
+    </pre>
+
+    <!-- Botones de Navegación idénticos a Infinito -->
+    <div class="infinite-actions">
+      <a href="../infinito/" class="back-link node-direct-link">Abrir Infinito</a>
+      <a href="../cuerpo/" class="back-link node-direct-link">Abrir Cuerpo</a>
+      <a href="../../index.html" class="back-link">&lt; Volver al men&uacute; principal</a>
+    </div>
+  </div>
+
+  <!-- Script de Telemetría de Descenso -->
+  <script>
+    (() => {
+      'use strict';
+      const progressBar = document.getElementById('progressBar');
+      const depthBadge = document.getElementById('depthBadge');
+
+      const onScroll = () => {
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+
+        if (progressBar) progressBar.style.width = `${progress}%`;
+        if (depthBadge) depthBadge.textContent = `DESCENSO: ${Math.round(progress)}%`;
+      };
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+  </script>
+
+  <!-- Cloudflare Web Analytics -->
+  <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "4ae4ff73465943b788027815f6676ab3"}'></script>
+  <!-- End Cloudflare Web Analytics -->
+  <script src="/assets/scripts/traffic-tracker.js" defer></script>
+</body>
+</html>
