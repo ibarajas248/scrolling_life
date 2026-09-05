@@ -947,6 +947,17 @@ draggableWindows.forEach(win => {
     bringToFront();
   });
 
+  titlebar.addEventListener('touchstart', (e) => {
+    if (e.touches.length !== 1) return;
+    isDragging = true;
+    const touch = e.touches[0];
+    startX = touch.clientX;
+    startY = touch.clientY;
+    initialX = win.offsetLeft;
+    initialY = win.offsetTop;
+    bringToFront();
+  }, { passive: true });
+
   document.addEventListener('mousemove', (e) => {
     if (!isDragging) return;
     e.preventDefault();
@@ -960,7 +971,24 @@ draggableWindows.forEach(win => {
     win.style.top = `${newY}px`;
   });
 
+  document.addEventListener('touchmove', (e) => {
+    if (!isDragging || e.touches.length !== 1) return;
+    const touch = e.touches[0];
+    let newX = initialX + (touch.clientX - startX);
+    let newY = initialY + (touch.clientY - startY);
+    if (newY < 0) newY = 0;
+    win.style.left = `${newX}px`;
+    win.style.top = `${newY}px`;
+  }, { passive: true });
+
   document.addEventListener('mouseup', () => {
+    isDragging = false;
+  });
+
+  document.addEventListener('touchend', () => {
+    isDragging = false;
+  });
+  document.addEventListener('touchcancel', () => {
     isDragging = false;
   });
 });
