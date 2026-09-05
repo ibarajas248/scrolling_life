@@ -29,7 +29,7 @@
       background: var(--bg);
       color: #f7f8fb;
       font-family: var(--font-body);
-      padding: 40px 20px 80px;
+      padding: 40px 20px 90px;
       line-height: 1.6;
       margin: 0;
       min-height: 100vh;
@@ -40,7 +40,7 @@
 
     .ascii-container {
       width: 100%;
-      max-width: 860px;
+      max-width: 880px;
       margin: 0 auto;
     }
 
@@ -84,10 +84,10 @@
       position: fixed;
       bottom: 24px;
       right: 24px;
-      background: rgba(12, 15, 20, 0.9);
-      border: 1px solid rgba(231, 235, 245, 0.15);
+      background: rgba(12, 15, 20, 0.92);
+      border: 1px solid rgba(231, 235, 245, 0.18);
       border-radius: 4px;
-      padding: 6px 12px;
+      padding: 6px 14px;
       font-family: var(--font-mono);
       font-size: 0.72rem;
       color: var(--green);
@@ -100,19 +100,19 @@
 
     /* Lienzo ASCII con Monospace Perfecto */
     .ascii-canvas {
-      margin: 3rem 0;
+      margin: 2.5rem 0;
       font-family: var(--font-mono);
-      font-size: clamp(0.95rem, 1.8vw, 1.15rem);
-      line-height: 1.45;
+      font-size: clamp(0.92rem, 1.7vw, 1.12rem);
+      line-height: 1.44;
       color: var(--text);
       white-space: pre;
       overflow-x: auto;
-      padding: 2rem 1rem;
+      padding: 2rem 0.5rem;
       background: transparent;
       user-select: text;
     }
 
-    /* Resaltados Semánticos del Poema */
+    /* Resaltados Semánticos del Poema y Arte ASCII */
     .hl-green {
       color: var(--green);
       font-weight: 700;
@@ -130,13 +130,28 @@
     }
 
     .hl-dim {
-      color: rgba(168, 176, 192, 0.45);
+      color: rgba(168, 176, 192, 0.4);
     }
 
     .hl-block {
       color: var(--green);
       letter-spacing: -0.05em;
       text-shadow: 0 0 12px rgba(158, 255, 113, 0.4);
+    }
+
+    .ascii-art-graphic {
+      color: var(--teal);
+      text-shadow: 0 0 8px rgba(95, 215, 223, 0.25);
+    }
+
+    .ascii-art-coral {
+      color: var(--coral);
+      text-shadow: 0 0 8px rgba(238, 125, 89, 0.25);
+    }
+
+    .ascii-art-green {
+      color: var(--green);
+      text-shadow: 0 0 8px rgba(158, 255, 113, 0.25);
     }
 
     /* Botones de Navegación */
@@ -179,10 +194,10 @@
 
     @media (max-width: 640px) {
       body {
-        padding: 24px 16px 60px;
+        padding: 24px 14px 70px;
       }
       .ascii-canvas {
-        font-size: 0.82rem;
+        font-size: 0.76rem;
         padding: 1rem 0;
       }
       .ascii-depth-badge {
@@ -208,8 +223,18 @@
       </div>
     </header>
 
-    <!-- Poema en Scroll ASCII -->
+    <!-- Poema en Scroll ASCII Enriquecido -->
     <pre class="ascii-canvas">
+<span class="ascii-art-graphic">  ___________________________________________________________
+ /                                                           \
+|  ___  ___ ___  ___  _    _    ___ _  _  ___   _    ___ ___  |
+| / __|/ __| _ \/ _ \| |  | |  |_ _| \| |/ __| | |  |_ _| __| |
+| \__ \ (__|   / (_) | |__| |__ | || .` | (_ | | |__ | || _|  |
+| |___/\___|_|_\\___/|____|____|___|_|\_|\___| |____|___|_|    |
+ \___________________________________________________________/
+                 [ FLUIDO DIGITAL // ASCII ]</span>
+
+
                      aparece
                 aparece
            aparece
@@ -231,6 +256,21 @@
                                    <span class="hl-dim">desaparece</span>
 
 
+
+<span class="ascii-art-green">                   .----------------.
+               _.-'        _         '-._
+             .'        .-"   "-.         '.
+            /        .'   .---.   '.       \
+           |        /    /     \    \       |
+           |       |    |   (o) |    |      |
+           |        \    \     /    /       |
+            \        '.   '---'   .'       /
+             '.        '-._____.-'       .'
+               '-._                    _.-'
+                   '----------------'
+                          |
+                          |  [ ÓPTICA DIGITAL ]
+                          v</span>
 
  <span class="hl-teal">ojo</span>
   |
@@ -291,6 +331,20 @@
 
                                   sin llegar
                                        al final
+
+
+
+<span class="ascii-art-graphic">        +--[TAPE: 00:00:00]--+
+        | [o]           [o]  |
+        |  |  =========  |   |
+        | [o]           [o]  |
+        +--------------------+
+           | |         | |
+           | |  SCROLL | |
+           | |   FLOW  | |
+           | |         | |
+           | |         | |
+           v v         v v</span>
 
 
 
@@ -398,6 +452,7 @@
 
 
 
+
 <span class="hl-green">CUERPO</span> --------------------------------------> <span class="hl-teal">ACONTECIMIENTO</span>
 
                      distancia
@@ -461,6 +516,23 @@
 
 
 
+<span class="ascii-art-coral">       .----------------------------------------.
+       |  .----------------------------------.  |
+       |  | [ PANTALLA // 01 ]               |  |
+       |  |                                  |  |
+       |  |    .------------------------.    |  |
+       |  |    | [ PANTALLA // 02 ]     |    |  |
+       |  |    |                        |    |  |
+       |  |    |    .--------------.    |    |  |
+       |  |    |    | [ OTRA... ]  |    |    |  |
+       |  |    |    '--------------'    |    |  |
+       |  |    '------------------------'    |  |
+       |  |                                  |  |
+       |  '----------------------------------'  |
+       '----------------------------------------'</span>
+
+
+
    debajo de esta pantalla
 
           hay otra pantalla
@@ -501,9 +573,23 @@ v
 |
 v
 <span class="hl-green">scroll</span>
-|
-v
-<span class="hl-green">scroll</span>
+
+
+
+<span class="ascii-art-green">                      ___
+                     /   \
+                    |  |  |
+                    |  |  |  ___
+                    |  |  | /   \
+               ___  |  |  ||  |  |
+              /   \ |  |  ||  |  |
+             |  |  ||  |  ||  |  |
+             |  |  ||  |  ||  |  |
+             |      '  '  ''  '  /
+              \                 /
+               \   [ GESTO ]   /
+                |   SCROLL    |
+                |   INDEX     |</span>
 
 
 
@@ -732,6 +818,23 @@ más abajo
 
 
 
+<span class="ascii-art-graphic">                  .-------------.
+                  |=============|
+                  | \  . . .  / |
+                  |  \  . .  /  |
+                  |   \  .  /   |
+                  |    \ : /    |
+                  |     X       |
+                  |    /   \    |
+                  |   /  :  \   |
+                  |  /  : :  \  |
+                  | / : : : : \ |
+                  |=============|
+                  '-------------'
+                  [ BUFFERING ]</span>
+
+
+
 <span class="hl-coral">error 404:</span>
 
 intervalo no encontrado
@@ -773,6 +876,34 @@ conciencia buffering...
         <span class="hl-green">yo desaparezco</span>
 
                  <span class="hl-coral">primero</span>
+
+
+
+<span class="ascii-art-dim">                     .-------.
+                   .'  ___    '.
+                  /   /   \     \
+                 |   | (o) |     |
+                 |    \___/      |
+                 |     ___       |
+                  \   /   \     /
+                   '. \___/   .'
+                     '-------'
+                     : .   . :
+                    .   :   . .
+                   .  .   .  .
+                  .    .    .
+                 .   .   .
+                .      .
+               .   .
+              .
+
+           ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+           ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+           ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+           ::::::::::::::::::::::::::::::::::::::::
+           ........................................
+           .   .     .    .     .   .    .   .    .
+                 .         .          .        .</span>
     </pre>
 
     <!-- Botones de Navegación idénticos a Infinito -->
