@@ -79,6 +79,7 @@ rm -rf "$release_dir"
 mv "$incoming_dir" "$release_dir"
 
 export SCROLLING_LIFE_WEB_CONTEXT="$release_dir"
+export CATH_REVIEW_CONTEXT="$release_dir/private-reviews/cath"
 export GRAPH_BACKEND_CONTEXT="$release_dir/graph-backend"
 export TRAFFIC_TRACKER_CONTEXT="$release_dir/traffic-tracker"
 export TRAFFIC_DASHBOARD_CONTEXT="$release_dir/traffic-dashboard"
@@ -88,6 +89,7 @@ export ESCRITURA_COLECTIVA_CONTEXT="$release_dir/escritura-colectiva"
 docker compose --env-file "$ENV_FILE" -f "$release_dir/docker-compose.yml" config >/dev/null
 docker compose --env-file "$ENV_FILE" -f "$release_dir/docker-compose.yml" build \
   web \
+  cath-review \
   graph-backend \
   traffic-tracker \
   traffic-dashboard \
@@ -96,6 +98,7 @@ docker compose --env-file "$ENV_FILE" -f "$release_dir/docker-compose.yml" build
 
 docker compose --env-file "$ENV_FILE" -f "$release_dir/docker-compose.yml" up -d --remove-orphans \
   web \
+  cath-review \
   graph-backend \
   traffic-tracker \
   traffic-dashboard \

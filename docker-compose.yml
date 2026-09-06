@@ -31,6 +31,33 @@ services:
       retries: 3
       start_period: 5s
 
+  cath-review:
+    container_name: scrolling_life_cath_review
+    image: scrolling_life_cath_review:latest
+    build:
+      context: ${CATH_REVIEW_CONTEXT:-./private-reviews/cath}
+      dockerfile: Dockerfile
+    ports:
+      - "${CATH_REVIEW_PORT:-0.0.0.0:18473}:8080"
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /var/cache/nginx
+      - /var/run
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - scrollinglife_net
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8080/"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+
   graph-backend:
     container_name: graph_backend
     image: graph_backend:latest
