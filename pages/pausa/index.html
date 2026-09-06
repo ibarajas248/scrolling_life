@@ -64,6 +64,13 @@
       background: rgba(238, 125, 89, 0.2);
     }
 
+    .subpages-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin: 0 0 2rem;
+    }
+
     .subpage-icon-link {
       display: inline-flex;
       flex-direction: column;
@@ -72,7 +79,7 @@
       gap: 7px;
       width: 132px;
       min-height: 112px;
-      margin: 0 0 2rem;
+      margin: 0;
       padding: 10px 8px;
       border: 2px solid #9eff71;
       border-radius: 4px;
@@ -106,6 +113,34 @@
       object-fit: contain;
     }
 
+    .subpage-icon-ascii {
+      width: 58px;
+      height: 58px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #05080c;
+      border: 1px dashed rgba(158, 255, 113, 0.4);
+      border-radius: 2px;
+      color: #9eff71;
+      font-family: 'Share Tech Mono', monospace;
+      text-align: center;
+    }
+
+    .subpage-icon-ascii .ascii-symbol-prompt {
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .subpage-icon-ascii .ascii-symbol-body {
+      font-size: 0.65rem;
+      color: #5fd7df;
+      letter-spacing: 1px;
+      margin-top: 3px;
+    }
+
     .subpage-icon-caption {
       max-width: 100%;
       color: #9eff71;
@@ -126,10 +161,20 @@
       <span>A&ntilde;o: 2026</span>
     </div>
 
-    <a href="./in-case-you-come-back/" class="subpage-icon-link" aria-label="Abrir In Case You Come Back" title="In Case You Come Back">
-      <img src="./in-case-you-come-back/assets/recipe-card.gif" alt="" />
-      <span class="subpage-icon-caption">In Case You Come Back</span>
-    </a>
+    <div class="subpages-row">
+      <a href="./in-case-you-come-back/" class="subpage-icon-link" aria-label="Abrir In Case You Come Back" title="In Case You Come Back">
+        <img src="./in-case-you-come-back/assets/recipe-card.gif" alt="" />
+        <span class="subpage-icon-caption">In Case You Come Back</span>
+      </a>
+
+      <a href="./ascii/" class="subpage-icon-link" aria-label="Abrir ASCII - Poema visual de scroll" title="ASCII - Poema visual de scroll">
+        <div class="subpage-icon-ascii" aria-hidden="true">
+          <span class="ascii-symbol-prompt">&gt;_</span>
+          <span class="ascii-symbol-body">[ . : * ]</span>
+        </div>
+        <span class="subpage-icon-caption">ASCII</span>
+      </a>
+    </div>
 
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae magna sit amet ligula luctus interdum. Sed ut arcu non augue faucibus placerat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Suspendisse vel massa sed justo fermentum viverra.</p>
 
