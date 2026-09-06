@@ -177,8 +177,8 @@
     node.setAttribute('role', 'dialog');
     node.setAttribute('aria-labelledby', `${record.id}-title`);
     if (record.cluster) { node.dataset.cluster = record.cluster; node.dataset.step = record.step; }
-    node.dataset.asset = item.id || item.title;
-    const naturalWidth = Math.min(item.width || 400, 490);
+    const isUrl = Boolean(item.url);
+    const naturalWidth = Math.min(item.width || (isUrl ? 580 : 400), isUrl ? 640 : 490);
     const maxHeight = stage.clientHeight - 125;
     const scaledWidth = item.height ? Math.min(naturalWidth, maxHeight * item.width / item.height) : naturalWidth;
     const width = record.kind === 'final' ? 760 : Math.max(200, scaledWidth);
@@ -252,25 +252,80 @@
     return record;
   }
 
+  function toEmbedUrl(url) {
+    if (!url) return '';
+    try {
+      const u = new URL(url);
+      if (u.hostname.includes('youtube.com')) {
+        if (u.searchParams.get('v')) {
+          return `https://www.youtube-nocookie.com/embed/${u.searchParams.get('v')}`;
+        }
+        const shortsMatch = u.pathname.match(/\/shorts\/([a-zA-Z0-9_-]+)/);
+        if (shortsMatch) {
+          return `https://www.youtube-nocookie.com/embed/${shortsMatch[1]}`;
+        }
+      }
+      if (u.hostname.includes('youtu.be')) {
+        const id = u.pathname.replace(/^\//, '');
+        return `https://www.youtube-nocookie.com/embed/${id}`;
+      }
+      if (u.hostname.includes('tiktok.com')) {
+        const tiktokMatch = u.pathname.match(/\/video\/(\d+)/);
+        if (tiktokMatch) {
+          return `https://www.tiktok.com/embed/v2/${tiktokMatch[1]}`;
+        }
+      }
+    } catch {
+      // fallback
+    }
+    return url;
+  }
+
   function linkContent(item, record) {
+    const embedSrc = toEmbedUrl(item.url);
     const content = document.createElement('div');
-    content.className = 'link-page';
-    const heading = document.createElement('p');
-    heading.textContent = 'Conexion establecida.';
-    const address = document.createElement('p');
-    address.className = 'link-address';
-    address.textContent = item.url;
-    const actions = document.createElement('div');
-    actions.className = 'dialog-actions';
+    content.className = 'link-page link-browser';
+
+    const toolbar = document.createElement('div');
+    toolbar.className = 'browser-toolbar';
+
+    const addressLabel = document.createElement('span');
+    addressLabel.className = 'browser-address-label';
+    addressLabel.textContent = 'Dirección:';
+
+    const addressBar = document.createElement('span');
+    addressBar.className = 'browser-address-bar';
+    addressBar.title = item.url;
+    addressBar.textContent = item.url;
+
     const link = document.createElement('a');
-    link.className = 'raised';
+    link.className = 'raised browser-open-link';
     link.textContent = 'Abrir enlace';
     link.href = item.url;
     link.target = '_blank';
     link.rel = 'noopener noreferrer';
+    link.title = 'Abrir enlace en pestaña nueva';
     link.addEventListener('click', () => activate(record));
-    actions.append(button('Continuar', null, () => activate(record), 'raised'), link);
-    content.append(icon('globe'), heading, address, actions);
+
+    toolbar.append(icon('globe'), addressLabel, addressBar, link);
+
+    const frameWrap = document.createElement('div');
+    frameWrap.className = 'browser-frame-wrap';
+
+    const iframe = document.createElement('iframe');
+    iframe.className = 'browser-iframe';
+    iframe.src = embedSrc;
+    iframe.title = item.title || 'Vista previa del enlace';
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+    iframe.setAttribute('loading', 'lazy');
+
+    frameWrap.append(iframe);
+
+    const actions = document.createElement('div');
+    actions.className = 'dialog-actions browser-footer';
+    actions.append(button('Continuar', null, () => activate(record), 'raised'));
+
+    content.append(toolbar, frameWrap, actions);
     return content;
   }
 

@@ -53,6 +53,17 @@ button:disabled img { opacity: .4; }
 .link-page .link-address { clear: both; font: 12px "Courier New", monospace; color: #555; padding: 8px 0; }
 .dialog-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 18px; flex-wrap: wrap; }
 .dialog-actions a, .dialog-actions button { text-align: center; min-width: 84px; padding: 6px 12px; text-decoration: none; color: #000; }
+.link-page.link-browser { padding: 0; min-height: 280px; display: flex; flex-direction: column; background: var(--silver); }
+.browser-toolbar { display: flex; align-items: center; gap: 6px; padding: 4px 6px; background: var(--silver); border-bottom: 1px solid #808080; }
+.browser-toolbar > img { width: 16px; height: 16px; float: none; margin: 0; flex-shrink: 0; }
+.browser-address-label { font-size: 11px; color: #222; flex-shrink: 0; }
+.browser-address-bar { flex: 1; min-width: 0; padding: 2px 6px; background: #fff; border: 1px solid; border-color: #808080 #fff #fff #808080; font: 11px "Courier New", monospace; color: #000; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.browser-open-link { flex-shrink: 0; min-width: unset !important; padding: 2px 8px !important; font-size: 11px !important; text-decoration: none; color: #000; white-space: nowrap; }
+.browser-frame-wrap { position: relative; width: 100%; height: clamp(260px, 48vh, 380px); background: #fff; border: 1px solid; border-color: #808080 #fff #fff #808080; }
+.browser-iframe { width: 100%; height: 100%; border: 0; display: block; background: #fff; }
+.browser-footer { margin-top: 0 !important; padding: 5px 8px; background: var(--silver); border-top: 1px solid #fff; }
+.is-maximized .link-browser { height: 100%; flex: 1; }
+.is-maximized .browser-frame-wrap { flex: 1; height: 100%; }
 .is-final { width: 760px; }
 .notepad-video { width: 100%; aspect-ratio: 1078 / 720; max-height: calc(100dvh - 215px); object-fit: contain; display: block; background: #fff; }
 .notepad-footer { display: flex; justify-content: flex-end; padding: 8px; gap: 8px; }
