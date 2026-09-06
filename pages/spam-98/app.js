@@ -224,7 +224,7 @@
     const status = document.createElement('div');
     status.className = 'window-status sunken';
     const message = document.createElement('span');
-    message.textContent = record.kind === 'final' ? 'AAAAAAAAAAAA.txt' : item.url ? 'Internet' : 'Listo';
+    message.textContent = record.kind === 'final' ? 'aaaaaa.txt' : item.url ? 'Internet' : 'Listo';
     const connection = document.createElement('span');
     connection.className = 'connection';
     connection.textContent = record.kind === 'final' ? 'Fin' : '56 Kbps';
@@ -340,7 +340,7 @@
     $('#pause').disabled = true;
     $('[data-command="inbox"]').disabled = true;
     $('#pause').setAttribute('aria-pressed', 'false');
-    const record = createWindow({ title: 'AAAAAAAAAAAA.txt - Bloc de notas' }, { kind: 'final' });
+    const record = createWindow({ title: 'aaaaaa.txt - Bloc de notas' }, { kind: 'final' });
     const body = record.node.querySelector('.window-body');
     // The supplied film already contains the Notepad writing and menu.
     const video = document.createElement('video');
@@ -372,7 +372,7 @@
       video.muted = true;
       video.play().catch(() => { /* Native controls remain available. */ });
     });
-    $('#status').textContent = 'Fin de la sesion. AAAAAAAAAAAA.txt, Bloc de notas.';
+    $('#status').textContent = 'Fin de la sesion. aaaaaa.txt, Bloc de notas.';
   }
 
   function closeFinal(record) {

@@ -10,7 +10,10 @@
   />
   <link rel="stylesheet" href="../../../assets/fonts/local-fonts.css" />
   <link rel="stylesheet" href="../../../assets/vendor/locomotive-scroll.min.css" />
-  <link rel="stylesheet" href="./styles.css?v=20260826-gif-motion" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css?v=20260905-artist-bio" />
   <link rel="icon" href="data:," />
   <script src="../../../assets/scripts/maintenance-gate.js" defer></script>
 </head>
@@ -20,14 +23,66 @@
   <div class="crt-lines" aria-hidden="true"></div>
   <div class="pixel-wall" aria-hidden="true"></div>
 
-  
+  <!-- Desplegable / Bio de Artista -->
+  <aside class="artist-drawer" id="artistDrawer" aria-label="Biografía de la artista">
+    <button
+      class="drawer-toggle"
+      id="drawerToggle"
+      aria-expanded="false"
+      aria-controls="artistDrawerPanel"
+      title="Biografía de Cath Lescier"
+    >
+      <span class="drawer-arrow" aria-hidden="true">&#x2039;</span>
+      <span class="drawer-label">BIO</span>
+    </button>
 
-  <div class="scroll-hud" aria-hidden="true">
-    <span class="hud-label" data-scroll-state>Recipes</span>
-    <span class="hud-percent" data-scroll-progress-text>000%</span>
-    <span class="hud-direction" data-scroll-direction>down</span>
-    <span class="hud-track"><span data-scroll-progress-fill></span></span>
-  </div>
+    <div class="drawer-panel" id="artistDrawerPanel">
+      <div class="drawer-window">
+        <div class="window-bar">
+          <div class="window-dots" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <span class="window-title"></span>
+          <button class="drawer-close" id="drawerClose" aria-label="Cerrar biografía">&times;</button>
+        </div>
+
+        <div class="drawer-body">
+          <header class="bio-header">
+            <h2 class="bio-name">Cath Lescier</h2>
+            
+          </header>
+
+          <figure class="bio-photo-card">
+            <div class="photo-wrapper">
+              <img
+                src="./assets/cath-lescier.jpg"
+                alt="Cath "
+                class="bio-photo"
+                onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 320 240\' width=\'100%\' height=\'100%\'><rect width=\'320\' height=\'240\' fill=\'%23ffd3ec\'/><circle cx=\'160\' cy=\'92\' r=\'46\' fill=\'%23c21d7a\'/><path d=\'M85 210 c0 -45 35 -75 75 -75 s75 30 75 75 Z\' fill=\'%236a164f\'/><text x=\'160\' y=\'228\' font-family=\'monospace\' font-size=\'13\' fill=\'%23311336\' text-anchor=\'middle\' font-weight=\'bold\'>CATH LESCIER (FOTO)</text></svg>';"
+              />
+            </div>
+            <figcaption class="photo-caption"></figcaption>
+          </figure>
+
+          <div class="bio-text">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            </p>
+            <p>
+              Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+            <p>
+              Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="drawer-backdrop" id="drawerBackdrop" aria-hidden="true"></div>
 
   <main class="recipe-scroll" data-scroll-container>
     <header class="hero" data-scroll-section>
@@ -52,8 +107,8 @@
             <span class="kinetic-gif-wrap gif-motion-a" data-scroll data-scroll-speed="1.25" data-scroll-direction="horizontal">
               <img class="kinetic-gif" src="./assets/recipe-card.gif" alt="" />
             </span>
-            <p>saved_recipe_170.gif</p>
-            <p>status: still possible</p>
+            <p>CATH LESCIEUR</p>
+            
           </div>
         </aside>
       </section>
@@ -66,7 +121,7 @@
           <span></span>
           <span></span>
         </div>
-        <p>LOCO<br />MOTIVE<br />SCROLL</p>
+        <p>recipes
         <span class="kinetic-gif-wrap gif-motion-b">
           <img class="kinetic-gif" src="./assets/peach-scone.gif" alt="" />
         </span>
@@ -100,7 +155,7 @@
           to that georgia o'keeffe show.
         </p>
 
-        <p class="stanza stanza-small" data-scroll data-scroll-speed="0.34" data-scroll-class="is-inview">
+        <p class="stanza" data-scroll data-scroll-speed="0.34" data-scroll-class="is-inview">
           neither did i.<br />
           it doesn't help<br />
           that they keep a piece of her<br />
@@ -132,7 +187,7 @@
           for years,
         </p>
 
-        <p class="stanza stanza-tight" data-scroll data-scroll-speed="-0.38" data-scroll-class="is-inview">
+        <p class="stanza" data-scroll data-scroll-speed="-0.38" data-scroll-class="is-inview">
           and say<br />
           i'm coming over,<br />
           and it hasn't<br />
@@ -154,7 +209,7 @@
           same sky.
         </p>
 
-        <p class="stanza stanza-small" data-scroll data-scroll-speed="-0.55" data-scroll-class="is-inview">
+        <p class="stanza" data-scroll data-scroll-speed="-0.55" data-scroll-class="is-inview">
           have you muted my stories?<br />
           have you blocked my number?
         </p>
@@ -174,7 +229,7 @@
           stays possible.
         </p>
 
-        <p class="stanza stanza-tight" data-scroll data-scroll-speed="0.4" data-scroll-class="is-inview">
+        <p class="stanza" data-scroll data-scroll-speed="0.4" data-scroll-class="is-inview">
           a cruising,<br />
           crushing desire.
         </p>
@@ -193,7 +248,7 @@
           a bet placed on the possible.
         </p>
 
-        <p class="stanza stanza-small" data-scroll data-scroll-speed="-0.36" data-scroll-class="is-inview">
+        <p class="stanza" data-scroll data-scroll-speed="-0.36" data-scroll-class="is-inview">
           uncertainty<br />
           not the defect<br />
           but the whole condition.
@@ -260,20 +315,14 @@
           <span></span>
         </div>
         <p>
-          My poem takes a saved-recipe archive? as evidence of a desire that never gets acted on.
-          Scrolling becomes its own kind of cruising &mdash; a gaze that passes, lingers, saves,
-          and never arrives.
-        </p>
-        <p>
-          Borrowing the vocabulary of queer utopian thought [muñoz &amp; bloch], it asks whether
-          keeping something perpetually deferred is a form of hope or a way of guaranteeing it never comes.
+          My poem takes a saved-recipe archive? as evidence of a desire that never gets acted on. Scrolling becomes its own kind of cruising — a gaze that passes, lingers, saves, and never arrives. Borrowing the vocabulary of queer utopian thought [muñoz & bloch] (the not-yet, the gaze that doesn't resolve, uncertainty as condition rather than defect), it asks whether keeping something perpetually deferred is a form of hope or a way of guaranteeing it never comes. I clumsily admit I know exactly what I want, yet I go back to the recipes anyway [escapism? in scrolling]
         </p>
       </div>
     </section>
   </main>
 
   <script src="../../../assets/vendor/locomotive-scroll.min.js" defer></script>
-  <script src="./script.js?v=20260826-gif-motion" defer></script>
+  <script src="./script.js?v=20260905-artist-bio" defer></script>
 
   <!-- Cloudflare Web Analytics -->
   <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "4ae4ff73465943b788027815f6676ab3"}'></script>

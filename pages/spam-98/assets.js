@@ -1,5 +1,5 @@
 window.SPAM_ASSETS = {
-  "title": "AAAAAAAAAAAA.txt",
+  "title": "aaaaaa.txt",
   "background": {
     "src": "assets/AAAAAAAAAAAA.txt/INICIO/inicio.jpg",
     "width": 1918,

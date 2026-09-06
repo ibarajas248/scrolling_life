@@ -1,10 +1,10 @@
 (() => {
   const container = document.querySelector('[data-scroll-container]');
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const hudState = document.querySelector('[data-scroll-state]');
-  const hudProgressTexts = document.querySelectorAll('[data-scroll-progress-text]');
+  const hudState = document.querySelector('.hud-label');
+  const hudProgressTexts = document.querySelectorAll('.hud-percent, .loco-sticky small');
   const hudProgressFill = document.querySelector('[data-scroll-progress-fill]');
-  const hudDirection = document.querySelector('[data-scroll-direction]');
+  const hudDirection = document.querySelector('.hud-direction');
   let locomotive = null;
 
   const setHud = ({ progress = 0, direction = 'down', active = false } = {}) => {
@@ -85,4 +85,40 @@
   }
 
   window.addEventListener('resize', refreshScroll, { passive: true });
+
+  // Artist Bio Drawer
+  const drawer = document.getElementById('artistDrawer');
+  const drawerToggle = document.getElementById('drawerToggle');
+  const drawerClose = document.getElementById('drawerClose');
+  const drawerBackdrop = document.getElementById('drawerBackdrop');
+
+  const openDrawer = () => {
+    drawer?.classList.add('is-open');
+    drawerBackdrop?.classList.add('is-open');
+    drawerToggle?.setAttribute('aria-expanded', 'true');
+  };
+
+  const closeDrawer = () => {
+    drawer?.classList.remove('is-open');
+    drawerBackdrop?.classList.remove('is-open');
+    drawerToggle?.setAttribute('aria-expanded', 'false');
+  };
+
+  drawerToggle?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (drawer?.classList.contains('is-open')) {
+      closeDrawer();
+    } else {
+      openDrawer();
+    }
+  });
+
+  drawerClose?.addEventListener('click', closeDrawer);
+  drawerBackdrop?.addEventListener('click', closeDrawer);
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && drawer?.classList.contains('is-open')) {
+      closeDrawer();
+    }
+  });
 })();
