@@ -1,7 +1,7 @@
 # AAAAAAAAAAAA.txt
 
 Pieza de Carmen y Javi, incorporada en Scrolling Life > Ruido.
-Ruta: `/pages/spam-98/`. HTML, CSS y JavaScript estaticos, sin compilacion.
+Ruta: `/pages/aaaaaa/`. HTML, CSS y JavaScript estaticos, sin compilacion.
 
 ## Material original
 

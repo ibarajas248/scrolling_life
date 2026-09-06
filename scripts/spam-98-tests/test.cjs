@@ -4,7 +4,7 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 
-const base = process.env.BASE_URL || 'http://localhost:8080/pages/spam-98/';
+const base = process.env.BASE_URL || 'http://localhost:8080/pages/aaaaaa/';
 const screenshots = process.env.SCREENSHOT_DIR || path.join(os.tmpdir(), 'scrollinglife-spam-98-tests');
 const order = ['C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8'];
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
