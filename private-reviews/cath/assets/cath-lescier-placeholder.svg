@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 240" role="img" aria-labelledby="title">
+  <title id="title">Cath Lescier</title>
+  <rect width="320" height="240" fill="#ffd3ec"/>
+  <circle cx="160" cy="92" r="46" fill="#c21d7a"/>
+  <path d="M85 210c0-45 35-75 75-75s75 30 75 75Z" fill="#6a164f"/>
+  <text x="160" y="228" fill="#311336" font-family="monospace" font-size="13" font-weight="700" text-anchor="middle">CATH LESCIER (FOTO)</text>
+</svg>
