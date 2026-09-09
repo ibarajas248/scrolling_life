@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Manifiesto Escrolleo" />
+  <title>Manifiesto Escrolleo</title>
+  <link rel="icon" href="data:," />
+  <link rel="stylesheet" href="../../assets/fonts/local-fonts.css" />
+  <script>document.documentElement.classList.add('js');</script>
+  <style>
+    :root {
+      color-scheme: dark;
+      --black: #030405;
+      --ink: #e9eee8;
+      --muted: #8c9996;
+      --acid: #9eff71;
+      --cyan: #5fd7df;
+      --coral: #ee7d59;
+      --hairline: rgba(233, 238, 232, 0.14);
+      --page-pad: max(24px, 7vw);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      background: var(--black);
+      overflow-x: hidden;
+      scrollbar-color: var(--acid) var(--black);
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-width: 320px;
+      margin: 0;
+      overflow-x: hidden;
+      background:
+        linear-gradient(180deg, #030405 0%, #07100d 23%, #050a0c 48%, #100907 73%, #030405 100%);
+      color: var(--ink);
+      font-family: 'Bricolage Grotesque', sans-serif;
+      letter-spacing: 0;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      z-index: 0;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(158, 255, 113, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(95, 215, 223, 0.028) 1px, transparent 1px);
+      background-position: 0 calc(var(--scroll-grid, 0px) * -0.08);
+      background-size: 52px 52px;
+      opacity: 0.85;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      z-index: 3;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      pointer-events: none;
+      background: linear-gradient(90deg, transparent, rgba(95, 215, 223, 0.2), transparent);
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+    }
+
+    p,
+    h1,
+    h2 {
+      margin: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .reading-progress {
+      position: fixed;
+      z-index: 5;
+      top: 0;
+      left: 0;
+      width: 3px;
+      height: 100vh;
+      pointer-events: none;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .reading-progress span {
+      display: block;
+      width: 100%;
+      height: 0;
+      background: linear-gradient(180deg, var(--acid), var(--cyan) 52%, var(--coral));
+      box-shadow: 0 0 14px rgba(158, 255, 113, 0.65);
+    }
+
+    .opening {
+      padding-inline: var(--page-pad);
+    }
+
+    .stanza {
+      display: flex;
+      min-height: 100svh;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1rem;
+      padding-block: 12vh;
+    }
+
+    .stanza--hands .line,
+    .stanza--finger .line {
+      max-width: 21ch;
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: 3.9rem;
+      line-height: 1;
+    }
+
+    .stanza--cycle {
+      min-height: 120svh;
+      gap: 1.6rem;
+    }
+
+    .stanza--cycle .line {
+      max-width: 25ch;
+      color: var(--muted);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 2rem;
+      line-height: 1.12;
+    }
+
+    .stanza--cycle .line:nth-child(1),
+    .stanza--cycle .line:nth-child(2) {
+      color: var(--coral);
+    }
+
+    .stanza--cycle .line:nth-child(3),
+    .stanza--cycle .line:nth-child(4) {
+      color: var(--acid);
+    }
+
+    .stanza--cycle .line:nth-child(5),
+    .stanza--cycle .line:nth-child(6) {
+      color: var(--cyan);
+    }
+
+    .stanza--finger {
+      min-height: 180svh;
+    }
+
+    .line:nth-child(even) {
+      align-self: flex-end;
+      text-align: right;
+    }
+
+    .line:nth-child(3n) {
+      color: var(--acid);
+    }
+
+    .line:nth-child(5n) {
+      color: var(--cyan);
+    }
+
+    .silence {
+      height: 42vh;
+    }
+
+    .meditation {
+      width: min(1040px, calc(100% - (2 * var(--page-pad))));
+      margin-inline: auto;
+      padding-bottom: 18vh;
+    }
+
+    .meditation p {
+      max-width: 66ch;
+      margin-block: 0 4.2rem;
+      font-size: 1.6rem;
+      line-height: 1.48;
+    }
+
+    .meditation .question {
+      max-width: 24ch;
+      margin-block: 20vh;
+      color: var(--ink);
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: 4.2rem;
+      line-height: 1;
+    }
+
+    .meditation .question:nth-of-type(even) {
+      margin-left: auto;
+      text-align: right;
+    }
+
+    .meditation .definition {
+      max-width: 56ch;
+      margin-bottom: 1.2rem;
+      color: var(--cyan);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1.35rem;
+      line-height: 1.35;
+    }
+
+    .meditation .definition + .definition {
+      margin-top: 0;
+      margin-left: auto;
+      color: var(--acid);
+      text-align: right;
+    }
+
+    .meditation .eyes {
+      max-width: 50ch;
+      margin-block: 24vh 10vh;
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: 2.2rem;
+      line-height: 1.38;
+    }
+
+    .meditation .eyes::first-letter {
+      color: var(--coral);
+      font-size: 3.6em;
+      line-height: 0.72;
+    }
+
+    .manifesto-title {
+      display: grid;
+      min-height: 100svh;
+      place-items: center;
+      padding: 12vh var(--page-pad);
+      text-align: center;
+    }
+
+    .manifesto-title h1 {
+      max-width: 10ch;
+      color: var(--acid);
+      font-family: 'Disket Mono', monospace;
+      font-size: 5.4rem;
+      font-weight: 400;
+      line-height: 0.9;
+      text-transform: uppercase;
+      text-shadow: 0 0 32px rgba(158, 255, 113, 0.18);
+    }
+
+    .manifesto {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: statement;
+    }
+
+    .manifesto-item {
+      display: grid;
+      min-height: 82svh;
+      grid-template-columns: 7rem minmax(0, 1fr);
+      align-content: center;
+      column-gap: 1.5rem;
+      padding: 15vh max(var(--page-pad), calc((100vw - 1120px) / 2));
+      border-top: 1px solid var(--hairline);
+      counter-increment: statement;
+    }
+
+    .manifesto-item::before {
+      content: counter(statement, upper-roman) '.';
+      grid-column: 1;
+      grid-row: 1 / span 2;
+      color: var(--acid);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1.3rem;
+      line-height: 1.2;
+    }
+
+    .manifesto-item:nth-child(3n + 2)::before,
+    .manifesto-item:nth-child(3n + 2) h2 {
+      color: var(--cyan);
+    }
+
+    .manifesto-item:nth-child(3n)::before,
+    .manifesto-item:nth-child(3n) h2 {
+      color: var(--coral);
+    }
+
+    .manifesto-item h2 {
+      grid-column: 2;
+      margin-bottom: 2.6rem;
+      color: var(--acid);
+      font-family: 'Disket Mono', monospace;
+      font-size: 2.55rem;
+      font-weight: 400;
+      line-height: 1.06;
+    }
+
+    .manifesto-item p {
+      grid-column: 2;
+      max-width: 64ch;
+      color: #d9dfd9;
+      font-size: 1.45rem;
+      line-height: 1.48;
+    }
+
+    .manifesto-item:last-child {
+      min-height: 100svh;
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    .js .reveal {
+      --live-shift: 0px;
+      opacity: 0.18;
+      filter: blur(1.5px);
+      transform: translate3d(var(--live-shift), 42px, 0);
+      transition:
+        opacity 700ms ease,
+        filter 700ms ease,
+        transform 700ms cubic-bezier(0.2, 0.75, 0.2, 1);
+    }
+
+    .js .reveal.is-active {
+      opacity: 1;
+      filter: blur(0);
+      transform: translate3d(var(--live-shift), 0, 0);
+    }
+
+    @media (max-width: 820px) {
+      :root {
+        --page-pad: 28px;
+      }
+
+      .stanza--hands .line,
+      .stanza--finger .line {
+        font-size: 3rem;
+      }
+
+      .meditation .question {
+        font-size: 3.3rem;
+      }
+
+      .meditation .eyes {
+        font-size: 1.8rem;
+      }
+
+      .manifesto-title h1 {
+        font-size: 4.2rem;
+      }
+
+      .manifesto-item {
+        grid-template-columns: 4.5rem minmax(0, 1fr);
+        column-gap: 0.75rem;
+      }
+
+      .manifesto-item h2 {
+        font-size: 2rem;
+      }
+
+      .manifesto-item p {
+        font-size: 1.25rem;
+      }
+    }
+
+    @media (max-width: 520px) {
+      :root {
+        --page-pad: 20px;
+      }
+
+      body::before {
+        background-size: 38px 38px;
+      }
+
+      .stanza {
+        gap: 0.85rem;
+      }
+
+      .stanza--hands .line,
+      .stanza--finger .line {
+        max-width: 18ch;
+        font-size: 2.15rem;
+        line-height: 1.04;
+      }
+
+      .stanza--cycle .line {
+        font-size: 1.4rem;
+      }
+
+      .meditation p {
+        margin-bottom: 3rem;
+        font-size: 1.16rem;
+        line-height: 1.52;
+      }
+
+      .meditation .question {
+        margin-block: 16vh;
+        font-size: 2.55rem;
+      }
+
+      .meditation .definition {
+        font-size: 1.05rem;
+      }
+
+      .meditation .eyes {
+        max-width: none;
+        font-size: 1.42rem;
+      }
+
+      .manifesto-title h1 {
+        font-size: 3rem;
+      }
+
+      .manifesto-item {
+        min-height: 88svh;
+        grid-template-columns: 1fr;
+        padding-block: 14vh;
+      }
+
+      .manifesto-item::before {
+        grid-column: 1;
+        grid-row: auto;
+        margin-bottom: 1.1rem;
+      }
+
+      .manifesto-item h2,
+      .manifesto-item p {
+        grid-column: 1;
+      }
+
+      .manifesto-item h2 {
+        margin-bottom: 2rem;
+        font-size: 1.65rem;
+        line-height: 1.12;
+      }
+
+      .manifesto-item p {
+        font-size: 1.08rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .js .reveal,
+      .js .reveal.is-active {
+        opacity: 1;
+        filter: none;
+        transform: none;
+        transition: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="reading-progress" aria-hidden="true"><span></span></div>
+
+  <main>
+    <div class="opening">
+      <section class="stanza stanza--hands" aria-label="">
+        <p class="line reveal">Unas manos pactaron acuerdos</p>
+        <p class="line reveal">Otras manos trajeron la novedad</p>
+        <p class="line reveal">Muchas manos aceptamos sin renegar</p>
+        <p class="line reveal">Unas manos recogieron la ganancia</p>
+        <p class="line reveal">Nuestras manos quedaron ocupadas</p>
+      </section>
+
+      <section class="stanza stanza--cycle" aria-label="">
+        <p class="line reveal">Amanece</p>
+        <p class="line reveal">El brillo del sol cambió, está más pequeño</p>
+        <p class="line reveal">Atardece</p>
+        <p class="line reveal">El brillo del diminuto sol se mantiene</p>
+        <p class="line reveal">Anochece</p>
+        <p class="line reveal">El brillo del sol permanece</p>
+      </section>
+
+      <section class="stanza stanza--finger" aria-label="">
+        <p class="line reveal">El dedo con el que alguna vez acaricié tu rostro</p>
+        <p class="line reveal">Ahora acaricia frenéticamente un vidrio templado</p>
+        <p class="line reveal">Un gel de plástico</p>
+        <p class="line reveal">Una pantalla que alimenta</p>
+        <p class="line reveal">Con una canción que se transmuta</p>
+        <p class="line reveal">en una persona desnuda o en una que insulta</p>
+        <p class="line reveal">De pizzas a sancocho</p>
+        <p class="line reveal">De deportes a marlboros</p>
+        <p class="line reveal">De trago a guerras</p>
+        <p class="line reveal">De bombas a animales</p>
+        <p class="line reveal">El dedo sube y baja</p>
+        <p class="line reveal">Como cuando salíamos juntos al parque.</p>
+      </section>
+    </div>
+
+    <div class="silence" aria-hidden="true"></div>
+
+    <section class="meditation">
+      <p class="question reveal">¿Qué es la tecnología… será nuestro anhelo para ser eternos?</p>
+      <p class="definition reveal">Tecnología proviene del prefijo griego techné→arte, técnica, oficio←</p>
+      <p class="definition reveal">y del sufijo logos →razón, estudio, ciencia, sabiduría←</p>
+      <p class="reveal">¿Cuándo llegue la hora de nuestra muerte nuestras cenizas serán parte del algoritmo? Seremos feed de los datos. Pero si en una época pasada los datos eran nuestro “feed”, nuestro alimento. Ahora nosotros somos el feed de los datos.</p>
+      <p class="reveal">Cuál es el punto de la vida sino ser parte de la avalancha del progreso, quiero ser ola dentro del maremoto tecnológico.</p>
+      <p class="reveal">La fantasía y la ciencia ambas están jugando con la llama de Prometeo, las alas de Hermes, la fuerza de Poseidón, la velocidad del rayo de Zéuz y el sacrificio de Hefesto. Todos hombres, todos listos y todos imbricados con Thiel, Zuckemberg, Bezos, Musk, Brin-Page. Son más blancos que la leche, más inseguros que leche con limón y tan diminutos como la bacteria <em>escherichia colli</em>.</p>
+      <p class="question reveal">¿Mientras ellos sueñan con el espacio, la inmortalidad y la soberanía de su individuación narcisista, nosotros con qué soñamos?</p>
+      <p class="question reveal">¿Qué sueño, qué sueña mi prójimo, qué sueña mi otro yo allá en los escombros de Gaza?</p>
+      <p class="question reveal">¿Quisiera poder soñar algo que no tuviese que ver con el fin del mundo? O nos acostumbramos a seguir el vaivén de la violencia, de la desolación… del desamparo.</p>
+      <p class="question reveal">¿Quién nos va a cuidar?</p>
+      <p class="eyes reveal">Dos ojos, los míos, los de nadie más. Dos ojos, los de mi prójimo, los que me cuidan, los que velan por mi vida. Cuatro ojos, los nuestros, los del amor, la amistad, la pasión. Ocho ojos, desconocemos algunos unos que se van, vienen y se quedan para siempre, unos dicen que cuidan, otros simplemente echan un vistazo, algunos se duermen bajo nuestra mirada. Dieciséis ojos, unos extraños, otros similares a los nuestros, unos hostiles, algunos hospitalarios, todos pestañean ¿cuál es la diferencia? todos lagrimean ¿cuál es la nuestra esencia? todos están cansados ¿cuál es nuestro destino? todos dormimos, todos morimos, todos seremos parte de la tierra y su gobierno. Treinta dos ojos nos vigilan y se multiplican… parecen esporas de hongos. Múltiplos de mil, múltiplos de diez mil, múltiplos de cien mil, múltiplos de un millón y va creciendo y creciendo, y no para y no para, y sigue y sigue, y vuelve el sube y baja, el baja y sube. Mi trato de ver y es imposible, solo veo la mirada del otro. Nos tratamos de ver y solo vemos la mirada de unos, de muchos, de miles, de millones con deseos, anhelos, pensamientos, insultos, desnudos, comercio, fraudes, deudas, catástrofes, caridad, muerte. En los ojos está la clave, los ojos, chico… los ojos nunca mienten.</p>
+    </section>
+
+    <div class="silence" aria-hidden="true"></div>
+
+    <header class="manifesto-title reveal">
+      <h1>Manifiesto Escrolleo</h1>
+    </header>
+
+    <ol class="manifesto">
+      <li class="manifesto-item reveal">
+        <h2>Scrolling life</h2>
+        <p>Este proyecto tiene una deuda artística con la patria milagro que hizo posible su tentativa devastación. La élite de las artes, bellas y puras, tiene la obligación positiva de participar en la defensa de la patria milagro con sangre o fuego, como les gusta a los sadomasoquistas de esta linda nación del cariño, del amor y de nuestra sagrada Virgen del corazón.</p>
+      </li>
+      <li class="manifesto-item reveal">
+        <h2>Raiders of the storm</h2>
+        <p>Debemos rebelarnos contra la tiranía de la dignidad. ¿Es acaso este concepto útil para nuestro anhelado deseo de escalar y seguir escalando por las escaleras de la maestría artística? La sabiduría, la motivación, el mérito de estar bendecidos por las musas de la productividad, la distribución de nuestra obra y su consumo inmediato debe permanecer y perdurar por encima de nuestra dignidad. Hacer arte es sacrificio, hacer arte es de unos bendecidos y hacer arte es para el genio que lo apoya y patrocina. Nosotros no valemos nada; nuestra obra, en cambio, sí lo vale.</p>
+      </li>
+      <li class="manifesto-item reveal">
+        <h2>The letter</h2>
+        <p>Hacer arte no es resistir. La novedosa decadencia de nuestra civilización artística solo será perdonada si dicha cultura es capaz de asegurar que el arte esté vinculado con programas biempensantes de emprendimiento y rendimiento, para así garantizar una cultura rentable en torno al esfuerzo esquemático de los artistas emergentes. El arte del capitalismo es el arte de capitalizar las creaciones artísticas.</p>
+      </li>
+      <li class="manifesto-item reveal">
+        <h2>The Rhythm of the Night</h2>
+        <p>El artista ha de ser mordaz e implacable tal como su sistema se lo indica. Deberá canibalizar a sus colegas, nutrirse de ellos libre y democráticamente dentro de los mandamientos digitales de las redes sociales.</p>
+      </li>
+      <li class="manifesto-item reveal">
+        <h2>We build this city</h2>
+        <p>La cuestión no es si se utilizará la IA para hacer arte, sino quién podrá utilizarla y con qué fin. Nuestros colegas no se detendrán en debates teatrales sobre las ventajas o desventajas del desarrollo de los procesos artísticos. Ellos y nosotros seguiremos adelante con este proceso lleno de cariño, amor y resistencia artística.</p>
+      </li>
+      <li class="manifesto-item reveal">
+        <h2>Sledgehammer</h2>
+        <p>El muro que se ha construido entre la lógica militar y las artes ha de ser derrumbado con poder de martillo demoledor. Derrumbar esta barrera implicaría un punto de vista más disciplinado, higiénico y puro. Las artes están contaminadas de ciertos patrones sospechosos dentro de nuestro pensamiento bendecido por el bienestar de la patria, el honor y la familia.</p>
+      </li>
+      <li class="manifesto-item reveal">
+        <h2>Artists just want to have fun</h2>
+        <p>Si un ciudadano de a pie pide que nuestro arte sea un arma para el beneficio de nuestra prosperidad, el artista tiene que luchar por fabricarla a todo coste, aún si no le alcanza, pues su sacrificio luego le será retribuido por el fantasmal aplauso de la desolación.</p>
+      </li>
+      <li class="manifesto-item reveal">
+        <h2>Patron saint</h2>
+        <p>El artista debe ser remunerado a partir de su motivación y funcionalidad con respecto a la utilidad de su creación, porque una pintura al óleo no le va a dar de comer a nadie, mucho menos un complejo tejido o un absurdo tatuaje. Ahora bien, si el artista logra capturar esta idea, su renta aumentará tanto en mérito como en su virtud de leer nuestro bendecido sistema.</p>
+      </li>
+      <li class="manifesto-item reveal">
+        <h2>America dreamin’</h2>
+        <p>Resentimiento y recuento de cuentas viejas. El resentimiento es una emoción que siempre ha nutrido nuestro sistema. Hace parte integral de la venganza y la revancha, sucumbir ante esta es simplemente un honor enorme y nos hará artistas que escalan con esfuerzo vital para encontrar su espacio vitalista en la existencia.</p>
+      </li>
+      <li class="manifesto-item reveal">
+        <h2>¿Beds are burning? No, let’s go to burning man</h2>
+        <p>El artista sensible que realiza un proyecto introspectivo ha de abandonar con rapidez esta fracasada contienda, pues demuestra su debilidad frente al sistema. Las grandes acciones vienen de personas de grandes proyecciones, más no de diminutos proyectos sobre su barato lugar de “enunciación”. Por ejemplo, si el mundo se acaba, hay que hacer un festival artístico sobre el fin del mundo, no criticarlo o cambiarlo, es mucho mejor la caridad a la transformación real.</p>
+      </li>
+      <li class="manifesto-item reveal">
+        <h2>Eyes with a face, Palantir is our friend</h2>
+        <p>Si un enemigo es abatido lo que corresponde es una caminata que rodee su cuerpo, de esta forma transformamos el minuto de silencio en un prolongado rumbo a la Patria Milagrosa donde se camina entre muertos y se entierran a los vivos en la miseria de nuestra pronta riqueza.</p>
+      </li>
+      <li class="manifesto-item reveal">
+        <h2>This is the end my only friend the ¿END?</h2>
+        <p>La era de la inteligencia artística artificial llega a su hospitalaria apertura… y vino para quedarse pues la creatividad del mundo es calculable para hacerla rentable al capital de nuestros dichosos mecenas y reyes.</p>
+      </li>
+      <li class="manifesto-item reveal">
+        <h2>Latinoamérica es a Little town al sur de United States</h2>
+        <p>Las visiones progresistas, el fuego de Prometeo, los valores de la sagrada democracia son de nuestro líder imperial: el querido, a veces violento, volátil e impredecible, Tio Sam. A él le debemos todo nuestro respeto en función de nuestros gastados suelos, contaminadas aguas y áspero aire lleno del amado aroma de glifosato.</p>
+      </li>
+      <li class="manifesto-item reveal">
+        <h2>Café and Oil</h2>
+        <p>Tu patria no es tu patria, tu problema es tu problema pues para que haya paz para nuestro ideal imperial es necesario nuestro sacrificio, después de las grandes guerras, ahora solo tenemos miedo y pequeñas guerras con millones de muertos y damnificados, pero el punto es que la paz del Imperio es una necesidad vital y para ello es bueno que tomen nuestro café y petróleo por las buenas o por las malas, total es por el bien de todo este hermoso pueblo lleno de tristeza.</p>
+      </li>
+      <li class="manifesto-item reveal">
+        <h2>United Oil Company</h2>
+        <p>La neutralización de Venezuela y toda Latinoamérica (y ojalá del mundo entero, hasta de posibles alienígenas comunistas) es lo mejor que ha realizado el sagaz vuelo del águila calva. Otorgar algo de soberanía a este pueblo que simplemente es el patio trasero del Imperio es un peligro, los niños en el patio pueden quejarse, convertirse en adultos que ya no quieran vivir encerrados e incómodos, por ello la neutralización e injerencia es nuestra mejor opción, sobre todo como espacio vital y fuerza de trabajo para todas las comodidades de Tío Sam.</p>
+      </li>
+      <li class="manifesto-item reveal">
+        <h2>Artistas unidos never would be deafeted</h2>
+        <p>Aquellos que se dedican al vital acto de realizar arte, es necesario que sean aplaudidos si han podido apropiarse de otros modos de hacer arte y de narrar profundas historias. Solo el artista verdadero puede incorporar en su discurso el milenario trabajo de otras personas y hacerlo suyo, parte de su obra y lograr conseguir una noble renta por explotar su visión de aquello que le narraron alguna vez esos otros especímenes del arte, o más bien… de artesanos, que de sanos tienen poco…</p>
+      </li>
+      <li class="manifesto-item reveal">
+        <h2>La voz de los 20x20</h2>
+        <p>Scrolling life debe hacerse cargo de que cada voz que interfiera en nuestro proyecto unífono sea totalmente negada, debido a que solo las voces más puras y prestigiosas han de ser parte de este movimiento implosionario y visionario. Elegantes voces de Europa, del Imperio, de los mejores museos del mundo, los únicos y más prestigiosos. El prestigio y la fama son la coca del artista y por ello hay que luchar por un mundo famosamente prestigioso y prestigiosamente puro.</p>
+      </li>
+      <li class="manifesto-item reveal">
+        <h2>Una Voz Coral</h2>
+        <p>¿Por qué dejar ingresar a nuestro convento a tantas personas que se dicen libres? Una voz única o únicas es todo lo permitido, lo demás ha de ser restringido. ¿Voz coral? Quién habló de esa estupidez, debió de ser un mugriento comunista quizás de apellido Aleksiévich. Las voces de muchos es la voz de una masa ignorante y la supuesta voz del pueblo es la voz de una gentuza lo mas de obtusa. No tienen nuestro nivel de reflexión, de introspección vital sobre el espacio del arte. El arte es para los refinados, para la gente fina y bella, delicada y sensual, para aquellos que disfrutan estar a la altura de sus amos en Europa y el Imperio.</p>
+      </li>
+      <li class="manifesto-item reveal">
+        <h2>El coro</h2>
+        <p>¿Quiénes se creen para exigir ser coro o una voz dentro de este espacio vitalmente artístico, acaso se creen griegos hermosos y divinos, bien esculpidos por las bondadosas manos de Dios? Aquí podrán hacer un grafiti de esos horribles que manchan la pulcritud del espacio público capitalino lleno de seguridad y bienestar para todas y para todos. ¡Vieron lo incluyentes que somos! Acaso quieren más: un grafiti y una queja de vez en cuando, nada más.</p>
+      </li>
+      <li class="manifesto-item reveal">
+        <h2>La avalancha</h2>
+        <p>Cuanto gentío, esto es un lío. Vayan con sus quejas a la calle, aquí en nuestro espacio vital nada de nada. No molesten al artista, estamos creando para ser famosos y ser serviles al grande de Thiel y al musculoso de Musk.</p>
+      </li>
+      <li class="manifesto-item reveal">
+        <h2>Anarquía del sube y baja</h2>
+        <p>Esto es una locura y es inaceptable que este gran espacio Scrolling life, esté condenado por una masa que se dice artista, que se dice tener su propia voz. Tenemos que retornar a los valores biempensantes. Nada de otorgar voz a nadie solo a nosotros los puros, los creadores, los bondadosos que les dimos una probada del verdadero arte.</p>
+      </li>
+      <li class="manifesto-item reveal">
+        <h2>Only you can’t help falling in love with art</h2>
+        <p>El arte es nuestro verdadero amor. Amo, cura y mecenas de nuestro destino. En su santidad dejamos nuestras plegarias y en su devenir dejamos nuestras posturas y planteamientos.</p>
+      </li>
+    </ol>
+  </main>
+
+  <script>
+    (() => {
+      const progress = document.querySelector('.reading-progress span');
+      const reveals = [...document.querySelectorAll('.reveal')];
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+      if (!('IntersectionObserver' in window) || reducedMotion.matches) {
+        reveals.forEach((element) => element.classList.add('is-active'));
+      } else {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) entry.target.classList.add('is-active');
+          });
+        }, { rootMargin: '-12% 0px -18% 0px', threshold: 0.08 });
+
+        reveals.forEach((element) => observer.observe(element));
+      }
+
+      let ticking = false;
+
+      const update = () => {
+        const scrollRange = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+        const ratio = Math.min(1, Math.max(0, window.scrollY / scrollRange));
+        progress.style.height = `${ratio * 100}%`;
+        document.body.style.setProperty('--scroll-grid', `${window.scrollY}px`);
+
+        if (!reducedMotion.matches) {
+          const shiftLimit = window.innerWidth <= 520 ? 5 : 14;
+          reveals.forEach((element, index) => {
+            if (!element.classList.contains('is-active')) return;
+            const rect = element.getBoundingClientRect();
+            const centerOffset = (rect.top + (rect.height / 2) - (window.innerHeight / 2)) / window.innerHeight;
+            const direction = index % 2 === 0 ? -1 : 1;
+            const shift = Math.max(-shiftLimit, Math.min(shiftLimit, centerOffset * shiftLimit * direction));
+            element.style.setProperty('--live-shift', `${shift}px`);
+          });
+        }
+
+        ticking = false;
+      };
+
+      const requestUpdate = () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(update);
+      };
+
+      addEventListener('scroll', requestUpdate, { passive: true });
+      addEventListener('resize', requestUpdate);
+      reducedMotion.addEventListener?.('change', requestUpdate);
+      update();
+    })();
+  </script>
+</body>
+</html>
