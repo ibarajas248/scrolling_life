@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bocetos Pausa - Scrolling Life</title>
+  <link rel="stylesheet" href="../../assets/fonts/local-fonts.css" />
+  <link rel="stylesheet" href="../../assets/styles/home.css" />
+  <style>
+    :root {
+      --bg: #020304;
+      --green: #9eff71;
+      --cyan: #5fd7df;
+      --coral: #ee7d59;
+      --muted: #9aa4b5;
+      --text: #d8e7ef;
+      --panel: rgba(2, 3, 4, 0.72);
+      --mono: 'Share Tech Mono', monospace;
+      --display: 'Disket Mono', monospace;
+      --body: 'Bricolage Grotesque', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 34px 20px 54px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--body);
+      line-height: 1.5;
+    }
+
+    .wrap {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      color: var(--green);
+      font-family: var(--display);
+      font-size: clamp(2.1rem, 7vw, 4rem);
+      line-height: 1;
+    }
+
+    .intro {
+      max-width: 760px;
+      margin: 0 0 34px;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 0.95rem;
+    }
+
+    .sketch-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 28px;
+    }
+
+    .sketch {
+      position: relative;
+      min-height: 430px;
+      overflow: hidden;
+      border: 1px solid rgba(158, 255, 113, 0.24);
+      background:
+        radial-gradient(ellipse at 50% 42%, rgba(158, 255, 113, 0.08), transparent 58%),
+        rgba(2, 3, 4, 0.58);
+      box-shadow: inset 0 0 70px rgba(0, 0, 0, 0.48);
+    }
+
+    .sketch__label {
+      position: absolute;
+      left: 18px;
+      top: 16px;
+      z-index: 6;
+      color: var(--cyan);
+      font-family: var(--mono);
+      font-size: 0.76rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .node {
+      position: absolute;
+      z-index: 5;
+      color: var(--green);
+      font-family: var(--mono);
+      text-decoration: none;
+    }
+
+    .node img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      image-rendering: pixelated;
+    }
+
+    .node-title {
+      display: block;
+      color: var(--green);
+      font-family: var(--display);
+      font-size: 0.86rem;
+      line-height: 1.15;
+      text-transform: uppercase;
+      text-shadow: 0 0 12px rgba(158, 255, 113, 0.34);
+    }
+
+    .node-meta {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 0.68rem;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 28px;
+      padding: 8px 16px;
+      border: 1px solid var(--coral);
+      border-radius: 4px;
+      color: var(--coral);
+      font-family: var(--mono);
+      text-decoration: none;
+    }
+
+    .b1 .axis {
+      position: absolute;
+      inset: 78px 36px 58px;
+      border-left: 1px solid rgba(95, 215, 223, 0.45);
+      border-right: 1px solid rgba(95, 215, 223, 0.14);
+      background:
+        linear-gradient(90deg, transparent 0 49.7%, rgba(158, 255, 113, 0.5) 50%, transparent 50.3%),
+        repeating-linear-gradient(0deg, transparent 0 18px, rgba(158, 255, 113, 0.08) 19px 20px);
+    }
+
+    .b1 .core {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 74px;
+      height: 74px;
+      border: 1px solid var(--green);
+      border-radius: 999px;
+      background: rgba(2, 3, 4, 0.82);
+      box-shadow: 0 0 28px rgba(158, 255, 113, 0.26);
+      transform: translate(-50%, -50%);
+    }
+
+    .b1 .n-recipe {
+      left: 54px;
+      top: 120px;
+      width: 150px;
+      height: 102px;
+      border: 1px solid var(--green);
+      padding: 9px;
+      background: var(--panel);
+    }
+
+    .b1 .n-ascii {
+      right: 54px;
+      bottom: 98px;
+      width: 150px;
+      min-height: 96px;
+      border: 1px solid rgba(95, 215, 223, 0.72);
+      padding: 14px;
+      background: var(--panel);
+    }
+
+    .b1 .n-ascii::before {
+      content: '[.:]';
+      display: block;
+      margin-bottom: 10px;
+      color: var(--cyan);
+      font-family: var(--display);
+      font-size: 1.4rem;
+    }
+
+    .b2 {
+      background:
+        radial-gradient(circle at 50% 50%, rgba(158, 255, 113, 0.12), transparent 28%),
+        radial-gradient(circle at 50% 50%, transparent 0 94px, rgba(158, 255, 113, 0.16) 95px 96px, transparent 97px 154px, rgba(95, 215, 223, 0.14) 155px 156px, transparent 157px),
+        rgba(2, 3, 4, 0.64);
+    }
+
+    .b2 .orbit-line {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 285px;
+      height: 285px;
+      border: 1px dashed rgba(158, 255, 113, 0.22);
+      border-radius: 999px;
+      transform: translate(-50%, -50%) rotate(-13deg);
+    }
+
+    .b2 .core {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      display: grid;
+      place-items: center;
+      width: 104px;
+      height: 104px;
+      border: 1px solid var(--green);
+      border-radius: 999px;
+      color: var(--green);
+      font-family: var(--display);
+      text-transform: uppercase;
+      background: rgba(4, 8, 6, 0.9);
+      box-shadow: 0 0 32px rgba(158, 255, 113, 0.26);
+      transform: translate(-50%, -50%);
+    }
+
+    .b2 .n-recipe {
+      left: 46px;
+      top: 68px;
+      width: 158px;
+      height: 108px;
+      padding: 8px;
+      border: 1px solid rgba(158, 255, 113, 0.72);
+      background: rgba(2, 3, 4, 0.58);
+    }
+
+    .b2 .n-ascii {
+      right: 42px;
+      bottom: 62px;
+      width: 168px;
+      padding: 18px;
+      border: 1px solid rgba(95, 215, 223, 0.62);
+      background: rgba(2, 3, 4, 0.58);
+    }
+
+    .b2 .n-ascii::before {
+      content: '> ascii_pause()';
+      display: block;
+      margin-bottom: 12px;
+      color: var(--cyan);
+      font-size: 0.86rem;
+    }
+
+    .b3 {
+      background:
+        linear-gradient(90deg, rgba(158, 255, 113, 0.07), transparent 26%, transparent 74%, rgba(95, 215, 223, 0.08)),
+        rgba(2, 3, 4, 0.72);
+    }
+
+    .b3 .rail {
+      position: absolute;
+      left: 42px;
+      right: 42px;
+      top: 50%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--green), var(--cyan), transparent);
+      box-shadow: 0 0 18px rgba(158, 255, 113, 0.18);
+    }
+
+    .b3 .tick {
+      position: absolute;
+      top: 86px;
+      bottom: 80px;
+      width: 1px;
+      background: rgba(158, 255, 113, 0.15);
+    }
+
+    .b3 .tick:nth-of-type(2) { left: 28%; }
+    .b3 .tick:nth-of-type(3) { left: 50%; }
+    .b3 .tick:nth-of-type(4) { left: 72%; }
+
+    .b3 .n-recipe,
+    .b3 .n-ascii {
+      top: 50%;
+      width: 176px;
+      min-height: 172px;
+      padding: 12px;
+      border: 1px solid rgba(158, 255, 113, 0.64);
+      background: rgba(2, 3, 4, 0.7);
+      transform: translateY(-50%);
+    }
+
+    .b3 .n-recipe { left: 62px; }
+    .b3 .n-ascii { right: 62px; }
+
+    .b3 .n-ascii .terminal {
+      display: grid;
+      place-items: center;
+      height: 82px;
+      margin-bottom: 16px;
+      border: 1px dashed rgba(95, 215, 223, 0.48);
+      color: var(--cyan);
+      font-family: var(--display);
+      font-size: 1.6rem;
+      background: rgba(0, 0, 0, 0.36);
+    }
+
+    .b4 {
+      background:
+        radial-gradient(circle at 30% 36%, rgba(255, 129, 237, 0.1), transparent 22%),
+        radial-gradient(circle at 70% 64%, rgba(95, 215, 223, 0.12), transparent 24%),
+        rgba(2, 3, 4, 0.7);
+    }
+
+    .b4 svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .b4 path {
+      fill: none;
+      stroke: rgba(158, 255, 113, 0.36);
+      stroke-width: 1;
+      stroke-dasharray: 8 8;
+    }
+
+    .b4 .n-recipe {
+      left: 56px;
+      bottom: 58px;
+      width: 188px;
+      min-height: 168px;
+      padding: 11px;
+      border: 1px solid rgba(255, 129, 237, 0.56);
+      background: rgba(2, 3, 4, 0.68);
+    }
+
+    .b4 .n-ascii {
+      right: 56px;
+      top: 64px;
+      width: 190px;
+      min-height: 160px;
+      padding: 17px;
+      border: 1px solid rgba(95, 215, 223, 0.64);
+      background: rgba(2, 3, 4, 0.68);
+    }
+
+    .b4 .n-ascii::before {
+      content: '{ pause: true }';
+      display: block;
+      margin-bottom: 18px;
+      color: var(--cyan);
+      font-family: var(--display);
+      font-size: 1rem;
+    }
+
+    @media (max-width: 900px) {
+      .sketch-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      body {
+        padding-inline: 14px;
+      }
+
+      .sketch {
+        min-height: 500px;
+      }
+
+      .b1 .n-recipe,
+      .b2 .n-recipe,
+      .b3 .n-recipe,
+      .b4 .n-recipe,
+      .b1 .n-ascii,
+      .b2 .n-ascii,
+      .b3 .n-ascii,
+      .b4 .n-ascii {
+        left: 50%;
+        right: auto;
+        width: min(230px, calc(100% - 44px));
+        transform: translateX(-50%);
+      }
+
+      .b1 .n-recipe,
+      .b2 .n-recipe,
+      .b3 .n-recipe,
+      .b4 .n-ascii {
+        top: 92px;
+        bottom: auto;
+      }
+
+      .b1 .n-ascii,
+      .b2 .n-ascii,
+      .b3 .n-ascii,
+      .b4 .n-recipe {
+        top: auto;
+        bottom: 60px;
+      }
+
+      .b3 .n-recipe,
+      .b3 .n-ascii {
+        transform: translateX(-50%);
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <h1>Bocetos Pausa</h1>
+    <p class="intro">Cuatro direcciones para reemplazar la zona de accesos en Pausa. Todas mantienen los dos enlaces reales: Recipe path y ASCII path.</p>
+
+    <section class="sketch-grid" aria-label="Bocetos de diseno para Pausa">
+      <article class="sketch b1">
+        <span class="sketch__label">01 / diagrama de espera</span>
+        <div class="axis" aria-hidden="true"></div>
+        <div class="core" aria-hidden="true"></div>
+        <a class="node n-recipe" href="./in-case-you-come-back/">
+          <img src="./in-case-you-come-back/assets/in-case-you-come-back-title.png" alt="" />
+          <span class="node-title">Recipe path</span>
+          <span class="node-meta">retorno / receta</span>
+        </a>
+        <a class="node n-ascii" href="./ascii/">
+          <span class="node-title">ASCII path</span>
+          <span class="node-meta">poema / consola</span>
+        </a>
+      </article>
+
+      <article class="sketch b2">
+        <span class="sketch__label">02 / orbita de pausa</span>
+        <div class="orbit-line" aria-hidden="true"></div>
+        <div class="core" aria-hidden="true">pausa</div>
+        <a class="node n-recipe" href="./in-case-you-come-back/">
+          <img src="./in-case-you-come-back/assets/in-case-you-come-back-title.png" alt="" />
+          <span class="node-title">Recipe path</span>
+          <span class="node-meta">archivo afectivo</span>
+        </a>
+        <a class="node n-ascii" href="./ascii/">
+          <span class="node-title">ASCII path</span>
+          <span class="node-meta">senal textual</span>
+        </a>
+      </article>
+
+      <article class="sketch b3">
+        <span class="sketch__label">03 / corredor de enlaces</span>
+        <div class="rail" aria-hidden="true"></div>
+        <span class="tick" aria-hidden="true"></span>
+        <span class="tick" aria-hidden="true"></span>
+        <span class="tick" aria-hidden="true"></span>
+        <a class="node n-recipe" href="./in-case-you-come-back/">
+          <img src="./in-case-you-come-back/assets/in-case-you-come-back-title.png" alt="" />
+          <span class="node-title">Recipe path</span>
+          <span class="node-meta">entrada 01</span>
+        </a>
+        <a class="node n-ascii" href="./ascii/">
+          <span class="terminal" aria-hidden="true">[.:]</span>
+          <span class="node-title">ASCII path</span>
+          <span class="node-meta">entrada 02</span>
+        </a>
+      </article>
+
+      <article class="sketch b4">
+        <span class="sketch__label">04 / bifurcacion glitch</span>
+        <svg viewBox="0 0 560 430" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M280 58 C250 130 222 182 172 244 C134 290 126 326 150 372" />
+          <path d="M280 58 C326 126 374 160 412 205 C452 252 450 302 404 358" />
+          <path d="M96 354 C166 298 245 260 282 215 C332 154 360 104 464 74" />
+        </svg>
+        <a class="node n-recipe" href="./in-case-you-come-back/">
+          <img src="./in-case-you-come-back/assets/in-case-you-come-back-title.png" alt="" />
+          <span class="node-title">Recipe path</span>
+          <span class="node-meta">imagen / regreso</span>
+        </a>
+        <a class="node n-ascii" href="./ascii/">
+          <span class="node-title">ASCII path</span>
+          <span class="node-meta">codigo / pausa</span>
+        </a>
+      </article>
+    </section>
+
+    <a href="./" class="back-link">&lt; Volver a Pausa</a>
+  </main>
+</body>
+</html>

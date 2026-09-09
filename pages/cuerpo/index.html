@@ -54,7 +54,13 @@
 
     /* Columna Izquierda: Texto Curatorial (idéntico a infinito) */
     .content-container {
+      position: relative;
       width: 100%;
+    }
+
+    .title-perch {
+      position: relative;
+      display: inline-block;
     }
 
     h1 {
@@ -64,6 +70,114 @@
       font-size: clamp(2.4rem, 6vw, 3.2rem);
       line-height: 1;
       letter-spacing: -0.02em;
+    }
+
+    .butterfly-link {
+      position: absolute;
+      top: -18px;
+      right: -54px;
+      z-index: 12;
+      display: block;
+      width: 62px;
+      height: 48px;
+      border-radius: 50%;
+      outline-offset: 8px;
+      transform-origin: 50% 70%;
+      animation: butterfly-perch 2.6s ease-in-out infinite;
+    }
+
+    .butterfly-link::before,
+    .butterfly-link::after {
+      position: absolute;
+      top: 12px;
+      width: 28px;
+      height: 26px;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      background:
+        radial-gradient(circle at 58% 38%, rgba(255, 255, 255, 0.92) 0 3px, transparent 4px),
+        radial-gradient(circle at 30% 68%, rgba(158, 255, 113, 0.9) 0 4px, transparent 5px),
+        linear-gradient(135deg, rgba(95, 215, 223, 0.96), rgba(238, 125, 89, 0.88));
+      box-shadow: 0 0 18px rgba(158, 255, 113, 0.32);
+      content: "";
+      will-change: transform;
+    }
+
+    .butterfly-link::before {
+      left: 5px;
+      border-radius: 70% 35% 72% 42%;
+      transform-origin: 100% 62%;
+      animation: wing-left 220ms ease-in-out infinite alternate;
+    }
+
+    .butterfly-link::after {
+      right: 5px;
+      border-radius: 35% 70% 42% 72%;
+      transform-origin: 0 62%;
+      animation: wing-right 220ms ease-in-out infinite alternate;
+    }
+
+    .butterfly-body {
+      position: absolute;
+      top: 17px;
+      left: 50%;
+      z-index: 2;
+      width: 5px;
+      height: 24px;
+      border-radius: 999px;
+      background: #f7f8fb;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.55);
+      transform: translateX(-50%) rotate(6deg);
+    }
+
+    .butterfly-body::before,
+    .butterfly-body::after {
+      position: absolute;
+      top: -9px;
+      width: 14px;
+      height: 13px;
+      border-top: 1px solid rgba(255, 255, 255, 0.78);
+      content: "";
+    }
+
+    .butterfly-body::before {
+      right: 1px;
+      border-radius: 100% 0 0 0;
+      transform: rotate(-26deg);
+    }
+
+    .butterfly-body::after {
+      left: 1px;
+      border-radius: 0 100% 0 0;
+      transform: rotate(26deg);
+    }
+
+    .butterfly-link:hover,
+    .butterfly-link:focus-visible {
+      filter: saturate(1.3) brightness(1.15);
+    }
+
+    @keyframes butterfly-perch {
+      0%, 100% {
+        transform: translate3d(0, 0, 0) rotate(-5deg);
+      }
+
+      45% {
+        transform: translate3d(8px, -10px, 0) rotate(7deg);
+      }
+
+      70% {
+        transform: translate3d(-5px, -4px, 0) rotate(-10deg);
+      }
+    }
+
+    @keyframes wing-left {
+      from { transform: rotateY(18deg) rotate(-16deg); }
+      to { transform: rotateY(62deg) rotate(-31deg); }
+    }
+
+    @keyframes wing-right {
+      from { transform: rotateY(-18deg) rotate(16deg); }
+      to { transform: rotateY(-62deg) rotate(31deg); }
     }
 
     .author-meta {
@@ -131,6 +245,8 @@
       display: flex;
       flex-direction: column;
       height: clamp(580px, 78vh, 740px);
+    }
+
     /* Escenario del Grafo Flotante */
     .graph-stage {
       position: relative;
@@ -192,9 +308,15 @@
       filter: drop-shadow(0 0 8px var(--coral));
     }
 
-    .edge-minor {
-      stroke: rgba(168, 176, 192, 0.18);
-      stroke-dasharray: 2 4;
+    .edge-teal {
+      stroke: rgba(95, 215, 223, 0.35);
+    }
+
+    .edge-teal.is-highlighted {
+      stroke: var(--teal);
+      stroke-width: 2.5;
+      stroke-dasharray: none;
+      filter: drop-shadow(0 0 8px var(--teal));
     }
 
     @keyframes edge-flow {
@@ -304,6 +426,17 @@
       transform: translate(-50%, -50%) scale(1.05);
     }
 
+    .satellite-materia {
+      border: 1px solid var(--teal);
+    }
+
+    .satellite-materia:hover,
+    .satellite-materia:focus {
+      background: rgba(95, 215, 223, 0.14);
+      box-shadow: 0 0 22px rgba(95, 215, 223, 0.35), 0 12px 30px rgba(0, 0, 0, 0.7);
+      transform: translate(-50%, -50%) scale(1.05);
+    }
+
     .node-icon-box {
       display: grid;
       place-items: center;
@@ -339,6 +472,18 @@
       box-shadow: 0 0 14px var(--coral);
     }
 
+    .satellite-materia .node-icon-box {
+      background: rgba(95, 215, 223, 0.1);
+      border: 1px solid var(--teal);
+      color: var(--teal);
+    }
+
+    .satellite-materia:hover .node-icon-box {
+      background: var(--teal);
+      color: #020304;
+      box-shadow: 0 0 14px var(--teal);
+    }
+
     .node-meta {
       display: flex;
       flex-direction: column;
@@ -354,6 +499,7 @@
 
     .satellite-game .node-title { color: var(--green); }
     .satellite-npc .node-title { color: var(--coral); }
+    .satellite-materia .node-title { color: var(--teal); }
 
     .node-caption {
       font-family: var(--font-mono);
@@ -380,6 +526,11 @@
       transform: translateX(3px);
     }
 
+    .satellite-materia:hover .node-arrow {
+      color: var(--teal);
+      transform: translateX(3px);
+    }
+
     /* Posicionamiento en el lienzo */
     #nodeGameScroll {
       top: 26%;
@@ -391,54 +542,10 @@
       left: 76%;
     }
 
-    /* 4. Micro-Nodos de Contexto Biométrico */
-    .minor-node {
-      padding: 4px 10px;
-      background: rgba(14, 18, 24, 0.85);
-      border: 1px solid var(--line);
-      border-radius: 4px;
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.06em;
-      color: var(--muted);
-      cursor: default;
+    #nodeMateria {
+      top: 50%;
+      left: 88%;
     }
-
-    .minor-node::before {
-      content: '';
-      display: inline-block;
-      width: 5px;
-      height: 5px;
-      background: var(--teal);
-      border-radius: 50%;
-      margin-right: 6px;
-      vertical-align: middle;
-      box-shadow: 0 0 5px var(--teal);
-    }
-
-    .minor-node:hover {
-      border-color: var(--teal);
-      color: var(--teal);
-      background: rgba(16, 24, 32, 0.95);
-      transform: translate(-50%, -50%) scale(1.06);
-    }
-
-    #nodeGesto {
-      top: 22%;
-      left: 22%;
-    }
-
-    #nodeRitmo {
-      top: 76%;
-      left: 24%;
-    }
-
-    #nodeMirada {
-      top: 86%;
-      left: 52%;
-    }
-
-
 
     /* -------------------------------------------------------------------------
        Responsive
@@ -466,15 +573,11 @@
         left: 74%;
       }
 
-      #nodeGesto {
-        top: 20%;
-        left: 20%;
+      #nodeMateria {
+        top: 50%;
+        left: 84%;
       }
 
-      #nodeRitmo {
-        top: 75%;
-        left: 20%;
-      }
     }
 
     @media (max-width: 640px) {
@@ -514,12 +617,24 @@
         font-size: 0.6rem;
       }
 
+      .butterfly-link {
+        top: -15px;
+        right: -44px;
+        width: 52px;
+        height: 42px;
+      }
+
       #nodeGameScroll {
         left: 70%;
       }
 
       #nodeNpc {
         left: 70%;
+      }
+
+      #nodeMateria {
+        top: 50%;
+        left: 76%;
       }
     }
   </style>
@@ -531,7 +646,12 @@
     
     <!-- Columna Izquierda: Formato Editorial Idéntico a Infinito -->
     <div class="content-container">
-      <h1>Cuerpo</h1>
+      <div class="title-perch">
+        <h1>Cuerpo</h1>
+        <a class="butterfly-link" href="../ochentas/index.html" aria-label="Ir a Ochentas">
+          <span class="butterfly-body" aria-hidden="true"></span>
+        </a>
+      </div>
       <div class="author-meta">
         <span>Texto Curatorial</span>
         <span>A&ntilde;o: 2026</span>
@@ -547,8 +667,6 @@
 
       <!-- Acciones y Botones con la misma coherencia que Infinito -->
       <div class="infinite-actions">
-        <a href="../game_scroll/" class="back-link node-direct-link">Abrir game_scroll</a>
-        <a href="../npc/" class="back-link">Abrir NPC</a>
         <a href="../../index.html" class="back-link">&lt; Volver al men&uacute; principal</a>
       </div>
     </div>
@@ -575,53 +693,48 @@
         <svg class="graph-connections-svg" id="graphConnectionsSvg" xmlns="http://www.w3.org/2000/svg">
           <line id="edgeGameScroll" class="graph-edge edge-green" />
           <line id="edgeNpc" class="graph-edge edge-coral" />
-          <line id="edgeGesto" class="graph-edge edge-minor" />
-          <line id="edgeRitmo" class="graph-edge edge-minor" />
-          <line id="edgeMirada" class="graph-edge edge-minor" />
+          <line id="edgeMateria" class="graph-edge edge-teal" />
         </svg>
 
         <!-- Nodos Interactivos -->
         <div class="graph-nodes-layer" id="graphNodesLayer">
-          
+
           <!-- Nodo Central Núcleo: CUERPO -->
           <div class="node-item hub-node" id="nodeHub">
             <div class="hub-shockwave" aria-hidden="true"></div>
             <h2>Cuerpo</h2>
-            <span class="hub-sub">NODO CENTRAL</span>
+
           </div>
 
           <!-- Satélite 1: game_scroll (Verde Neón) -->
           <a class="node-item satellite-node satellite-game" id="nodeGameScroll" href="../game_scroll/" data-edge="edgeGameScroll">
-            <span class="node-icon-box" aria-hidden="true">▣</span>
+
             <div class="node-meta">
-              <span class="node-title">game_scroll</span>
-              <span class="node-caption">experiencia interactiva</span>
+              <span class="node-title">El Mounstro del Scroll</span>
+
             </div>
-            <span class="node-arrow" aria-hidden="true">↗</span>
+
           </a>
 
           <!-- Satélite 2: NPC (Coral) -->
           <a class="node-item satellite-node satellite-npc" id="nodeNpc" href="../npc/" data-edge="edgeNpc">
-            <span class="node-icon-box" aria-hidden="true">◉</span>
+
             <div class="node-meta">
               <span class="node-title">NPC</span>
-              <span class="node-caption">muñeco interactivo</span>
+              <span class="node-caption">Juan Osorio</span>
             </div>
-            <span class="node-arrow" aria-hidden="true">↗</span>
+
           </a>
 
-          <!-- Micro-Nodos de Contexto Biométrico -->
-          <div class="node-item minor-node" id="nodeGesto" data-edge="edgeGesto" title="Gesto físico del scroll">
-            GESTO // SCROLL
-          </div>
+          <!-- Satélite 3: Fantasmagorías / Materia Inestable -->
+          <a class="node-item satellite-node satellite-materia" id="nodeMateria" href="../fantasmagorias/" data-edge="edgeMateria">
 
-          <div class="node-item minor-node" id="nodeRitmo" data-edge="edgeRitmo" title="Ritmo corporal y pulso">
-            RITMO // DEDO
-          </div>
+            <div class="node-meta">
+              <span class="node-title">Materia Inestable</span>
+              <span class="node-caption">fantasmagorías</span>
+            </div>
 
-          <div class="node-item minor-node" id="nodeMirada" data-edge="edgeMirada" title="Dirección de la mirada">
-            MIRADA // TRÁNSITO
-          </div>
+          </a>
 
         </div>
       </div>
@@ -638,14 +751,12 @@
       const stage = document.getElementById('graphStage');
       const hub = document.getElementById('nodeHub');
       const coordReadout = document.getElementById('coordReadout');
-      const satellites = document.querySelectorAll('.satellite-node, .minor-node');
+      const satellites = document.querySelectorAll('.satellite-node');
 
       const edges = {
         nodeGameScroll: document.getElementById('edgeGameScroll'),
         nodeNpc: document.getElementById('edgeNpc'),
-        nodeGesto: document.getElementById('edgeGesto'),
-        nodeRitmo: document.getElementById('edgeRitmo'),
-        nodeMirada: document.getElementById('edgeMirada')
+        nodeMateria: document.getElementById('edgeMateria')
       };
 
       const updateEdgeLines = () => {

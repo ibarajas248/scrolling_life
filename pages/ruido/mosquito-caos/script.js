@@ -9,6 +9,16 @@ const metricPressure = document.getElementById('metricPressure');
 const metricMode = document.getElementById('metricMode');
 const matrixRain = document.getElementById('matrixRain');
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+const ochentasRoute = '/pages/ochentas/index.html';
+
+function redirectToOchentas(event) {
+  event.preventDefault();
+  event.stopImmediatePropagation();
+  window.location.assign(ochentasRoute);
+}
+
+// Capture every click before local controls or generated frames can consume it.
+document.addEventListener('click', redirectToOchentas, { capture: true });
 
 const mediaUrls = Array.from({length: 40}, (_, i) => `https://picsum.photos/400/300?random=${i}`);
 
@@ -222,7 +232,7 @@ function createFrame(index) {
   field.append(wrapper);
 
   const openOchentas = () => {
-    window.location.href = '/pages/ochentas/index.html';
+    window.location.assign(ochentasRoute);
   };
 
   wrapper.addEventListener('pointerdown', (event) => event.stopPropagation());
