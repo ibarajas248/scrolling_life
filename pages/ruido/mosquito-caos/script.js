@@ -7,6 +7,8 @@ const metricFrames = document.getElementById('metricFrames');
 const metricSpeed = document.getElementById('metricSpeed');
 const metricPressure = document.getElementById('metricPressure');
 const metricMode = document.getElementById('metricMode');
+const matrixRain = document.getElementById('matrixRain');
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 const mediaUrls = Array.from({length: 40}, (_, i) => `https://picsum.photos/400/300?random=${i}`);
 
@@ -56,6 +58,11 @@ let lastTick = performance.now();
 let zCounter = 40;
 let clearChaosTimer = 0;
 let currentMode = CHAOS_MODES[0];
+let matrixContext;
+let matrixColumns = [];
+let matrixGlyphSize = 16;
+let matrixLastTick = performance.now();
+let matrixAnimationFrame = 0;
 
 function randomBetween(min, max) {
   return min + Math.random() * (max - min);
@@ -67,6 +74,84 @@ function pick(list) {
 
 function clamp(value, min, max) {
   return Math.min(max, Math.max(min, value));
+}
+
+function createMatrixColumn(index) {
+  const tail = Math.floor(randomBetween(12, 25));
+  return {
+    x: index * matrixGlyphSize + randomBetween(-2, 2),
+    y: randomBetween(-window.innerHeight, window.innerHeight),
+    speed: randomBetween(38, 118),
+    tail,
+    glyphs: Array.from({ length: tail }, () => (Math.random() > 0.5 ? '1' : '0')),
+    tint: Math.random() > 0.82 ? '82, 224, 255' : '203, 255, 46'
+  };
+}
+
+function resizeMatrixRain() {
+  if (!matrixRain) return;
+
+  const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  matrixGlyphSize = width < 640 ? 13 : 16;
+  matrixRain.width = Math.round(width * pixelRatio);
+  matrixRain.height = Math.round(height * pixelRatio);
+  matrixRain.style.width = `${width}px`;
+  matrixRain.style.height = `${height}px`;
+  matrixContext = matrixRain.getContext('2d');
+  matrixContext.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+  matrixContext.textBaseline = 'top';
+  matrixContext.font = `600 ${matrixGlyphSize}px "IBM Plex Mono", monospace`;
+
+  const count = Math.ceil(width / matrixGlyphSize) + 1;
+  matrixColumns = Array.from({ length: count }, (_, index) => createMatrixColumn(index));
+}
+
+function drawMatrixRain(now) {
+  if (!matrixContext || !matrixRain) return;
+
+  const dt = Math.min((now - matrixLastTick) / 1000, 0.06);
+  matrixLastTick = now;
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  matrixContext.clearRect(0, 0, width, height);
+
+  matrixColumns.forEach((column) => {
+    column.y += column.speed * dt;
+    if (column.y - column.tail * matrixGlyphSize > height + matrixGlyphSize) {
+      Object.assign(column, createMatrixColumn(Math.round(column.x / matrixGlyphSize)));
+      column.y = randomBetween(-height * 0.45, -matrixGlyphSize);
+    }
+
+    column.glyphs.forEach((glyph, index) => {
+      const y = column.y - index * matrixGlyphSize;
+      if (y < -matrixGlyphSize || y > height) return;
+
+      const tailProgress = 1 - index / column.tail;
+      const isHead = index === 0;
+      const alpha = isHead ? 0.92 : 0.08 + tailProgress * 0.46;
+      matrixContext.fillStyle = `rgba(${column.tint}, ${alpha})`;
+      matrixContext.fillText(glyph, column.x, y);
+    });
+
+    if (Math.random() < 0.035) {
+      const glyphIndex = Math.floor(Math.random() * column.glyphs.length);
+      column.glyphs[glyphIndex] = column.glyphs[glyphIndex] === '1' ? '0' : '1';
+    }
+  });
+
+  if (!prefersReducedMotion.matches) {
+    matrixAnimationFrame = requestAnimationFrame(drawMatrixRain);
+  }
+}
+
+function initMatrixRain() {
+  if (!matrixRain) return;
+  resizeMatrixRain();
+  matrixLastTick = performance.now();
+  cancelAnimationFrame(matrixAnimationFrame);
+  drawMatrixRain(matrixLastTick);
 }
 
 function buildSrc() {
@@ -322,6 +407,8 @@ function animate(now) {
 
 function rebuildLayout() {
   bounds = { width: window.innerWidth, height: window.innerHeight };
+  resizeMatrixRain();
+  matrixLastTick = performance.now();
   frames.forEach((frame) => {
     frame.x = clamp(frame.x, -90, Math.max(60, bounds.width - frame.width + 60));
     frame.y = clamp(frame.y, 72, Math.max(130, bounds.height - frame.height + 42));
@@ -333,6 +420,7 @@ async function init() {
 
   document.body.dataset.chaosMode = currentMode.id;
   setCursorPosition(window.innerWidth * 0.5, window.innerHeight * 0.52);
+  initMatrixRain();
 
   for (let index = 0; index < frameCount; index += 1) {
     createFrame(index);
@@ -385,7 +473,10 @@ async function init() {
   window.addEventListener('resize', rebuildLayout);
   document.addEventListener('visibilitychange', () => {
     lastTick = performance.now();
+    matrixLastTick = performance.now();
   });
+
+  prefersReducedMotion.addEventListener('change', initMatrixRain);
 }
 
 init();
