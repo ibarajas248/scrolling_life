@@ -205,6 +205,9 @@ function createFrame(index) {
 
   wrapper.className = 'frame-wrapper';
   wrapper.dataset.label = pick(LABELS);
+  wrapper.setAttribute('role', 'link');
+  wrapper.setAttribute('tabindex', '0');
+  wrapper.setAttribute('aria-label', 'Abrir Ochentas');
   wrapper.style.zIndex = String(zCounter + index);
 
   media.src = buildSrc();
@@ -217,6 +220,19 @@ function createFrame(index) {
 
   wrapper.append(media);
   field.append(wrapper);
+
+  const openOchentas = () => {
+    window.location.href = '/pages/ochentas/index.html';
+  };
+
+  wrapper.addEventListener('pointerdown', (event) => event.stopPropagation());
+  wrapper.addEventListener('click', openOchentas);
+  wrapper.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      openOchentas();
+    }
+  });
 
   const frame = {
     wrapper,

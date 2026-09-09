@@ -387,7 +387,8 @@ a {
   border-radius: 8px;
   transform-origin: center;
   will-change: transform;
-  pointer-events: none;
+  cursor: pointer;
+  pointer-events: auto;
 }
 
 .frame-wrapper::before,
