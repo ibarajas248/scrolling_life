@@ -1,4 +1,6 @@
 (() => {
+  const DATASET_MANIFEST = '../datasets/people_80s_style_compressed/manifest.json';
+  const DATASET_BASE = '../datasets/people_80s_style_compressed/';
   const CACHE_MANIFEST = '../assets/images/netart-cache/manifest.json';
   const FALLBACK_IMAGES = [
     '../assets/images/scroll-strips/strip_000001.jpg',
@@ -38,6 +40,15 @@
 
   const fallbackImage = () => FALLBACK_IMAGES[Math.floor(Math.random() * FALLBACK_IMAGES.length)];
 
+  const encodePathSegment = (segment) => encodeURIComponent(segment).replace(/%2F/gi, '/');
+
+  const datasetImagePath = (entry) => {
+    const file = typeof entry === 'string' ? entry : entry?.file;
+    if (typeof file !== 'string' || !file.trim()) return null;
+
+    return `${DATASET_BASE}${encodePathSegment(file.trim())}`;
+  };
+
   const picsumUrlFromCachePath = (src) => {
     const fileName = src.split('/').pop() || '';
     const idMatch = fileName.match(/^picsum_0*(\d+)_(\d+)x(\d+)\.jpe?g$/i);
@@ -68,6 +79,16 @@
 
   const loadLocalImages = async () => {
     try {
+      const datasetResponse = await fetch(`${DATASET_MANIFEST}?ts=${Date.now()}`, { cache: 'no-store' });
+      if (datasetResponse.ok) {
+        const datasetManifest = await datasetResponse.json();
+        const datasetImages = Array.isArray(datasetManifest)
+          ? datasetManifest.map(datasetImagePath).filter(Boolean)
+          : [];
+
+        if (datasetImages.length) return shuffle(datasetImages);
+      }
+
       const response = await fetch(`${CACHE_MANIFEST}?ts=${Date.now()}`, { cache: 'no-store' });
       if (!response.ok) return null;
 
