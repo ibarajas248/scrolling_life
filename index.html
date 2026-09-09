@@ -9,7 +9,7 @@
     content="Scrolling Life es una pieza web sobre el scroll como gesto cultural, ritmo corporal y forma contemporanea de mirar."
   />
   <link rel="stylesheet" href="./assets/fonts/local-fonts.css" />
-  <link rel="stylesheet" href="./assets/styles/home.css?v=20260908-netart-hero-v1" />
+    <link rel="stylesheet" href="./assets/styles/home.css?v=20260909-body-8bit-icon-v1" />
   <script src="./assets/scripts/maintenance-gate.js" defer></script>
   <style>
     .submenu-container {
@@ -58,6 +58,14 @@
         <span class="radio-name" data-radio-name>radio scroll</span>
       </div>
     </div>
+
+    <svg class="hero-svg-filters" aria-hidden="true" focusable="false" width="0" height="0">
+      <filter id="hero-title-pixelate" x="-12%" y="-18%" width="124%" height="136%" filterRes="34">
+        <feComponentTransfer>
+          <feFuncA type="discrete" tableValues="0 1 1 1" />
+        </feComponentTransfer>
+      </filter>
+    </svg>
 
     <details class="site-menu" aria-label="Otras salas">
       <summary aria-controls="site-menu-panel" aria-expanded="false">
@@ -210,13 +218,32 @@
         <span class="hero-strip hero-strip-h"></span>
         <span class="hero-spotlight"></span>
       </div>
+      <div class="hero-poster" aria-hidden="true">
+        <span class="poster-shape poster-blue-top"></span>
+        <span class="poster-shape poster-blue-right"></span>
+        <span class="poster-shape poster-grey-body"></span>
+        <span class="poster-shape poster-grey-left"></span>
+        <span class="poster-shape poster-green-top"></span>
+        <span class="poster-shape poster-green-checks"></span>
+        <span class="poster-shape poster-green-lines"></span>
+        <span class="poster-shape poster-green-bars"></span>
+        <span class="poster-shape poster-black-left"></span>
+        <span class="poster-shape poster-black-bottom"></span>
+        <span class="poster-shape poster-yellow-a"></span>
+        <span class="poster-shape poster-yellow-b"></span>
+        <span class="poster-shape poster-barcode-top"></span>
+        <span class="poster-shape poster-barcode-bottom"></span>
+        <span class="poster-shape poster-circuit-a"></span>
+        <span class="poster-shape poster-circuit-b"></span>
+        <span class="poster-shape poster-big-s">S</span>
+      </div>
       <div class="hero-copy reveal">
         <p class="sr-only" id="heroSummary">Scrolling Life es una pieza web sobre el scroll como gesto cultural, ritmo corporal y forma contemporanea de mirar.</p>
         <p class="eyebrow">&gt; Proyecto ganador de la Beca de Programación Virtual en Artes Plásticas y Visuales Red Galería Santa Fe 2026</p>
-        <h1>
-          <span>Scrolling</span>
-          <span class="title-accent">
-            <span class="title-accent-word">Life</span>
+        <h1 aria-label="Scrolling Life">
+          <span class="pixel-title-line" data-text="Scrolling" aria-hidden="true">Scrolling</span>
+          <span class="title-accent" aria-hidden="true">
+            <span class="title-accent-word pixel-title-line" data-text="Life">Life</span>
             <a
               class="mosquito-link"
               href="https://thescrollingdrawing.scrollinglife.com/"
@@ -236,7 +263,7 @@
           </span>
         </h1>
         <p class="lead">&gt; Iván Barajas Hurtado</p>
-        <p class="hero-date">17 DE SEPTIEMBRE DE 2026</p>
+        <p class="hero-date">sept. 17<br />2026</p>
         <div class="hero-actions">
           <a class="button button-solid" href="#manifiesto">Entrar al recorrido</a>
         </div>
@@ -382,6 +409,7 @@
               </span>
             </div>
             <div class="concept-window-body">
+              <span class="body-pixel-icon" aria-hidden="true"></span>
               
               <h3>Cuerpo</h3>
               <p>
