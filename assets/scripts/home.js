@@ -79,6 +79,8 @@ const datasetNetArtImagePath = (entry) => {
   return `${NETART_DATASET_BASE}${encodeNetArtPathSegment(file.trim())}`;
 };
 
+const cssUrl = (src) => `url("${String(src).replace(/["\\]/g, '\\$&')}")`;
+
 const probeImage = (src) => new Promise((resolve) => {
   const image = new Image();
   let settled = false;
@@ -201,7 +203,7 @@ const initNetArt = async () => {
     item.className = 'netart-item';
 
     const image = netArtImages[i % netArtImages.length];
-    item.style.backgroundImage = `url(${image})`;
+    item.style.backgroundImage = cssUrl(image);
 
     const y = Math.random() * vh * 1.2 - vh * 0.6;
     item.style.top = '0px';
