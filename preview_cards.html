@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bocetos: Revitalización de las 5 Tarjetas Win98 — Scrolling Life</title>
+  <link rel="stylesheet" href="./assets/fonts/local-fonts.css" />
+  <link rel="stylesheet" href="./assets/styles/home.css?v=20260904-floating-windows-v1" />
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    /* Switcher Flotante */
+    .cards-switcher-bar {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 99999;
+      background: rgba(7, 11, 16, 0.96);
+      border: 2px solid #9eff71;
+      border-radius: 999px;
+      padding: 6px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.9), 0 0 20px rgba(158, 255, 113, 0.3);
+      backdrop-filter: blur(14px);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.75rem;
+      max-width: calc(100vw - 24px);
+      overflow-x: auto;
+    }
+    .cards-switcher-bar span.label {
+      color: #9eff71;
+      font-weight: bold;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .c-btn {
+      background: #0d1520;
+      border: 1px solid #1f2e42;
+      color: #d8e7ef;
+      padding: 6px 13px;
+      border-radius: 999px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      font-family: inherit;
+      font-size: inherit;
+    }
+    .c-btn:hover {
+      background: #1400ff;
+      border-color: #9eff71;
+      color: #ffffff;
+    }
+    .c-btn.active {
+      background: #9eff71;
+      color: #020304;
+      border-color: #9eff71;
+      font-weight: bold;
+      box-shadow: 0 0 14px rgba(158, 255, 113, 0.6);
+    }
+
+    /* Keyframes de Animaciones */
+    @keyframes infiniteTextCascade {
+      0% { transform: translateY(0%); }
+      100% { transform: translateY(-50%); }
+    }
+    @keyframes zenBreathing {
+      0%, 100% { transform: scale(1); opacity: 0.7; filter: drop-shadow(0 0 4px #9eff71); }
+      50% { transform: scale(1.15); opacity: 1; filter: drop-shadow(0 0 16px #9eff71); }
+    }
+    @keyframes noiseFlicker {
+      0% { opacity: 0.85; }
+      50% { opacity: 1; }
+      100% { opacity: 0.9; }
+    }
+    @keyframes laserScan {
+      0% { left: 0%; }
+      100% { left: 100%; }
+    }
+    @keyframes pcbPulseGlow {
+      0%, 100% { stroke-dashoffset: 400; opacity: 0.2; }
+      50% { stroke-dashoffset: 0; opacity: 0.9; filter: drop-shadow(0 0 6px #9eff71); }
+    }
+    @keyframes sEchoPulse {
+      0%, 100% { transform: translate(0, 0); opacity: 0.4; }
+      50% { transform: translate(-3px, 2px); opacity: 0.85; }
+    }
+
+    /* Estilos de las ventanas */
+    .concept-card {
+      min-width: 290px;
+      max-width: 320px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .win-titlebar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px 8px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.72rem;
+      background: linear-gradient(90deg, #000080, #1084d0);
+      color: #ffffff;
+      user-select: none;
+    }
+    .win-controls {
+      display: flex;
+      gap: 3px;
+    }
+    .win-controls span {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 14px;
+      height: 14px;
+      background: #c0c0c0;
+      border: 1px solid #fff;
+      border-right-color: #404040;
+      border-bottom-color: #404040;
+      font-size: 9px;
+      font-weight: bold;
+      color: #000;
+      line-height: 1;
+    }
+    .concept-window-body {
+      background: #fdfdfd;
+      color: #111;
+      padding: 12px 14px 14px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.85rem;
+    }
+
+    /* =========================================================================
+       BOCETO 1: MICRO-VISORES VIVOS (CADA VENTANA UN MUNDO)
+       ========================================================================= */
+    body.mode-boceto-1 .concept-card {
+      border: 2px solid #000080 !important;
+      box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.4), 0 0 20px rgba(20, 0, 255, 0.15) !important;
+    }
+    body.mode-boceto-1 .concept-card:hover {
+      box-shadow: 8px 8px 0 #1400ff, 0 0 24px rgba(158, 255, 113, 0.3) !important;
+      transform: translateY(-3px) !important;
+    }
+    body.mode-boceto-1 .micro-viewport {
+      display: block !important;
+    }
+
+    /* =========================================================================
+       BOCETO 2: COLLAGE NET-ART FRAGMENTADO (PIEZAS DEL CARTEL)
+       ========================================================================= */
+    body.mode-boceto-2 .concept-card {
+      background: #101720 !important;
+      border: 2px solid #9eff71 !important;
+      box-shadow: 6px 6px 0 rgba(158, 255, 113, 0.3) !important;
+    }
+    body.mode-boceto-2 .win-titlebar {
+      background: linear-gradient(90deg, #1400ff, #00ff00) !important;
+      color: #000 !important;
+      font-weight: bold !important;
+    }
+    body.mode-boceto-2 .concept-window-body {
+      background: #080d14 !important;
+      color: #d8e7ef !important;
+    }
+    body.mode-boceto-2 .collage-fragment {
+      display: block !important;
+    }
+
+    /* =========================================================================
+       BOCETO 3: HARDWARE PCB INTERCONECTADO
+       ========================================================================= */
+    body.mode-boceto-3 .desktop-pcb-traces {
+      display: block !important;
+    }
+    body.mode-boceto-3 .concept-card {
+      border: 1px solid #5fd7df !important;
+      box-shadow: 0 0 16px rgba(95, 215, 223, 0.25), inset 0 0 12px rgba(20, 0, 255, 0.2) !important;
+    }
+    body.mode-boceto-3 .win-titlebar {
+      background: linear-gradient(90deg, #020304, #1400ff 70%) !important;
+      border-bottom: 2px solid #9eff71 !important;
+    }
+    body.mode-boceto-3 .pcb-badge {
+      display: flex !important;
+    }
+
+    /* =========================================================================
+       BOCETO 4: SUITE PAINT 98 CON HERRAMIENTAS
+       ========================================================================= */
+    body.mode-boceto-4 .paint-floating-toolbar {
+      display: flex !important;
+    }
+    body.mode-boceto-4 .concept-card {
+      background: #c0c0c0 !important;
+      border: 2px solid #fff !important;
+      border-right-color: #404040 !important;
+      border-bottom-color: #404040 !important;
+      box-shadow: 4px 4px 0 #000 !important;
+    }
+    body.mode-boceto-4 .concept-window-body {
+      background: #fff !important;
+      color: #000 !important;
+    }
+
+    /* Componentes ocultos por defecto que los bocetos activan */
+    .micro-viewport, .collage-fragment, .desktop-pcb-traces, .pcb-badge, .paint-floating-toolbar {
+      display: none;
+    }
+  </style>
+</head>
+<body id="top" class="mode-boceto-1 bg-[#020304] text-[#d8e7ef] min-h-screen py-20 px-4">
+
+  <!-- CONMUTADOR FLOTANTE -->
+  <aside class="cards-switcher-bar" aria-label="Selector de bocetos para las 5 tarjetas">
+    <span class="label">⚡ BOCETOS TARJETAS:</span>
+    <button class="c-btn active" onclick="setCardsMode('mode-boceto-1')">1. Micro-Visores Vivos (Animación x Tarjeta)</button>
+    <button class="c-btn" onclick="setCardsMode('mode-boceto-2')">2. Collage Fragmentado (Piezas del Cartel)</button>
+    <button class="c-btn" onclick="setCardsMode('mode-boceto-3')">3. Hardware PCB Interconectado</button>
+    <button class="c-btn" onclick="setCardsMode('mode-boceto-4')">4. Suite Paint 98 (Toolbar)</button>
+    <button class="c-btn" onclick="setCardsMode('mode-original')">0. Original (Plano)</button>
+  </aside>
+
+  <!-- PISTAS DE CIRCUITO SVG EN EL FONDO (BOCETO 3) -->
+  <svg class="desktop-pcb-traces fixed inset-0 w-full h-full pointer-events-none text-[#9eff71]/20 z-0" viewBox="0 0 1200 800" fill="none">
+    <path class="fluid-pcb-path" d="M200,200 H450 L500,260 H750 L800,200 H1050 M320,380 V500 L380,560 H600 M750,420 V540 L820,600 H950" stroke="currentColor" stroke-width="2" stroke-dasharray="200" style="animation: pcbPulseGlow 6s ease-in-out infinite;"/>
+    <circle cx="200" cy="200" r="4" fill="#9eff71"/>
+    <circle cx="500" cy="260" r="4" fill="#5fd7df"/>
+    <circle cx="750" cy="260" r="4" fill="#ee7d59"/>
+    <circle cx="1050" cy="200" r="4" fill="#9eff71"/>
+    <circle cx="380" cy="560" r="4" fill="#5fd7df"/>
+  </svg>
+
+  <!-- BARRA FLOTANTE DE PAINT 98 (BOCETO 4) -->
+  <aside class="paint-floating-toolbar fixed left-4 top-28 z-40 bg-[#c0c0c0] p-1 border-2 border-white border-r-[#404040] border-b-[#404040] shadow-2xl flex-col gap-1 w-12 text-black">
+    <div class="h-3 bg-[#000080] text-white text-[8px] font-bold text-center leading-tight">TOOLS</div>
+    <button class="w-9 h-8 bg-[#dfdfdf] border border-white border-r-[#404040] border-b-[#404040] flex items-center justify-center text-xs">↗</button>
+    <button class="w-9 h-8 bg-[#c0c0c0] border border-white border-r-[#404040] border-b-[#404040] flex items-center justify-center text-xs">✥</button>
+    <button class="w-9 h-8 bg-[#dfdfdf] border border-white border-r-[#404040] border-b-[#404040] flex items-center justify-center text-xs text-[#000080] font-bold" title="Lápiz activo">✎</button>
+    <button class="w-9 h-8 bg-[#c0c0c0] border border-white border-r-[#404040] border-b-[#404040] flex items-center justify-center text-xs">▱</button>
+    <div class="h-0.5 bg-[#808080] my-0.5"></div>
+    <button class="w-9 h-8 bg-[#c0c0c0] border border-white border-r-[#404040] border-b-[#404040] flex items-center justify-center text-xs font-mono">#</button>
+    <button class="w-9 h-8 bg-[#c0c0c0] border border-white border-r-[#404040] border-b-[#404040] flex items-center justify-center text-xs">🔊</button>
+  </aside>
+
+  <!-- CONTENEDOR EXACTO DE LAS 5 TARJETAS EN PANTALLA -->
+  <main class="max-w-6xl mx-auto relative z-10 space-y-4">
+
+    <!-- Encabezado de la Sección -->
+    <div class="text-center mb-8">
+      <span class="text-xs font-mono text-[#9eff71] tracking-widest uppercase">&gt; SECCIÓN 02: SALAS & DERIVAS</span>
+      <h1 class="text-3xl sm:text-4xl font-mono font-bold text-white tracking-tight mt-1">
+        Las 5 Ventanas de Scrolling Life
+      </h1>
+      <p class="text-xs text-[#8fa0b5] font-mono mt-1">
+        Arrastra las ventanas, interactúa con sus animaciones o prueba los 4 bocetos arriba.
+      </p>
+    </div>
+
+    <!-- EL ESCRITORIO CON LAS 5 VENTANAS (REPRESENTACIÓN IDÉNTICA AL SCREENSHOT) -->
+    <div class="win98-desktop-container">
+      <div class="win98-desktop flex flex-wrap justify-center gap-6" id="win98Desktop">
+
+        <!-- ===================================================================
+             1. CUERPO (C:\SCROLL\CUERPO.TXT)
+             =================================================================== -->
+        <article class="concept-card concept-card-body win-draggable" id="winCuerpo">
+          <div class="win-titlebar">
+            <span>C:\SCROLL\CUERPO.TXT</span>
+            <span class="win-controls" aria-hidden="true">
+              <span>_</span><span>□</span><span>×</span>
+            </span>
+          </div>
+          <div class="concept-window-body space-y-2">
+            <div class="flex items-center justify-between border-b pb-1">
+              <h3 class="font-bold text-lg leading-none">Cuerpo</h3>
+              <span class="text-[10px] bg-[#9eff71]/20 text-[#006600] px-1.5 py-0.5 rounded font-mono font-bold">NODO 04</span>
+            </div>
+
+            <!-- MICRO-VISOR VIVO (BOCETO 1): Trazo Biológico / Wireframe Reactivo -->
+            <div class="micro-viewport bg-[#05080c] text-white p-2.5 rounded border border-[#1b2838] overflow-hidden relative">
+              <div class="flex justify-between text-[9px] font-mono text-[#9eff71] mb-1">
+                <span>GESTO // RASTRO</span>
+                <span class="animate-pulse">● TRACKING</span>
+              </div>
+              <div class="h-16 relative bg-[#020304] rounded flex items-center justify-center overflow-hidden border border-[#141e2b]">
+                <!-- Gráfico wireframe interactivo de mano/cuerpo -->
+                <svg class="w-full h-full text-[#9eff71]" viewBox="0 0 100 40">
+                  <path d="M10,20 Q30,5 50,20 T90,20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 3"/>
+                  <circle cx="50" cy="20" r="4" fill="#ee7d59" class="animate-ping"/>
+                  <circle cx="50" cy="20" r="3" fill="#9eff71"/>
+                </svg>
+                <span class="absolute bottom-1 right-2 text-[8px] font-mono text-[#78889b]">Gesto biológico</span>
+              </div>
+              <p class="text-[10px] font-mono text-[#8fa0b5] mt-1.5 leading-snug">
+                El scroll deja una huella física y muscular en el espectador.
+              </p>
+            </div>
+
+            <!-- COLLAGE FRAGMENT (BOCETO 2): Manifiesto LEEME.TXT -->
+            <div class="collage-fragment bg-[#595959] text-[#9eff71] p-2 border border-[#737373] text-[10px] font-mono shadow-inner">
+              <div class="flex justify-between text-white/70 border-b border-white/20 pb-0.5 mb-1 text-[8px]">
+                <span>LEEME.TXT</span><span>—</span>
+              </div>
+              <p class="font-bold leading-tight">Hacer scroll es un acto político.</p>
+              <span class="text-[8px] text-[#ddd] block mt-1">No es solo mirar. Es seguir.</span>
+            </div>
+
+            <!-- PCB BADGE (BOCETO 3): Telemetría Hardware -->
+            <div class="pcb-badge items-center justify-between text-[9px] font-mono bg-[#091018] text-[#5fd7df] p-1.5 rounded border border-[#162334]">
+              <span>BUS: BIO_SENSOR</span>
+              <span class="text-[#9eff71]">STATUS: OK</span>
+            </div>
+
+            <p class="text-xs leading-relaxed text-gray-700">
+              Rastro de gestos, fisicalidad y memoria biológica de la mirada.
+            </p>
+            <div class="pt-1">
+              <a class="concept-card-link inline-block px-3 py-1 bg-[#d6d6d0] border border-gray-600 font-mono text-xs font-bold hover:bg-[#9eff71] hover:text-black transition-colors" href="./pages/cuerpo/">Abrir Cuerpo ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- ===================================================================
+             2. INFINITO (C:\SCROLL\INFINITO.SYS)
+             =================================================================== -->
+        <article class="concept-card concept-card-infinite win-draggable" id="winInfinito">
+          <div class="win-titlebar">
+            <span>C:\SCROLL\INFINITO.SYS</span>
+            <span class="win-controls" aria-hidden="true">
+              <span>_</span><span>□</span><span>×</span>
+            </span>
+          </div>
+          <div class="concept-window-body space-y-2">
+            <div class="flex items-center justify-between border-b pb-1">
+              <h3 class="font-bold text-lg leading-none">Infinito</h3>
+              <span class="text-[10px] bg-[#1400ff]/20 text-[#1400ff] px-1.5 py-0.5 rounded font-mono font-bold">NODO 02</span>
+            </div>
+
+            <!-- MICRO-VISOR VIVO (BOCETO 1): Cascada Vertical Infinita -->
+            <div class="micro-viewport bg-[#05080c] text-white p-2.5 rounded border border-[#1b2838] overflow-hidden relative">
+              <div class="flex justify-between text-[9px] font-mono text-[#5fd7df] mb-1">
+                <span>CASCADA // VERTICAL</span>
+                <span class="text-[#9eff71]">∞ DESPLAZAMIENTO</span>
+              </div>
+              <div class="h-16 relative bg-[#020304] rounded overflow-hidden border border-[#141e2b] p-1">
+                <!-- Tira que cae continuamente en loop vertical -->
+                <div class="font-mono text-[10px] text-[#9eff71] space-y-1 font-bold animate-[infiniteTextCascade_4s_linear_infinite]">
+                  <div>↓ más abajo</div>
+                  <div class="text-[#5fd7df]">↓ todavía más</div>
+                  <div>↓ casi llegas</div>
+                  <div class="text-[#ee7d59]">↓ no era aquí</div>
+                  <div>↓ sigue bajando</div>
+                  <div class="text-[#fff]">↓ sin final</div>
+                  <div>↓ más abajo</div>
+                  <div class="text-[#5fd7df]">↓ todavía más</div>
+                </div>
+              </div>
+              <p class="text-[10px] font-mono text-[#8fa0b5] mt-1.5 leading-snug">
+                La lógica de una verticalidad algorítmica que nunca termina.
+              </p>
+            </div>
+
+            <!-- COLLAGE FRAGMENT (BOCETO 2): Terminal sin_destino.sh -->
+            <div class="collage-fragment bg-black text-[#9eff71] p-2 border border-[#444] text-[10px] font-mono">
+              <div class="flex justify-between text-[#888] border-b border-[#333] pb-0.5 mb-1 text-[8px]">
+                <span>sin_destino.sh</span><span>_ □ ×</span>
+              </div>
+              <p class="text-white/80">visitante@internet:~$</p>
+              <p class="text-[#9eff71] font-bold">seguir_desplazándose<span class="animate-ping">█</span></p>
+            </div>
+
+            <!-- PCB BADGE (BOCETO 3) -->
+            <div class="pcb-badge items-center justify-between text-[9px] font-mono bg-[#091018] text-[#5fd7df] p-1.5 rounded border border-[#162334]">
+              <span>LOOP: INFINITE_V</span>
+              <span class="text-[#9eff71]">OFFSET: 0x9999</span>
+            </div>
+
+            <p class="text-xs leading-relaxed text-gray-700">
+              Repetición textual y descenso continuo sin llegar a un fondo.
+            </p>
+            <div class="pt-1">
+              <a class="concept-card-link inline-block px-3 py-1 bg-[#d6d6d0] border border-gray-600 font-mono text-xs font-bold hover:bg-[#1400ff] hover:text-white transition-colors" href="./pages/infinito/">Abrir Infinito ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- ===================================================================
+             3. RUIDO (C:\SCROLL\RUIDO.DLL)
+             =================================================================== -->
+        <article class="concept-card concept-card-noise win-draggable" id="winRuido">
+          <div class="win-titlebar">
+            <span>C:\SCROLL\RUIDO.DLL</span>
+            <span class="win-controls" aria-hidden="true">
+              <span>_</span><span>□</span><span>×</span>
+            </span>
+          </div>
+          <div class="concept-window-body space-y-2">
+            <div class="flex items-center justify-between border-b pb-1">
+              <h3 class="font-bold text-lg leading-none">Ruido</h3>
+              <span class="text-[10px] bg-[#a46afa]/20 text-[#6a11cb] px-1.5 py-0.5 rounded font-mono font-bold">NODO 01</span>
+            </div>
+
+            <!-- MICRO-VISOR VIVO (BOCETO 1): Estática / TV Noise Generativo -->
+            <div class="micro-viewport bg-[#05080c] text-white p-2.5 rounded border border-[#1b2838] overflow-hidden relative">
+              <div class="flex justify-between text-[9px] font-mono text-[#a46afa] mb-1">
+                <span>SEÑAL // ESTÁTICA</span>
+                <span class="text-[#ee7d59] animate-pulse">● INTERFERENCIA</span>
+              </div>
+              <div class="h-16 relative bg-[#000088] rounded overflow-hidden border border-[#141e2b] flex items-center justify-center" style="background-image: repeating-radial-gradient(circle at 50% 50%, #1400ff 0px, #00ff00 2px, #000 4px);">
+                <!-- Barras de interferencia animada -->
+                <div class="absolute inset-0 opacity-40 bg-[linear-gradient(rgba(255,255,255,0.2)_50%,transparent_50%)] bg-[length:100%_4px] animate-[noiseFlicker_0.1s_steps(2)_infinite]"></div>
+                <div class="relative z-10 bg-black/70 px-2 py-0.5 rounded text-[9px] font-mono text-[#9eff71] border border-[#9eff71]/40">
+                  SATURACIÓN 98.4%
+                </div>
+              </div>
+              <p class="text-[10px] font-mono text-[#8fa0b5] mt-1.5 leading-snug">
+                La saturación de estímulos también produce imágenes.
+              </p>
+            </div>
+
+            <!-- COLLAGE FRAGMENT (BOCETO 2): Checkerboard Verde/Azul -->
+            <div class="collage-fragment p-2 border border-black text-[10px] font-mono text-white relative overflow-hidden" style="background: repeating-conic-gradient(#00ff00 0% 25%, #1400ff 0% 50%) 50%/14px 14px;">
+              <div class="bg-black/80 p-1.5 rounded">
+                <span class="text-[#9eff71] font-bold block text-[9px]">INTERFERENCIA ESPECTRAL</span>
+                <span class="text-[8px] text-gray-300">Residuo analógico // 06</span>
+              </div>
+            </div>
+
+            <!-- PCB BADGE (BOCETO 3) -->
+            <div class="pcb-badge items-center justify-between text-[9px] font-mono bg-[#091018] text-[#a46afa] p-1.5 rounded border border-[#162334]">
+              <span>SIGNAL: STATIC_404</span>
+              <span class="text-[#ee7d59]">ERROR: RECOVERED</span>
+            </div>
+
+            <p class="text-xs leading-relaxed text-gray-700">
+              Interferencias, saturación de estímulos y ecos sonoros.
+            </p>
+            <div class="pt-1">
+              <a class="concept-card-link inline-block px-3 py-1 bg-[#d6d6d0] border border-gray-600 font-mono text-xs font-bold hover:bg-[#a46afa] hover:text-white transition-colors" href="./pages/ruido/">Abrir Ruido ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- ===================================================================
+             4. ARCHIVO (C:\SCROLL\ARCHIVO.LOG)
+             =================================================================== -->
+        <article class="concept-card concept-card-archive win-draggable" id="winArchivo">
+          <div class="win-titlebar">
+            <span>C:\SCROLL\ARCHIVO.LOG</span>
+            <span class="win-controls" aria-hidden="true">
+              <span>_</span><span>□</span><span>×</span>
+            </span>
+          </div>
+          <div class="concept-window-body space-y-2">
+            <div class="flex items-center justify-between border-b pb-1">
+              <h3 class="font-bold text-lg leading-none">Archivo</h3>
+              <span class="text-[10px] bg-[#5fd7df]/20 text-[#006677] px-1.5 py-0.5 rounded font-mono font-bold">NODO 03</span>
+            </div>
+
+            <!-- MICRO-VISOR VIVO (BOCETO 1): Galería de 4 Afiches Originales -->
+            <div class="micro-viewport bg-[#05080c] text-white p-2.5 rounded border border-[#1b2838] overflow-hidden relative">
+              <div class="flex justify-between text-[9px] font-mono text-[#5fd7df] mb-1">
+                <span>MEMORIA // 4 AFICHES</span>
+                <span class="text-[#9eff71]">RECUPERADOS</span>
+              </div>
+              <!-- Grid de los 4 afiches en miniatura -->
+              <div class="grid grid-cols-4 gap-1 h-16 bg-[#020304] p-1 rounded border border-[#141e2b]">
+                <div class="bg-[#1400ff] rounded-sm overflow-hidden border border-[#5fd7df] relative group cursor-pointer" title="01 Cartel">
+                  <img src="assets_ref/01-cartel.webp" class="w-full h-full object-cover opacity-80 group-hover:opacity-100">
+                </div>
+                <div class="bg-[#222] rounded-sm overflow-hidden border border-[#333] relative group cursor-pointer" title="02 Escritorio Paint">
+                  <img src="assets_ref/02-escritorio.webp" class="w-full h-full object-cover opacity-80 group-hover:opacity-100">
+                </div>
+                <div class="bg-[#222] rounded-sm overflow-hidden border border-[#333] relative group cursor-pointer" title="03 Scrolling Drawing">
+                  <img src="assets_ref/03-scrolling-drawing.webp" class="w-full h-full object-cover opacity-80 group-hover:opacity-100">
+                </div>
+                <div class="bg-[#222] rounded-sm overflow-hidden border border-[#333] relative group cursor-pointer" title="04 Programación">
+                  <img src="assets_ref/04-programacion.webp" class="w-full h-full object-cover opacity-80 group-hover:opacity-100">
+                </div>
+              </div>
+              <p class="text-[10px] font-mono text-[#8fa0b5] mt-1.5 leading-snug">
+                Cuatro imágenes sobreviven a la navegación: el archivo de partida.
+              </p>
+            </div>
+
+            <!-- COLLAGE FRAGMENT (BOCETO 2): Pistas PCB & Fecha -->
+            <div class="collage-fragment bg-[#0d141e] text-[#9eff71] p-2 border border-[#1e2e42] text-[10px] font-mono">
+              <span class="text-[#5fd7df] text-[8px] block">PROGRAMACIÓN OFICIAL</span>
+              <div class="text-base font-bold text-white tracking-wider">17.09.2026</div>
+              <span class="text-[8px] text-gray-400">RED GALERÍA SANTA FE</span>
+            </div>
+
+            <!-- PCB BADGE (BOCETO 3) -->
+            <div class="pcb-badge items-center justify-between text-[9px] font-mono bg-[#091018] text-[#5fd7df] p-1.5 rounded border border-[#162334]">
+              <span>INDEX: 4_ASSETS</span>
+              <span class="text-[#9eff71]">VERIFIED: SHA256</span>
+            </div>
+
+            <p class="text-xs leading-relaxed text-gray-700">
+              Residuos, documentos gráficos y memoria del proyecto 2026.
+            </p>
+            <div class="pt-1">
+              <a class="concept-card-link inline-block px-3 py-1 bg-[#d6d6d0] border border-gray-600 font-mono text-xs font-bold hover:bg-[#5fd7df] hover:text-black transition-colors" href="./pages/archivo/">Abrir Archivo ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- ===================================================================
+             5. PAUSA (C:\SCROLL\PAUSA.EXE)
+             =================================================================== -->
+        <article class="concept-card concept-card-pausa is-visible win-draggable" id="winPausa">
+          <div class="win-titlebar">
+            <span>C:\SCROLL\PAUSA.EXE</span>
+            <span class="win-controls" aria-hidden="true">
+              <span>_</span><span>□</span><span>×</span>
+            </span>
+          </div>
+          <div class="concept-window-body space-y-2">
+            <div class="flex items-center justify-between border-b pb-1">
+              <h3 class="font-bold text-lg leading-none">Pausa</h3>
+              <span class="text-[10px] bg-[#ee7d59]/20 text-[#c2410c] px-1.5 py-0.5 rounded font-mono font-bold">NODO 05</span>
+            </div>
+
+            <!-- MICRO-VISOR VIVO (BOCETO 1): Símbolo Zen Ⅱ & Control de Pausa -->
+            <div class="micro-viewport bg-[#05080c] text-white p-2.5 rounded border border-[#1b2838] overflow-hidden relative">
+              <div class="flex justify-between text-[9px] font-mono text-[#ee7d59] mb-1">
+                <span>TIEMPO // RECUPERADO</span>
+                <span class="text-[#9eff71]">SILENCIO</span>
+              </div>
+              <div class="h-16 relative bg-[#020304] rounded flex flex-col items-center justify-center border border-[#141e2b]">
+                <div class="text-2xl font-mono font-bold text-[#9eff71] animate-[zenBreathing_3s_ease-in-out_infinite]">
+                  Ⅱ
+                </div>
+                <span class="text-[8px] font-mono text-[#8fa0b5] mt-0.5">Por un momento, nada te pide seguir.</span>
+              </div>
+              <p class="text-[10px] font-mono text-[#8fa0b5] mt-1.5 leading-snug">
+                Detención del scroll, poemas ASCII y recetas diferidas.
+              </p>
+            </div>
+
+            <!-- COLLAGE FRAGMENT (BOCETO 2): Símbolo 'S' Pixel Art con Eco -->
+            <div class="collage-fragment bg-[#1400ff] text-[#9eff71] p-2 border-2 border-black text-[10px] font-mono text-center">
+              <span class="text-[8px] text-[#a9a3ff] block">S / 0x0053</span>
+              <div class="relative inline-block my-0.5">
+                <span class="text-2xl font-black text-[#00ff00] block">S</span>
+                <span class="text-2xl font-black text-[#5fd7df] absolute inset-0 animate-s-echo pointer-events-none">S</span>
+              </div>
+              <span class="text-[7px] text-[#d8e7ef] block">una pantalla dentro de otra pantalla</span>
+            </div>
+
+            <!-- PCB BADGE (BOCETO 3) -->
+            <div class="pcb-badge items-center justify-between text-[9px] font-mono bg-[#091018] text-[#ee7d59] p-1.5 rounded border border-[#162334]">
+              <span>FLOW: PAUSED</span>
+              <span class="text-[#9eff71]">STATE: ZEN</span>
+            </div>
+
+            <p class="text-xs leading-relaxed text-gray-700">
+              Detención del scroll, poemas ASCII y recetas diferidas.
+            </p>
+            <div class="pt-1">
+              <a class="concept-card-link inline-block px-3 py-1 bg-[#d6d6d0] border border-gray-600 font-mono text-xs font-bold hover:bg-[#ee7d59] hover:text-black transition-colors" href="./pages/pausa/">Abrir Pausa ↗</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- SCRIPT DE CONMUTACIÓN DE BOCETOS -->
+  <script>
+    function setCardsMode(mode) {
+      document.body.className = mode + ' bg-[#020304] text-[#d8e7ef] min-h-screen py-20 px-4';
+      document.querySelectorAll('.c-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+  </script>
+</body>
+</html>

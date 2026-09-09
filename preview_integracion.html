@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Scrolling Life — 4 Bocetos Fondo Azul Chirriante BIOS</title>
+  <meta
+    name="description"
+    content="Scrolling Life es una pieza web sobre el scroll como gesto cultural, ritmo corporal y forma contemporanea de mirar."
+  />
+  <link rel="stylesheet" href="./assets/fonts/local-fonts.css" />
+  <link rel="stylesheet" href="./assets/styles/home.css?v=20260904-floating-windows-v1" />
+  <script src="./assets/scripts/maintenance-gate.js" defer></script>
+  <style>
+    /* Control Flotante de Previsualización */
+    .preview-switcher-bar {
+      position: fixed;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 99999;
+      background: rgba(4, 8, 14, 0.95);
+      border: 2px solid #1400ff;
+      border-radius: 999px;
+      padding: 6px 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.9), 0 0 20px rgba(20, 0, 255, 0.5);
+      backdrop-filter: blur(14px);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.74rem;
+      max-width: calc(100vw - 24px);
+      overflow-x: auto;
+    }
+    .preview-switcher-bar span.switcher-label {
+      color: #9eff71;
+      font-weight: bold;
+      text-transform: uppercase;
+      white-space: nowrap;
+      margin-right: 4px;
+    }
+    .preview-btn {
+      background: #090e18;
+      border: 1px solid #1c2c44;
+      color: #d8e7ef;
+      padding: 5px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      font-family: inherit;
+      font-size: inherit;
+    }
+    .preview-btn:hover {
+      background: #1400ff;
+      border-color: #9eff71;
+      color: #ffffff;
+      box-shadow: 0 0 10px rgba(20, 0, 255, 0.8);
+    }
+    .preview-btn.active {
+      background: #1400ff;
+      color: #ffffff;
+      border-color: #9eff71;
+      font-weight: bold;
+      box-shadow: 0 0 14px rgba(158, 255, 113, 0.6), 0 0 8px #1400ff;
+    }
+
+    /* Submenu original */
+    .submenu-container {
+      display: flex;
+      flex-direction: column;
+    }
+    .submenu-item {
+      display: none !important;
+      padding-left: 2.5rem; 
+      background-color: rgba(255, 255, 255, 0.02); 
+      border-left: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .submenu-container:hover .submenu-item,
+    .submenu-container:focus-within .submenu-item {
+      display: flex !important;
+    }
+
+    /* Animaciones Generales */
+    @keyframes marqueeFlow {
+      0% { transform: translateX(0%); }
+      100% { transform: translateX(-50%); }
+    }
+    @keyframes marqueeFlowRev {
+      0% { transform: translateX(-50%); }
+      100% { transform: translateX(0%); }
+    }
+    @keyframes pcbPulseGlow {
+      0%, 100% { stroke-dashoffset: 400; opacity: 0.25; }
+      50% { stroke-dashoffset: 0; opacity: 0.95; filter: drop-shadow(0 0 8px #9eff71); }
+    }
+    @keyframes sPulse {
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 2px #1400ff); }
+      50% { transform: scale(1.05); filter: drop-shadow(0 0 12px #9eff71); }
+    }
+
+    /* ==========================================================================
+       4 BOCETOS: FONDO AZUL CHIRRIANTE TIPO BIOS
+       ========================================================================== */
+
+    /* --------------------------------------------------------------------------
+       BOCETO 1: AZUL BIOS ELÉCTRICO PURO (#1400ff)
+       -------------------------------------------------------------------------- */
+    body.mode-bios-1 .hero {
+      background: radial-gradient(circle at 50% 45%, #1800ff 0%, #1200dd 48%, #080088 100%) !important;
+      box-shadow: inset 0 -40px 60px #020304 !important;
+    }
+    body.mode-bios-1 .hero-strip {
+      filter: contrast(1.35) brightness(1.2) !important;
+      mix-blend-mode: screen !important;
+      opacity: 0.44 !important;
+    }
+    body.mode-bios-1 .hero-copy h1 {
+      color: #9eff71 !important;
+      text-shadow:
+        0 0 2px #fff,
+        0 0 12px rgba(158, 255, 113, 0.9),
+        0 0 24px rgba(158, 255, 113, 0.6),
+        3px 3px 0 #000044 !important;
+    }
+    body.mode-bios-1 .eyebrow {
+      color: #e0ffd5 !important;
+      text-shadow: 0 0 8px rgba(158, 255, 113, 0.5) !important;
+    }
+    body.mode-bios-1 .lead {
+      color: #ffffff !important;
+      text-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 2px 2px 0 #000044 !important;
+    }
+    body.mode-bios-1 .hero-date {
+      color: #9eff71 !important;
+      text-shadow: 0 0 8px rgba(158, 255, 113, 0.5), 2px 2px 0 #000044 !important;
+    }
+    body.mode-bios-1 .hero .button-solid {
+      background: #9eff71 !important;
+      color: #000066 !important;
+      font-weight: 900 !important;
+      border: 2px solid #ffffff !important;
+      box-shadow: 0 0 20px rgba(158, 255, 113, 0.7), 3px 3px 0 #000044 !important;
+    }
+
+    /* --------------------------------------------------------------------------
+       BOCETO 2: BIOS AWARD / PHOENIX 98 CLÁSICO (#0000aa)
+       -------------------------------------------------------------------------- */
+    body.mode-bios-2 .hero {
+      background: #0000aa !important;
+      background-image:
+        repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.22) 0 1px, transparent 1px 2px),
+        linear-gradient(90deg, #000099 0%, #0000aa 50%, #000099 100%) !important;
+      box-shadow: inset 0 -30px 50px #020304 !important;
+    }
+    body.mode-bios-2 .hero-strip {
+      filter: grayscale(1) contrast(1.5) brightness(1.15) !important;
+      mix-blend-mode: color-dodge !important;
+      opacity: 0.28 !important;
+    }
+    body.mode-bios-2 .hero-copy h1 {
+      color: #ffff00 !important;
+      font-family: 'Share Tech Mono', 'Courier New', monospace !important;
+      text-shadow:
+        3px 3px 0 #000044,
+        0 0 14px rgba(255, 255, 0, 0.8) !important;
+    }
+    body.mode-bios-2 .eyebrow {
+      background: #00aaaa !important;
+      color: #000000 !important;
+      font-weight: bold !important;
+      padding: 3px 8px !important;
+      display: inline-block !important;
+      border: 1px solid #ffffff !important;
+    }
+    body.mode-bios-2 .lead {
+      color: #ffffff !important;
+      text-shadow: 2px 2px 0 #000044 !important;
+    }
+    body.mode-bios-2 .hero-date {
+      color: #ffff00 !important;
+      text-shadow: 2px 2px 0 #000044 !important;
+    }
+    body.mode-bios-2 .hero .button-solid {
+      background: #00aaaa !important;
+      color: #000000 !important;
+      font-weight: bold !important;
+      border: 2px solid #ffffff !important;
+      box-shadow: 3px 3px 0 #000044 !important;
+    }
+
+    /* --------------------------------------------------------------------------
+       BOCETO 3: DEGRADADO AURORA BIOS A NEGRO ABISAL (#1800ff -> #020304)
+       -------------------------------------------------------------------------- */
+    body.mode-bios-3 .hero {
+      background: linear-gradient(180deg, #1800ff 0%, #1000b8 32%, #080055 65%, #020304 100%) !important;
+    }
+    body.mode-bios-3 .hero-strip {
+      filter: contrast(1.3) brightness(1.1) !important;
+      mix-blend-mode: screen !important;
+      opacity: 0.38 !important;
+    }
+    body.mode-bios-3 .hero-copy h1 {
+      color: #9eff71 !important;
+      text-shadow:
+        0 0 16px rgba(158, 255, 113, 0.7),
+        0 0 32px rgba(20, 0, 255, 0.9),
+        2px 2px 0 #000022 !important;
+    }
+    body.mode-bios-3 .lead {
+      color: #5fd7df !important;
+    }
+    body.mode-bios-3 .hero-date {
+      color: #ee7d59 !important;
+    }
+    body.mode-bios-3 .fluid-pcb-layer {
+      display: block !important;
+    }
+
+    /* --------------------------------------------------------------------------
+       BOCETO 4: AZUL BIOS REACTIVO & GLITCH CROMÁTICO
+       -------------------------------------------------------------------------- */
+    body.mode-bios-4 .hero {
+      background: radial-gradient(circle 500px at var(--archive-cursor-x, 50%) var(--archive-cursor-y, 45%), #2400ff 0%, #1200dd 45%, #05006b 100%) !important;
+      box-shadow: inset 0 -40px 60px #020304 !important;
+    }
+    body.mode-bios-4 .hero-strip {
+      filter: contrast(1.4) brightness(1.2) saturate(1.35) !important;
+      mix-blend-mode: screen !important;
+      opacity: 0.46 !important;
+    }
+    body.mode-bios-4 .hero-copy h1 {
+      color: #ffffff !important;
+      text-shadow:
+        -2px 0 #1400ff,
+        2px 0 #9eff71,
+        0 0 18px rgba(158, 255, 113, 0.9),
+        3px 3px 0 #000033 !important;
+    }
+    body.mode-bios-4 .fluid-marquee-ribbon {
+      display: block !important;
+    }
+    body.mode-bios-4 .fluid-s-badge {
+      display: block !important;
+    }
+    body.mode-bios-4 #ambient-trail-canvas {
+      display: block !important;
+    }
+
+    /* Elementos auxiliares */
+    .fluid-pcb-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      display: none;
+    }
+    .fluid-pcb-path {
+      stroke: #9eff71;
+      stroke-width: 1.6;
+      stroke-dasharray: 200;
+      animation: pcbPulseGlow 7s ease-in-out infinite;
+    }
+    .fluid-marquee-ribbon {
+      display: none;
+      width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      background: #000088;
+      border-top: 1px solid #9eff71;
+      border-bottom: 1px solid #9eff71;
+      padding: 6px 0;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.76rem;
+      color: #9eff71;
+      z-index: 10;
+      position: relative;
+    }
+    .fluid-marquee-content {
+      display: flex;
+      width: 200%;
+      animation: marqueeFlow 14s linear infinite;
+    }
+    .fluid-s-badge {
+      display: none;
+      position: absolute;
+      top: 24px;
+      right: 30px;
+      z-index: 15;
+      background: #0000aa;
+      border: 2px solid #ffffff;
+      padding: 6px 10px;
+      border-radius: 4px;
+      text-align: center;
+      box-shadow: 4px 4px 0 rgba(0,0,0,0.8), 0 0 15px rgba(20,0,255,0.6);
+      animation: sPulse 4s ease-in-out infinite;
+    }
+    .fluid-s-badge span.s-glyph {
+      font-family: 'Disket Mono', monospace;
+      font-size: 1.8rem;
+      font-weight: 900;
+      line-height: 1;
+      color: #ffff00;
+      display: block;
+      text-shadow: -1px 0 #5fd7df, 1px 1px 0 #000;
+    }
+    .fluid-s-badge span.s-sub {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.58rem;
+      color: #ffffff;
+      display: block;
+      letter-spacing: 0.08em;
+    }
+    #ambient-trail-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 80;
+      display: none;
+    }
+  </style>
+</head>
+<body id="top" class="mode-bios-1">
+
+  <!-- BARRA FLOTANTE DE CONTROL DE PREVISUALIZACIÓN BIOS -->
+  <aside class="preview-switcher-bar" aria-label="Control de bocetos azul BIOS">
+    <span class="switcher-label">⚡ AZUL BIOS:</span>
+    <button class="preview-btn active" onclick="setBiosMode('mode-bios-1')">1. BIOS Azul Puro (#1400ff)</button>
+    <button class="preview-btn" onclick="setBiosMode('mode-bios-2')">2. BIOS Award 98 (#0000aa)</button>
+    <button class="preview-btn" onclick="setBiosMode('mode-bios-3')">3. Degradado Aurora a Negro</button>
+    <button class="preview-btn" onclick="setBiosMode('mode-bios-4')">4. BIOS Reactivo & Glitch</button>
+    <button class="preview-btn" onclick="setBiosMode('original')">0. Original</button>
+  </aside>
+
+  <!-- Canvas para estela de partículas de luz (Modo 4) -->
+  <canvas id="ambient-trail-canvas"></canvas>
+
+  <a class="skip-link" href="#main-content">Saltar al contenido principal</a>
+  <div class="netart-layer" aria-hidden="true"></div>
+  <div class="page-content" id="visualExperience">
+    <div class="bg-orbit orbit-a" aria-hidden="true"></div>
+    <div class="bg-orbit orbit-b" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <div class="progress-shell" aria-hidden="true">
+      <div class="progress-track">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="radio-float" data-radio-state="loading" aria-label="Señal en vivo Radio Scroll">
+      <div class="radio-player-shell">
+        <iframe
+          class="radio-button-frame"
+          src="https://radio.testivanbarajas.cloud/radio"
+          title="Botón de reproducción de la emisora Scrolling Life"
+          loading="eager"
+          allow="autoplay; encrypted-media"
+          referrerpolicy="strict-origin-when-cross-origin"
+        ></iframe>
+      </div>
+      <div class="radio-live-copy" aria-live="polite">
+        <span class="radio-signal" data-radio-signal>no signal</span>
+        <span class="radio-name" data-radio-name>radio scroll</span>
+      </div>
+    </div>
+
+    <!-- Menú Desplegable -->
+    <details class="site-menu" aria-label="Otras salas">
+      <summary aria-controls="site-menu-panel" aria-expanded="false">
+        <span class="site-menu-label">menú </span>
+      </summary>
+      <nav class="site-menu-panel" id="site-menu-panel" aria-label="Otras salas">
+        <p class="site-menu-caption">otras salas</p>
+        <div class="site-menu-links">
+          <div class="submenu-container">
+            <a class="site-menu-link" href="./pages/infinito/">
+              <span>Infinito</span>
+              <small>texto curatorial</small>
+            </a>
+            <a class="site-menu-link submenu-item" href="https://thescrollingdrawing.scrollinglife.com/">
+              <span>↳ The Scrolling Drawing</span>
+              <small>dibujo infinito</small>
+            </a>
+          </div>
+          <a class="site-menu-link" href="./pages/consulta-imagenes/">
+            <span>Lluvia de Imagenes</span>
+            <small>cache 20 + scroll</small>
+          </a>
+          <div class="submenu-container">
+            <a class="site-menu-link" href="./pages/pausa/">
+              <span>Pausa</span>
+              <small>texto curatorial</small>
+            </a>
+            <a class="site-menu-link submenu-item" href="./pages/pausa/in-case-you-come-back/">
+              <span>In Case You Come Back</span>
+              <small>poema / recetas / rosa 90s</small>
+            </a>
+            <a class="site-menu-link submenu-item" href="./pages/pausa/ascii/">
+              <span>↳ ASCII</span>
+              <small>poema visual de scroll</small>
+            </a>
+          </div>
+          <a class="site-menu-link" href="./pages/creditos/">
+            <span>Créditos</span>
+            <small>ficha técnica / equipo</small>
+          </a>
+        </div>
+      </nav>
+    </details>
+
+    <!-- HERO SECTION -->
+    <header class="hero section" role="banner" aria-describedby="heroSummary">
+
+      <!-- Capa de circuito PCB SVG fluido (Modo 3) -->
+      <svg class="fluid-pcb-layer w-full h-full" viewBox="0 0 1200 600" fill="none">
+        <path class="fluid-pcb-path" d="M30,120 H210 L270,180 H580 L630,130 H1050 M120,480 V320 L180,260 H420 V150" />
+        <circle cx="210" cy="120" r="4" fill="#9eff71"/>
+        <circle cx="580" cy="180" r="4" fill="#5fd7df"/>
+        <circle cx="630" cy="130" r="4" fill="#ee7d59"/>
+      </svg>
+
+      <!-- Insignia 'S' pixel-art (Modo 4) -->
+      <aside class="fluid-s-badge" aria-hidden="true">
+        <span class="s-glyph">S</span>
+        <span class="s-sub">0x0053</span>
+      </aside>
+
+      <!-- Tiras de fondo (Hero Archive original) -->
+      <div class="hero-archive" aria-hidden="true">
+        <span class="hero-strip hero-strip-a"></span>
+        <span class="hero-strip hero-strip-b"></span>
+        <span class="hero-strip hero-strip-c"></span>
+        <span class="hero-strip hero-strip-d"></span>
+        <span class="hero-strip hero-strip-i"></span>
+        <span class="hero-strip hero-strip-j"></span>
+        <span class="hero-strip hero-strip-k"></span>
+        <span class="hero-strip hero-strip-l"></span>
+        <span class="hero-strip hero-strip-e"></span>
+        <span class="hero-strip hero-strip-f"></span>
+        <span class="hero-strip hero-strip-g"></span>
+        <span class="hero-strip hero-strip-h"></span>
+        <span class="hero-spotlight"></span>
+      </div>
+
+      <div class="hero-copy reveal">
+        <p class="sr-only" id="heroSummary">Scrolling Life es una pieza web sobre el scroll como gesto cultural, ritmo corporal y forma contemporanea de mirar.</p>
+        <p class="eyebrow">&gt; Proyecto ganador de la Beca de Programación Virtual en Artes Plásticas y Visuales Red Galería Santa Fe 2026</p>
+        <h1>
+          <span>Scrolling</span>
+          <span class="title-accent">
+            <span class="title-accent-word">Life</span>
+            <a
+              class="mosquito-link"
+              href="https://thescrollingdrawing.scrollinglife.com/"
+              title="seguir hacia The Scrolling Drawing"
+              aria-hidden="true"
+              tabindex="-1"
+            >
+              <span class="mosquito">
+                <span class="mosquito-wing mosquito-wing-left"></span>
+                <span class="mosquito-wing mosquito-wing-right"></span>
+                <span class="mosquito-body"></span>
+                <span class="mosquito-head"></span>
+                <span class="mosquito-legs"></span>
+              </span>
+              <span class="mosquito-call">seguir</span><span class="sr-only"> hacia The Scrolling Drawing</span>
+            </a>
+          </span>
+        </h1>
+        <p class="lead">&gt; Iván Barajas Hurtado</p>
+        <p class="hero-date">17 DE SEPTIEMBRE DE 2026</p>
+        <div class="hero-actions">
+          <a class="button button-solid" href="#manifiesto">Entrar al recorrido</a>
+        </div>
+      </div>
+
+      <div class="kinetic-line" data-speed="0.24" aria-hidden="true">scroll is never neutral</div>
+      <div class="kinetic-line line-bottom" data-speed="-0.18" aria-hidden="true">cada deslizamiento reorganiza la mirada</div>
+    </header>
+
+    <!-- Marquesina Fluida Continua entre el Hero y el Manifiesto (Modo 4) -->
+    <div class="fluid-marquee-ribbon" aria-hidden="true">
+      <div class="fluid-marquee-content">
+        <span>APARECE / DESAPARECE / PERMANECE / APARECE / DESAPARECE / PERMANECE / APARECE / DESAPARECE / PERMANECE /&nbsp;</span>
+        <span>APARECE / DESAPARECE / PERMANECE / APARECE / DESAPARECE / PERMANECE / APARECE / DESAPARECE / PERMANECE /&nbsp;</span>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 01: MANIFIESTO & SETUP 98 BIOS -->
+    <main id="main-content" role="main" tabindex="-1">
+      <section class="section split-section" id="manifiesto" aria-labelledby="manifiestoTitle">
+        <div class="section-mark reveal" aria-hidden="true">
+          <span>01</span>
+          Sobre lo infinito
+        </div>
+        <div class="sr-only">
+          <h2 id="manifiestoTitle">Sobre lo infinito</h2>
+          <p>Scrolling Life parte de un gesto cotidiano y casi automático para pensar la manera en que nos relacionamos con las imágenes.</p>
+        </div>
+
+        <div class="section-body reveal terminal-block has-setup" data-terminal-sequence data-terminal-speed="13">
+          <div class="setup-panel" data-setup-panel aria-hidden="true">
+            <div class="setup-titlebar">
+              <span>Scrolling Life 98 Setup</span>
+              <span class="setup-window-controls" aria-hidden="true"><span></span><span></span><span></span></span>
+            </div>
+            <div class="setup-content">
+              <div class="setup-brand">
+                <span>SCROLLING</span>
+                <strong>LIFE </strong>
+              </div>
+              <div class="setup-main">
+                <p class="setup-kicker">Setup is configuring vertical experience.</p>
+                <h2>Scrolling Life Setup Wizard</h2>
+                <div class="setup-divider"></div>
+                <dl class="setup-checklist">
+                  <div data-setup-step="0">
+                    <dt>System Check</dt>
+                    <dd data-step-status>Waiting</dd>
+                  </div>
+                  <div data-setup-step="1">
+                    <dt>Copying Scroll Files</dt>
+                    <dd data-step-status>Pending</dd>
+                  </div>
+                  <div data-setup-step="2">
+                    <dt>Installing Verticality</dt>
+                    <dd data-step-status>Pending</dd>
+                  </div>
+                  <div data-setup-step="3">
+                    <dt>Preparing BIOS Console</dt>
+                    <dd data-step-status>Pending</dd>
+                  </div>
+                </dl>
+                <div class="setup-progress-row">
+                  <span>Progress:</span>
+                  <div class="setup-progress" aria-hidden="true">
+                    <span data-setup-progress></span>
+                  </div>
+                  <strong data-setup-percent>0%</strong>
+                </div>
+                <p class="setup-status" data-setup-status>Initializing setup...</p>
+              </div>
+            </div>
+            <div class="setup-actions" aria-hidden="true">
+              <button type="button" disabled>&lt; Back</button>
+              <button type="button">Next &gt;</button>
+              <button type="button">Cancel</button>
+            </div>
+          </div>
+
+          <div class="terminal-shell" aria-hidden="true">
+            <div class="terminal-chrome" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+              <p>SCROLLING LIFE BIOS UTILITY</p>
+            </div>
+            <div class="terminal-screen">
+              <p class="terminal-line terminal-line-meta">
+                <span class="terminal-text" data-terminal-copy>Scrolling Life Setup Utility v0.94</span>
+              </p>
+              <p class="terminal-line terminal-line-command">
+                <span class="terminal-prefix">A:\&gt;</span>
+                <span class="terminal-text" data-terminal-copy>setup verticalidad.pkg /auto</span>
+              </p>
+              <p class="terminal-line terminal-line-boot">
+                <span class="terminal-prefix">[01]</span>
+                <span class="terminal-text" data-terminal-copy>comprobando memoria visual instalada ................ ok</span>
+              </p>
+              <h2 class="terminal-line terminal-heading">
+                <span class="terminal-prefix">&gt;</span>
+                <span class="terminal-text" data-terminal-copy>modulo verticalidad cargado</span>
+              </h2>
+              <p class="terminal-line terminal-line-output">
+                <span class="terminal-prefix">&gt;</span>
+                <span class="terminal-text" data-terminal-copy>Scrolling Life parte de un gesto cotidiano y casi automático para pensar la manera en que nos relacionamos con las imágenes. El proyecto lleva el scroll más allá de su función como dispositivo de navegación en internet y lo convierte en una condición de experiencia, atravesada por flujos algorítmicos y por la lógica de una verticalidad que parece no terminar nunca.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECCIÓN 02: ESCRITORIO WIN98 CON TARJETAS DRAGGABLES -->
+      <div class="win98-desktop-container reveal">
+        <div class="win98-desktop" id="win98Desktop">
+          <article class="concept-card concept-card-body win-draggable" id="winCuerpo">
+            <div class="win-titlebar">
+              <span>C:\SCROLL\CUERPO.TXT</span>
+              <span class="win-controls" aria-hidden="true"><span></span><span></span><span></span></span>
+            </div>
+            <div class="concept-window-body">
+              <h3>Cuerpo</h3>
+              <p>Rastro de gestos, fisicalidad y memoria biológica de la mirada.</p>
+              <a class="concept-card-link" href="./pages/cuerpo/">Abrir Cuerpo</a>
+            </div>
+          </article>
+
+          <article class="concept-card concept-card-infinite win-draggable" id="winInfinito">
+            <div class="win-titlebar">
+              <span>C:\SCROLL\INFINITO.SYS</span>
+              <span class="win-controls" aria-hidden="true"><span></span><span></span><span></span></span>
+            </div>
+            <div class="concept-window-body">
+              <h3>Infinito</h3>
+              <p>Repetición textual y descenso continuo sin llegar a un fondo.</p>
+              <a class="concept-card-link" href="./pages/infinito/">Abrir Infinito</a>
+            </div>
+          </article>
+
+          <article class="concept-card concept-card-noise win-draggable" id="winRuido">
+            <div class="win-titlebar">
+              <span>C:\SCROLL\RUIDO.DLL</span>
+              <span class="win-controls" aria-hidden="true"><span></span><span></span><span></span></span>
+            </div>
+            <div class="concept-window-body">
+              <h3>Ruido</h3>
+              <p>Interferencias, saturación de estímulos y ecos sonoros.</p>
+              <a class="concept-card-link" href="./pages/ruido/">Abrir Ruido</a>
+            </div>
+          </article>
+
+          <article class="concept-card concept-card-archive win-draggable" id="winArchivo">
+            <div class="win-titlebar">
+              <span>C:\SCROLL\ARCHIVO.LOG</span>
+              <span class="win-controls" aria-hidden="true"><span></span><span></span><span></span></span>
+            </div>
+            <div class="concept-window-body">
+              <h3>Archivo</h3>
+              <p>Residuos, documentos gráficos y memoria del proyecto 2026.</p>
+              <a class="concept-card-link" href="./pages/archivo/">Abrir Archivo</a>
+            </div>
+          </article>
+
+          <article class="concept-card concept-card-pausa is-visible win-draggable" id="winPausa">
+            <div class="win-titlebar">
+              <span>C:\SCROLL\PAUSA.EXE</span>
+              <span class="win-controls" aria-hidden="true"><span></span><span></span><span></span></span>
+            </div>
+            <div class="concept-window-body">
+              <h3>Pausa</h3>
+              <p>Detención del scroll, poemas ASCII y recetas diferidas.</p>
+              <a class="concept-card-link" href="./pages/pausa/">Abrir Pausa</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- SCRIPT DE INTERACCIÓN Y CONMUTACIÓN -->
+  <script src="./assets/scripts/home.js?v=20260904-floating-windows-v1"></script>
+  <script>
+    function setBiosMode(modeName) {
+      document.body.className = modeName;
+      document.querySelectorAll('.preview-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      event.target.classList.add('active');
+    }
+
+    // Partículas reactivas en modo 4
+    const trailCanvas = document.getElementById('ambient-trail-canvas');
+    let tCtx = trailCanvas?.getContext('2d');
+    let tParticles = [];
+
+    function resizeTrailCanvas() {
+      if (!trailCanvas) return;
+      trailCanvas.width = window.innerWidth;
+      trailCanvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeTrailCanvas);
+    resizeTrailCanvas();
+
+    window.addEventListener('mousemove', (e) => {
+      if (!document.body.classList.contains('mode-bios-4')) return;
+      for (let i = 0; i < 2; i++) {
+        tParticles.push({
+          x: e.clientX + (Math.random() - 0.5) * 6,
+          y: e.clientY + (Math.random() - 0.5) * 6,
+          size: Math.random() * 3 + 1.5,
+          color: Math.random() > 0.5 ? '#9eff71' : '#1400ff',
+          alpha: 0.8,
+          vx: (Math.random() - 0.5) * 0.8,
+          vy: (Math.random() - 0.5) * 0.8 - 0.3
+        });
+      }
+    });
+
+    function renderTrail() {
+      if (!tCtx || !trailCanvas) return;
+      tCtx.clearRect(0, 0, trailCanvas.width, trailCanvas.height);
+      for (let i = tParticles.length - 1; i >= 0; i--) {
+        const p = tParticles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.alpha -= 0.03;
+        if (p.alpha <= 0) {
+          tParticles.splice(i, 1);
+          continue;
+        }
+        tCtx.save();
+        tCtx.globalAlpha = p.alpha;
+        tCtx.fillStyle = p.color;
+        tCtx.shadowColor = p.color;
+        tCtx.shadowBlur = 6;
+        tCtx.beginPath();
+        tCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        tCtx.fill();
+        tCtx.restore();
+      }
+      requestAnimationFrame(renderTrail);
+    }
+    renderTrail();
+  </script>
+</body>
+</html>

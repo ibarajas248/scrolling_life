@@ -21,6 +21,9 @@ const RAIN_PHASE_MS = 3000;
 const MOSQUITO_SOUND_ENABLED = false;
 const MOSQUITO_AUDIO_SRC = './assets/audio/mosquito-buzz.mp3';
 const NETART_CACHE_MANIFEST = './assets/images/netart-cache/manifest.json';
+const NETART_PROBE_LIMIT = 70;
+const NETART_MIN_VALID_IMAGES = 8;
+const NETART_IMAGE_TIMEOUT_MS = 650;
 
 let netArtStartTime = performance.now();
 let mosquitoCycleTimer = null;
@@ -47,7 +50,11 @@ let netArtImages = [
   './assets/images/scroll-strips/strip_000002.jpg',
   './assets/images/scroll-strips/strip_000003.jpg',
   './assets/images/scroll-strips/strip_000004.jpg',
-  './assets/images/netart/Screenshot_20250108-144156.jpg'
+  './assets/images/archive-sides/paper-strips-installation.png',
+  './assets/images/archive-sides/dense-text-column.png',
+  './assets/images/archive-sides/vertical-contact-strips.png',
+  './assets/images/archive-sides/sepia-contact-sheet.png',
+  './assets/images/archive-sides/folded-paper-floor.png'
 ];
 
 const shuffleImages = (images) => {
@@ -61,6 +68,38 @@ const shuffleImages = (images) => {
   return shuffled;
 };
 
+const probeImage = (src) => new Promise((resolve) => {
+  const image = new Image();
+  let settled = false;
+
+  const finish = (valid) => {
+    if (settled) return;
+    settled = true;
+    window.clearTimeout(timeout);
+    image.onload = null;
+    image.onerror = null;
+    resolve(valid ? src : null);
+  };
+
+  const timeout = window.setTimeout(() => finish(false), NETART_IMAGE_TIMEOUT_MS);
+  image.onload = () => finish(image.naturalWidth > 0 && image.naturalHeight > 0);
+  image.onerror = () => finish(false);
+  image.src = src;
+});
+
+const collectReachableImages = async (images) => {
+  const candidates = shuffleImages(images)
+    .filter((image) => typeof image === 'string' && image.length > 0)
+    .slice(0, NETART_PROBE_LIMIT);
+
+  if (candidates.length === 0) return null;
+
+  const testedImages = await Promise.all(candidates.map((image) => probeImage(image)));
+  const validImages = testedImages.filter(Boolean);
+
+  return validImages.length >= NETART_MIN_VALID_IMAGES ? validImages : null;
+};
+
 const loadLocalNetArtImages = async () => {
   try {
     const response = await fetch(`${NETART_CACHE_MANIFEST}?ts=${Date.now()}`, { cache: 'no-store' });
@@ -68,9 +107,9 @@ const loadLocalNetArtImages = async () => {
 
     const manifest = await response.json();
     const images = Array.isArray(manifest.images) ? manifest.images : [];
-    const validImages = images.filter((image) => typeof image === 'string' && image.length > 0);
+    const validImages = await collectReachableImages(images);
 
-    return validImages.length > 0 ? shuffleImages(validImages) : null;
+    return validImages ? shuffleImages(validImages) : null;
   } catch (error) {
     console.warn('Cache local de imagenes no disponible, usando fallback.', error);
     return null;
@@ -117,11 +156,6 @@ const initNetArt = async () => {
 
     if (localImages) {
       netArtImages = localImages;
-    } else {
-      const remoteImages = await loadRemoteNetArtImages();
-      if (remoteImages.length > 0) {
-        netArtImages = remoteImages;
-      }
     }
   } catch (e) {
     console.warn('API de imágenes falló, usando imágenes locales de respaldo.', e);
@@ -687,7 +721,7 @@ const updateKinetic = () => {
     } else {
       pageContent.classList.remove('hidden');
       if (netArtLayer) {
-        netArtLayer.style.opacity = `${0.02 + scrollRainEnergy * 0.12}`;
+        netArtLayer.style.opacity = `${0.18 + scrollRainEnergy * 0.14}`;
       }
     }
   } else if (netArtLayer) {
@@ -722,7 +756,8 @@ const updateKinetic = () => {
       scale = 1 + Math.sin(elapsed * 0.012 + rainSpeed + phase) * 0.08;
       opacity = 0.28 + Math.abs(Math.sin(elapsed * 0.022 + rainSpeed + phase)) * 0.22;
     } else {
-      const rawY = base + scrollRainDistance * scrollRainSpeed + Math.sin(elapsed * 0.0011 + phase) * 12;
+      const idleRainDistance = Math.max(0, elapsed - RAIN_PHASE_MS) * rainSpeed * 1.15;
+      const rawY = base + idleRainDistance + scrollRainDistance * scrollRainSpeed + Math.sin(elapsed * 0.0011 + phase) * 12;
       const wrapTop = -window.innerHeight * 0.95;
       const wrapBottom = window.innerHeight + 180;
       const wrapRange = wrapBottom - wrapTop;

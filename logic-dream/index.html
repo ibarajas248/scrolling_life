@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0a1010">
+  <meta name="description" content="Un pequeño Transformer generativo, abierto por dentro, que comienza a escribir al entrar y continúa sin límite en tu navegador.">
+  <title>LOGIC / DREAM — Dentro de una máquina que escribe</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230a1010'/%3E%3Cpath d='M16 14v36h34M16 32h17V14m0 18h17' stroke='%23c9f89b' fill='none' stroke-width='4'/%3E%3Ccircle cx='50' cy='32' r='4' fill='%23c9f89b'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="src/styles.css">
+  <script src="src/model-data.js" defer></script>
+  <script src="src/engine.js" defer></script>
+  <script src="src/app.js" defer></script>
+</head>
+<body class="netart-mode">
+<a class="skip" href="#output">Ir al texto generado</a>
+<div class="shell">
+  
+  <main>
+    <section class="hero">
+      <div><div class="eyebrow"><span>✳</span> UNA VENTANA AL INTERIOR DE LA IA GENERATIVA</div><h1>Una letra. <span>Miles de operaciones.</span></h1><p>Escribe una semilla. Sigue sus números. Descubre cómo aparece el siguiente carácter.</p></div>
+      <button class="specs" id="show-model" aria-label="Ver ficha del modelo"><span><b id="param-short">75.9k</b><small>PARÁMETROS</small></span><span><b>02</b><small>CAPAS</small></span><span><b>04</b><small>CABEZAS / CAPA</small></span></button>
+    </section>
+    <section class="panel console" aria-labelledby="console-title">
+      <div class="console-grid">
+        <div class="input-side"><h2 id="console-title" class="sr">Consola infinita</h2>
+          <div class="seed-controls" hidden><label for="prompt">Semilla de texto para el modelo</label><textarea id="prompt" spellcheck="false" autocapitalize="off" autocomplete="off" rows="2" maxlength="512">la máquina sueña con </textarea><button id="clear-prompt" type="button">Vaciar semilla</button><button data-prompt="la máquina sueña con ">La máquina sueña</button><button data-prompt="en la pantalla ">En la pantalla</button><button data-prompt="un archivo ">Un archivo</button><div id="normalization-note">Modelo de caracteres · minúsculas · contexto de 64 posiciones.</div></div>
+          <div id="output" class="output" tabindex="0" aria-label="Texto generado"><span class="seed-text">la máquina sueña con </span><span class="cursor" aria-hidden="true"></span></div>
+        </div>
+        <div class="output-side process-side" aria-labelledby="process-title">
+          <div class="console-head"><h2 id="process-title"><span class="output-indicator"></span> GRÁFICOS TÉCNICOS DEL MODELO</h2><span id="process-mode" class="tiny-btn">atención</span></div>
+          <div id="process-visual" class="process-visual" aria-label="Gráficos técnicos cambiantes del proceso generativo"></div>
+          <div class="process-caption"><span id="process-caption">El gráfico técnico cambia mientras el modelo escribe.</span><span id="process-pulse">∞</span></div>
+        </div>
+      </div>
+      <div class="transport-bar"><div class="transport"><button class="btn primary" id="play"><span id="play-icon" aria-hidden="true">▶</span><span id="play-label">Generar</span></button><button class="btn" id="step"><span aria-hidden="true">↦</span> Un carácter</button><button class="icon-btn" id="reset" title="Reiniciar generación y semilla aleatoria" aria-label="Reiniciar generación">↺</button>
+        <span id="run-status" class="run-status">GENERANDO EN TU NAVEGADOR</span></div><div class="transport-settings"><label class="speed" title="Intervalo objetivo entre pasos. El cálculo puede reducir la velocidad efectiva.">VELOCIDAD <input type="range" id="speed" min="1" max="12" value="5"><output id="speed-label" for="speed">5 car/s</output></label><label class="limit-label">LÍMITE <select id="limit"><option value="Infinity" selected>∞</option><option value="32">32</option><option value="64">64</option><option value="128">128</option><option value="256">256</option></select></label></div></div>
+    </section>
+    <div class="route-heading"><span><i class="dot dim"></i> EL TRAYECTO DE UN CARÁCTER</span><span>PULSA UNA ETAPA PARA INSPECCIONAR ↓</span></div>
+    <div class="pipeline" id="pipeline" aria-label="Etapas del modelo">
+      <button data-stage="tokens"><span class="stage-num">01 / ENTRADA</span><strong>Caracteres</strong><div class="stage-preview chars" id="preview-tokens">l a ␣ m á</div><small id="pipeline-context">20 / 64 posiciones</small></button>
+      <button data-stage="vectors"><span class="stage-num">02 / CODIFICACIÓN</span><strong>Vectores</strong><div class="stage-preview mini-grid" id="preview-vectors"></div><small>64 números / carácter</small></button>
+      <button data-stage="attention" class="active"><span class="stage-num">03 / CONTEXTO</span><strong>Atención</strong><div class="stage-preview mini-bars" id="preview-attention"></div><small>Q · K → softmax → V</small></button>
+      <button data-stage="operations"><span class="stage-num">04 / TRANSFORMACIÓN</span><strong>Red neuronal</strong><div class="stage-preview mini-grid" id="preview-mlp"></div><small>64 → 128 → 64</small></button>
+      <button data-stage="probabilities"><span class="stage-num">05 / DISTRIBUCIÓN</span><strong>Posibilidades</strong><div class="stage-preview mini-bars" id="preview-probs"></div><small id="pipeline-options">37 caracteres posibles</small></button>
+      <button data-stage="sample"><span class="stage-num">06 / GENERACIÓN</span><strong>Un nuevo carácter</strong><div class="stage-preview sample-preview" id="preview-sample">_</div><small>se añade y vuelve a empezar ↺</small></button>
+    </div>
+    <div class="workspace-label"><span><span class="index">02</span> EXPLORA LO QUE ESTÁ CALCULANDO</span><span class="compute-stats"><b id="compute-time">—</b> ms <span> / </span><b id="multiply-count">—</b> multiplicaciones</span></div>
+    <div class="workspace">
+      <section class="panel inspector" aria-labelledby="inspector-title">
+        <div class="panel-head"><div><h2 id="inspector-title">La máquina, por dentro.</h2><p>Selecciona un carácter y cambia de escala.</p></div><span class="badge"><i class="dot"></i> VALORES REALES</span></div>
+        <div class="tabs" role="tablist" aria-label="Escalas de inspección"><button id="tab-attention" role="tab" data-view="attention" aria-controls="inspect-body" aria-selected="true">Atención <span>01</span></button><button id="tab-vectors" role="tab" data-view="vectors" aria-controls="inspect-body" aria-selected="false" tabindex="-1">Vectores <span>02</span></button><button id="tab-operations" role="tab" data-view="operations" aria-controls="inspect-body" aria-selected="false" tabindex="-1">Operaciones <span>03</span></button><button id="tab-circuits" role="tab" data-view="circuits" aria-controls="inspect-body" aria-selected="false" tabindex="-1">Circuitos <span>04</span></button></div>
+        <div class="inspector-toolbar"><span id="token-label">CONTEXTO DEL MODELO</span><div class="layer-tools"><label>CAPA <select id="layer-select"><option value="0">01</option><option value="1">02</option></select></label><div class="head-picker" id="head-picker" aria-label="Cabeza de atención"><span>CABEZA</span><button data-head="0" class="active" aria-pressed="true">1</button><button data-head="1" aria-pressed="false">2</button><button data-head="2" aria-pressed="false">3</button><button data-head="3" aria-pressed="false">4</button></div></div></div>
+        <div class="token-ribbon-wrap"><div id="token-ribbon" class="token-ribbon" aria-label="Caracteres del contexto"></div><button id="follow-last" class="follow-btn active" aria-pressed="true" title="Seguir el último carácter">Seguir último ↘</button></div>
+        <div id="inspect-body" class="inspect-body" role="tabpanel" aria-labelledby="tab-attention"></div>
+        <div class="inspector-foot" id="inspector-foot">La atención es parte del cálculo, no una explicación completa de una respuesta.</div>
+      </section>
+      <aside class="panel prediction" id="prediction" aria-labelledby="prediction-title">
+        <div class="panel-head"><div><div class="overline accent">LA SALIDA DEL MODELO</div><h2 id="prediction-title">La próxima posibilidad.</h2><p>Siempre desde la última posición del contexto.</p></div><span class="prediction-icon">↗</span></div>
+        <div class="distribution-caption"><span>CARÁCTER</span><span>PROBABILIDAD</span></div><div id="probability-bars" class="probability-bars"></div><div class="distribution-meta"><span id="other-probability">Otros: —</span><span>H = <b id="entropy">—</b> bits</span></div>
+        <div class="sampling-settings"><div class="temperature-head"><label for="temperature">Temperatura <button class="inline-info" id="temp-help" title="Qué hace la temperatura" aria-label="Ayuda sobre temperatura">ⓘ</button></label><output id="temperature-label" for="temperature">0.75</output></div><input type="range" id="temperature" min="0" max="1.5" step="0.05" value="0.75"><div class="range-labels"><span>MÁS PREDECIBLE</span><span>MÁS DIVERSO</span></div><div class="sampling-row"><label>TOP-K <select id="top-k"><option value="0">Todos</option><option value="1">1</option><option value="3">3</option><option value="5">5</option><option value="10">10</option><option value="20">20</option></select></label><label for="random-seed">SEMILLA <input type="number" id="random-seed" min="1" max="4294967295" step="1" value="248"></label><button class="icon-btn" id="new-seed" title="Cambiar semilla aleatoria" aria-label="Cambiar semilla aleatoria">⤨</button></div><div id="sampling-explanation" class="micro-note">Se recalcula la distribución, no los pesos aprendidos.</div></div>
+        <div class="last-sample" id="last-sample"><div class="overline">ÚLTIMO MUESTREO</div><div class="sample-empty"><span>_</span><p>Una posibilidad se convierte en carácter.<br>Pulsa <strong>Un carácter</strong> para verlo.</p></div></div>
+        <div class="history-box"><div class="overline">RASTRO DE GENERACIÓN <span id="history-count">0</span></div><div id="history" class="history"></div></div>
+      </aside>
+    </div>
+    <details class="panel architecture" id="architecture" open><summary><div><span class="index">03</span><strong>Un Transformer pequeño. Todo a la vista.</strong></div><span>ARQUITECTURA COMPLETA <i>+</i></span></summary><div class="architecture-body"><div id="architecture-svg" class="architecture-svg"></div><p>Los dos bloques tienen sus propios pesos. Las conexiones residuales suman la entrada a la salida de cada subcapa. El contexto es causal: una posición no puede usar caracteres futuros.</p></div></details>
+    <div class="principles"><article><span class="principle-icon">↗</span><div><h3>Generación real, en pequeño.</h3><p>Un modelo entrenado aquí construye el texto. No reproduce un repertorio de respuestas ni llama a una API.</p></div></article><article><span class="principle-icon">⌁</span><div><h3>No es un asistente de conversación.</h3><p>Aprendió un corpus sintético sobre imagen, memoria y tecnología. Puede repetir frases y producir errores.</p></div></article><article><span class="principle-icon">⊕</span><div><h3>Dos escalas, una distinción.</h3><p>La red usa coma flotante. La vista de circuitos enseña una copia cuantizada, no el hardware real de tu equipo.</p></div></article></div>
+    <details class="panel model-card" id="model-card"><summary><div><span class="index">04</span><strong>Ficha del modelo y entrenamiento</strong></div><span>DATOS, PESOS Y LÍMITES <i>+</i></span></summary><div id="model-card-body" class="model-card-body"></div></details>
+  </main>
+  <footer><span class="footer-brand">LOGIC <i>/</i> DREAM <span>Un laboratorio entre el lenguaje y la máquina.</span></span><span>HTML + CSS + JAVASCRIPT <b>·</b> SIN RED <b>·</b> SIN SEGUIMIENTO</span></footer>
+</div>
+<dialog id="guide"><div class="dialog-head"><span class="eyebrow">GUÍA DEL LABORATORIO</span><button id="close-guide" class="icon-btn" aria-label="Cerrar guía">×</button></div><h2>De una frase<br>a una señal.</h2><p>Esta página ejecuta un Transformer diminuto entrenado con texto sintético en español. Predice un <strong>carácter</strong> a la vez. Los valores de las vistas provienen de esa inferencia.</p><div class="help-step"><span>01</span><div><h3>Escribe el comienzo, no una instrucción.</h3><p>Prueba «la máquina sueña con ». La entrada se normaliza a minúsculas. Se usan los últimos 64 caracteres; los caracteres que el modelo no conoce se sustituyen por «?».</p></div></div><div class="help-step"><span>02</span><div><h3>Detén el tiempo.</h3><p>Usa <strong>Un carácter</strong> para un paso o <strong>Generar</strong> para continuar. La temperatura cambia la distribución; 0 elige siempre el máximo. Top-k limita los candidatos. La semilla fija la secuencia pseudoaleatoria.</p></div></div><div class="help-step"><span>03</span><div><h3>Cambia de escala.</h3><p>Atención: selecciona una celda para inspeccionar Q y K. Vectores: observa los 64 valores de una representación. Operaciones: abre una multiplicación y su suma. Circuitos: explora la versión cuantizada de uno de esos productos.</p></div></div><div class="help-note"><b>Lo que es real y lo que es didáctico.</b> Atención, vectores, logits y probabilidades son valores del modelo. El circuito usa enteros con signo de 8 bits y cuatro bits fraccionarios. Esa copia no participa en la generación; no es una inspección de los transistores de tu navegador.</div><p class="help-small">No hay comprensión humana demostrada ni conocimiento general. Las frases pueden parecer coherentes por los patrones del corpus. Un mapa de atención no explica por sí solo la decisión completa del modelo.</p><div class="help-sources"><a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener noreferrer">Arquitectura Transformer ↗</a><a href="https://poloclub.github.io/transformer-explainer/" target="_blank" rel="noopener noreferrer">Transformer Explainer ↗</a><a href="https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html" target="_blank" rel="noopener noreferrer">Atención causal en PyTorch ↗</a></div><div class="keyboard-note"><kbd>Ctrl</kbd> + <kbd>Enter</kbd> Generar / pausar <span>·</span> <kbd>Alt</kbd> + <kbd>→</kbd> Un carácter</div></dialog>
+<input id="session-file" type="file" accept="application/json,.json" hidden>
+<div id="toast" class="toast" role="status" hidden></div><div id="a11y-status" class="sr" aria-live="polite"></div>
+<noscript><div class="error-banner">Activa JavaScript para ejecutar el modelo y sus visualizaciones.</div></noscript>
+</body>
+</html>

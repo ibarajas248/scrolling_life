@@ -65,40 +65,125 @@
     }
 
     .subpages-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      margin: 0 0 2rem;
+      position: relative;
+      min-height: 245px;
+      margin: 0 0 2.4rem;
+      overflow: visible;
+      border: 0;
+      background:
+        radial-gradient(ellipse at 50% 52%, rgba(2, 3, 4, 0.96) 0%, rgba(2, 3, 4, 0.82) 43%, rgba(2, 3, 4, 0) 74%);
+      box-shadow: none;
+    }
+
+    .subpages-row::before {
+      content: 'if scroll == pause';
+      position: absolute;
+      top: 58px;
+      left: 50%;
+      z-index: 2;
+      transform: translateX(-50%);
+      color: rgba(158, 255, 113, 0.5);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-shadow: 0 0 12px rgba(158, 255, 113, 0.24);
+      white-space: nowrap;
+    }
+
+    .subpages-row::after {
+      content: 'return memory';
+      position: absolute;
+      bottom: 43px;
+      left: 50%;
+      z-index: 2;
+      transform: translateX(-50%);
+      color: rgba(158, 255, 113, 0.5);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-shadow: 0 0 12px rgba(158, 255, 113, 0.24);
+      white-space: nowrap;
+    }
+
+    .subpages-graph-lines {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .subpages-graph-lines path,
+    .subpages-graph-lines line,
+    .subpages-graph-lines circle {
+      fill: none;
+      stroke: rgba(158, 255, 113, 0.3);
+      stroke-width: 1;
+      vector-effect: non-scaling-stroke;
+    }
+
+    .subpages-graph-lines .flow-line {
+      stroke: rgba(95, 215, 223, 0.54);
+      stroke-dasharray: 7 10;
+      animation: subpage-flow 1.8s linear infinite;
+    }
+
+    .subpages-hub {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      z-index: 2;
+      width: 18px;
+      height: 18px;
+      border: 1px solid rgba(158, 255, 113, 0.72);
+      border-radius: 999px;
+      background: rgba(158, 255, 113, 0.1);
+      box-shadow:
+        0 0 0 8px rgba(158, 255, 113, 0.035),
+        0 0 24px rgba(95, 215, 223, 0.22);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
     }
 
     .subpage-icon-link {
-      display: inline-flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 7px;
-      width: 132px;
-      min-height: 112px;
+      position: absolute;
+      top: 50%;
+      z-index: 3;
+      display: grid;
+      place-items: center;
+      gap: 10px;
+      width: clamp(104px, 19vw, 128px);
+      min-height: 104px;
       margin: 0;
-      padding: 10px 8px;
-      border: 2px solid #9eff71;
-      border-radius: 4px;
-      background: #101820;
+      padding: 13px 10px 12px;
+      border: 1px solid rgba(158, 255, 113, 0.74);
+      background: rgba(2, 3, 4, 0.32);
+      backdrop-filter: blur(2px);
       color: #d8e7ef;
       text-decoration: none;
       box-shadow:
-        5px 5px 0 rgba(158, 255, 113, 0.2),
-        inset 1px 1px 0 rgba(255, 255, 255, 0.22);
+        0 0 24px rgba(158, 255, 113, 0.12),
+        inset 0 0 14px rgba(158, 255, 113, 0.045);
+      transform: translateY(-50%);
       transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+    }
+
+    .subpage-icon-link:first-of-type {
+      left: clamp(22px, 8vw, 96px);
+    }
+
+    .subpage-icon-link:last-of-type {
+      right: clamp(22px, 8vw, 96px);
     }
 
     .subpage-icon-link:hover,
     .subpage-icon-link:focus {
       border-color: #80e9ff;
       box-shadow:
-        5px 5px 0 rgba(128, 233, 255, 0.22),
-        inset 1px 1px 0 rgba(255, 255, 255, 0.28);
-      transform: translate(-2px, -2px);
+        0 0 30px rgba(128, 233, 255, 0.26),
+        inset 0 0 18px rgba(128, 233, 255, 0.12);
+      transform: translateY(calc(-50% - 3px));
     }
 
     .subpage-icon-link:focus-visible {
@@ -107,35 +192,35 @@
     }
 
     .subpage-icon-link img {
-      width: 58px;
-      height: 58px;
+      width: 72px;
+      height: 48px;
       image-rendering: pixelated;
-      object-fit: contain;
+      object-fit: cover;
+      object-position: left center;
     }
 
     .subpage-icon-ascii {
-      width: 58px;
-      height: 58px;
+      width: 48px;
+      height: 48px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       background: #05080c;
-      border: 1px dashed rgba(158, 255, 113, 0.4);
-      border-radius: 2px;
+      border: 1px dashed rgba(158, 255, 113, 0.48);
       color: #9eff71;
       font-family: 'Share Tech Mono', monospace;
       text-align: center;
     }
 
     .subpage-icon-ascii .ascii-symbol-prompt {
-      font-size: 1.25rem;
+      font-size: 1.1rem;
       font-weight: 700;
       line-height: 1;
     }
 
     .subpage-icon-ascii .ascii-symbol-body {
-      font-size: 0.65rem;
+      font-size: 0.58rem;
       color: #5fd7df;
       letter-spacing: 1px;
       margin-top: 3px;
@@ -145,10 +230,57 @@
       max-width: 100%;
       color: #9eff71;
       font-family: 'Share Tech Mono', monospace;
-      font-size: 0.72rem;
-      line-height: 1.15;
+      font-size: 0.66rem;
+      line-height: 1.1;
       text-align: center;
+      text-transform: uppercase;
       overflow-wrap: anywhere;
+    }
+
+    @keyframes subpage-flow {
+      to {
+        stroke-dashoffset: -68;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .subpages-row {
+        min-height: 360px;
+      }
+
+      .subpages-row::before {
+        top: 28px;
+      }
+
+      .subpages-row::after {
+        bottom: 18px;
+      }
+
+      .subpages-hub {
+        top: 52%;
+      }
+
+      .subpage-icon-link {
+        width: min(132px, calc(100% - 42px));
+      }
+
+      .subpage-icon-link:first-of-type {
+        top: 35%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .subpage-icon-link:last-of-type {
+        top: 67%;
+        right: auto;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .subpage-icon-link:hover,
+      .subpage-icon-link:focus {
+        transform: translate(-50%, calc(-50% - 3px));
+      }
     }
   </style>
   <script src="../../assets/scripts/maintenance-gate.js" defer></script>
@@ -162,17 +294,25 @@
     </div>
 
     <div class="subpages-row">
+      <svg class="subpages-graph-lines" viewBox="0 0 800 245" preserveAspectRatio="none" aria-hidden="true">
+        <path class="flow-line" d="M122 78 H400 V184 H678" />
+        <path d="M400 78 V38 M400 184 V218 M122 78 V122 H400 M678 184 V122 H400" />
+        <circle cx="400" cy="122" r="10" />
+        <circle cx="400" cy="38" r="4" />
+        <circle cx="400" cy="218" r="4" />
+      </svg>
+      <span class="subpages-hub" aria-hidden="true"></span>
       <a href="./in-case-you-come-back/" class="subpage-icon-link" aria-label="Abrir In Case You Come Back" title="In Case You Come Back">
-        <img src="./in-case-you-come-back/assets/recipe-card.gif" alt="" />
-        <span class="subpage-icon-caption">In Case You Come Back</span>
+        <img src="./in-case-you-come-back/assets/in-case-you-come-back-title.png" alt="" />
+        <span class="subpage-icon-caption">Recipe path</span>
       </a>
 
       <a href="./ascii/" class="subpage-icon-link" aria-label="Abrir ASCII - Poema visual de scroll" title="ASCII - Poema visual de scroll">
         <div class="subpage-icon-ascii" aria-hidden="true">
-          <span class="ascii-symbol-prompt">&gt;_</span>
-          <span class="ascii-symbol-body">[ . : * ]</span>
+          <span class="ascii-symbol-prompt">[.:]</span>
+          <span class="ascii-symbol-body">0101</span>
         </div>
-        <span class="subpage-icon-caption">ASCII</span>
+        <span class="subpage-icon-caption">ASCII path</span>
       </a>
     </div>
 
