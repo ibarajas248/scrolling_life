@@ -20,6 +20,8 @@ const MOSQUITO_ACTIVE_MS = 20000;
 const RAIN_PHASE_MS = 3000;
 const MOSQUITO_SOUND_ENABLED = false;
 const MOSQUITO_AUDIO_SRC = './assets/audio/mosquito-buzz.mp3';
+const NETART_DATASET_MANIFEST = './datasets/people_80s_style_compressed/manifest.json';
+const NETART_DATASET_BASE = './datasets/people_80s_style_compressed/';
 const NETART_CACHE_MANIFEST = './assets/images/netart-cache/manifest.json';
 const NETART_PROBE_LIMIT = 70;
 const NETART_MIN_VALID_IMAGES = 8;
@@ -68,6 +70,15 @@ const shuffleImages = (images) => {
   return shuffled;
 };
 
+const encodeNetArtPathSegment = (segment) => encodeURIComponent(segment).replace(/%2F/gi, '/');
+
+const datasetNetArtImagePath = (entry) => {
+  const file = typeof entry === 'string' ? entry : entry?.file;
+  if (typeof file !== 'string' || !file.trim()) return null;
+
+  return `${NETART_DATASET_BASE}${encodeNetArtPathSegment(file.trim())}`;
+};
+
 const probeImage = (src) => new Promise((resolve) => {
   const image = new Image();
   let settled = false;
@@ -100,7 +111,28 @@ const collectReachableImages = async (images) => {
   return validImages.length >= NETART_MIN_VALID_IMAGES ? validImages : null;
 };
 
+const loadDatasetNetArtImages = async () => {
+  try {
+    const response = await fetch(`${NETART_DATASET_MANIFEST}?ts=${Date.now()}`, { cache: 'no-store' });
+    if (!response.ok) return null;
+
+    const manifest = await response.json();
+    const images = Array.isArray(manifest)
+      ? manifest.map(datasetNetArtImagePath).filter(Boolean)
+      : [];
+    const validImages = await collectReachableImages(images);
+
+    return validImages ? shuffleImages(validImages) : null;
+  } catch (error) {
+    console.warn('Dataset de imagenes no disponible, usando fallback.', error);
+    return null;
+  }
+};
+
 const loadLocalNetArtImages = async () => {
+  const datasetImages = await loadDatasetNetArtImages();
+  if (datasetImages) return datasetImages;
+
   try {
     const response = await fetch(`${NETART_CACHE_MANIFEST}?ts=${Date.now()}`, { cache: 'no-store' });
     if (!response.ok) return null;
