@@ -495,6 +495,34 @@ const clampDays = (value) => {
   return Math.min(Math.max(days, 1), 90);
 };
 
+const ISO_DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
+
+const validIsoDate = (value) => typeof value === 'string' && ISO_DATE_PATTERN.test(value);
+
+const daysBetweenInclusive = (startDate, endDate) => {
+  const start = new Date(`${startDate}T00:00:00Z`);
+  const end = new Date(`${endDate}T00:00:00Z`);
+  if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) return null;
+  return Math.floor((end - start) / 86400000) + 1;
+};
+
+const dashboardRange = (url) => {
+  const requestedDays = clampDays(url.searchParams.get('days'));
+  const startDate = url.searchParams.get('start_date') || '';
+  const endDate = url.searchParams.get('end_date') || '';
+
+  if (!validIsoDate(startDate) || !validIsoDate(endDate)) {
+    return { mode: 'days', days: requestedDays };
+  }
+
+  const days = daysBetweenInclusive(startDate, endDate);
+  if (!days || days < 1 || days > 90) {
+    return { mode: 'days', days: requestedDays };
+  }
+
+  return { mode: 'dates', days, startDate, endDate };
+};
+
 const firstRow = (rows, fallback = {}) => rows[0] || fallback;
 
 const estimatedUserSql = `
@@ -505,7 +533,23 @@ const estimatedUserSql = `
   END
 `;
 
-const trafficDashboard = async (days) => {
+const dateRangeCondition = (columnExpression, range) => (
+  range.mode === 'dates'
+    ? `${columnExpression} BETWEEN :startDate AND :endDate`
+    : `${columnExpression} >= DATE_SUB(DATE(CONVERT_TZ(UTC_TIMESTAMP(), '+00:00', '-05:00')), INTERVAL ${range.days - 1} DAY)`
+);
+
+const rangeParams = (range) => (
+  range.mode === 'dates'
+    ? { startDate: range.startDate, endDate: range.endDate }
+    : {}
+);
+
+const trafficDashboard = async (range) => {
+  const eventDay = "DATE(CONVERT_TZ(event_time, '+00:00', '-05:00'))";
+  const eventRangeWhere = dateRangeCondition(eventDay, range);
+  const params = rangeParams(range);
+
   const [[totals]] = await pool.query(`
     SELECT
       (SELECT COUNT(*) FROM traffic_visitors) AS visitors,
@@ -534,37 +578,38 @@ const trafficDashboard = async (days) => {
       COUNT(*) AS events,
       COALESCE(SUM(event_type = 'pageview'), 0) AS pageviews
     FROM traffic_events
-    WHERE DATE(CONVERT_TZ(event_time, '+00:00', '-05:00')) >=
-      DATE_SUB(DATE(CONVERT_TZ(UTC_TIMESTAMP(), '+00:00', '-05:00')), INTERVAL ${days - 1} DAY)
-  `);
+    WHERE ${eventRangeWhere}
+  `, params);
 
   const [byDay] = await pool.query(`
     SELECT
-      DATE(CONVERT_TZ(event_time, '+00:00', '-05:00')) AS day,
+      ${eventDay} AS day,
       COUNT(DISTINCT visitor_id) AS visitors,
       COUNT(DISTINCT ${estimatedUserSql}) AS estimated_users,
       COUNT(DISTINCT session_id) AS sessions,
       COUNT(*) AS events,
       COALESCE(SUM(event_type = 'pageview'), 0) AS pageviews
     FROM traffic_events
-    WHERE DATE(CONVERT_TZ(event_time, '+00:00', '-05:00')) >=
-      DATE_SUB(DATE(CONVERT_TZ(UTC_TIMESTAMP(), '+00:00', '-05:00')), INTERVAL ${days - 1} DAY)
-    GROUP BY DATE(CONVERT_TZ(event_time, '+00:00', '-05:00'))
+    WHERE ${eventRangeWhere}
+    GROUP BY ${eventDay}
     ORDER BY day ASC
-  `);
+  `, params);
 
   const [topPages] = await pool.query(`
     SELECT
       host,
       path,
       COALESCE(NULLIF(title, ''), path) AS title,
-      visits_count AS visits,
-      CONVERT_TZ(last_seen, '+00:00', '-05:00') AS last_seen_colombia
-    FROM tracked_pages
-    WHERE visits_count > 0
-    ORDER BY visits_count DESC, last_seen DESC
+      COUNT(*) AS visits,
+      COUNT(DISTINCT visitor_id) AS visitors,
+      MAX(CONVERT_TZ(event_time, '+00:00', '-05:00')) AS last_seen_colombia
+    FROM traffic_events
+    WHERE event_type = 'pageview'
+      AND ${eventRangeWhere}
+    GROUP BY host, path, COALESCE(NULLIF(title, ''), path)
+    ORDER BY visits DESC, last_seen_colombia DESC
     LIMIT 20
-  `);
+  `, params);
 
   const [countries] = await pool.query(`
     SELECT
@@ -572,11 +617,11 @@ const trafficDashboard = async (days) => {
       COUNT(DISTINCT visitor_id) AS visitors,
       COUNT(*) AS events
     FROM traffic_events
-    WHERE event_time >= UTC_TIMESTAMP() - INTERVAL ${days} DAY
+    WHERE ${eventRangeWhere}
     GROUP BY COALESCE(NULLIF(cf_country, ''), 'sin_dato')
     ORDER BY visitors DESC, events DESC
     LIMIT 20
-  `);
+  `, params);
 
   const [referrers] = await pool.query(`
     SELECT
@@ -585,21 +630,21 @@ const trafficDashboard = async (days) => {
       COUNT(*) AS pageviews
     FROM traffic_events
     WHERE event_type = 'pageview'
-      AND event_time >= UTC_TIMESTAMP() - INTERVAL ${days} DAY
+      AND ${eventRangeWhere}
     GROUP BY COALESCE(NULLIF(referrer, ''), 'directo')
     ORDER BY pageviews DESC
     LIMIT 20
-  `);
+  `, params);
 
   const [eventsByType] = await pool.query(`
     SELECT
       event_type,
       COUNT(*) AS events
     FROM traffic_events
-    WHERE event_time >= UTC_TIMESTAMP() - INTERVAL ${days} DAY
+    WHERE ${eventRangeWhere}
     GROUP BY event_type
     ORDER BY events DESC
-  `);
+  `, params);
 
   return {
     totals,
@@ -613,7 +658,11 @@ const trafficDashboard = async (days) => {
   };
 };
 
-const lienzoDashboard = async (days) => {
+const lienzoDashboard = async (range) => {
+  const loginDay = "DATE(CONVERT_TZ(login_at, '+00:00', '-05:00'))";
+  const loginRangeWhere = dateRangeCondition(loginDay, range);
+  const params = rangeParams(range);
+
   const [[totals]] = await pool.query(`
     SELECT
       COUNT(*) AS sessions,
@@ -638,6 +687,18 @@ const lienzoDashboard = async (days) => {
     WHERE login_at >= UTC_TIMESTAMP(3) - INTERVAL 1 DAY
   `);
 
+  const [rangeRows] = await pool.query(`
+    SELECT
+      COUNT(*) AS sessions,
+      COUNT(DISTINCT NULLIF(firebase_uid, '')) AS unique_authenticated_users,
+      COALESCE(SUM(user_type = 'authenticated'), 0) AS authenticated_sessions,
+      COALESCE(SUM(user_type = 'guest'), 0) AS guest_sessions,
+      COALESCE(SUM(stroke_count), 0) AS strokes,
+      COALESCE(SUM(draw_event_count), 0) AS draw_events
+    FROM lienzo_analytics.login_sessions
+    WHERE ${loginRangeWhere}
+  `, params);
+
   const [byDay] = await pool.query(`
     SELECT
       DATE(CONVERT_TZ(login_at, '+00:00', '-05:00')) AS day,
@@ -648,11 +709,10 @@ const lienzoDashboard = async (days) => {
       COALESCE(SUM(stroke_count), 0) AS strokes,
       COALESCE(SUM(draw_event_count), 0) AS draw_events
     FROM lienzo_analytics.login_sessions
-    WHERE DATE(CONVERT_TZ(login_at, '+00:00', '-05:00')) >=
-      DATE_SUB(DATE(CONVERT_TZ(UTC_TIMESTAMP(), '+00:00', '-05:00')), INTERVAL ${days - 1} DAY)
-    GROUP BY DATE(CONVERT_TZ(login_at, '+00:00', '-05:00'))
+    WHERE ${loginRangeWhere}
+    GROUP BY ${loginDay}
     ORDER BY day ASC
-  `);
+  `, params);
 
   const [byCanvas] = await pool.query(`
     SELECT
@@ -663,21 +723,21 @@ const lienzoDashboard = async (days) => {
       COALESCE(SUM(draw_event_count), 0) AS draw_events,
       MAX(CONVERT_TZ(last_seen_at, '+00:00', '-05:00')) AS last_seen_colombia
     FROM lienzo_analytics.login_sessions
-    WHERE login_at >= UTC_TIMESTAMP(3) - INTERVAL ${days} DAY
+    WHERE ${loginRangeWhere}
     GROUP BY canvas_id
     ORDER BY sessions DESC, last_seen_colombia DESC
     LIMIT 20
-  `);
+  `, params);
 
   const [sessionTypes] = await pool.query(`
     SELECT
       user_type,
       COUNT(*) AS sessions
     FROM lienzo_analytics.login_sessions
-    WHERE login_at >= UTC_TIMESTAMP(3) - INTERVAL ${days} DAY
+    WHERE ${loginRangeWhere}
     GROUP BY user_type
     ORDER BY sessions DESC
-  `);
+  `, params);
 
   const [recentSessions] = await pool.query(`
     SELECT
@@ -703,6 +763,14 @@ const lienzoDashboard = async (days) => {
       strokes: 0,
       draw_events: 0,
     }),
+    range: firstRow(rangeRows, {
+      sessions: 0,
+      unique_authenticated_users: 0,
+      authenticated_sessions: 0,
+      guest_sessions: 0,
+      strokes: 0,
+      draw_events: 0,
+    }),
     byDay,
     byCanvas,
     sessionTypes,
@@ -710,10 +778,10 @@ const lienzoDashboard = async (days) => {
   };
 };
 
-const dashboard = async (days) => {
+const dashboard = async (range) => {
   const [traffic, lienzo] = await Promise.all([
-    trafficDashboard(days),
-    lienzoDashboard(days),
+    trafficDashboard(range),
+    lienzoDashboard(range),
   ]);
   const [[clock]] = await pool.query(`
     SELECT CONVERT_TZ(UTC_TIMESTAMP(), '+00:00', '-05:00') AS generated_at_colombia
@@ -722,7 +790,12 @@ const dashboard = async (days) => {
   return {
     generatedAt: clock.generated_at_colombia,
     timezone: 'America/Bogota',
-    days,
+    days: range.days,
+    range: {
+      mode: range.mode,
+      startDate: range.startDate || null,
+      endDate: range.endDate || null,
+    },
     traffic,
     lienzo,
   };
@@ -766,7 +839,7 @@ const router = async (req, res) => {
       jsonResponse(res, 401, { error: 'No autorizado.' }, cors);
       return;
     }
-    jsonResponse(res, 200, await dashboard(clampDays(url.searchParams.get('days'))), cors);
+    jsonResponse(res, 200, await dashboard(dashboardRange(url)), cors);
     return;
   }
 

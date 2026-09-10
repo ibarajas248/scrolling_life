@@ -1,5 +1,5 @@
 import os
-from datetime import datetime
+from datetime import date, datetime, timedelta
 
 import pandas as pd
 import requests
@@ -47,14 +47,17 @@ def as_int(value):
         return 0
 
 
-def fetch_dashboard(days):
+def fetch_dashboard(start_date, end_date):
     if not API_ADMIN_TOKEN:
         raise RuntimeError("Falta API_ADMIN_TOKEN en el entorno del dashboard.")
 
     response = requests.get(
         f"{API_BASE_URL}/admin/dashboard.json",
         headers={"X-Admin-Token": API_ADMIN_TOKEN},
-        params={"days": days},
+        params={
+            "start_date": start_date.isoformat(),
+            "end_date": end_date.isoformat(),
+        },
         timeout=REQUEST_TIMEOUT_SECONDS,
     )
     response.raise_for_status()
@@ -151,8 +154,14 @@ def format_duration(seconds):
     return f"{minutes}m"
 
 
-def days_label(days):
-    return "1 dia" if days == 1 else f"{days} dias"
+def range_days(start_date, end_date):
+    return (end_date - start_date).days + 1
+
+
+def date_range_label(start_date, end_date):
+    if start_date == end_date:
+        return start_date.strftime("%Y-%m-%d")
+    return f"{start_date.strftime('%Y-%m-%d')} a {end_date.strftime('%Y-%m-%d')}"
 
 
 def history_bucket(hours):
@@ -338,11 +347,41 @@ st.title("Indicadores de trafico")
 
 with st.sidebar:
     st.header("Periodo")
-    days = st.slider("Dias", min_value=1, max_value=90, value=14)
+    today = date.today()
+    default_start = today - timedelta(days=13)
+    selected_dates = st.date_input(
+        "Rango de fechas",
+        value=(default_start, today),
+        max_value=today,
+        format="YYYY-MM-DD",
+    )
+
+    if isinstance(selected_dates, tuple) and len(selected_dates) == 2:
+        start_date, end_date = selected_dates
+    elif isinstance(selected_dates, tuple) and len(selected_dates) == 1:
+        start_date = selected_dates[0]
+        end_date = selected_dates[0]
+        st.info("Selecciona una segunda fecha para cerrar el rango.")
+    elif isinstance(selected_dates, tuple):
+        st.info("Selecciona un rango de fechas.")
+        st.stop()
+    else:
+        start_date = selected_dates
+        end_date = selected_dates
+
+    if start_date > end_date:
+        start_date, end_date = end_date, start_date
+
+    selected_days = range_days(start_date, end_date)
+    if selected_days > 90:
+        st.error("El rango maximo es de 90 dias.")
+        st.stop()
+
+    st.caption(f"Rango seleccionado: {date_range_label(start_date, end_date)}")
     refresh = st.button("Actualizar", use_container_width=True)
 
 try:
-    data = fetch_dashboard(days)
+    data = fetch_dashboard(start_date, end_date)
 except requests.HTTPError as exc:
     st.error(f"El API respondio con error HTTP {exc.response.status_code}.")
     st.stop()
@@ -360,7 +399,8 @@ traffic_last24 = traffic.get("last24h", {})
 traffic_range = traffic.get("range", {})
 lienzo_totals = lienzo.get("totals", {})
 lienzo_last24 = lienzo.get("last24h", {})
-selected_period = days_label(days)
+lienzo_range = lienzo.get("range", {})
+selected_period = date_range_label(start_date, end_date)
 
 generated_at = data.get("generatedAt") or datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 st.caption(f"Actualizado: {generated_at} | Zona horaria: {data.get('timezone', 'America/Bogota')}")
@@ -370,14 +410,15 @@ tab_summary, tab_web, tab_lienzo, tab_server, tab_tables = st.tabs(
 )
 
 with tab_summary:
-    st.subheader("Ultimas 24 horas")
+    st.subheader("Resumen del rango seleccionado")
+    st.caption(selected_period)
     metric_row(
         [
-            (f"Usuarios por navegador {selected_period}", traffic_range.get("visitors")),
-            (f"Usuarios estimados {selected_period}", traffic_range.get("estimated_users")),
-            ("Usuarios por navegador 24h", traffic_last24.get("visitors")),
-            ("Sesiones web", traffic_last24.get("sessions")),
-            ("Pageviews", traffic_last24.get("pageviews")),
+            ("Usuarios navegador", traffic_range.get("visitors")),
+            ("Usuarios estimados", traffic_range.get("estimated_users")),
+            ("Sesiones web", traffic_range.get("sessions")),
+            ("Pageviews", traffic_range.get("pageviews")),
+            ("Sesiones lienzo", lienzo_range.get("sessions")),
         ]
     )
     st.caption(
@@ -395,12 +436,13 @@ with tab_summary:
 
 with tab_web:
     st.subheader("Scrolling Life Traffic")
+    st.caption(selected_period)
     metric_row(
         [
-            (f"Usuarios por navegador {selected_period}", traffic_range.get("visitors")),
-            (f"Usuarios estimados {selected_period}", traffic_range.get("estimated_users")),
-            (f"Sesiones {selected_period}", traffic_range.get("sessions")),
-            (f"Pageviews {selected_period}", traffic_range.get("pageviews")),
+            ("Usuarios navegador", traffic_range.get("visitors")),
+            ("Usuarios estimados", traffic_range.get("estimated_users")),
+            ("Sesiones", traffic_range.get("sessions")),
+            ("Pageviews", traffic_range.get("pageviews")),
             ("Usuarios historicos", traffic_totals.get("visitors")),
             ("Paginas indexadas", traffic_totals.get("tracked_pages")),
         ]
