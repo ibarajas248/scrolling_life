@@ -353,6 +353,7 @@ traffic = data.get("traffic", {})
 lienzo = data.get("lienzo", {})
 traffic_totals = traffic.get("totals", {})
 traffic_last24 = traffic.get("last24h", {})
+traffic_range = traffic.get("range", {})
 lienzo_totals = lienzo.get("totals", {})
 lienzo_last24 = lienzo.get("last24h", {})
 
@@ -367,6 +368,7 @@ with tab_summary:
     st.subheader("Ultimas 24 horas")
     metric_row(
         [
+            (f"Usuarios unicos {days} dias", traffic_range.get("visitors")),
             ("Visitantes web", traffic_last24.get("visitors")),
             ("Sesiones web", traffic_last24.get("sessions")),
             ("Pageviews", traffic_last24.get("pageviews")),
@@ -387,10 +389,10 @@ with tab_web:
     st.subheader("Scrolling Life Traffic")
     metric_row(
         [
-            ("Visitantes", traffic_totals.get("visitors")),
-            ("Sesiones", traffic_totals.get("sessions")),
-            ("Eventos", traffic_totals.get("events")),
-            ("Pageviews", traffic_totals.get("pageviews")),
+            (f"Usuarios unicos {days} dias", traffic_range.get("visitors")),
+            (f"Sesiones {days} dias", traffic_range.get("sessions")),
+            (f"Pageviews {days} dias", traffic_range.get("pageviews")),
+            ("Usuarios historicos", traffic_totals.get("visitors")),
             ("Paginas indexadas", traffic_totals.get("tracked_pages")),
         ]
     )

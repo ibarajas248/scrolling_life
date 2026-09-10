@@ -517,6 +517,17 @@ const trafficDashboard = async (days) => {
     WHERE event_time >= UTC_TIMESTAMP() - INTERVAL 1 DAY
   `);
 
+  const [rangeRows] = await pool.query(`
+    SELECT
+      COUNT(DISTINCT visitor_id) AS visitors,
+      COUNT(DISTINCT session_id) AS sessions,
+      COUNT(*) AS events,
+      COALESCE(SUM(event_type = 'pageview'), 0) AS pageviews
+    FROM traffic_events
+    WHERE DATE(CONVERT_TZ(event_time, '+00:00', '-05:00')) >=
+      DATE_SUB(DATE(CONVERT_TZ(UTC_TIMESTAMP(), '+00:00', '-05:00')), INTERVAL ${days - 1} DAY)
+  `);
+
   const [byDay] = await pool.query(`
     SELECT
       DATE(CONVERT_TZ(event_time, '+00:00', '-05:00')) AS day,
@@ -582,6 +593,7 @@ const trafficDashboard = async (days) => {
   return {
     totals,
     last24h: firstRow(last24Rows, { visitors: 0, sessions: 0, events: 0, pageviews: 0 }),
+    range: firstRow(rangeRows, { visitors: 0, sessions: 0, events: 0, pageviews: 0 }),
     byDay,
     topPages,
     countries,
