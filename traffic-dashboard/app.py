@@ -151,6 +151,10 @@ def format_duration(seconds):
     return f"{minutes}m"
 
 
+def days_label(days):
+    return "1 dia" if days == 1 else f"{days} dias"
+
+
 def history_bucket(hours):
     if hours <= 3:
         return "1min", "1 minuto"
@@ -356,6 +360,7 @@ traffic_last24 = traffic.get("last24h", {})
 traffic_range = traffic.get("range", {})
 lienzo_totals = lienzo.get("totals", {})
 lienzo_last24 = lienzo.get("last24h", {})
+selected_period = days_label(days)
 
 generated_at = data.get("generatedAt") or datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 st.caption(f"Actualizado: {generated_at} | Zona horaria: {data.get('timezone', 'America/Bogota')}")
@@ -368,13 +373,16 @@ with tab_summary:
     st.subheader("Ultimas 24 horas")
     metric_row(
         [
-            (f"Usuarios unicos {days} dias", traffic_range.get("visitors")),
-            ("Visitantes web", traffic_last24.get("visitors")),
+            (f"Usuarios por navegador {selected_period}", traffic_range.get("visitors")),
+            (f"Usuarios estimados {selected_period}", traffic_range.get("estimated_users")),
+            ("Usuarios por navegador 24h", traffic_last24.get("visitors")),
             ("Sesiones web", traffic_last24.get("sessions")),
             ("Pageviews", traffic_last24.get("pageviews")),
-            ("Sesiones lienzo", lienzo_last24.get("sessions")),
-            ("Usuarios autenticados", lienzo_last24.get("unique_authenticated_users")),
         ]
+    )
+    st.caption(
+        "Usuarios por navegador usa cookie/localStorage. Usuarios estimados agrupa IP hasheada + navegador; "
+        "si faltan esas señales, usa el identificador del navegador."
     )
 
     left, right = st.columns(2)
@@ -389,12 +397,17 @@ with tab_web:
     st.subheader("Scrolling Life Traffic")
     metric_row(
         [
-            (f"Usuarios unicos {days} dias", traffic_range.get("visitors")),
-            (f"Sesiones {days} dias", traffic_range.get("sessions")),
-            (f"Pageviews {days} dias", traffic_range.get("pageviews")),
+            (f"Usuarios por navegador {selected_period}", traffic_range.get("visitors")),
+            (f"Usuarios estimados {selected_period}", traffic_range.get("estimated_users")),
+            (f"Sesiones {selected_period}", traffic_range.get("sessions")),
+            (f"Pageviews {selected_period}", traffic_range.get("pageviews")),
             ("Usuarios historicos", traffic_totals.get("visitors")),
             ("Paginas indexadas", traffic_totals.get("tracked_pages")),
         ]
+    )
+    st.caption(
+        "Usuarios por navegador cuenta una vez el mismo navegador en el rango. Usuarios estimados intenta reducir "
+        "duplicados con senales anonimas del servidor."
     )
 
     left, right = st.columns(2)

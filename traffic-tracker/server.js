@@ -497,6 +497,14 @@ const clampDays = (value) => {
 
 const firstRow = (rows, fallback = {}) => rows[0] || fallback;
 
+const estimatedUserSql = `
+  CASE
+    WHEN ip_hash IS NOT NULL AND user_agent_hash IS NOT NULL
+      THEN CONCAT(ip_hash, ':', user_agent_hash)
+    ELSE visitor_id
+  END
+`;
+
 const trafficDashboard = async (days) => {
   const [[totals]] = await pool.query(`
     SELECT
@@ -510,6 +518,7 @@ const trafficDashboard = async (days) => {
   const [last24Rows] = await pool.query(`
     SELECT
       COUNT(DISTINCT visitor_id) AS visitors,
+      COUNT(DISTINCT ${estimatedUserSql}) AS estimated_users,
       COUNT(DISTINCT session_id) AS sessions,
       COUNT(*) AS events,
       COALESCE(SUM(event_type = 'pageview'), 0) AS pageviews
@@ -520,6 +529,7 @@ const trafficDashboard = async (days) => {
   const [rangeRows] = await pool.query(`
     SELECT
       COUNT(DISTINCT visitor_id) AS visitors,
+      COUNT(DISTINCT ${estimatedUserSql}) AS estimated_users,
       COUNT(DISTINCT session_id) AS sessions,
       COUNT(*) AS events,
       COALESCE(SUM(event_type = 'pageview'), 0) AS pageviews
@@ -532,6 +542,7 @@ const trafficDashboard = async (days) => {
     SELECT
       DATE(CONVERT_TZ(event_time, '+00:00', '-05:00')) AS day,
       COUNT(DISTINCT visitor_id) AS visitors,
+      COUNT(DISTINCT ${estimatedUserSql}) AS estimated_users,
       COUNT(DISTINCT session_id) AS sessions,
       COUNT(*) AS events,
       COALESCE(SUM(event_type = 'pageview'), 0) AS pageviews
@@ -592,8 +603,8 @@ const trafficDashboard = async (days) => {
 
   return {
     totals,
-    last24h: firstRow(last24Rows, { visitors: 0, sessions: 0, events: 0, pageviews: 0 }),
-    range: firstRow(rangeRows, { visitors: 0, sessions: 0, events: 0, pageviews: 0 }),
+    last24h: firstRow(last24Rows, { visitors: 0, estimated_users: 0, sessions: 0, events: 0, pageviews: 0 }),
+    range: firstRow(rangeRows, { visitors: 0, estimated_users: 0, sessions: 0, events: 0, pageviews: 0 }),
     byDay,
     topPages,
     countries,
