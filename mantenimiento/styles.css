@@ -615,12 +615,12 @@ body {
 
   .countdown-cell small {
     margin-bottom: 7px;
-    font-size: 0.52rem;
-    letter-spacing: 0.06em;
+    font-size: clamp(0.68rem, 3vw, 0.82rem);
+    letter-spacing: 0.03em;
   }
 
   .countdown-cell strong {
-    font-size: clamp(1rem, 7vw, 1.55rem);
+    font-size: clamp(1.22rem, 7.5vw, 1.75rem);
     letter-spacing: 0.03em;
   }
 
@@ -652,6 +652,6 @@ body {
   }
 
   .maintenance-countdown {
-    width: min(100%, 360px);
+    width: min(100%, 380px);
   }
 }
