@@ -385,7 +385,7 @@ body {
 
 .maintenance-countdown {
   display: grid;
-  width: min(760px, 100%);
+  width: min(820px, 100%);
   margin: 30px auto 0;
   color: rgba(238, 244, 236, 0.92);
   text-shadow:
@@ -396,25 +396,29 @@ body {
 .countdown-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
-  align-items: center;
-  gap: clamp(5px, 1.6vw, 14px);
+  align-items: end;
+  gap: clamp(4px, 1.2vw, 12px);
 }
 
 .countdown-cell {
   display: grid;
   min-width: 0;
-  padding: 14px 10px 13px;
-  border: 1px solid rgba(158, 255, 113, 0.32);
-  background:
-    linear-gradient(180deg, rgba(158, 255, 113, 0.1), rgba(2, 3, 4, 0.42)),
-    rgba(2, 3, 4, 0.58);
-  box-shadow:
-    0 0 20px rgba(158, 255, 113, 0.08),
-    inset 0 0 18px rgba(158, 255, 113, 0.05);
+  justify-items: center;
+  padding: 0;
 }
 
-.countdown-cell strong {
+.countdown-cell strong,
+.countdown-cell small {
   display: block;
+}
+
+.countdown-cell small {
+  margin: 0 0 10px;
+  color: rgba(238, 244, 236, 0.82);
+  font-family: 'Share Tech Mono', 'IBM Plex Mono', 'Courier New', monospace;
+  font-size: clamp(0.62rem, 1.1vw, 0.82rem);
+  line-height: 1;
+  letter-spacing: 0.12em;
 }
 
 .countdown-cell strong {
@@ -438,6 +442,7 @@ body {
   font-size: clamp(1.5rem, 4vw, 3rem);
   line-height: 1;
   letter-spacing: 0.13em;
+  padding-bottom: 0.04em;
   text-shadow:
     0 0 1px rgba(245, 255, 236, 0.8),
     0 0 6px rgba(158, 255, 113, 0.48),
@@ -600,16 +605,18 @@ body {
   }
 
   .maintenance-countdown {
-    width: min(100%, 460px);
+    width: min(100%, 520px);
     margin-top: 22px;
   }
 
   .countdown-grid {
-    gap: 5px;
+    gap: 4px;
   }
 
-  .countdown-cell {
-    padding: 10px 4px 9px;
+  .countdown-cell small {
+    margin-bottom: 7px;
+    font-size: 0.52rem;
+    letter-spacing: 0.06em;
   }
 
   .countdown-cell strong {
@@ -645,6 +652,6 @@ body {
   }
 
   .maintenance-countdown {
-    width: min(100%, 340px);
+    width: min(100%, 360px);
   }
 }
