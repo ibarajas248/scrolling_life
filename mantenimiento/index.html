@@ -34,9 +34,67 @@
       <p class="maintenance-award">&gt; Proyecto ganador de la Beca de Programación Virtual en Artes Plásticas y Visuales Red Galería Santa Fe 2026</p>
       <h1 id="maintenanceTitle">Scroll en construcción</h1>
       <p class="maintenance-author">Iván Barajas</p>
+      <div class="maintenance-countdown" aria-live="off" data-countdown>
+        <p class="countdown-label">Inauguración</p>
+        <p class="countdown-date">17 septiembre 2026 · 5:00 p.m. Colombia</p>
+        <div class="countdown-grid" aria-label="Tiempo restante para la inauguración">
+          <span class="countdown-cell">
+            <strong data-countdown-days>00</strong>
+            <small>días</small>
+          </span>
+          <span class="countdown-cell">
+            <strong data-countdown-hours>00</strong>
+            <small>horas</small>
+          </span>
+          <span class="countdown-cell">
+            <strong data-countdown-minutes>00</strong>
+            <small>min</small>
+          </span>
+          <span class="countdown-cell">
+            <strong data-countdown-seconds>00</strong>
+            <small>seg</small>
+          </span>
+        </div>
+      </div>
     </section>
   </main>
   <script>
+    const countdown = document.querySelector('[data-countdown]');
+    const countdownTarget = new Date('2026-09-17T17:00:00-05:00').getTime();
+    const countdownParts = {
+      days: document.querySelector('[data-countdown-days]'),
+      hours: document.querySelector('[data-countdown-hours]'),
+      minutes: document.querySelector('[data-countdown-minutes]'),
+      seconds: document.querySelector('[data-countdown-seconds]'),
+    };
+
+    const formatTimePart = (value) => String(value).padStart(2, '0');
+
+    const updateCountdown = () => {
+      if (!countdown || Object.values(countdownParts).some((node) => !node)) return;
+
+      const remaining = Math.max(0, countdownTarget - Date.now());
+      const totalSeconds = Math.floor(remaining / 1000);
+      const days = Math.floor(totalSeconds / 86400);
+      const hours = Math.floor((totalSeconds % 86400) / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+
+      countdownParts.days.textContent = formatTimePart(days);
+      countdownParts.hours.textContent = formatTimePart(hours);
+      countdownParts.minutes.textContent = formatTimePart(minutes);
+      countdownParts.seconds.textContent = formatTimePart(seconds);
+
+      if (remaining === 0) {
+        countdown.dataset.countdownComplete = 'true';
+        const label = countdown.querySelector('.countdown-label');
+        if (label) label.textContent = 'Inauguración en curso';
+      }
+    };
+
+    updateCountdown();
+    window.setInterval(updateCountdown, 1000);
+
     const maintenanceScreen = document.querySelector('.maintenance-screen');
     const maintenanceArchive = document.querySelector('.maintenance-archive');
 
