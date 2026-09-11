@@ -385,8 +385,7 @@ body {
 
 .maintenance-countdown {
   display: grid;
-  gap: 12px;
-  width: min(680px, 100%);
+  width: min(760px, 100%);
   margin: 30px auto 0;
   color: rgba(238, 244, 236, 0.92);
   text-shadow:
@@ -394,33 +393,17 @@ body {
     0 0 7px rgba(220, 236, 255, 0.18);
 }
 
-.countdown-label,
-.countdown-date {
-  margin: 0;
-  font-family: 'Share Tech Mono', 'IBM Plex Mono', 'Courier New', monospace;
-  letter-spacing: 0.14em;
-}
-
-.countdown-label {
-  color: #aaff8b;
-  font-size: clamp(0.78rem, 1.45vw, 0.98rem);
-}
-
-.countdown-date {
-  color: rgba(238, 244, 236, 0.82);
-  font-size: clamp(0.72rem, 1.32vw, 0.9rem);
-}
-
 .countdown-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 10px;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(5px, 1.6vw, 14px);
 }
 
 .countdown-cell {
   display: grid;
   min-width: 0;
-  padding: 14px 10px 12px;
+  padding: 14px 10px 13px;
   border: 1px solid rgba(158, 255, 113, 0.32);
   background:
     linear-gradient(180deg, rgba(158, 255, 113, 0.1), rgba(2, 3, 4, 0.42)),
@@ -430,25 +413,24 @@ body {
     inset 0 0 18px rgba(158, 255, 113, 0.05);
 }
 
-.countdown-cell strong,
-.countdown-cell small {
+.countdown-cell strong {
   display: block;
 }
 
 .countdown-cell strong {
   color: #f7fff1;
   font-family: 'Disket Mono', 'Diskete Mono', 'Share Tech Mono', monospace;
-  font-size: clamp(1.45rem, 4vw, 2.7rem);
+  font-size: clamp(1.8rem, 5vw, 3.5rem);
   font-weight: 400;
   line-height: 1;
-  letter-spacing: 0.04em;
+  letter-spacing: 0;
 }
 
-.countdown-cell small {
-  margin-top: 8px;
-  color: rgba(238, 244, 236, 0.76);
-  font-size: clamp(0.58rem, 1.1vw, 0.72rem);
-  letter-spacing: 0.12em;
+.countdown-separator {
+  color: rgba(170, 255, 139, 0.76);
+  font-family: 'Disket Mono', 'Diskete Mono', 'Share Tech Mono', monospace;
+  font-size: clamp(1.5rem, 4vw, 3rem);
+  line-height: 1;
 }
 
 .maintenance-copy h1 {
@@ -605,23 +587,12 @@ body {
   }
 
   .maintenance-countdown {
-    gap: 9px;
-    width: min(100%, 420px);
+    width: min(100%, 460px);
     margin-top: 22px;
   }
 
-  .countdown-label {
-    font-size: 0.7rem;
-    letter-spacing: 0.12em;
-  }
-
-  .countdown-date {
-    font-size: 0.64rem;
-    letter-spacing: 0.08em;
-  }
-
   .countdown-grid {
-    gap: 6px;
+    gap: 5px;
   }
 
   .countdown-cell {
@@ -629,14 +600,12 @@ body {
   }
 
   .countdown-cell strong {
-    font-size: clamp(1.05rem, 7vw, 1.55rem);
+    font-size: clamp(1rem, 7vw, 1.55rem);
     letter-spacing: 0;
   }
 
-  .countdown-cell small {
-    margin-top: 6px;
-    font-size: 0.54rem;
-    letter-spacing: 0.06em;
+  .countdown-separator {
+    font-size: clamp(0.95rem, 6vw, 1.35rem);
   }
 }
 
@@ -662,7 +631,7 @@ body {
     font-size: 0.66rem;
   }
 
-  .countdown-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .maintenance-countdown {
+    width: min(100%, 340px);
   }
 }

@@ -35,24 +35,21 @@
       <h1 id="maintenanceTitle">Scroll en construcción</h1>
       <p class="maintenance-author">Iván Barajas</p>
       <div class="maintenance-countdown" aria-live="off" data-countdown>
-        <p class="countdown-label">Inauguración</p>
-        <p class="countdown-date">17 septiembre 2026 · 5:00 p.m. Colombia</p>
         <div class="countdown-grid" aria-label="Tiempo restante para la inauguración">
-          <span class="countdown-cell">
+          <span class="countdown-cell" aria-label="días">
             <strong data-countdown-days>00</strong>
-            <small>días</small>
           </span>
-          <span class="countdown-cell">
+          <span class="countdown-separator" aria-hidden="true">:</span>
+          <span class="countdown-cell" aria-label="horas">
             <strong data-countdown-hours>00</strong>
-            <small>horas</small>
           </span>
-          <span class="countdown-cell">
+          <span class="countdown-separator" aria-hidden="true">:</span>
+          <span class="countdown-cell" aria-label="minutos">
             <strong data-countdown-minutes>00</strong>
-            <small>min</small>
           </span>
-          <span class="countdown-cell">
+          <span class="countdown-separator" aria-hidden="true">:</span>
+          <span class="countdown-cell" aria-label="segundos">
             <strong data-countdown-seconds>00</strong>
-            <small>seg</small>
           </span>
         </div>
       </div>
@@ -87,8 +84,6 @@
 
       if (remaining === 0) {
         countdown.dataset.countdownComplete = 'true';
-        const label = countdown.querySelector('.countdown-label');
-        if (label) label.textContent = 'Inauguración en curso';
       }
     };
 
