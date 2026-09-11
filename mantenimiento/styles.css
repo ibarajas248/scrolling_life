@@ -418,19 +418,32 @@ body {
 }
 
 .countdown-cell strong {
-  color: #f7fff1;
+  color: #aaff8b;
   font-family: 'Disket Mono', 'Diskete Mono', 'Share Tech Mono', monospace;
   font-size: clamp(1.8rem, 5vw, 3.5rem);
   font-weight: 400;
   line-height: 1;
-  letter-spacing: 0;
+  letter-spacing: 0.13em;
+  text-shadow:
+    0 0 1px rgba(245, 255, 236, 0.8),
+    0 0 6px rgba(158, 255, 113, 0.48),
+    0 0 16px rgba(158, 255, 113, 0.3),
+    0 0 32px rgba(95, 215, 111, 0.16);
+  filter: drop-shadow(0 0 8px rgba(158, 255, 113, 0.16));
 }
 
 .countdown-separator {
-  color: rgba(170, 255, 139, 0.76);
+  color: #aaff8b;
   font-family: 'Disket Mono', 'Diskete Mono', 'Share Tech Mono', monospace;
   font-size: clamp(1.5rem, 4vw, 3rem);
   line-height: 1;
+  letter-spacing: 0.13em;
+  text-shadow:
+    0 0 1px rgba(245, 255, 236, 0.8),
+    0 0 6px rgba(158, 255, 113, 0.48),
+    0 0 16px rgba(158, 255, 113, 0.3),
+    0 0 32px rgba(95, 215, 111, 0.16);
+  filter: drop-shadow(0 0 8px rgba(158, 255, 113, 0.16));
 }
 
 .maintenance-copy h1 {
@@ -601,7 +614,7 @@ body {
 
   .countdown-cell strong {
     font-size: clamp(1rem, 7vw, 1.55rem);
-    letter-spacing: 0;
+    letter-spacing: 0.03em;
   }
 
   .countdown-separator {
