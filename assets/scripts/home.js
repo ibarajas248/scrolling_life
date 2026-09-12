@@ -23,6 +23,7 @@ const MOSQUITO_AUDIO_SRC = './assets/audio/mosquito-buzz.mp3';
 const NETART_DATASET_MANIFEST = './datasets/people_80s_style_compressed/manifest.json';
 const NETART_DATASET_BASE = './datasets/people_80s_style_compressed/';
 const NETART_CACHE_MANIFEST = './assets/images/netart-cache/manifest.json';
+const NETART_REMOTE_IMAGE_SIZE = 420;
 const NETART_PROBE_LIMIT = 70;
 const NETART_MIN_VALID_IMAGES = 8;
 const NETART_IMAGE_TIMEOUT_MS = 650;
@@ -79,6 +80,29 @@ const datasetNetArtImagePath = (entry) => {
   return `${NETART_DATASET_BASE}${encodeNetArtPathSegment(file.trim())}`;
 };
 
+const picsumUrlFromCachePath = (src) => {
+  const fileName = src.split('/').pop() || '';
+  const idMatch = fileName.match(/^picsum_0*(\d+)_(\d+)x(\d+)\.jpe?g$/i);
+  if (idMatch) {
+    return `https://picsum.photos/id/${idMatch[1]}/${NETART_REMOTE_IMAGE_SIZE}/${NETART_REMOTE_IMAGE_SIZE}`;
+  }
+
+  const seedMatch = fileName.match(/^picsum_seed-([^_]+)_(\d+)x(\d+)\.jpe?g$/i);
+  if (seedMatch) {
+    return `https://picsum.photos/seed/${encodeURIComponent(seedMatch[1])}/${NETART_REMOTE_IMAGE_SIZE}/${NETART_REMOTE_IMAGE_SIZE}`;
+  }
+
+  return null;
+};
+
+const normalizeCachedNetArtPath = (src, source = '') => {
+  if (typeof src !== 'string' || !src.trim()) return null;
+  const clean = src.trim();
+  const remotePicsumUrl = source.includes('picsum.photos') ? picsumUrlFromCachePath(clean) : null;
+
+  return remotePicsumUrl || clean;
+};
+
 const cssUrl = (src) => `url("${String(src).replace(/["\\]/g, '\\$&')}")`;
 
 const probeImage = (src) => new Promise((resolve) => {
@@ -132,20 +156,29 @@ const loadDatasetNetArtImages = async () => {
 };
 
 const loadLocalNetArtImages = async () => {
+  try {
+    const response = await fetch(`${NETART_CACHE_MANIFEST}?ts=${Date.now()}`, { cache: 'no-store' });
+    if (response.ok) {
+      const manifest = await response.json();
+      const images = Array.isArray(manifest.images)
+        ? manifest.images.map((src) => normalizeCachedNetArtPath(src, manifest.source || '')).filter(Boolean)
+        : [];
+      const validImages = await collectReachableImages(images);
+
+      if (validImages) return shuffleImages(validImages);
+    }
+  } catch (error) {
+    console.warn('Cache local de imagenes no disponible, probando dataset comprimido.', error);
+  }
+
   const datasetImages = await loadDatasetNetArtImages();
   if (datasetImages) return datasetImages;
 
   try {
-    const response = await fetch(`${NETART_CACHE_MANIFEST}?ts=${Date.now()}`, { cache: 'no-store' });
-    if (!response.ok) return null;
-
-    const manifest = await response.json();
-    const images = Array.isArray(manifest.images) ? manifest.images : [];
-    const validImages = await collectReachableImages(images);
-
-    return validImages ? shuffleImages(validImages) : null;
+    const remoteImages = await loadRemoteNetArtImages();
+    return remoteImages.length ? shuffleImages(remoteImages) : null;
   } catch (error) {
-    console.warn('Cache local de imagenes no disponible, usando fallback.', error);
+    console.warn('API de imagenes no disponible, usando fallback.', error);
     return null;
   }
 };
