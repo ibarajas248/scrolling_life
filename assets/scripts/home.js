@@ -14,9 +14,6 @@ const mosquitoLink = document.querySelector('.mosquito-link');
 const hero = document.querySelector('.hero');
 const heroArchive = document.querySelector('.hero-archive');
 const netArtItems = [];
-const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection || {};
-const isSmallViewport = window.matchMedia?.('(max-width: 720px)').matches ?? window.innerWidth <= 720;
-const isConstrainedConnection = Boolean(connection.saveData) || /^(slow-)?2g$/i.test(connection.effectiveType || '');
 
 const MOSQUITO_CYCLE_MS = 60000;
 const MOSQUITO_ACTIVE_MS = 20000;
@@ -27,11 +24,9 @@ const NETART_DATASET_MANIFEST = './datasets/people_80s_style_compressed/manifest
 const NETART_DATASET_BASE = './datasets/people_80s_style_compressed/';
 const NETART_CACHE_MANIFEST = './assets/images/netart-cache/manifest.json';
 const NETART_REMOTE_IMAGE_SIZE = 420;
-const NETART_ITEM_COUNT = isConstrainedConnection ? 14 : isSmallViewport ? 22 : 45;
-const NETART_PROBE_LIMIT = isConstrainedConnection ? 16 : isSmallViewport ? 28 : 70;
-const NETART_MIN_VALID_IMAGES = isConstrainedConnection ? 4 : isSmallViewport ? 6 : 8;
-const NETART_PROBE_BATCH_SIZE = isConstrainedConnection ? 4 : isSmallViewport ? 6 : 10;
-const NETART_IMAGE_TIMEOUT_MS = isConstrainedConnection ? 500 : isSmallViewport ? 600 : 650;
+const NETART_PROBE_LIMIT = 70;
+const NETART_MIN_VALID_IMAGES = 8;
+const NETART_IMAGE_TIMEOUT_MS = 650;
 
 let netArtStartTime = performance.now();
 let mosquitoCycleTimer = null;
@@ -136,24 +131,15 @@ const collectReachableImages = async (images) => {
 
   if (candidates.length === 0) return null;
 
-  const validImages = [];
-
-  for (let index = 0; index < candidates.length; index += NETART_PROBE_BATCH_SIZE) {
-    const batch = candidates.slice(index, index + NETART_PROBE_BATCH_SIZE);
-    const testedImages = await Promise.all(batch.map((image) => probeImage(image)));
-    validImages.push(...testedImages.filter(Boolean));
-
-    if (validImages.length >= NETART_MIN_VALID_IMAGES && isConstrainedConnection) {
-      break;
-    }
-  }
+  const testedImages = await Promise.all(candidates.map((image) => probeImage(image)));
+  const validImages = testedImages.filter(Boolean);
 
   return validImages.length >= NETART_MIN_VALID_IMAGES ? validImages : null;
 };
 
 const loadDatasetNetArtImages = async () => {
   try {
-    const response = await fetch(NETART_DATASET_MANIFEST, { cache: 'force-cache' });
+    const response = await fetch(`${NETART_DATASET_MANIFEST}?ts=${Date.now()}`, { cache: 'no-store' });
     if (!response.ok) return null;
 
     const manifest = await response.json();
@@ -171,7 +157,7 @@ const loadDatasetNetArtImages = async () => {
 
 const loadLocalNetArtImages = async () => {
   try {
-    const response = await fetch(NETART_CACHE_MANIFEST, { cache: 'force-cache' });
+    const response = await fetch(`${NETART_CACHE_MANIFEST}?ts=${Date.now()}`, { cache: 'no-store' });
     if (response.ok) {
       const manifest = await response.json();
       const skipFallbackCache = manifest.source === 'local-fallback';
@@ -199,8 +185,6 @@ const loadLocalNetArtImages = async () => {
 };
 
 const loadRemoteNetArtImages = async () => {
-  if (isConstrainedConnection) return [];
-
   const randomPage = Math.floor(Math.random() * 20) + 1;
   const response = await fetch(`https://picsum.photos/v2/list?page=${randomPage}&limit=30`);
   const data = await response.json();
@@ -232,7 +216,7 @@ const randomizeNetArtItem = (item, subtle = false) => {
 
 const initNetArt = async () => {
   if (!netArtLayer) return;
-  const count = NETART_ITEM_COUNT;
+  const count = 45;
   const vh = window.innerHeight;
 
   try {

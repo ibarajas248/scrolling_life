@@ -11,7 +11,7 @@ const FALLBACK_IMAGES = [
   '../../assets/images/archive-sides/folded-paper-floor.png'
 ];
 const MAX_TEXTURES = 112;
-const MOBILE_TEXTURES = 42;
+const MOBILE_TEXTURES = 62;
 
 const canvas = document.getElementById('sculptureCanvas');
 const fallback = document.getElementById('fallbackSculpture');
@@ -53,7 +53,7 @@ const datasetImagePath = (entry) => {
 
 const loadDatasetImages = async () => {
   try {
-    const response = await fetch(DATASET_MANIFEST, { cache: 'force-cache' });
+    const response = await fetch(`${DATASET_MANIFEST}?ts=${Date.now()}`, { cache: 'no-store' });
     if (!response.ok) return null;
 
     const manifest = await response.json();
@@ -73,7 +73,7 @@ const loadImages = async () => {
   if (datasetImages) return datasetImages;
 
   try {
-    const response = await fetch(CACHE_MANIFEST, { cache: 'force-cache' });
+    const response = await fetch(`${CACHE_MANIFEST}?ts=${Date.now()}`, { cache: 'no-store' });
     if (!response.ok) return shuffle(FALLBACK_IMAGES);
 
     const manifest = await response.json();
@@ -98,11 +98,10 @@ const importThree = async () => Promise.race([
 const buildFallback = (images) => {
   if (!fallback) return;
 
-  const fallbackCount = window.innerWidth < 720 ? 44 : 72;
-  const nodes = images.slice(0, fallbackCount).map((src, index) => {
+  const nodes = images.slice(0, 72).map((src, index) => {
     const node = document.createElement('span');
     const image = document.createElement('img');
-    const ring = index / fallbackCount;
+    const ring = index / 72;
     const orbit = index * 137.5;
     const radius = 230 + Math.sin(index * 0.71) * 110 + ring * 220;
     const y = Math.sin(index * 0.37) * 220;

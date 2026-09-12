@@ -10,9 +10,7 @@
     '../../assets/images/archive-sides/folded-paper-floor.png'
   ];
   const STRIP_WIDTH = 150;
-  const isSmallViewport = window.matchMedia?.('(max-width: 720px)').matches ?? window.innerWidth <= 720;
-  const FRAMES_PER_STRIP = isSmallViewport ? 9 : 14;
-  const PRELOAD_COUNT = isSmallViewport ? 18 : 42;
+  const FRAMES_PER_STRIP = 14;
 
   const stripField = document.getElementById('stripField');
   if (!stripField) return;
@@ -55,7 +53,7 @@
 
   const loadDatasetImages = async () => {
     try {
-      const response = await fetch(DATASET_MANIFEST, { cache: 'force-cache' });
+      const response = await fetch(`${DATASET_MANIFEST}?ts=${Date.now()}`, { cache: 'no-store' });
       if (!response.ok) return null;
 
       const manifest = await response.json();
@@ -75,7 +73,7 @@
     if (datasetImages) return datasetImages;
 
     try {
-      const response = await fetch(CACHE_MANIFEST, { cache: 'force-cache' });
+      const response = await fetch(`${CACHE_MANIFEST}?ts=${Date.now()}`, { cache: 'no-store' });
       if (!response.ok) return null;
 
       const manifest = await response.json();
@@ -91,7 +89,7 @@
   };
 
   const preloadImages = () => {
-    images.slice(0, PRELOAD_COUNT).forEach((src) => {
+    images.slice(0, 72).forEach((src) => {
       const image = new Image();
       image.decoding = 'async';
       image.src = src;
@@ -125,7 +123,7 @@
     image.src = src;
     image.alt = '';
     image.decoding = 'async';
-    image.loading = seed < (isSmallViewport ? 2 : 4) ? 'eager' : 'lazy';
+    image.loading = seed < 4 ? 'eager' : 'lazy';
     image.draggable = false;
     frame.append(image);
     return frame;
