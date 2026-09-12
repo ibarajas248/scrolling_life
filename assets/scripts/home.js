@@ -160,7 +160,8 @@ const loadLocalNetArtImages = async () => {
     const response = await fetch(`${NETART_CACHE_MANIFEST}?ts=${Date.now()}`, { cache: 'no-store' });
     if (response.ok) {
       const manifest = await response.json();
-      const images = Array.isArray(manifest.images)
+      const skipFallbackCache = manifest.source === 'local-fallback';
+      const images = !skipFallbackCache && Array.isArray(manifest.images)
         ? manifest.images.map((src) => normalizeCachedNetArtPath(src, manifest.source || '')).filter(Boolean)
         : [];
       const validImages = await collectReachableImages(images);
