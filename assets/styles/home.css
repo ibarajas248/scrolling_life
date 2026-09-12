@@ -443,6 +443,13 @@ a {
   margin: 0 auto;
 }
 
+@supports (content-visibility: auto) {
+  .section:not(.hero) {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 920px;
+  }
+}
+
 .hero {
   width: 100%;
   max-width: none;
@@ -3974,6 +3981,20 @@ p {
 }
 
 @media (max-width: 720px) {
+  body::before {
+    opacity: 0.24;
+    background-size: 48px 48px;
+  }
+
+  .grain {
+    opacity: 0.045;
+  }
+
+  .netart-item {
+    filter: saturate(1.06) contrast(1.02) brightness(1.02);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+  }
+
   .win98-desktop-container {
     height: auto;
     min-height: 0;

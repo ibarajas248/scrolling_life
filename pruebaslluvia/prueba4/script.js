@@ -21,6 +21,7 @@
   const FALL_MIN = prefersReducedMotion.matches ? 15000 : 7600;
   const FALL_MAX = prefersReducedMotion.matches ? 26000 : 16800;
   const COLUMN_WIDTH = window.innerWidth < 720 ? 92 : 128;
+  const PRELOAD_COUNT = window.innerWidth < 720 ? 16 : 32;
 
   let images = [...FALLBACK_IMAGES];
   let imageCursor = 0;
@@ -65,7 +66,7 @@
 
   const loadDatasetImages = async () => {
     try {
-      const response = await fetch(`${DATASET_MANIFEST}?ts=${Date.now()}`, { cache: 'no-store' });
+      const response = await fetch(DATASET_MANIFEST, { cache: 'force-cache' });
       if (!response.ok) return null;
 
       const manifest = await response.json();
@@ -85,7 +86,7 @@
     if (datasetImages) return datasetImages;
 
     try {
-      const response = await fetch(`${CACHE_MANIFEST}?ts=${Date.now()}`, { cache: 'no-store' });
+      const response = await fetch(CACHE_MANIFEST, { cache: 'force-cache' });
       if (!response.ok) return shuffle(FALLBACK_IMAGES);
 
       const manifest = await response.json();
@@ -101,7 +102,7 @@
   };
 
   const preloadImages = () => {
-    images.slice(0, 48).forEach((src) => {
+    images.slice(0, PRELOAD_COUNT).forEach((src) => {
       const image = new Image();
       image.decoding = 'async';
       image.src = src;

@@ -8,11 +8,14 @@
     '../assets/images/scroll-strips/strip_000003.jpg',
     '../assets/images/scroll-strips/strip_000004.jpg'
   ];
-  const MAX_ACTIVE_DROPS = 64;
-  const PRELOAD_COUNT = 14;
+  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection || {};
+  const isSmallViewport = window.matchMedia?.('(max-width: 720px)').matches ?? window.innerWidth <= 720;
+  const isConstrainedConnection = Boolean(connection.saveData) || /^(slow-)?2g$/i.test(connection.effectiveType || '');
+  const MAX_ACTIVE_DROPS = isConstrainedConnection ? 28 : isSmallViewport ? 40 : 64;
+  const PRELOAD_COUNT = isConstrainedConnection ? 4 : isSmallViewport ? 8 : 14;
   const REMOTE_IMAGE_SIZE = 420;
-  const BASE_INTERVAL_MS = 118;
-  const BURST_INTERVAL_MS = 1100;
+  const BASE_INTERVAL_MS = isConstrainedConnection ? 260 : isSmallViewport ? 170 : 118;
+  const BURST_INTERVAL_MS = isConstrainedConnection ? 1800 : isSmallViewport ? 1450 : 1100;
 
   const rainField = document.getElementById('rainField');
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -79,7 +82,7 @@
 
   const loadLocalImages = async () => {
     try {
-      const datasetResponse = await fetch(`${DATASET_MANIFEST}?ts=${Date.now()}`, { cache: 'no-store' });
+      const datasetResponse = await fetch(DATASET_MANIFEST, { cache: 'force-cache' });
       if (datasetResponse.ok) {
         const datasetManifest = await datasetResponse.json();
         const datasetImages = Array.isArray(datasetManifest)
@@ -89,7 +92,7 @@
         if (datasetImages.length) return shuffle(datasetImages);
       }
 
-      const response = await fetch(`${CACHE_MANIFEST}?ts=${Date.now()}`, { cache: 'no-store' });
+      const response = await fetch(CACHE_MANIFEST, { cache: 'force-cache' });
       if (!response.ok) return null;
 
       const manifest = await response.json();
@@ -150,7 +153,7 @@
     drop.src = nextImage();
     drop.alt = '';
     drop.decoding = 'async';
-    drop.loading = 'eager';
+    drop.loading = near || mode === 'burst' ? 'eager' : 'lazy';
     drop.draggable = false;
     drop.onerror = () => {
       drop.onerror = null;
@@ -220,7 +223,8 @@
 
   window.addEventListener('pointerdown', () => {
     if (isPaused) return;
-    for (let index = 0; index < 8; index += 1) {
+    const burst = isConstrainedConnection ? 3 : isSmallViewport ? 5 : 8;
+    for (let index = 0; index < burst; index += 1) {
       window.setTimeout(() => spawnDrop('burst'), index * 34);
     }
   }, { passive: true });
@@ -232,7 +236,11 @@
 
     preloadSomeImages();
 
-    const initialBurst = prefersReducedMotion.matches ? 6 : 22;
+    const initialBurst = prefersReducedMotion.matches
+      ? 6
+      : isConstrainedConnection
+        ? 8
+        : isSmallViewport ? 14 : 22;
     for (let index = 0; index < initialBurst; index += 1) {
       window.setTimeout(() => spawnDrop(index < 12 ? 'burst' : 'normal'), index * 44);
     }
