@@ -1,3 +1,5 @@
+const DATASET_MANIFEST = '../../datasets/people_80s_style_compressed/manifest.json';
+const DATASET_BASE = '../../datasets/people_80s_style_compressed/';
 const CACHE_MANIFEST = '../../assets/images/netart-cache/manifest.json';
 const THREE_URL = '../../assets/vendor/three.module.js';
 const THREE_TIMEOUT_MS = 4200;
@@ -40,7 +42,36 @@ const normalizeImagePath = (src) => {
   return clean;
 };
 
+const encodePathSegment = (segment) => encodeURIComponent(segment).replace(/%2F/gi, '/');
+
+const datasetImagePath = (entry) => {
+  const file = typeof entry === 'string' ? entry : entry?.file;
+  if (typeof file !== 'string' || !file.trim()) return null;
+
+  return `${DATASET_BASE}${encodePathSegment(file.trim())}`;
+};
+
+const loadDatasetImages = async () => {
+  try {
+    const response = await fetch(`${DATASET_MANIFEST}?ts=${Date.now()}`, { cache: 'no-store' });
+    if (!response.ok) return null;
+
+    const manifest = await response.json();
+    const datasetImages = Array.isArray(manifest)
+      ? manifest.map(datasetImagePath).filter(Boolean)
+      : [];
+
+    return datasetImages.length ? shuffle(datasetImages) : null;
+  } catch (error) {
+    console.warn('No se pudo cargar el dataset comprimido de la escultura.', error);
+    return null;
+  }
+};
+
 const loadImages = async () => {
+  const datasetImages = await loadDatasetImages();
+  if (datasetImages) return datasetImages;
+
   try {
     const response = await fetch(`${CACHE_MANIFEST}?ts=${Date.now()}`, { cache: 'no-store' });
     if (!response.ok) return shuffle(FALLBACK_IMAGES);

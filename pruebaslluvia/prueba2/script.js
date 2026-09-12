@@ -1,4 +1,6 @@
 (() => {
+  const DATASET_MANIFEST = '../../datasets/people_80s_style_compressed/manifest.json';
+  const DATASET_BASE = '../../datasets/people_80s_style_compressed/';
   const CACHE_MANIFEST = '../../assets/images/netart-cache/manifest.json';
   const FALLBACK_IMAGES = [
     '../../assets/images/archive-sides/paper-strips-installation.png',
@@ -30,6 +32,15 @@
     return shuffled;
   };
 
+  const encodePathSegment = (segment) => encodeURIComponent(segment).replace(/%2F/gi, '/');
+
+  const datasetImagePath = (entry) => {
+    const file = typeof entry === 'string' ? entry : entry?.file;
+    if (typeof file !== 'string' || !file.trim()) return null;
+
+    return `${DATASET_BASE}${encodePathSegment(file.trim())}`;
+  };
+
   const normalizeImagePath = (src) => {
     if (typeof src !== 'string' || !src.trim()) return null;
     const clean = src.trim();
@@ -40,7 +51,27 @@
     return clean;
   };
 
+  const loadDatasetImages = async () => {
+    try {
+      const response = await fetch(`${DATASET_MANIFEST}?ts=${Date.now()}`, { cache: 'no-store' });
+      if (!response.ok) return null;
+
+      const manifest = await response.json();
+      const datasetImages = Array.isArray(manifest)
+        ? manifest.map(datasetImagePath).filter(Boolean)
+        : [];
+
+      return datasetImages.length ? shuffle(datasetImages) : null;
+    } catch (error) {
+      console.warn('No se pudo leer el dataset comprimido para prueba2.', error);
+      return null;
+    }
+  };
+
   const loadLocalImages = async () => {
+    const datasetImages = await loadDatasetImages();
+    if (datasetImages) return datasetImages;
+
     try {
       const response = await fetch(`${CACHE_MANIFEST}?ts=${Date.now()}`, { cache: 'no-store' });
       if (!response.ok) return null;
