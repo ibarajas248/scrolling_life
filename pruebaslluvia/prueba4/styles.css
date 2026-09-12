@@ -1,0 +1,246 @@
+:root {
+  --bg: #010204;
+  --green: #9eff71;
+  --cyan: #73e9ff;
+  --paper: #eef2ea;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+body {
+  color: var(--paper);
+  font-family: 'Share Tech Mono', 'IBM Plex Mono', 'Courier New', monospace;
+}
+
+.sediment-stage {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 82%, rgba(158, 255, 113, 0.12), transparent 31%),
+    radial-gradient(ellipse at 48% 16%, rgba(115, 233, 255, 0.06), transparent 36%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.98), rgba(3, 8, 18, 0.75) 30%, rgba(4, 7, 14, 0.78) 72%, rgba(0, 0, 0, 0.98)),
+    #010204;
+  isolation: isolate;
+}
+
+.fall-layer,
+.sediment-layer,
+.pressure-layer,
+.screen-mesh,
+.screen-mask {
+  position: absolute;
+  inset: 0;
+}
+
+.fall-layer {
+  z-index: 1;
+  overflow: hidden;
+}
+
+.sediment-layer {
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.fall-strip {
+  position: absolute;
+  left: var(--x, 50vw);
+  top: 0;
+  width: var(--w, 130px);
+  height: var(--h, 360px);
+  overflow: hidden;
+  border-left: 1px solid rgba(238, 242, 234, 0.08);
+  border-right: 1px solid rgba(158, 255, 113, 0.12);
+  background: rgba(0, 0, 0, 0.68);
+  opacity: var(--opacity, 0.82);
+  filter:
+    grayscale(var(--gray, 0.86))
+    contrast(var(--contrast, 1.24))
+    brightness(var(--brightness, 0.82))
+    saturate(var(--sat, 0.84));
+  transform:
+    translate3d(0, calc(-1 * var(--h, 360px) - 10vh), 0)
+    rotateZ(var(--tilt, 0deg))
+    scaleX(var(--sx, 1));
+  will-change: transform;
+  animation: fallToResidue var(--duration, 13s) cubic-bezier(0.33, 0.01, 0.72, 1) forwards;
+}
+
+.fall-strip img,
+.sediment-shard img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.9;
+  transform: scale(var(--image-scale, 1.08));
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.fall-strip::before,
+.fall-strip::after,
+.sediment-shard::before,
+.sediment-shard::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.fall-strip::before,
+.sediment-shard::before {
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.2), transparent 15%, transparent 84%, rgba(255, 255, 255, 0.08)),
+    repeating-linear-gradient(0deg, transparent 0 23px, rgba(255, 255, 255, 0.08) 24px, transparent 25px);
+  mix-blend-mode: screen;
+  opacity: 0.24;
+}
+
+.fall-strip::after,
+.sediment-shard::after {
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.55), transparent 30%, transparent 68%, rgba(0, 0, 0, 0.66)),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.54), transparent 16%, transparent 82%, rgba(0, 0, 0, 0.58));
+  opacity: 0.9;
+}
+
+.sediment-shard {
+  position: absolute;
+  left: var(--x, 50vw);
+  bottom: var(--bottom, 0px);
+  width: var(--w, 130px);
+  height: var(--h, 40px);
+  overflow: hidden;
+  border: 1px solid rgba(238, 242, 234, 0.08);
+  background: rgba(0, 0, 0, 0.78);
+  box-shadow:
+    0 10px 26px rgba(0, 0, 0, 0.42),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.035);
+  opacity: var(--opacity, 0.72);
+  filter:
+    grayscale(var(--gray, 0.92))
+    contrast(var(--contrast, 1.34))
+    brightness(var(--brightness, 0.66))
+    saturate(var(--sat, 0.72));
+  transform:
+    translate3d(var(--shift, 0px), 0, 0)
+    rotateZ(var(--tilt, 0deg))
+    scaleX(var(--sx, 1.08))
+    scaleY(var(--sy, 0.54));
+  transform-origin: center bottom;
+  mix-blend-mode: var(--blend, normal);
+  animation: compactResidue 1.2s ease-out both;
+}
+
+.pressure-layer {
+  z-index: 3;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, transparent 0 54%, rgba(0, 0, 0, 0.13) 67%, rgba(0, 0, 0, 0.88) 100%),
+    repeating-linear-gradient(0deg, transparent 0 18px, rgba(158, 255, 113, 0.024) 19px, transparent 20px);
+  mix-blend-mode: multiply;
+}
+
+.screen-mesh {
+  z-index: 4;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle, rgba(238, 246, 252, 0.13) 0 1px, transparent 1.4px),
+    repeating-linear-gradient(90deg, rgba(158, 255, 113, 0.06) 0 1px, transparent 1px 75px),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.028) 0 1px, transparent 1px 4px);
+  background-size: 12px 12px, 75px 100%, 100% 4px;
+  mix-blend-mode: screen;
+  opacity: 0.24;
+}
+
+.screen-mask {
+  z-index: 5;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at center, transparent 0 36%, rgba(0, 0, 0, 0.45) 72%, rgba(0, 0, 0, 0.98) 100%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.9), transparent 14%, transparent 86%, rgba(0, 0, 0, 0.92)),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.54), transparent 19%, transparent 76%, rgba(0, 0, 0, 0.82));
+  box-shadow: inset 0 0 180px rgba(0, 0, 0, 0.98);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@keyframes fallToResidue {
+  0% {
+    transform:
+      translate3d(0, calc(-1 * var(--h, 360px) - 10vh), 0)
+      rotateZ(var(--tilt, 0deg))
+      scaleX(var(--sx, 1));
+  }
+
+  78% {
+    transform:
+      translate3d(var(--drift, 0px), calc(100vh - var(--landing, 72px)), 0)
+      rotateZ(calc(var(--tilt, 0deg) * 0.45))
+      scaleX(var(--sx, 1));
+  }
+
+  100% {
+    transform:
+      translate3d(var(--drift, 0px), calc(100vh - var(--landing, 72px)), 0)
+      rotateZ(calc(var(--tilt, 0deg) * 0.25))
+      scaleX(calc(var(--sx, 1) * 1.12))
+      scaleY(0.18);
+    opacity: 0.26;
+  }
+}
+
+@keyframes compactResidue {
+  from {
+    transform:
+      translate3d(var(--shift, 0px), -22px, 0)
+      rotateZ(calc(var(--tilt, 0deg) * 0.6))
+      scaleX(0.92)
+      scaleY(1);
+    filter:
+      grayscale(0.75)
+      contrast(1.12)
+      brightness(0.88)
+      saturate(0.92);
+  }
+}
+
+@media (max-width: 680px) {
+  .fall-strip {
+    width: calc(var(--w, 118px) * 0.82);
+  }
+
+  .sediment-shard {
+    width: calc(var(--w, 118px) * 0.88);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fall-strip {
+    animation-duration: 26s;
+  }
+}
