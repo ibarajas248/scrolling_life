@@ -1,9 +1,12 @@
 (() => {
   const container = document.querySelector('[data-scroll-container]');
   const poem = document.querySelector('.pause-poem');
+  const paths = document.querySelector('.subpages-row');
   const meterLabel = document.querySelector('.scroll-meter-label');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   let locomotive = null;
+
+  if (poem && paths) poem.after(paths);
 
   const setProgress = (progress) => {
     const bounded = Math.min(1, Math.max(0, progress));
@@ -25,7 +28,9 @@
       fragment.dataset.scroll = '';
       fragment.dataset.scrollClass = 'is-inview';
       fragment.dataset.scrollRepeat = 'true';
-      fragment.dataset.scrollSpeed = String([0.22, -0.18, 0.34, -0.12][index % 4]);
+      fragment.dataset.scrollSpeed = String([0.08, -0.06, 0.12, -0.04][index % 4]);
+      if (text.includes('¿')) fragment.classList.add('is-question');
+      if (text.length <= 18) fragment.classList.add('is-brief');
       poem.appendChild(fragment);
       return fragment;
     });
