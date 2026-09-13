@@ -10,6 +10,7 @@
   />
   <link rel="stylesheet" href="../../assets/fonts/local-fonts.css" />
   <link rel="stylesheet" href="../../assets/styles/home.css" />
+  <link rel="stylesheet" href="../../assets/vendor/locomotive-scroll.min.css" />
   <style>
     body {
       background: #020304;
@@ -290,16 +291,182 @@
         transform: translate(-50%, calc(-50% - 3px));
       }
     }
+
+    body {
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    .pause-scroll {
+      min-height: 100vh;
+    }
+
+    .content-container {
+      width: min(100% - 40px, 960px);
+      padding: 64px 0 120px;
+    }
+
+    .pause-header {
+      min-height: 56vh;
+      display: grid;
+      align-content: center;
+      border-bottom: 1px solid rgba(95, 215, 223, 0.28);
+    }
+
+    .pause-header h1 {
+      font-size: 6rem;
+      text-shadow: 0 0 24px rgba(158, 255, 113, 0.2);
+    }
+
+    .author-meta {
+      flex-direction: row;
+      justify-content: space-between;
+      padding-top: 18px;
+      border-top: 1px solid rgba(158, 255, 113, 0.42);
+    }
+
+    .pause-poem {
+      padding-top: 18vh;
+      padding-bottom: 16vh;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      white-space: normal;
+    }
+
+    .poem-fragment {
+      width: min(100%, 690px);
+      min-height: 34vh;
+      display: flex;
+      align-items: center;
+      margin: 0 0 8vh;
+      color: #d8e7ef;
+      font-size: 1.45rem;
+      line-height: 1.65;
+      white-space: pre-wrap;
+      opacity: 0.2;
+      transform: translateY(42px);
+      transition: opacity 0.8s ease, transform 0.8s ease, color 0.8s ease;
+    }
+
+    .poem-fragment:nth-child(3n + 2) {
+      margin-left: auto;
+      color: #9eff71;
+    }
+
+    .poem-fragment:nth-child(4n) {
+      width: min(88%, 560px);
+      margin-right: auto;
+      margin-left: 9%;
+      color: #5fd7df;
+    }
+
+    .poem-fragment.is-inview {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .scroll-meter {
+      position: fixed;
+      z-index: 30;
+      top: 50%;
+      right: 20px;
+      width: 2px;
+      height: min(46vh, 320px);
+      background: rgba(216, 231, 239, 0.16);
+      transform: translateY(-50%);
+    }
+
+    .scroll-meter-fill {
+      width: 100%;
+      height: var(--pause-progress, 0%);
+      background: #9eff71;
+      box-shadow: 0 0 12px rgba(158, 255, 113, 0.65);
+    }
+
+    .scroll-meter-label {
+      position: absolute;
+      right: 10px;
+      bottom: -28px;
+      color: #5fd7df;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      white-space: nowrap;
+    }
+
+    .pause-end {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 28px;
+      border-top: 1px solid rgba(238, 125, 89, 0.45);
+    }
+
+    .pause-end > span {
+      color: #5fd7df;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.72rem;
+    }
+
+    @media (max-width: 700px) {
+      .content-container {
+        width: min(100% - 32px, 960px);
+        padding-top: 28px;
+      }
+
+      .pause-header {
+        min-height: 42vh;
+      }
+
+      .pause-header h1 {
+        font-size: 3.4rem;
+      }
+
+      .author-meta {
+        flex-direction: column;
+      }
+
+      .pause-poem {
+        padding-top: 10vh;
+      }
+
+      .poem-fragment,
+      .poem-fragment:nth-child(4n) {
+        width: 100%;
+        min-height: 26vh;
+        margin-right: 0;
+        margin-left: 0;
+        font-size: 1.08rem;
+        overflow-wrap: anywhere;
+      }
+
+      .scroll-meter {
+        right: 8px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .poem-fragment {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+    }
   </style>
   <script src="../../assets/scripts/maintenance-gate.js" defer></script>
 </head>
 <body>
-  <div class="content-container">
+  <aside class="scroll-meter" aria-hidden="true">
+    <div class="scroll-meter-fill"></div>
+    <span class="scroll-meter-label">000%</span>
+  </aside>
+  <main class="pause-scroll" data-scroll-container>
+  <div class="content-container" data-scroll-section>
+    <header class="pause-header" data-scroll data-scroll-speed="0.55">
     <h1>Pausa</h1>
     <div class="author-meta">
       <span>Texto Curatorial</span>
       <span>A&ntilde;o: 2026</span>
     </div>
+    </header>
 
     <div class="subpages-row">
       <svg class="subpages-graph-lines" viewBox="0 0 800 245" preserveAspectRatio="none" aria-hidden="true">
@@ -621,12 +788,18 @@ Para pensar.
 Pensar
 </div>
 
-    <a href="../../index.html" class="back-link">&lt; Volver al men&uacute; principal</a>
+    <footer class="pause-end">
+      <a href="../../index.html" class="back-link">&lt; Volver al men&uacute; principal</a>
+      <span aria-hidden="true">[ fin / inicio ]</span>
+    </footer>
   </div>
+  </main>
 
   <!-- Cloudflare Web Analytics -->
   <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "4ae4ff73465943b788027815f6676ab3"}'></script>
   <!-- End Cloudflare Web Analytics -->
   <script src="/assets/scripts/traffic-tracker.js" defer></script>
+  <script src="../../assets/vendor/locomotive-scroll.min.js" defer></script>
+  <script src="./script.js?v=20260913-locomotive" defer></script>
 </body>
 </html>
