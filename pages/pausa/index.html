@@ -302,7 +302,7 @@
     }
 
     .content-container {
-      width: min(100% - 40px, 960px);
+      width: min(100% - 48px, 1180px);
       padding: 64px 0 120px;
     }
 
@@ -330,6 +330,36 @@
       padding-bottom: 16vh;
       font-family: 'Bricolage Grotesque', sans-serif;
       white-space: normal;
+    }
+
+    .pause-reading-stage {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(380px, 0.95fr);
+      gap: clamp(48px, 7vw, 108px);
+      align-items: start;
+    }
+
+    .pause-reading-stage .pause-poem {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .pause-reading-stage .subpages-row {
+      grid-column: 2;
+      grid-row: 1;
+      width: 100%;
+      min-height: 330px;
+      margin: 18vh 0 0;
+      align-self: start;
+    }
+
+    .pause-reading-stage .subpage-icon-link:first-of-type {
+      left: 0;
+    }
+
+    .pause-reading-stage .subpage-icon-link:last-of-type {
+      right: 0;
     }
 
     .poem-fragment {
@@ -428,6 +458,30 @@
         padding-top: 10vh;
       }
 
+      .pause-reading-stage {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .pause-reading-stage .subpages-row {
+        order: 0;
+        width: 100%;
+        min-height: 360px;
+        margin: 8vh 0 0;
+      }
+
+      .pause-reading-stage .subpage-icon-link:first-of-type,
+      .pause-reading-stage .subpage-icon-link:last-of-type {
+        right: auto;
+        left: 50%;
+      }
+
+      .pause-reading-stage .pause-poem {
+        order: 1;
+        width: 100%;
+      }
+
       .poem-fragment,
       .poem-fragment:nth-child(4n) {
         width: 100%;
@@ -468,7 +522,8 @@
     </div>
     </header>
 
-    <div class="subpages-row">
+    <section class="pause-reading-stage" id="pause-reading">
+    <div class="subpages-row" data-scroll data-scroll-sticky data-scroll-target="#pause-reading">
       <svg class="subpages-graph-lines" viewBox="0 0 800 245" preserveAspectRatio="none" aria-hidden="true">
         <path class="flow-line" d="M122 78 H400 V184 H678" />
         <path d="M400 78 V38 M400 184 V218 M122 78 V122 H400 M678 184 V122 H400" />
@@ -787,6 +842,7 @@ Para pensar.
 
 Pensar
 </div>
+    </section>
 
     <footer class="pause-end">
       <a href="../../index.html" class="back-link">&lt; Volver al men&uacute; principal</a>
