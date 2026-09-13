@@ -1,12 +1,9 @@
 (() => {
   const container = document.querySelector('[data-scroll-container]');
   const poem = document.querySelector('.pause-poem');
-  const paths = document.querySelector('.subpages-row');
   const meterLabel = document.querySelector('.scroll-meter-label');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   let locomotive = null;
-
-  if (poem && paths) poem.before(paths);
 
   const setProgress = (progress) => {
     const bounded = Math.min(1, Math.max(0, progress));
@@ -24,11 +21,21 @@
     return fragments.map((text, index) => {
       const fragment = document.createElement('section');
       fragment.className = 'poem-fragment';
-      fragment.textContent = text;
+      const signalMatch = text.match(/^([.\u2026]+)(\s+)(.+)$/s);
+      if (signalMatch) {
+        const signal = document.createElement('span');
+        signal.className = 'poem-signal';
+        signal.textContent = signalMatch[1];
+        fragment.append(signal, document.createTextNode(`${signalMatch[2]}${signalMatch[3]}`));
+      } else {
+        fragment.textContent = text;
+      }
       fragment.dataset.scroll = '';
       fragment.dataset.scrollClass = 'is-inview';
       fragment.dataset.scrollRepeat = 'true';
       fragment.dataset.scrollSpeed = String([0.08, -0.06, 0.12, -0.04][index % 4]);
+      if (index <= 14) fragment.classList.add('is-counter');
+      if (index >= 15 && index <= 21) fragment.classList.add('is-opening-copy');
       if (text.includes('¿')) fragment.classList.add('is-question');
       if (text.length <= 18) fragment.classList.add('is-brief');
       poem.appendChild(fragment);

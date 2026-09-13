@@ -6,295 +6,40 @@
   <title>Pausa - Scrolling Life</title>
   <meta
     name="description"
-    content="Pagina de pausa para Scrolling Life con texto placeholder en formato curatorial."
+    content="Pausa, texto curatorial de Scrolling Life sobre la velocidad de las imagenes y el acto de detenerse."
   />
   <link rel="stylesheet" href="../../assets/fonts/local-fonts.css" />
   <link rel="stylesheet" href="../../assets/styles/home.css" />
   <link rel="stylesheet" href="../../assets/vendor/locomotive-scroll.min.css" />
   <style>
+    :root {
+      --pause-bg: #020304;
+      --pause-ink: #f7f8fb;
+      --pause-muted: #8d96aa;
+      --pause-lime: #9eff71;
+      --pause-cyan: #5fd7df;
+      --pause-line: rgba(95, 215, 223, 0.24);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      background: var(--pause-bg);
+    }
+
     body {
-      background: #020304;
-      color: #f7f8fb;
-      font-family: 'Bricolage Grotesque', sans-serif;
-      padding: 40px 20px;
-      line-height: 1.6;
-    }
-
-    .content-container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    h1 {
-      margin: 0 0 0.5rem;
-      color: #9eff71;
-      font-family: 'Disket Mono', monospace;
-      font-size: clamp(2.4rem, 8vw, 3rem);
-      line-height: 1;
-    }
-
-    .author-meta {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      margin-bottom: 2rem;
-      color: #a8b0c0;
-      font-family: 'Share Tech Mono', monospace;
-    }
-
-    p {
-      margin: 0 0 1.5rem;
-      color: #d8e7ef;
-      font-size: 1.1rem;
-    }
-
-    .pause-poem {
-      margin: 0 0 1.5rem;
-      color: #d8e7ef;
-      font-size: 1.1rem;
-      line-height: 1.6;
-      white-space: pre-wrap;
-    }
-
-    .back-link {
-      display: inline-block;
-      margin-top: 2rem;
-      padding: 8px 16px;
-      border: 1px solid #ee7d59;
-      border-radius: 4px;
-      color: #ee7d59;
-      font-family: 'Share Tech Mono', monospace;
-      text-decoration: none;
-      transition: background 0.3s ease;
-    }
-
-    .back-link:hover,
-    .back-link:focus {
-      background: rgba(238, 125, 89, 0.2);
-    }
-
-    .subpages-row {
-      position: relative;
-      min-height: 245px;
-      margin: 0 0 2.4rem;
-      overflow: visible;
-      border: 0;
-      background:
-        radial-gradient(ellipse at 50% 52%, rgba(2, 3, 4, 0.96) 0%, rgba(2, 3, 4, 0.82) 43%, rgba(2, 3, 4, 0) 74%);
-      box-shadow: none;
-    }
-
-    .subpages-row::before {
-      content: 'if scroll == pause';
-      position: absolute;
-      top: 58px;
-      left: 50%;
-      z-index: 2;
-      transform: translateX(-50%);
-      color: rgba(158, 255, 113, 0.5);
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.68rem;
-      letter-spacing: 0.08em;
-      text-shadow: 0 0 12px rgba(158, 255, 113, 0.24);
-      white-space: nowrap;
-    }
-
-    .subpages-row::after {
-      content: 'return memory';
-      position: absolute;
-      bottom: 43px;
-      left: 50%;
-      z-index: 2;
-      transform: translateX(-50%);
-      color: rgba(158, 255, 113, 0.5);
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.68rem;
-      letter-spacing: 0.08em;
-      text-shadow: 0 0 12px rgba(158, 255, 113, 0.24);
-      white-space: nowrap;
-    }
-
-    .subpages-graph-lines {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-    }
-
-    .subpages-graph-lines path,
-    .subpages-graph-lines line,
-    .subpages-graph-lines circle {
-      fill: none;
-      stroke: rgba(158, 255, 113, 0.3);
-      stroke-width: 1;
-      vector-effect: non-scaling-stroke;
-    }
-
-    .subpages-graph-lines .flow-line {
-      stroke: rgba(95, 215, 223, 0.54);
-      stroke-dasharray: 7 10;
-      animation: subpage-flow 1.8s linear infinite;
-    }
-
-    .subpages-hub {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      z-index: 2;
-      width: 18px;
-      height: 18px;
-      border: 1px solid rgba(158, 255, 113, 0.72);
-      border-radius: 999px;
-      background: rgba(158, 255, 113, 0.1);
-      box-shadow:
-        0 0 0 8px rgba(158, 255, 113, 0.035),
-        0 0 24px rgba(95, 215, 223, 0.22);
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-    }
-
-    .subpage-icon-link {
-      position: absolute;
-      top: 50%;
-      z-index: 3;
-      display: grid;
-      place-items: center;
-      gap: 10px;
-      width: clamp(104px, 19vw, 128px);
-      min-height: 104px;
       margin: 0;
-      padding: 13px 10px 12px;
-      border: 1px solid rgba(158, 255, 113, 0.74);
-      background: rgba(2, 3, 4, 0.32);
-      backdrop-filter: blur(2px);
-      color: #d8e7ef;
-      text-decoration: none;
-      box-shadow:
-        0 0 24px rgba(158, 255, 113, 0.12),
-        inset 0 0 14px rgba(158, 255, 113, 0.045);
-      transform: translateY(-50%);
-      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
-    }
-
-    .subpage-icon-link:first-of-type {
-      left: clamp(22px, 8vw, 96px);
-    }
-
-    .subpage-icon-link:last-of-type {
-      right: clamp(22px, 8vw, 96px);
-    }
-
-    .subpage-icon-link:hover,
-    .subpage-icon-link:focus {
-      border-color: #80e9ff;
-      box-shadow:
-        0 0 30px rgba(128, 233, 255, 0.26),
-        inset 0 0 18px rgba(128, 233, 255, 0.12);
-      transform: translateY(calc(-50% - 3px));
-    }
-
-    .subpage-icon-link:focus-visible {
-      outline: 2px solid #80e9ff;
-      outline-offset: 4px;
-    }
-
-    .subpage-icon-link img {
-      width: 72px;
-      height: 48px;
-      image-rendering: pixelated;
-      object-fit: cover;
-      object-position: left center;
-    }
-
-    .subpage-icon-ascii {
-      width: 48px;
-      height: 48px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: #05080c;
-      border: 1px dashed rgba(158, 255, 113, 0.48);
-      color: #9eff71;
-      font-family: 'Share Tech Mono', monospace;
-      text-align: center;
-    }
-
-    .subpage-icon-ascii .ascii-symbol-prompt {
-      font-size: 1.1rem;
-      font-weight: 700;
-      line-height: 1;
-    }
-
-    .subpage-icon-ascii .ascii-symbol-body {
-      font-size: 0.58rem;
-      color: #5fd7df;
-      letter-spacing: 1px;
-      margin-top: 3px;
-    }
-
-    .subpage-icon-caption {
-      max-width: 100%;
-      color: #9eff71;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.66rem;
-      line-height: 1.1;
-      text-align: center;
-      text-transform: uppercase;
-      overflow-wrap: anywhere;
-    }
-
-    @keyframes subpage-flow {
-      to {
-        stroke-dashoffset: -68;
-      }
-    }
-
-    @media (max-width: 620px) {
-      .subpages-row {
-        min-height: 360px;
-      }
-
-      .subpages-row::before {
-        top: 28px;
-      }
-
-      .subpages-row::after {
-        bottom: 18px;
-      }
-
-      .subpages-hub {
-        top: 52%;
-      }
-
-      .subpage-icon-link {
-        width: min(132px, calc(100% - 42px));
-      }
-
-      .subpage-icon-link:first-of-type {
-        top: 35%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      }
-
-      .subpage-icon-link:last-of-type {
-        top: 67%;
-        right: auto;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      }
-
-      .subpage-icon-link:hover,
-      .subpage-icon-link:focus {
-        transform: translate(-50%, calc(-50% - 3px));
-      }
-    }
-
-    body {
       padding: 0;
       overflow-x: hidden;
+      background-color: var(--pause-bg);
+      background-image:
+        repeating-linear-gradient(0deg, transparent 0 39px, rgba(95, 215, 223, 0.035) 39px 40px),
+        repeating-linear-gradient(90deg, transparent 0 39px, rgba(95, 215, 223, 0.035) 39px 40px);
+      color: var(--pause-ink);
+      font-family: 'Bricolage Grotesque', sans-serif;
+      line-height: 1.4;
     }
 
     .pause-scroll {
@@ -302,103 +47,240 @@
     }
 
     .content-container {
-      width: min(100% - 48px, 1180px);
-      padding: 64px 0 120px;
+      width: min(calc(100% - 80px), 1480px);
+      margin: 0 auto;
+      padding: 22px 0 120px;
+    }
+
+    .pause-system-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      min-height: 40px;
+      border-bottom: 1px solid var(--pause-line);
+      color: var(--pause-muted);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+    }
+
+    .pause-system-bar strong {
+      color: var(--pause-ink);
+      font-weight: 400;
+    }
+
+    .pause-system-bar span:last-child {
+      color: var(--pause-lime);
     }
 
     .pause-header {
-      min-height: 0;
       display: grid;
-      align-content: center;
-      padding: 0 0 16px;
-      border-bottom: 1px solid rgba(95, 215, 223, 0.28);
+      grid-template-areas:
+        'title paths'
+        'meta meta';
+      grid-template-columns: minmax(0, 1.05fr) minmax(460px, 0.95fr);
+      column-gap: 48px;
+      align-items: end;
+      padding: 48px 0 0;
     }
 
-    .pause-header .author-meta {
-      margin-bottom: 0;
+    .pause-title-block {
+      grid-area: title;
+      min-width: 0;
     }
 
-    .pause-header h1 {
-      font-size: 6rem;
-      text-shadow: 0 0 24px rgba(158, 255, 113, 0.2);
+    .pause-title-block h1 {
+      margin: 0;
+      color: var(--pause-lime);
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 8rem;
+      font-weight: 600;
+      line-height: 0.82;
+      text-transform: uppercase;
+      text-shadow: 0 0 26px rgba(158, 255, 113, 0.18);
+    }
+
+    .subpages-row {
+      grid-area: paths;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+      align-self: end;
+    }
+
+    .subpage-icon-link {
+      position: relative;
+      display: grid;
+      grid-template-columns: 104px minmax(0, 1fr);
+      grid-template-rows: 1fr auto;
+      gap: 10px 18px;
+      min-height: 148px;
+      padding: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(158, 255, 113, 0.76);
+      background: rgba(2, 3, 4, 0.78);
+      color: var(--pause-ink);
+      text-decoration: none;
+      transition: border-color 180ms ease, background-color 180ms ease, transform 180ms ease;
+    }
+
+    .subpage-icon-link::after {
+      content: '\2192';
+      position: absolute;
+      top: 50%;
+      right: 18px;
+      color: var(--pause-lime);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1.5rem;
+      transform: translateY(-50%);
+      transition: transform 180ms ease;
+    }
+
+    .subpage-icon-link:hover,
+    .subpage-icon-link:focus {
+      border-color: var(--pause-cyan);
+      background: rgba(95, 215, 223, 0.07);
+      transform: translateY(-3px);
+    }
+
+    .subpage-icon-link:hover::after,
+    .subpage-icon-link:focus::after {
+      transform: translate(4px, -50%);
+    }
+
+    .subpage-icon-link:focus-visible {
+      outline: 2px solid var(--pause-cyan);
+      outline-offset: 4px;
+    }
+
+    .subpage-icon-link img,
+    .subpage-icon-ascii {
+      grid-row: 1;
+      align-self: center;
+      width: 104px;
+      height: 68px;
+    }
+
+    .subpage-icon-link img {
+      image-rendering: pixelated;
+      object-fit: cover;
+      object-position: left center;
+    }
+
+    .subpage-icon-ascii {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 1px dashed rgba(158, 255, 113, 0.5);
+      background: #05080c;
+      color: var(--pause-lime);
+      font-family: 'Share Tech Mono', monospace;
+      text-align: center;
+    }
+
+    .ascii-symbol-prompt {
+      font-size: 1.45rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .ascii-symbol-body {
+      margin-top: 5px;
+      color: var(--pause-cyan);
+      font-size: 0.64rem;
+    }
+
+    .subpage-icon-caption {
+      grid-column: 1 / -1;
+      grid-row: 2;
+      color: var(--pause-lime);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.78rem;
+      line-height: 1.1;
+      text-transform: uppercase;
     }
 
     .author-meta {
-      flex-direction: row;
+      grid-area: meta;
+      display: flex;
       justify-content: space-between;
-      padding-top: 18px;
-      border-top: 1px solid rgba(158, 255, 113, 0.42);
+      margin-top: 34px;
+      padding: 15px 0;
+      border-top: 1px solid rgba(158, 255, 113, 0.5);
+      border-bottom: 1px solid var(--pause-line);
+      color: #b7c0d1;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.9rem;
+    }
+
+    .pause-reading-stage,
+    .pause-poem {
+      width: 100%;
     }
 
     .pause-poem {
-      width: 100%;
-      padding-top: 64px;
-      padding-bottom: 72px;
-      font-family: 'Bricolage Grotesque', sans-serif;
+      margin: 0;
+      padding: 48px 0 92px;
       white-space: normal;
-    }
-
-    .pause-reading-stage {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .pause-reading-stage .pause-poem {
-      order: 2;
-    }
-
-    .pause-reading-stage .subpages-row {
-      order: 1;
-      width: 100%;
-      min-height: 330px;
-      margin: 0 0 56px;
-    }
-
-    .pause-reading-stage .subpage-icon-link:first-of-type {
-      left: clamp(22px, 8vw, 96px);
-    }
-
-    .pause-reading-stage .subpage-icon-link:last-of-type {
-      right: clamp(22px, 8vw, 96px);
     }
 
     .poem-fragment {
       width: 100%;
       min-height: 0;
-      margin: 0 0 1.35rem;
-      padding: 0.15rem 0;
-      color: #d8e7ef;
-      font-size: 1.28rem;
-      line-height: 1.48;
+      margin: 0 0 0.7rem;
+      padding: 0.08em 0;
+      color: var(--pause-ink);
+      font-size: 2.15rem;
+      line-height: 1.22;
       white-space: pre-wrap;
-      opacity: 0.32;
-      transform: translateY(14px);
-      transition: opacity 0.55s ease, transform 0.55s ease, color 0.55s ease;
+      overflow-wrap: anywhere;
+      opacity: 0.22;
+      transform: translateY(16px);
+      transition: opacity 0.5s ease, transform 0.5s ease, color 0.5s ease;
     }
 
     .poem-fragment:nth-child(3n + 2) {
-      margin-left: 5%;
-      color: #9eff71;
+      padding-left: 8%;
     }
 
     .poem-fragment:nth-child(4n) {
-      width: 90%;
-      margin-left: 10%;
-      color: #5fd7df;
+      padding-left: 18%;
+    }
+
+    .poem-fragment.is-counter {
+      font-family: 'Disket Mono', monospace;
+      font-size: 2.7rem;
+      line-height: 1.08;
+    }
+
+    .poem-fragment.is-counter:first-child {
+      font-size: 4rem;
+    }
+
+    .poem-fragment.is-opening-copy {
+      margin-bottom: 0.42rem;
+      font-size: 3.05rem;
+      line-height: 1.08;
     }
 
     .poem-fragment.is-question {
-      margin-top: 3.25rem;
+      margin-top: 4.5rem;
       margin-bottom: 2rem;
-      color: #f7f8fb;
-      font-size: 1.62rem;
-      line-height: 1.35;
+      padding-left: 0;
+      color: var(--pause-ink);
+      font-size: 3rem;
+      line-height: 1.12;
     }
 
-    .poem-fragment.is-brief {
+    .poem-fragment.is-brief:not(.is-counter) {
       font-family: 'Disket Mono', monospace;
-      font-size: 1.12rem;
+      font-size: 1.7rem;
+    }
+
+    .poem-signal {
+      color: var(--pause-lime);
+      text-shadow: 0 0 14px rgba(158, 255, 113, 0.22);
     }
 
     .poem-fragment.is-inview {
@@ -410,109 +292,186 @@
       position: fixed;
       z-index: 30;
       top: 50%;
-      right: 20px;
-      width: 2px;
-      height: min(46vh, 320px);
-      background: rgba(216, 231, 239, 0.16);
+      right: 22px;
+      width: 1px;
+      height: min(50vh, 430px);
+      background: rgba(216, 231, 239, 0.24);
       transform: translateY(-50%);
     }
 
     .scroll-meter-fill {
-      width: 100%;
+      width: 3px;
       height: var(--pause-progress, 0%);
-      background: #9eff71;
-      box-shadow: 0 0 12px rgba(158, 255, 113, 0.65);
+      background: var(--pause-lime);
+      box-shadow: 0 0 12px rgba(158, 255, 113, 0.52);
+      transform: translateX(-1px);
+    }
+
+    .scroll-meter-label,
+    .scroll-meter-end {
+      position: absolute;
+      right: 10px;
+      color: var(--pause-cyan);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.68rem;
+      white-space: nowrap;
     }
 
     .scroll-meter-label {
-      position: absolute;
-      right: 10px;
-      bottom: -28px;
-      color: #5fd7df;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.7rem;
-      white-space: nowrap;
+      top: -27px;
+    }
+
+    .scroll-meter-end {
+      bottom: -27px;
     }
 
     .pause-end {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-top: 28px;
+      padding-top: 26px;
       border-top: 1px solid rgba(238, 125, 89, 0.45);
     }
 
+    .back-link {
+      display: inline-block;
+      padding: 7px 0;
+      border-bottom: 1px solid #ee7d59;
+      color: #ee7d59;
+      font-family: 'Share Tech Mono', monospace;
+      text-decoration: none;
+    }
+
+    .back-link:hover,
+    .back-link:focus {
+      color: var(--pause-ink);
+      border-color: var(--pause-ink);
+    }
+
     .pause-end > span {
-      color: #5fd7df;
+      color: var(--pause-cyan);
       font-family: 'Share Tech Mono', monospace;
       font-size: 0.72rem;
     }
 
-    @media (max-width: 700px) {
+    @media (max-width: 1080px) {
       .content-container {
-        width: min(100% - 32px, 960px);
-        padding-top: 28px;
+        width: min(calc(100% - 48px), 1480px);
       }
 
       .pause-header {
-        min-height: 0;
-        padding-bottom: 16px;
+        grid-template-areas:
+          'title'
+          'paths'
+          'meta';
+        grid-template-columns: 1fr;
+        row-gap: 34px;
       }
 
-      .pause-header h1 {
-        font-size: 3.4rem;
+      .pause-title-block h1 {
+        font-size: 6rem;
+      }
+
+      .subpage-icon-link {
+        min-height: 132px;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .content-container {
+        width: min(calc(100% - 32px), 1480px);
+        padding-top: 12px;
+      }
+
+      .pause-system-bar {
+        min-height: 34px;
+        font-size: 0.62rem;
+      }
+
+      .pause-header {
+        padding-top: 30px;
+        row-gap: 24px;
+      }
+
+      .pause-title-block h1 {
+        font-size: 4rem;
+      }
+
+      .subpages-row {
+        gap: 10px;
+      }
+
+      .subpage-icon-link {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+        min-height: 150px;
+        padding: 14px;
+      }
+
+      .subpage-icon-link::after {
+        top: auto;
+        right: 14px;
+        bottom: 10px;
+        transform: none;
+      }
+
+      .subpage-icon-link:hover::after,
+      .subpage-icon-link:focus::after {
+        transform: translateX(4px);
+      }
+
+      .subpage-icon-link img,
+      .subpage-icon-ascii {
+        width: 76px;
+        height: 52px;
       }
 
       .author-meta {
-        flex-direction: column;
+        margin-top: 0;
+        font-size: 0.72rem;
       }
 
       .pause-poem {
-        padding-top: 40px;
-        padding-bottom: 52px;
-      }
-
-      .pause-reading-stage {
-        display: flex;
-        flex-direction: column;
-        gap: 0;
-      }
-
-      .pause-reading-stage .subpages-row {
-        order: 1;
-        width: 100%;
-        min-height: 360px;
-        margin: 0 0 40px;
-      }
-
-      .pause-reading-stage .subpage-icon-link:first-of-type,
-      .pause-reading-stage .subpage-icon-link:last-of-type {
-        right: auto;
-        left: 50%;
-      }
-
-      .pause-reading-stage .pause-poem {
-        order: 2;
-        width: 100%;
+        padding-top: 34px;
+        padding-bottom: 60px;
       }
 
       .poem-fragment,
+      .poem-fragment:nth-child(3n + 2),
       .poem-fragment:nth-child(4n) {
-        width: 100%;
-        min-height: 0;
-        margin-right: 0;
-        margin-left: 0;
-        font-size: 1.08rem;
-        overflow-wrap: anywhere;
+        padding-left: 0;
+        font-size: 1.48rem;
+        line-height: 1.28;
+      }
+
+      .poem-fragment.is-counter,
+      .poem-fragment.is-counter:first-child {
+        font-size: 2rem;
+      }
+
+      .poem-fragment.is-opening-copy {
+        font-size: 2rem;
       }
 
       .poem-fragment.is-question {
-        margin-top: 2.5rem;
-        font-size: 1.32rem;
+        margin-top: 3.25rem;
+        font-size: 2rem;
+      }
+
+      .poem-fragment.is-brief:not(.is-counter) {
+        font-size: 1.25rem;
       }
 
       .scroll-meter {
-        right: 8px;
+        right: 7px;
+      }
+
+      .scroll-meter-label,
+      .scroll-meter-end {
+        display: none;
       }
     }
 
@@ -530,27 +489,21 @@
   <aside class="scroll-meter" aria-hidden="true">
     <div class="scroll-meter-fill"></div>
     <span class="scroll-meter-label">000%</span>
+    <span class="scroll-meter-end">100%</span>
   </aside>
   <main class="pause-scroll" data-scroll-container>
   <div class="content-container" data-scroll-section>
-    <header class="pause-header" data-scroll data-scroll-speed="0.55">
-    <h1>Pausa</h1>
-    <div class="author-meta">
-      <span>Texto Curatorial</span>
-      <span>A&ntilde;o: 2026</span>
+    <div class="pause-system-bar" aria-hidden="true">
+      <strong>PAUSA.EXE</strong>
+      <span>2026 / SCROLL = PAUSE</span>
     </div>
-    </header>
 
-    <section class="pause-reading-stage" id="pause-reading">
-    <div class="subpages-row" data-scroll data-scroll-speed="0.15">
-      <svg class="subpages-graph-lines" viewBox="0 0 800 245" preserveAspectRatio="none" aria-hidden="true">
-        <path class="flow-line" d="M122 78 H400 V184 H678" />
-        <path d="M400 78 V38 M400 184 V218 M122 78 V122 H400 M678 184 V122 H400" />
-        <circle cx="400" cy="122" r="10" />
-        <circle cx="400" cy="38" r="4" />
-        <circle cx="400" cy="218" r="4" />
-      </svg>
-      <span class="subpages-hub" aria-hidden="true"></span>
+    <header class="pause-header">
+      <div class="pause-title-block" data-scroll data-scroll-speed="0.35">
+        <h1>Pausa</h1>
+      </div>
+
+      <nav class="subpages-row" aria-label="Rutas relacionadas">
       <a href="./in-case-you-come-back/" class="subpage-icon-link" aria-label="Abrir In Case You Come Back" title="In Case You Come Back">
         <img src="./in-case-you-come-back/assets/in-case-you-come-back-title.png" alt="" />
         <span class="subpage-icon-caption">Recipe path</span>
@@ -563,8 +516,15 @@
         </div>
         <span class="subpage-icon-caption">ASCII path</span>
       </a>
-    </div>
+      </nav>
 
+      <div class="author-meta">
+        <span>Texto Curatorial</span>
+        <span>A&ntilde;o: 2026</span>
+      </div>
+    </header>
+
+    <section class="pause-reading-stage" id="pause-reading">
     <div class="pause-poem">Uno
 
 ….. dos
@@ -875,6 +835,6 @@ Pensar
   <!-- End Cloudflare Web Analytics -->
   <script src="/assets/scripts/traffic-tracker.js" defer></script>
   <script src="../../assets/vendor/locomotive-scroll.min.js" defer></script>
-  <script src="./script.js?v=20260913-locomotive" defer></script>
+  <script src="./script.js?v=20260913-editorial" defer></script>
 </body>
 </html>
