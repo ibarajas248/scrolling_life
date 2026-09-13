@@ -307,10 +307,15 @@
     }
 
     .pause-header {
-      min-height: 56vh;
+      min-height: 0;
       display: grid;
       align-content: center;
+      padding: 0 0 16px;
       border-bottom: 1px solid rgba(95, 215, 223, 0.28);
+    }
+
+    .pause-header .author-meta {
+      margin-bottom: 0;
     }
 
     .pause-header h1 {
@@ -443,7 +448,8 @@
       }
 
       .pause-header {
-        min-height: 42vh;
+        min-height: 0;
+        padding-bottom: 16px;
       }
 
       .pause-header h1 {
