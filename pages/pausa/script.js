@@ -6,7 +6,7 @@
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   let locomotive = null;
 
-  if (poem && paths) poem.after(paths);
+  if (poem && paths) poem.before(paths);
 
   const setProgress = (progress) => {
     const bounded = Math.min(1, Math.max(0, progress));
