@@ -3976,6 +3976,30 @@ p {
   z-index: 2;
 }
 
+.win98-desktop #winCuerpo .concept-window-body {
+  isolation: isolate;
+}
+
+.win98-desktop #winCuerpo .body-window-art {
+  position: absolute;
+  z-index: 0;
+  top: -22px;
+  right: -4px;
+  width: 170px;
+  height: auto;
+  opacity: 0.38;
+  filter: saturate(1.08) contrast(1.04);
+  image-rendering: pixelated;
+  pointer-events: none;
+  user-select: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.5) 20%, #000 46%);
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.5) 20%, #000 46%);
+}
+
+.win98-desktop #winCuerpo .concept-window-body > :not(.body-window-art) {
+  z-index: 2;
+}
+
 .win98-desktop .body-pixel-icon {
   position: absolute;
   right: 24px;
@@ -4087,6 +4111,12 @@ p {
     right: -4px;
     width: 180px;
     opacity: 0.32;
+  }
+
+  .win98-desktop #winCuerpo .body-window-art {
+    top: -16px;
+    right: -2px;
+    width: 184px;
   }
 }
 
