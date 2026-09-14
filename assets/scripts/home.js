@@ -1,3 +1,48 @@
+const DRAWING_COMPANION_URL = 'https://thescrollingdrawing.scrollinglife.com/';
+const DRAWING_COMPANION_SESSION_KEY = 'scrolling-life:drawing-companion-opened';
+
+const drawingCompanionWasOpened = () => {
+  try {
+    return window.sessionStorage.getItem(DRAWING_COMPANION_SESSION_KEY) === 'true';
+  } catch {
+    return false;
+  }
+};
+
+const markDrawingCompanionOpened = () => {
+  try {
+    window.sessionStorage.setItem(DRAWING_COMPANION_SESSION_KEY, 'true');
+  } catch {
+    // The companion still opens when session storage is unavailable.
+  }
+};
+
+const openDrawingCompanion = () => {
+  if (drawingCompanionWasOpened()) return true;
+
+  const companionWindow = window.open(DRAWING_COMPANION_URL, '_blank');
+  if (!companionWindow) return false;
+
+  companionWindow.opener = null;
+  markDrawingCompanionOpened();
+  return true;
+};
+
+const initDrawingCompanion = () => {
+  if (openDrawingCompanion()) return;
+
+  const openOnFirstInteraction = () => {
+    if (!openDrawingCompanion()) return;
+    window.removeEventListener('pointerdown', openOnFirstInteraction, true);
+    window.removeEventListener('keydown', openOnFirstInteraction, true);
+  };
+
+  window.addEventListener('pointerdown', openOnFirstInteraction, true);
+  window.addEventListener('keydown', openOnFirstInteraction, true);
+};
+
+initDrawingCompanion();
+
 const progressBar = document.getElementById('progressBar');
 const revealNodes = document.querySelectorAll('.reveal');
 const kineticNodes = document.querySelectorAll('[data-speed]');
