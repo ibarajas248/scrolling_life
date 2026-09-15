@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f2f0e9" />
+  <title>Lorem ipsum — Video</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f2f0e9; color: #25251f; }
+    main { display: grid; grid-template-columns: 1fr 1fr; min-height: 100svh; }
+    .text { display: flex; flex-direction: column; justify-content: center; padding: clamp(32px, 6vw, 110px); }
+    h1 { margin: 0 0 40px; font: normal clamp(48px, 5.5vw, 100px)/.98 Georgia, serif; letter-spacing: -.055em; }
+    p { max-width: 42ch; margin: 0 0 24px; font: 18px/1.7 Georgia, serif; }
+    p:last-child { margin-bottom: 0; }
+    .video { display: flex; align-items: center; justify-content: center; min-width: 0; background: #080808; }
+    iframe { display: block; width: 100%; height: 100svh; border: 0; pointer-events: none; }
+    @media (max-width: 600px) {
+      main { grid-template-columns: 1fr; }
+      .text { min-height: 55svh; padding: 48px 28px; }
+      .video { min-height: 45svh; }
+      iframe { height: 75svh; }
+      h1 { margin-bottom: 28px; }
+      p { font-size: 17px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="text" aria-labelledby="title">
+      <h1 id="title">Lorem ipsum.</h1>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </section>
+    <section class="video" aria-label="Video en bucle, sin sonido">
+      <iframe
+        src="https://player.vimeo.com/video/498923061?background=1&amp;autoplay=1&amp;loop=1&amp;muted=1&amp;controls=0&amp;title=0&amp;byline=0&amp;portrait=0&amp;keyboard=0&amp;dnt=1"
+        title="Video de Vimeo en bucle"
+        allow="autoplay; fullscreen; picture-in-picture"
+        referrerpolicy="strict-origin-when-cross-origin"
+        tabindex="-1">
+      </iframe>
+    </section>
+  </main>
+</body>
+</html>

@@ -547,6 +547,11 @@
       left: 88%;
     }
 
+    #nodeApuntesColor {
+      top: 86%;
+      left: 32%;
+    }
+
     /* -------------------------------------------------------------------------
        Responsive
        ------------------------------------------------------------------------- */
@@ -694,6 +699,7 @@
           <line id="edgeGameScroll" class="graph-edge edge-green" />
           <line id="edgeNpc" class="graph-edge edge-coral" />
           <line id="edgeMateria" class="graph-edge edge-teal" />
+          <line id="edgeApuntesColor" class="graph-edge edge-green" />
         </svg>
 
         <!-- Nodos Interactivos -->
@@ -736,6 +742,13 @@
 
           </a>
 
+          <a class="node-item satellite-node satellite-game" id="nodeApuntesColor" href="../video-texto/" data-edge="edgeApuntesColor">
+            <div class="node-meta">
+              <span class="node-title">Apuntes de color</span>
+              <span class="node-caption">Iván Barajas · Video</span>
+            </div>
+          </a>
+
         </div>
       </div>
 
@@ -756,7 +769,8 @@
       const edges = {
         nodeGameScroll: document.getElementById('edgeGameScroll'),
         nodeNpc: document.getElementById('edgeNpc'),
-        nodeMateria: document.getElementById('edgeMateria')
+        nodeMateria: document.getElementById('edgeMateria'),
+        nodeApuntesColor: document.getElementById('edgeApuntesColor')
       };
 
       const updateEdgeLines = () => {
