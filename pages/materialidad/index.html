@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#050706" />
+  <title>Materialidad</title>
+  <link rel="stylesheet" href="../../assets/fonts/local-fonts.css" />
+  <link rel="stylesheet" href="../../assets/styles/home.css" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
+      margin: 0;
+    }
+
+    body {
+      overflow-x: hidden;
+      color: #f7f8fb;
+      background: #050706;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      line-height: 1.6;
+    }
+
+    .materialidad-shell {
+      display: grid;
+      grid-template-columns: minmax(320px, 0.9fr) minmax(0, 1.1fr);
+      min-height: 100dvh;
+    }
+
+    .text-panel {
+      display: flex;
+      min-width: 0;
+      padding: clamp(28px, 7vw, 92px);
+      flex-direction: column;
+      justify-content: center;
+      background:
+        linear-gradient(90deg, rgba(5, 7, 6, 0.96), rgba(5, 7, 6, 0.88)),
+        radial-gradient(circle at 18% 24%, rgba(158, 255, 113, 0.14), transparent 28%);
+      border-right: 1px solid rgba(247, 248, 251, 0.14);
+    }
+
+    h1 {
+      margin: 0 0 clamp(28px, 5vw, 52px);
+      color: #9eff71;
+      font-family: 'Disket Mono', monospace;
+      font-size: clamp(2.7rem, 7vw, 5.6rem);
+      font-weight: 400;
+      letter-spacing: 0;
+      line-height: 0.95;
+      text-transform: uppercase;
+    }
+
+    .copy {
+      max-width: 58ch;
+      color: rgba(216, 231, 239, 0.88);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: clamp(1rem, 1.2vw, 1.14rem);
+    }
+
+    .copy p {
+      margin: 0 0 1.35rem;
+    }
+
+    .copy p:last-child {
+      margin-bottom: 0;
+    }
+
+    .back-link {
+      display: inline-flex;
+      width: fit-content;
+      margin-top: clamp(32px, 5vw, 60px);
+      padding: 10px 14px;
+      color: #f7f8fb;
+      border: 1px solid rgba(238, 125, 89, 0.8);
+      background: rgba(2, 3, 4, 0.72);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.92rem;
+      text-decoration: none;
+      transition: color 0.25s ease, background 0.25s ease, transform 0.25s ease;
+    }
+
+    .back-link:hover,
+    .back-link:focus {
+      color: #ee7d59;
+      background: rgba(238, 125, 89, 0.16);
+      outline: none;
+      transform: translateY(-2px);
+    }
+
+    .video-panel {
+      position: relative;
+      min-width: 0;
+      min-height: 100dvh;
+      overflow: hidden;
+      background: #020304;
+      isolation: isolate;
+    }
+
+    .video-stage {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      z-index: 0;
+      width: max(100%, calc(100dvh * 16 / 9));
+      height: max(100%, calc(100vw * 9 / 16));
+      min-width: 100%;
+      min-height: 100%;
+      transform: translate(-50%, -50%);
+    }
+
+    .video-stage iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      pointer-events: none;
+    }
+
+    .video-panel::before,
+    .video-panel::after {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      content: "";
+    }
+
+    .video-panel::before {
+      background:
+        linear-gradient(90deg, rgba(5, 7, 6, 0.58), transparent 18%, transparent 78%, rgba(5, 7, 6, 0.38)),
+        radial-gradient(circle at 64% 48%, transparent 0 48%, rgba(5, 7, 6, 0.42) 82%);
+      box-shadow: inset 0 0 110px rgba(2, 3, 4, 0.74);
+    }
+
+    .video-panel::after {
+      opacity: 0.13;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.92' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.32'/%3E%3C/svg%3E");
+      mix-blend-mode: screen;
+    }
+
+    @media (max-width: 860px) {
+      .materialidad-shell {
+        display: flex;
+        min-height: 100dvh;
+        flex-direction: column;
+      }
+
+      .text-panel {
+        min-height: 54dvh;
+        border-right: 0;
+        border-bottom: 1px solid rgba(247, 248, 251, 0.14);
+      }
+
+      .video-panel {
+        min-height: 46dvh;
+      }
+
+      .video-stage {
+        width: max(100%, calc(46dvh * 16 / 9));
+        height: max(100%, calc(100vw * 9 / 16));
+      }
+    }
+  </style>
+  <script src="../../assets/scripts/maintenance-gate.js" defer></script>
+</head>
+<body>
+  <main class="materialidad-shell">
+    <section class="text-panel" aria-labelledby="materialidad-title">
+      <h1 id="materialidad-title">Materialidad</h1>
+      <div class="copy">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in odio et velit gravida viverra. Curabitur consectetur quam id felis dapibus, non interdum metus lacinia.</p>
+        <p>Vivamus dignissim magna a scelerisque cursus. Aliquam in lorem non massa condimentum ultrices sit amet varius sem. Pellentesque quis libero tincidunt, faucibus felis egestas, viverra lectus.</p>
+        <p>Nunc malesuada nisi risus, sed accumsan ligula tempor sit amet. In hac habitasse platea dictumst. Morbi tempor efficitur metus id vulputate.</p>
+      </div>
+      <a href="../archivo/" class="back-link">&lt; Volver al Archivo</a>
+    </section>
+
+    <section class="video-panel" aria-label="Video de Materialidad en bucle">
+      <div class="video-stage">
+        <iframe
+          title="Materialidad"
+          src="https://player.vimeo.com/video/498923061?background=1&autoplay=1&loop=1&muted=1&autopause=0&controls=0&dnt=1"
+          allow="autoplay; encrypted-media; picture-in-picture"
+          referrerpolicy="strict-origin-when-cross-origin"
+          tabindex="-1"
+        ></iframe>
+      </div>
+    </section>
+  </main>
+
+  <!-- Cloudflare Web Analytics -->
+  <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "4ae4ff73465943b788027815f6676ab3"}'></script>
+  <!-- End Cloudflare Web Analytics -->
+  <script src="/assets/scripts/traffic-tracker.js" defer></script>
+</body>
+</html>
