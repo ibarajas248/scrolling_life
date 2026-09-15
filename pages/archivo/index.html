@@ -29,14 +29,6 @@
       letter-spacing: 0;
       text-transform: uppercase;
     }
-    .author-meta {
-      font-family: 'Share Tech Mono', monospace;
-      color: #a8b0c0;
-      margin-bottom: 1.75rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
     p {
       margin-bottom: 1.5rem;
       font-size: 1.1rem;
@@ -64,7 +56,7 @@
       grid-template-rows: repeat(8, 64px);
       gap: 0;
       min-height: 560px;
-      margin-top: 3.5rem;
+      margin-top: 2rem;
       border: 1px solid rgba(216, 231, 239, 0.2);
       background:
         radial-gradient(circle at 18% 31%, rgba(158, 255, 113, 0.16), transparent 20%),
@@ -146,34 +138,6 @@
       stroke: rgba(216, 231, 239, 0.28);
       stroke-width: 1;
     }
-    .graph-label {
-      position: absolute;
-      left: 24px;
-      top: 18px;
-      font-family: 'Share Tech Mono', monospace;
-      color: rgba(216, 231, 239, 0.72);
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      z-index: 3;
-    }
-    .graph-status {
-      position: absolute;
-      right: 18px;
-      bottom: 18px;
-      max-width: min(280px, calc(100% - 36px));
-      border: 1px solid rgba(158, 255, 113, 0.58);
-      padding: 14px 16px;
-      font-family: 'Share Tech Mono', monospace;
-      color: rgba(216, 231, 239, 0.86);
-      background: rgba(2, 3, 4, 0.82);
-      z-index: 3;
-    }
-    .graph-status strong {
-      display: block;
-      color: #9eff71;
-      font-weight: 400;
-      margin-bottom: 0.25rem;
-    }
     .archive-node {
       --node-color: #9eff71;
       position: relative;
@@ -221,19 +185,9 @@
       transform: translateY(-4px);
       outline: none;
     }
-    .archive-node__code {
-      color: var(--node-color);
-      font-size: 0.8rem;
-      margin-bottom: 0.9rem;
-    }
     .archive-node__title {
       font-size: clamp(1rem, 1.8vw, 1.35rem);
       line-height: 1.15;
-    }
-    .archive-node__meta {
-      margin-top: 1rem;
-      color: rgba(216, 231, 239, 0.58);
-      font-size: 0.78rem;
     }
     .archive-node--a {
       --col: 2 / span 3;
@@ -296,10 +250,6 @@
       .archive-home {
         left: 18px;
       }
-      .graph-status {
-        left: 18px;
-        right: 18px;
-      }
     }
   </style>
   <script src="../../assets/scripts/maintenance-gate.js" defer></script>
@@ -307,13 +257,8 @@
 <body>
   <div class="content-container">
     <h1>Archivo</h1>
-    <div class="author-meta">
-      <span>Texto Curatorial</span>
-      <span>Año: 2026</span>
-    </div>
 
     <div class="archive-subpages" aria-label="Grafo navegable del archivo">
-      <span class="graph-label">Nodos / paginas conectadas</span>
       <svg class="circuit-traces" viewBox="0 0 1200 560" preserveAspectRatio="none" aria-hidden="true">
         <path class="circuit-trace circuit-trace--hot" d="M390 168 H470 V238 H596" />
         <path class="circuit-trace" d="M390 196 H438 V308 H290 V380" />
@@ -340,34 +285,20 @@
       </svg>
       <a href="../../index.html" class="back-link archive-home">&lt; Menu principal</a>
       <a href="./inteligencias-colectivas/index.html" class="archive-node archive-node--a">
-        <span class="archive-node__code">NODO 01</span>
         <span class="archive-node__title">Inteligencias Colectivas</span>
-        <span class="archive-node__meta">archivo / texto / artistas</span>
       </a>
       <a href="./precipitacion-critica/" class="archive-node archive-node--b">
-        <span class="archive-node__code">NODO 02</span>
         <span class="archive-node__title">Precipitaci&oacute;n cr&iacute;tica</span>
-        <span class="archive-node__meta">lectura / lluvia / esfera publica</span>
       </a>
       <a href="../scroll-vertical/" class="archive-node archive-node--c">
-        <span class="archive-node__code">NODO 03</span>
         <span class="archive-node__title">Sedimento visual</span>
-        <span class="archive-node__meta">scroll / capas / imagen</span>
       </a>
       <a href="../mundo-gif/" class="archive-node archive-node--e">
-        <span class="archive-node__code">NODO 04</span>
         <span class="archive-node__title">Mundo GIF</span>
-        <span class="archive-node__meta">bucle / imagen / ruido</span>
       </a>
       <a href="../../grafo_3d/" class="archive-node archive-node--d">
-        <span class="archive-node__code">NODO 05</span>
         <span class="archive-node__title">Grafo 3D</span>
-        <span class="archive-node__meta">red / espacio / navegacion</span>
       </a>
-      <div class="graph-status" aria-hidden="true">
-        <strong>ESTADO: OPERATIVO</strong>
-        Cada modulo abre una pagina del archivo.
-      </div>
     </div>
 
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in odio et velit gravida viverra. Curabitur consectetur quam id felis dapibus, non interdum metus lacinia. Vivamus dignissim magna a scelerisque cursus. Aliquam in lorem non massa condimentum ultrices sit amet varius sem. Pellentesque quis libero tincidunt, faucibus felis egestas, viverra lectus. Nunc malesuada nisi risus, sed accumsan ligula tempor sit amet. In hac habitasse platea dictumst. Morbi tempor efficitur metus id vulputate.</p>
