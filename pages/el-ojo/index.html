@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#020304">
+  <title>El ojo que todo lo ve — Scrolling Life</title>
+  <link rel="stylesheet" href="../../assets/fonts/local-fonts.css">
+  <link rel="stylesheet" href="../../assets/vendor/locomotive-scroll.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="../../assets/vendor/locomotive-scroll.min.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="navigation">
+    <a href="../../index.html">← Scrolling Life</a>
+    <nav aria-label="Partes del poema"><a href="#parte-1">01</a><a href="#parte-2">02</a><a href="#parte-3">03</a></nav>
+  </header>
+  <div class="reading-track" aria-hidden="true"><span></span></div>
+  <main data-scroll-container>
+    <section class="opening" data-scroll-section>
+      <div class="opening-meta">CUERPO / MIRADA / VÉRTIGO</div>
+      <div class="eye" aria-hidden="true" data-scroll data-scroll-speed="-1.5"><div class="iris"></div></div>
+      <h1 data-scroll data-scroll-speed="1">El ojo<br>que todo<br><em>lo ve.</em></h1>
+      <div class="opening-bottom"><span>TRES MOVIMIENTOS</span><a href="#parte-1">Desliza para leer ↓</a></div>
+    </section>
+    <section class="movement first" id="parte-1" data-scroll-section aria-labelledby="number-1">
+      <header class="movement-heading"><h2 id="number-1">1.</h2><span aria-hidden="true">01 / 03</span></header>
+      <div class="poem">
+        <p data-scroll>El ojo que todo lo ve<br>y que todo lo sabe<br>tiene más alcance<br>que la mano camuflada<br>de un astrólogo fascinado<br>por el sonido de una moneda.</p>
+        <p data-scroll>Invisible es su tacto<br>y su mirada penetrante<br>volatín su conciencia,<br>mantiene vigía noche y día<br>inútil su uso,</p>
+        <p data-scroll>el cansancio llega<br>hasta en nuestras entrañas<br>oxidado su valor<br>pero lo intentamos pulir así nos haga trizas, restos y despojos</p>
+        <p data-scroll>e imperioso<br>es su asfixiante abrazo<br>que solo se abre al contemplar<br>un cielo estrellado,<br>un rio desbordado,<br>una sonrisa solidaria<br>y quizás…<br>una lágrima extraviada.</p>
+      </div>
+    </section>
+    <section class="movement second" id="parte-2" data-scroll-section aria-labelledby="number-2">
+      <header class="movement-heading"><h2 id="number-2">2.</h2><span aria-hidden="true">02 / 03</span></header>
+      <div class="poem">
+        <p data-scroll>La terapia funciona<br>y sus píldoras son amables:<br>las bombas estallan<br>como en un lejano letargo,<br>los misiles llegan a su destino<br>y se ven entre radiantes y radioactivos.</p>
+        <p data-scroll>Los árboles se quiebran,<br>los animales huyen y sufren,<br>la muerte nos rodea<br>y el poderoso polvoroso azaroso e indecoroso<br>está cada vez más glotón<br>y cada vez más hampón.</p>
+        <p data-scroll>Se ríe y nos saluda<br>con su mano firme<br>señalando al mugroso cielo.<br>Todo se ve lento y de película,<br>un escenario magistral<br>dirigido por los grandes astrólogos de la moneda…</p>
+        <p data-scroll>Parece que la terapia funciona<br>Una píldora para cada día,<br>Una… día tras día,<br>una existencia enloquecida.</p>
+      </div>
+    </section>
+    <section class="movement third" id="parte-3" data-scroll-section aria-labelledby="number-3">
+      <header class="movement-heading"><h2 id="number-3">3.</h2><span aria-hidden="true">03 / 03</span></header>
+      <div class="poem">
+        <p data-scroll>Saltamos al vacío,<br>un vértigo infinito,<br>una cómoda sensación<br>de bajar</p>
+        <p class="descent" data-scroll>por los cielos,<br>por constantes deshielos,<br>por bombardeos,<br>por suculentos fideos,<br>por plantas podadas,<br>por suelos cementados</p>
+        <p class="question" data-scroll>¿Tropezamos con la ilusión del infinito?<br>O…<br>¿Intentamos evadir nuestro destino finito?</p>
+      </div>
+      <footer><span aria-hidden="true">.</span><a href="#top" id="return-top">Volver al inicio ↑</a></footer>
+    </section>
+  </main>
+</body>
+</html>

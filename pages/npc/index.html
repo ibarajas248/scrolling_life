@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NPC - Scrolling Life</title>
+    <title>NP,C — Juan Osorio — Scrolling Life</title>
+    <link rel="stylesheet" href="../../assets/fonts/local-fonts.css" />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <link rel="preconnect" href="https://www.tiktok.com" crossorigin />
     <link rel="preconnect" href="https://www.tiktokcdn.com" crossorigin />
@@ -69,10 +70,43 @@
         width: 100% !important;
         height: 100% !important;
       }
+      body { color: #d8e7ef; font-family: 'VT323', monospace; }
+      .curatorial {
+        width: 55%;
+        height: 100dvh;
+        overflow-y: auto;
+        padding: clamp(24px, 3vw, 48px);
+        background-color: #020304;
+        background-image:
+          linear-gradient(rgba(158, 255, 113, 0.025) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(158, 255, 113, 0.025) 1px, transparent 1px);
+        background-size: 48px 48px;
+      }
+      .curatorial h1 { color: #9eff71; font: bold clamp(44px, 5vw, 68px)/1.1 'Disket Mono', monospace; margin: 36px 0 16px; }
+      .curatorial .author { color: #a8b0c0; margin-bottom: 40px; font-family: 'Share Tech Mono', monospace; font-size: 19px; }
+      .curatorial .author strong { color: inherit; }
+      .curatorial p { max-width: 64ch; font-size: clamp(23px, 1.8vw, 27px); line-height: 1.5; letter-spacing: .025em; margin-bottom: 32px; }
+      .curatorial strong { font-weight: 700; color: #f7f8fb; }
+      .curatorial a { color: #9eff71; text-decoration: none; font: 12px 'Disket Mono', monospace; }
+      .curatorial a:hover { text-decoration: underline; }
+      .curatorial a:focus-visible { outline: 1px solid #9eff71; outline-offset: 6px; }
+      #phone-shell { left: 55%; overflow: hidden; }
+      @media (max-width: 900px) {
+        html, body { height: auto; overflow: auto; }
+        .curatorial { width: 100%; height: auto; overflow: visible; padding: 32px 24px; }
+        #phone-shell { position: relative; inset: auto; width: 100%; height: 90svh; }
+      }
     </style>
     <script type="module" crossorigin src="./assets/index-runtime-fix.js"></script>
   </head>
   <body>
-
+    <main class="curatorial">
+      <a href="../cuerpo/">← Volver a Cuerpo</a>
+      <h1>NP,C</h1>
+      <p class="author"><strong>Juan Osorio</strong></p>
+      <p><strong>La obra explora el scrolling como una experiencia de fricción entre realidad y representación.</strong> En el desplazamiento constante por imágenes, discursos y estímulos, el sujeto se enfrenta a un flujo ininterrumpido de interpretaciones del mundo que pone en tensión aquello que existe y las formas mediante las cuales decidimos qué creer.</p>
+      <p>La velocidad y saturación de este flujo reducen el espacio para la pausa y el cuestionamiento, haciendo que la experiencia pueda transformarse en una respuesta cada vez más automática. El <strong>NPC</strong> aparece entonces como metáfora de un sujeto cuya fricción con la realidad representada se debilita: ya no interrumpe el flujo para interpretarlo, sino que comienza a reproducir sus lógicas.</p>
+      <p>La obra propone detenerse en ese punto de tensión y preguntarse <strong>qué sucede con nuestra capacidad de discernir cuando la realidad llega a nosotros como un flujo permanente de representaciones</strong>.</p>
+    </main>
   </body>
 </html>

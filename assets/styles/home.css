@@ -4120,6 +4120,43 @@ p {
   }
 }
 
+/* Las ilustraciones ocupan una fila propia, entre el título y el texto. */
+.win98-desktop :is(#winCuerpo, #winInfinito, #winRuido, #winArchivo) .concept-window-body > img {
+  position: relative;
+  inset: auto;
+  z-index: 1;
+  order: 1;
+  display: block;
+  flex: 0 0 auto;
+  width: 100%;
+  height: 170px;
+  margin: 8px 0 18px;
+  padding: 10px;
+  object-fit: contain;
+  opacity: 1;
+  filter: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  background: #ffffff;
+  border: 1px solid #a0a0a0;
+  box-shadow: inset 1px 1px #808080, inset -1px -1px #ffffff;
+}
+
+.win98-desktop .concept-window-body > h3 { order: 0; }
+.win98-desktop .concept-window-body > p { order: 2; }
+.win98-desktop .concept-window-body > .concept-card-link { order: 3; }
+
+@media (min-width: 1121px) {
+  .win98-desktop-container, .win98-desktop { min-height: 1200px; }
+  #winArchivo, #winPausa { top: 680px; }
+}
+
+@media (min-width: 721px) and (max-width: 1120px) {
+  .win98-desktop-container { height: 1640px; }
+  #winRuido, #winArchivo { top: 690px; }
+  #winPausa { top: 1300px; }
+}
+
 @media (max-width: 430px) {
   .radio-float {
     top: 64px;
