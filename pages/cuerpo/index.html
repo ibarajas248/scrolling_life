@@ -11,6 +11,7 @@
   />
   <link rel="stylesheet" href="../../assets/fonts/local-fonts.css" />
   <link rel="stylesheet" href="../../assets/styles/home.css" />
+  <script src="./poem-console.js?v=20260917-3" defer></script>
   
   <style>
     /* Coherencia estilística y de color con infinito e identidad de Scrolling Life */
@@ -57,7 +58,45 @@
     .content-container {
       position: relative;
       width: 100%;
+      min-width: 0;
+      container-type: inline-size;
     }
+
+    .cuerpo-poem {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      background: none;
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: clamp(11px, 3.4cqw, 17px);
+      line-height: 1.65;
+      letter-spacing: 0;
+      white-space: pre;
+    }
+
+    .poem-pending { visibility: hidden; }
+    .poem-typing::after {
+      content: '▋';
+      display: inline-block;
+      width: 0;
+      overflow: visible;
+      color: var(--green);
+      animation: poem-cursor 1s steps(1) infinite;
+    }
+    .poem-skip {
+      display: block;
+      margin: 1rem 0;
+      padding: 6px 0;
+      border: 0;
+      background: none;
+      color: var(--muted);
+      font: 13px var(--font-mono);
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      cursor: pointer;
+    }
+    @keyframes poem-cursor { 50% { opacity: 0; } }
 
     .title-perch {
       position: relative;
@@ -667,18 +706,173 @@
           <span class="butterfly-body" aria-hidden="true"></span>
         </a>
       </div>
-      <div class="author-meta">
-        <span>Texto Curatorial</span>
-        <span>A&ntilde;o: 2026</span>
-      </div>
 
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat nisl ut dapibus. Mauris iaculis porttitor posuere.</p>
-      
-      <p>Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque faucibus vestibulum.</p>
-      
-      <p>Nulla at nulla justo, eget luctus tortor. Nulla facilisi. Duis aliquet egestas purus in blandit. Curabitur vulputate, ligula lacinia scelerisque tempor, lacus lacus ornare ante, ac egestas est urna sit amet arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+      <pre class="cuerpo-poem">la pantalla empieza
+un poco antes
+del vidrio
 
-      <p>Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing, commodo quis, gravida id, est. Sed lectus. Praesent elementum hendrerit tortor. Sed semper lorem at felis. Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl.</p>
+en la inclinaci&#243;n del cuello
+en la mano que se adelanta
+en el dedo
+que ya sabe d&#243;nde ir
+
+
+
+                                  cuerpo
+                              como interfaz
+
+
+
+por aqu&#237; entra la luz
+por aqu&#237; sale una orden
+
+un roce
+                  abre
+
+una presi&#243;n
+                  acepta
+
+un desplazamiento
+                  hace desaparecer
+                  el cuerpo de alguien m&#225;s
+
+
+
+
+entre la piel y el p&#237;xel
+hay una zona de contacto
+
+ah&#237;
+donde tocar
+todav&#237;a significa
+dos cosas distintas.
+
+
+
+
+deslizo
+
+       deslizo
+
+              deslizo
+
+
+el pulgar guarda
+recorridos
+que no recuerdo
+
+
+
+                                  cuerpo
+                              como archivo
+
+
+
+se archiva en la mu&#241;eca
+se archiva en los p&#225;rpados
+se archiva en la distancia
+entre la cabeza
+y los hombros
+
+
+cada repetici&#243;n
+deja preparada
+la siguiente
+
+
+                  volver
+                  sin recordar
+
+                  repetir
+                  sin volver
+
+
+
+
+hay im&#225;genes que olvid&#233;
+y posturas
+que todav&#237;a conservo
+
+una forma de sentarme
+una tensi&#243;n en la mand&#237;bula
+la mano buscando el tel&#233;fono
+en un bolsillo vac&#237;o
+
+
+
+
+                                  cuerpo
+                           como dispositivo
+
+
+
+una postura
+sostenida durante horas
+tambi&#233;n es una instrucci&#243;n
+
+
+mirar aqu&#237;
+
+                   apoyar el dedo
+
+                                     continuar
+
+
+la pantalla recibe
+la parte de mi gesto
+que puede convertirse
+en una orden
+
+
+el temblor queda fuera
+
+el cansancio
+tambi&#233;n
+
+
+
+
+                 piel
+                 pupila
+                 pulso
+
+           superficie de contacto
+
+           memoria de la repetici&#243;n
+
+           mecanismo que aprende
+
+
+
+
+&#191;d&#243;nde termina el dispositivo?
+
+&#191;en el borde del vidrio?
+
+&#191;en la mano?
+
+&#191;en el gesto que vuelve
+cuando ya no hay pantalla?
+
+
+
+
+
+
+
+
+retiro el tel&#233;fono
+
+
+
+
+
+
+
+
+la mano permanece
+un momento
+en la misma posici&#243;n.</pre>
 
       <!-- Acciones y Botones con la misma coherencia que Infinito -->
       <div class="infinite-actions">
