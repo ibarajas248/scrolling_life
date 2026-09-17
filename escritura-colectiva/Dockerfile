@@ -8,6 +8,9 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
 COPY app.py /app/app.py
+COPY input_store.py /app/input_store.py
+COPY image_store.py /app/image_store.py
+RUN pip install --no-cache-dir Pillow==11.3.0
 COPY public /app/public
 
 RUN adduser -D appuser \

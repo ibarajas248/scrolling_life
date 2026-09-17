@@ -2,6 +2,9 @@
 
 Pieza de Carmen y Javi, incorporada en Scrolling Life > Ruido.
 Ruta: `/pages/aaaaaa/`. HTML, CSS y JavaScript estaticos, sin compilacion.
+La ruta abre una presentacion con el texto de la pieza y los creditos.
+"Entrar a la pieza" abre `pieza.html`, donde comienza la experiencia;
+la presentacion no carga ventanas, sonidos ni temporizadores de la obra.
 
 ## Material original
 
@@ -20,7 +23,9 @@ solo sus enlaces HTTPS forman parte de la pieza. No se ejecuta contenido del ZIP
   aparecer y al pulsarla, despues del primer gesto que activa el audio.
   Se superponen desde C3, sin avanzar ni saltarse los pasos de los clusters.
 - Seis URL originales, al final de sus recorridos. Se muestran en una ventana
-  con enlace real; solo se abre otra pestana cuando se pulsa "Abrir enlace".
+  con enlace real, sin incrustar el sitio externo. Al aparecer el paso del enlace,
+  se abre automaticamente otra pestana desde el clic que lo revela. "Abrir enlace"
+  queda disponible si el navegador bloquea la apertura; "Continuar" sigue el recorrido.
 - FINAL: pelicula original de Notepad (39,9 s), convertida de MOV/HEVC a
   MP4/H.264 con el audio original para compatibilidad web. El MOV se conserva.
 
@@ -33,8 +38,10 @@ El mismo encadenamiento se aplica hasta C8. Cada nuevo paso se coloca delante
 del spam para que el resultado del clic sea visible.
 
 Desde C3, las ventanas aleatorias aceleran con el tiempo y las interacciones.
-Cerrar o pulsar provoca nuevas apariciones. Las ventanas se arrastran,
-minimizan y maximizan; el menu Opciones
+Cerrar o pulsar provoca nuevas apariciones.
+Cada tres ventanas aleatorias nuevas, la ventana del recorrido fijo vuelve
+al frente (tambien si estaba minimizada), sin avanzar su paso.
+Las ventanas se arrastran, minimizan y maximizan; el menu Opciones
 de la pagina permite recuperarlas. Los botones dibujados en los assets forman
 parte de una superficie interactiva que avanza el recorrido.
 

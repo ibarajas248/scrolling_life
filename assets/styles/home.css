@@ -4120,8 +4120,30 @@ p {
   }
 }
 
-/* Las ilustraciones ocupan una fila propia, entre el título y el texto. */
-.win98-desktop :is(#winCuerpo, #winInfinito, #winRuido, #winArchivo) .concept-window-body > img {
+/* Texto a la izquierda e ilustraciones transparentes a la derecha. */
+.win98-desktop .concept-window-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  grid-template-rows: auto 1fr auto;
+  gap: 12px;
+  padding: 16px;
+}
+
+.win98-desktop .concept-window-body > :is(h3, p, .concept-card-link) {
+  grid-column: 1;
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.win98-desktop .concept-window-body > h3 { grid-row: 1; }
+.win98-desktop .concept-window-body > p { grid-row: 2; }
+.win98-desktop .concept-window-body > .concept-card-link { grid-row: 3; justify-self: start; }
+
+.win98-desktop :is(#winCuerpo, #winInfinito, #winRuido, #winArchivo, #winPausa) .concept-window-body > :is(img, svg) {
+  grid-column: 2;
+  grid-row: 1 / 4;
+  align-self: center;
   position: relative;
   inset: auto;
   z-index: 1;
@@ -4130,16 +4152,16 @@ p {
   flex: 0 0 auto;
   width: 100%;
   height: 170px;
-  margin: 8px 0 18px;
-  padding: 10px;
+  margin: 0;
+  padding: 0;
   object-fit: contain;
   opacity: 1;
   filter: none;
   -webkit-mask-image: none;
   mask-image: none;
-  background: #ffffff;
-  border: 1px solid #a0a0a0;
-  box-shadow: inset 1px 1px #808080, inset -1px -1px #ffffff;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
 }
 
 .win98-desktop .concept-window-body > h3 { order: 0; }

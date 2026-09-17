@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg?v=20260917" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ASCII - Scrolling Life</title>
@@ -59,15 +60,6 @@
       letter-spacing: -0.02em;
     }
 
-    .author-meta {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      color: var(--muted);
-      font-family: var(--font-mono);
-      font-size: 0.95rem;
-    }
-
     /* Scroll HUD / Barra de Progreso del Descenso */
     .ascii-progress-bar {
       position: fixed;
@@ -78,24 +70,6 @@
       width: 0%;
       z-index: 1000;
       transition: width 0.1s ease-out;
-    }
-
-    .ascii-depth-badge {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      background: rgba(12, 15, 20, 0.92);
-      border: 1px solid rgba(231, 235, 245, 0.18);
-      border-radius: 4px;
-      padding: 6px 14px;
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      color: var(--green);
-      letter-spacing: 0.08em;
-      z-index: 100;
-      backdrop-filter: blur(8px);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
-      user-select: none;
     }
 
     /* Lienzo ASCII con Monospace Perfecto */
@@ -200,10 +174,6 @@
         font-size: 0.76rem;
         padding: 1rem 0;
       }
-      .ascii-depth-badge {
-        bottom: 16px;
-        right: 16px;
-      }
     }
   </style>
   <script src="../../../assets/scripts/maintenance-gate.js" defer></script>
@@ -212,29 +182,10 @@
 
   <!-- Barra de progreso del scroll -->
   <div class="ascii-progress-bar" id="progressBar" aria-hidden="true"></div>
-  <div class="ascii-depth-badge" id="depthBadge" aria-live="polite">DESCENSO: 0%</div>
 
   <div class="ascii-container">
-    <header>
-      <h1>ASCII</h1>
-      <div class="author-meta">
-        <span>Poema Visual // Descenso en Scroll</span>
-        <span>A&ntilde;o: 2026</span>
-      </div>
-    </header>
-
     <!-- Poema en Scroll ASCII Enriquecido -->
     <pre class="ascii-canvas">
-<span class="ascii-art-graphic">  ___________________________________________________________
- /                                                           \
-|  ___  ___ ___  ___  _    _    ___ _  _  ___   _    ___ ___  |
-| / __|/ __| _ \/ _ \| |  | |  |_ _| \| |/ __| | |  |_ _| __| |
-| \__ \ (__|   / (_) | |__| |__ | || .` | (_ | | |__ | || _|  |
-| |___/\___|_|_\\___/|____|____|___|_|\_|\___| |____|___|_|    |
- \___________________________________________________________/
-                 [ FLUIDO DIGITAL // ASCII ]</span>
-
-
                      aparece
                 aparece
            aparece
@@ -909,9 +860,6 @@ conciencia buffering...
     <!-- Botones de Navegación -->
     <div class="infinite-actions">
       <a href="../" class="back-link">&lt; Volver a Pausa</a>
-      <a href="../in-case-you-come-back/" class="back-link node-direct-link">In Case You Come Back</a>
-      <a href="../../infinito/" class="back-link node-direct-link">Abrir Infinito</a>
-      <a href="../../../index.html" class="back-link">&lt; Men&uacute; principal</a>
     </div>
   </div>
 
@@ -920,7 +868,6 @@ conciencia buffering...
     (() => {
       'use strict';
       const progressBar = document.getElementById('progressBar');
-      const depthBadge = document.getElementById('depthBadge');
 
       const onScroll = () => {
         const scrollTop = window.scrollY || document.documentElement.scrollTop;
@@ -928,7 +875,6 @@ conciencia buffering...
         const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
 
         if (progressBar) progressBar.style.width = `${progress}%`;
-        if (depthBadge) depthBadge.textContent = `DESCENSO: ${Math.round(progress)}%`;
       };
 
       window.addEventListener('scroll', onScroll, { passive: true });

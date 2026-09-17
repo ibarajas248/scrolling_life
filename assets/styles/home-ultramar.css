@@ -1,0 +1,89 @@
+/* Selected proposal 04: ultramar windows, scoped to the home desktop. */
+.win98-desktop.ultramar-desktop {
+  min-height: 1150px;
+}
+.win98-desktop-container:has(.ultramar-desktop) { height: auto; min-height: 1150px; }
+.ultramar-desktop.win98-desktop .concept-card {
+  width: calc((100% - 96px) / 3);
+  max-width: none;
+  padding: 0;
+  border: 1px solid #eef4e9;
+  background: #ebf0e8;
+  color: #081588;
+  box-shadow: 8px 8px 0 #03064f !important;
+  transform: none;
+}
+.ultramar-desktop #winCuerpo { top: 24px; left: 24px; right: auto; }
+.ultramar-desktop #winInfinito { top: 24px; left: calc((100% - 96px) / 3 + 48px); right: auto; }
+.ultramar-desktop #winRuido { top: 24px; left: calc((100% - 96px) / 3 * 2 + 72px); right: auto; }
+.ultramar-desktop #winArchivo { top: 585px; left: calc((100% - 96px) / 6 + 36px); right: auto; }
+.ultramar-desktop #winPausa { top: 585px; left: calc((100% - 96px) / 2 + 60px); right: auto; }
+.ultramar-desktop.win98-desktop .win-titlebar {
+  height: 38px;
+  min-height: 38px;
+  margin: 0;
+  padding: 0 10px;
+  border: 0;
+  border-bottom: 1px solid #eef4e9;
+  background: #0d17b5;
+  color: #ebf0e8;
+  font: 12px 'Share Tech Mono', monospace;
+  letter-spacing: .02em;
+  text-shadow: none;
+}
+.ultramar-desktop .win-titlebar > span:first-child { min-width: 0; padding-left: 24px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ultramar-desktop .win-titlebar > span:first-child::before { width: 18px; height: 18px; background: url('/assets/favicon.svg?v=20260917') center / contain no-repeat; border: 0; box-shadow: none; }
+.ultramar-desktop .win-controls { flex-shrink: 0; }
+.ultramar-desktop .win-controls span { width: 17px; height: 17px; background: transparent; border: 1px solid #9da7fa; box-shadow: none; color: #ebf0e8; }
+.ultramar-desktop .win-controls span::before { color: #ebf0e8; }
+.ultramar-desktop.win98-desktop .concept-window-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 26px;
+  margin: 0;
+  min-height: 448px;
+  background: #ebf0e8;
+  border: 0;
+  box-shadow: none;
+  overflow: hidden;
+}
+.ultramar-desktop .concept-window-body::before,
+.ultramar-desktop .concept-window-body::after { content: none; }
+.ultramar-desktop .window-category { order: 0; color: #081588; font: 12px 'Share Tech Mono', monospace; letter-spacing: .12em; text-transform: uppercase; }
+.ultramar-desktop.win98-desktop .concept-window-body > h3 { order: 1; margin: 8px 0 14px; color: #081588; font: 700 41px/1.05 'Bricolage Grotesque', sans-serif; letter-spacing: -.06em; text-shadow: none; }
+.ultramar-desktop .window-art { order: 2; position: relative; height: 126px; flex: 0 0 126px; display: flex; align-items: center; justify-content: flex-end; margin: 0 0 20px; }
+.ultramar-desktop .window-art::before { content: attr(data-number); position: absolute; left: 0; bottom: -8px; font: 110px/1 'Instrument Serif', Georgia, serif; color: #1529bf22; }
+#win98Desktop.ultramar-desktop .concept-card .window-art > :is(img, svg) {
+  position: relative; inset: auto; display: block; width: 60%; height: 120px; max-height: 120px;
+  margin: 0; padding: 0; object-fit: contain; opacity: 1; filter: none; transform: none;
+  mask-image: none; -webkit-mask-image: none; border: 0; background: transparent;
+  box-shadow: none; pointer-events: none; image-rendering: pixelated;
+}
+.ultramar-desktop.win98-desktop .concept-window-body > p { order: 3; margin: 0 0 24px; min-height: 100px; max-width: 29ch; color: #182443; font: 16px/1.55 'Bricolage Grotesque', sans-serif !important; letter-spacing: 0; text-shadow: none; white-space: normal; overflow-wrap: normal; }
+.ultramar-desktop.win98-desktop .concept-window-body > .concept-card-link {
+  order: 4; display: flex; align-items: center; justify-content: space-between; align-self: stretch;
+  margin: auto -26px -26px; padding: 17px 26px; border: 0 !important; border-top: 1px solid #081588 !important;
+  border-radius: 0; background: #b3ff57 !important; color: #081588 !important; box-shadow: none !important;
+  font: 700 16px 'Share Tech Mono', monospace; letter-spacing: 0; text-decoration: none; text-transform: none;
+}
+.ultramar-desktop .concept-card-link::after { content: '\2197'; position: static; color: inherit; }
+.ultramar-desktop.win98-desktop .concept-card-link:is(:hover, :focus) { background: #95ed30 !important; color: #081588 !important; transform: none; }
+.ultramar-desktop.win98-desktop .concept-card-link:active { padding: 17px 26px; box-shadow: none !important; }
+.ultramar-desktop .concept-card-link:focus-visible { outline: 3px solid #081588; outline-offset: -5px; }
+.ultramar-desktop .window-status { padding: 8px 12px; background: #0d17b5; color: #ccd4ff; font: 11px 'Share Tech Mono', monospace; letter-spacing: .08em; }
+@media (min-width: 721px) and (max-width: 1120px) {
+  .win98-desktop.ultramar-desktop, .win98-desktop-container:has(.ultramar-desktop) { min-height: 1690px; height: auto; }
+  .ultramar-desktop.win98-desktop .concept-card { width: calc((100% - 72px) / 2); }
+  .ultramar-desktop #winInfinito { left: calc(50% + 12px); }
+  .ultramar-desktop #winRuido { top: 575px; left: 24px; }
+  .ultramar-desktop #winArchivo { top: 575px; left: calc(50% + 12px); }
+  .ultramar-desktop #winPausa { top: 1126px; left: calc(25% + 18px); }
+}
+@media (max-width: 720px) {
+  .win98-desktop.ultramar-desktop, .win98-desktop-container:has(.ultramar-desktop) { height: auto; min-height: 0; }
+  .win98-desktop.ultramar-desktop { display: grid; grid-template-columns: minmax(0,1fr); gap: 28px; padding: 12px; }
+  .ultramar-desktop.win98-desktop .concept-card { position: relative !important; inset: auto !important; width: 100%; max-width: 410px; justify-self: center; }
+  .ultramar-desktop.win98-desktop .concept-window-body { min-height: 0; }
+  .ultramar-desktop.win98-desktop .concept-window-body > p { min-height: 0; }
+}

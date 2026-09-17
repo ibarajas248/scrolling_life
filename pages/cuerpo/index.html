@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg?v=20260917" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cuerpo - Scrolling Life</title>
@@ -552,6 +553,13 @@
       left: 32%;
     }
 
+    #nodeJuliana {
+      top: 18%;
+      left: 26%;
+      width: 210px;
+      max-width: 42%;
+    }
+
     /* -------------------------------------------------------------------------
        Responsive
        ------------------------------------------------------------------------- */
@@ -644,6 +652,8 @@
     }
   </style>
   <script src="../../assets/scripts/maintenance-gate.js" defer></script>
+  <link rel="stylesheet" href="/assets/styles/home-terminal-menu.css?v=20260917-2" />
+  <script src="/assets/scripts/home-terminal-menu.js?v=20260917-2" defer></script>
 </head>
 <body>
 
@@ -653,7 +663,7 @@
     <div class="content-container">
       <div class="title-perch">
         <h1>Cuerpo</h1>
-        <a class="butterfly-link" href="../ochentas/index.html" aria-label="Ir a Ochentas">
+        <a class="butterfly-link" href="../ochentas/" aria-label="Ir a Ochentas">
           <span class="butterfly-body" aria-hidden="true"></span>
         </a>
       </div>
@@ -672,7 +682,7 @@
 
       <!-- Acciones y Botones con la misma coherencia que Infinito -->
       <div class="infinite-actions">
-        <a href="../../index.html" class="back-link">&lt; Volver al men&uacute; principal</a>
+        <a href="../../" class="back-link">&lt; Volver al men&uacute; principal</a>
       </div>
     </div>
 
@@ -700,6 +710,7 @@
           <line id="edgeNpc" class="graph-edge edge-coral" />
           <line id="edgeMateria" class="graph-edge edge-teal" />
           <line id="edgeApuntesColor" class="graph-edge edge-green" />
+          <line id="edgeJuliana" class="graph-edge edge-teal" />
         </svg>
 
         <!-- Nodos Interactivos -->
@@ -737,7 +748,6 @@
 
             <div class="node-meta">
               <span class="node-title">Materia Inestable</span>
-              <span class="node-caption">fantasmagorías</span>
             </div>
 
           </a>
@@ -745,7 +755,13 @@
           <a class="node-item satellite-node satellite-game" id="nodeApuntesColor" href="../video-texto/" data-edge="edgeApuntesColor">
             <div class="node-meta">
               <span class="node-title">Apuntes de color</span>
-              <span class="node-caption">Iván Barajas · Video</span>
+            </div>
+          </a>
+
+          <a class="node-item satellite-node satellite-materia" id="nodeJuliana" href="../../contacto-command/" data-edge="edgeJuliana">
+            <div class="node-meta">
+              <span class="node-title">contacto.<wbr>command</span>
+              <span class="node-caption">Juliana Castro Duperly</span>
             </div>
           </a>
 
@@ -770,7 +786,8 @@
         nodeGameScroll: document.getElementById('edgeGameScroll'),
         nodeNpc: document.getElementById('edgeNpc'),
         nodeMateria: document.getElementById('edgeMateria'),
-        nodeApuntesColor: document.getElementById('edgeApuntesColor')
+        nodeApuntesColor: document.getElementById('edgeApuntesColor'),
+        nodeJuliana: document.getElementById('edgeJuliana')
       };
 
       const updateEdgeLines = () => {

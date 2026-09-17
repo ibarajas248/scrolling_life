@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg?v=20260917" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ruido</title>
@@ -22,27 +23,6 @@
       max-width: 1040px;
       margin: 0 auto;
     }
-    h1 {
-      font-family: 'Disket Mono', monospace;
-      font-size: 3rem;
-      margin-bottom: 0.5rem;
-      color: #9eff71;
-      text-shadow: 3px 0 0 rgba(0, 229, 255, 0.28), 0 0 22px rgba(158, 255, 113, 0.18);
-    }
-    .author-meta {
-      font-family: 'Share Tech Mono', monospace;
-      color: #a8b0c0;
-      margin-bottom: 2rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-    p {
-      max-width: 820px;
-      margin-bottom: 1.5rem;
-      font-size: 1.1rem;
-      color: #d8e7ef;
-    }
     .back-link {
       display: inline-block;
       margin-top: 2rem;
@@ -57,349 +37,45 @@
     .back-link:hover {
       background: rgba(238, 125, 89, 0.2);
     }
-    .noise-graph {
-      position: relative;
-      height: 560px;
-      margin-top: 3.25rem;
-      font-family: 'Share Tech Mono', monospace;
-      isolation: isolate;
-    }
-
-    .noise-graph::before {
-      content: '';
-      position: absolute;
-      inset: 8% 5%;
-      z-index: 0;
-      border-radius: 50%;
-      background: radial-gradient(ellipse, rgba(158, 255, 113, 0.08), transparent 62%);
-      pointer-events: none;
-    }
-
-    .noise-lines {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      width: 100%;
-      height: 100%;
-      overflow: visible;
-      pointer-events: none;
-    }
-
-    .noise-lines .orbit,
-    .noise-lines .trace,
-    .noise-lines .branch {
-      fill: none;
-      vector-effect: non-scaling-stroke;
-    }
-
-    .noise-lines .orbit {
-      stroke: rgba(158, 255, 113, 0.16);
-      stroke-dasharray: 3 9;
-    }
-
-    .noise-lines .branch {
-      stroke: rgba(168, 176, 192, 0.22);
-      stroke-dasharray: 2 7;
-    }
-
-    .noise-lines .trace {
-      stroke: rgba(158, 255, 113, 0.7);
-      stroke-width: 1.2;
-      stroke-dasharray: 7 12;
-      animation: signal-flow 1.75s linear infinite;
-    }
-
-    .noise-lines .trace-cyan { stroke: rgba(0, 229, 255, 0.75); }
-    .noise-lines .trace-pink { stroke: rgba(255, 121, 188, 0.75); }
-
-    .noise-hub {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      z-index: 3;
-      display: grid;
-      width: 126px;
-      height: 126px;
-      place-content: center;
-      transform: translate(-50%, -50%);
-      border: 1px solid #9eff71;
-      border-radius: 50%;
-      color: #d8e7ef;
-      text-align: center;
-      box-shadow: 0 0 0 8px rgba(158, 255, 113, 0.035), 0 0 30px rgba(158, 255, 113, 0.23);
-    }
-
-    .noise-hub::before,
-    .noise-hub::after {
-      content: '';
-      position: absolute;
-      inset: 10px;
-      border: 1px dashed rgba(158, 255, 113, 0.42);
-      border-radius: 50%;
-      animation: hub-spin 13s linear infinite;
-    }
-
-    .noise-hub::after {
-      inset: -17px;
-      border-color: rgba(0, 229, 255, 0.19);
-      animation-direction: reverse;
-      animation-duration: 18s;
-    }
-
-    .hub-title {
-      position: relative;
-      z-index: 1;
-      color: #9eff71;
-      font-family: 'Disket Mono', monospace;
-      font-size: 1.12rem;
-      letter-spacing: 0.12em;
-      text-shadow: 0 0 12px rgba(158, 255, 113, 0.62);
-    }
-
-    .hub-meta {
-      position: relative;
-      z-index: 1;
-      margin-top: 5px;
-      color: #a8b0c0;
-      font-size: 0.58rem;
-      letter-spacing: 0.11em;
-      text-transform: uppercase;
-    }
-
-    .graph-node {
-      position: absolute;
-      z-index: 3;
-      display: grid;
-      grid-template-columns: 72px minmax(0, 1fr);
-      align-items: center;
-      width: min(260px, 26vw);
-      min-height: 98px;
-      gap: 13px;
-      color: var(--accent);
-      text-decoration: none;
-      transition: transform 180ms steps(3, end), filter 180ms ease;
-    }
-
-    .graph-node::before {
-      content: '';
-      position: absolute;
-      inset: 8px 0 8px 38px;
-      z-index: -1;
-      border-top: 1px solid color-mix(in srgb, var(--accent) 48%, transparent);
-      border-bottom: 1px solid color-mix(in srgb, var(--accent) 24%, transparent);
-      opacity: 0.7;
-    }
-
-    .graph-node::after {
-      content: '';
-      position: absolute;
-      right: 0;
-      bottom: 8px;
-      width: 25px;
-      height: 1px;
-      background: var(--accent);
-      box-shadow: 0 -6px 0 color-mix(in srgb, var(--accent) 42%, transparent);
-    }
-
-    .node-comments { left: 4%; top: 11%; }
-    .node-mosquito { right: 4%; top: 19%; }
-    .node-aaaaaa { right: 14%; bottom: 8%; }
-
-    .node-orb {
-      position: relative;
-      display: grid;
-      width: 72px;
-      height: 72px;
-      place-items: center;
-      overflow: hidden;
-      border: 1px solid var(--accent);
-      border-radius: 50%;
-      background: #020304;
-      box-shadow: inset 0 0 16px color-mix(in srgb, var(--accent) 16%, transparent), 0 0 16px color-mix(in srgb, var(--accent) 16%, transparent);
-    }
-
-    .node-orb::after {
-      content: '';
-      position: absolute;
-      inset: 5px;
-      border: 1px dashed color-mix(in srgb, var(--accent) 46%, transparent);
-      border-radius: 50%;
-      pointer-events: none;
-    }
-
-    .node-orb img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      image-rendering: pixelated;
-      filter: contrast(1.1) saturate(1.18);
-      transition: transform 180ms steps(3, end);
-    }
-
-    .node-aaaaaa .node-orb img { object-fit: cover; }
-
-    .node-copy { min-width: 0; }
-
-    .node-index,
-    .node-desc {
-      display: block;
-      color: #a8b0c0;
-      font-size: 0.61rem;
-      letter-spacing: 0.1em;
-      line-height: 1.25;
-      text-transform: uppercase;
-    }
-
-    .node-index { color: color-mix(in srgb, var(--accent) 78%, #ffffff); }
-
-    .node-title {
-      display: block;
-      margin: 5px 0;
-      color: var(--accent);
-      font-family: 'Disket Mono', monospace;
-      font-size: clamp(0.82rem, 1.55vw, 1.06rem);
-      line-height: 1.05;
-      text-transform: uppercase;
-      text-shadow: 0 0 12px color-mix(in srgb, var(--accent) 34%, transparent);
-    }
-
-    .graph-node:hover,
-    .graph-node:focus-visible {
-      z-index: 5;
-      outline: none;
-      filter: brightness(1.2);
-      transform: translateY(-5px);
-    }
-
-    .graph-node:hover .node-orb,
-    .graph-node:focus-visible .node-orb {
-      box-shadow: inset 0 0 24px color-mix(in srgb, var(--accent) 30%, transparent), 0 0 27px color-mix(in srgb, var(--accent) 46%, transparent);
-    }
-
-    .graph-node:hover .node-orb img,
-    .graph-node:focus-visible .node-orb img { transform: scale(1.12); }
-
-    @keyframes signal-flow {
-      to { stroke-dashoffset: -38; }
-    }
-
-    @keyframes hub-spin {
-      to { transform: rotate(360deg); }
-    }
-
-    @media (max-width: 720px) {
-      .noise-graph {
-        height: 710px;
-        margin-top: 2.6rem;
-      }
-
-      .noise-lines { display: none; }
-
-      .noise-graph::after {
-        content: '';
-        position: absolute;
-        left: 50%;
-        top: 12%;
-        bottom: 8%;
-        border-left: 1px dashed rgba(158, 255, 113, 0.28);
-      }
-
-      .noise-hub {
-        top: 34%;
-        width: 102px;
-        height: 102px;
-      }
-
-      .graph-node,
-      .node-comments,
-      .node-mosquito,
-      .node-aaaaaa {
-        left: 50%;
-        right: auto;
-        width: min(280px, calc(100% - 18px));
-        transform: translateX(-50%);
-      }
-
-      .node-comments { top: 1%; }
-      .node-mosquito { top: 49%; }
-      .node-aaaaaa { top: 72%; bottom: auto; }
-
-      .graph-node:hover,
-      .graph-node:focus-visible {
-        transform: translate(-50%, -5px);
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .noise-lines .trace,
-      .noise-hub::before,
-      .noise-hub::after { animation: none; }
-    }
   </style>
+  <link rel="stylesheet" href="./ascii-field.css?v=20260917-field1">
+  <script src="./ascii-field.js?v=20260917-field1" defer></script>
   <script src="../../assets/scripts/maintenance-gate.js" defer></script>
+  <link rel="stylesheet" href="/assets/styles/home-terminal-menu.css?v=20260917-2" />
+  <script src="/assets/scripts/home-terminal-menu.js?v=20260917-2" defer></script>
 </head>
 <body>
   <div class="content-container">
-    <h1>Ruido</h1>
-    <div class="author-meta">
-      <span>Nueva subsección</span>
-    </div>
-
-    <p>
-      El "ruido" en la época digital ya no es simplemente una interferencia estática, sino una sobreabundancia de señal. Cuando todo grita al mismo tiempo en el *scroll* de nuestras redes sociales, el mensaje se pierde y lo único que queda es la textura del caos.
-    </p>
-    <p>
-      Esta sección recopila fragmentos sonoros y textuales de esa textura. Voces desconectadas, algoritmos tratando de ordenar lo inordenable, y la cacofonía de miles de personas interactuando en el vacío virtual.
-    </p>
-
-    <section class="noise-graph" aria-label="Red de proyectos Ruido">
-      <svg class="noise-lines" viewBox="0 0 1000 560" preserveAspectRatio="none" aria-hidden="true">
-        <circle class="orbit" cx="500" cy="280" r="115" />
-        <circle class="orbit" cx="500" cy="280" r="205" />
-        <path class="branch" d="M85 300 H250 M750 78 V190 M685 475 H910" />
-        <path class="trace" d="M248 148 C348 150 377 220 440 262" />
-        <path class="trace trace-cyan" d="M760 190 C662 195 626 232 560 267" />
-        <path class="trace trace-pink" d="M730 432 C657 379 614 341 557 306" />
-        <circle cx="248" cy="148" r="4" fill="#9eff71" />
-        <circle cx="760" cy="190" r="4" fill="#00e5ff" />
-        <circle cx="730" cy="432" r="4" fill="#ff79bc" />
-      </svg>
-
-      <div class="noise-hub" aria-hidden="true">
-        <span class="hub-title">RUIDO</span>
-        <span class="hub-meta">03 señales</span>
+    <section class="noise-graph" aria-label="Campo de interferencia: proyectos de Ruido">
+      <canvas class="ascii-field" aria-hidden="true"></canvas>
+      <a href="./ecos/" class="ascii-node node-ecos" aria-label="Abrir Ecos">
+        <span class="ascii-edge" aria-hidden="true">+------------------------+</span>
+        <span class="ascii-label">Ecos</span>
+        <span class="ascii-edge" aria-hidden="true">+------------------------+</span>
+      </a>
+      <a href="./mosquito-caos/" class="ascii-node node-caos" aria-label="Abrir Caos">
+        <span class="ascii-edge" aria-hidden="true">+------------------------+</span>
+        <span class="ascii-label">Caos</span>
+        <span class="ascii-edge" aria-hidden="true">+------------------------+</span>
+      </a>
+      <a href="../../lluvia_imagenes2/" class="noise-hub" aria-label="Ruido: abrir lluvia de imágenes">RUIDO</a>
+      <div class="ascii-project node-text">
+        <a href="../aaaaaa/" class="ascii-node" aria-label="Abrir aaaaaa.txt">
+          <span class="ascii-edge" aria-hidden="true">+------------------------+</span>
+          <span class="ascii-label">aaaaaa.txt</span>
+          <span class="ascii-edge" aria-hidden="true">+------------------------+</span>
+        </a>
+        <span class="ascii-credit"><strong>Carmen Calderón</strong> / Javier León</span>
       </div>
-
-      <a href="./ecos/index.html" class="graph-node node-comments" style="--accent: #9eff71;" aria-label="Abrir Ecos">
-        <span class="node-orb"><img src="../../assets/images/icon_comentarios_8bit.jpg" alt="" /></span>
-        <span class="node-copy">
-          <span class="node-index">señal 01</span>
-          <span class="node-title">Ecos</span>
-          <span class="node-desc">voces / scroll social</span>
-        </span>
-      </a>
-
-      <a href="./mosquito-caos/index.html" class="graph-node node-mosquito" style="--accent: #00e5ff;" aria-label="Abrir Mosquito Caos">
-        <span class="node-orb"><img src="../../assets/images/icon_mosquito_8bit.jpg" alt="" /></span>
-        <span class="node-copy">
-          <span class="node-index">señal 02</span>
-          <span class="node-title">Mosquito Caos</span>
-          <span class="node-desc">zumbido / interferencia</span>
-        </span>
-      </a>
-
-      <a href="../aaaaaa/" class="graph-node node-aaaaaa" style="--accent: #ff79bc;" aria-label="Abrir aaaaaa.txt">
-        <span class="node-orb"><img src="../aaaaaa/assets/AAAAAAAAAAAA.txt/ALEATORIO/AAAAAAAAA/AAAAAAAAAAAA.JPG" alt="" /></span>
-        <span class="node-copy">
-          <span class="node-index">señal 03</span>
-          <span class="node-title">aaaaaa.txt</span>
-          <span class="node-desc">archivo / error saturado</span>
-        </span>
+      <a href="../consulta-imagenes/" class="ascii-node node-learning" aria-label="Abrir maquina-aprendiendo">
+        <span class="ascii-edge" aria-hidden="true">+------------------------+</span>
+        <span class="ascii-label">maquina-aprendiendo</span>
+        <span class="ascii-edge" aria-hidden="true">+------------------------+</span>
       </a>
     </section>
 
     <div style="margin-top: 4rem;">
-      <a href="../../index.html" class="back-link" style="margin-top: 0;">&lt; Volver al menú principal</a>
+      <a href="../../" class="back-link" style="margin-top: 0;">&lt; Volver al menú principal</a>
     </div>
   </div>
 

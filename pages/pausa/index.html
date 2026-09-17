@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg?v=20260917" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pausa - Scrolling Life</title>
@@ -76,8 +77,7 @@
     .pause-header {
       display: grid;
       grid-template-areas:
-        'title paths'
-        'meta meta';
+        'title paths';
       grid-template-columns: minmax(0, 1.05fr) minmax(460px, 0.95fr);
       column-gap: 48px;
       align-items: end;
@@ -103,49 +103,43 @@
     .subpages-row {
       grid-area: paths;
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 22px;
+      grid-template-columns: 1fr;
+      gap: 9px;
       align-self: end;
     }
 
     .subpage-icon-link {
       position: relative;
       display: grid;
-      grid-template-columns: 104px minmax(0, 1fr);
-      grid-template-rows: 1fr auto;
-      gap: 10px 18px;
-      min-height: 148px;
-      padding: 18px;
-      overflow: hidden;
-      border: 1px solid rgba(158, 255, 113, 0.76);
-      background: rgba(2, 3, 4, 0.78);
-      color: var(--pause-ink);
+      grid-template-columns: 52px minmax(0, 1fr) 24px;
+      align-items: center;
+      gap: 15px;
+      min-height: 78px;
+      padding: 15px 18px;
+      border: 1px solid #2b4330;
+      background: #070c09;
+      color: var(--pause-lime);
       text-decoration: none;
-      transition: border-color 180ms ease, background-color 180ms ease, transform 180ms ease;
+      font-family: 'Share Tech Mono', monospace;
+      transition: border-color 180ms ease, background-color 180ms ease;
     }
 
     .subpage-icon-link::after {
-      content: '\2192';
-      position: absolute;
-      top: 50%;
-      right: 18px;
-      color: var(--pause-lime);
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 1.5rem;
-      transform: translateY(-50%);
+      content: '\2197';
+      grid-column: 3;
+      grid-row: 1;
+      font-size: 22px;
       transition: transform 180ms ease;
     }
 
     .subpage-icon-link:hover,
-    .subpage-icon-link:focus {
-      border-color: var(--pause-cyan);
-      background: rgba(95, 215, 223, 0.07);
-      transform: translateY(-3px);
+    .subpage-icon-link:focus-visible {
+      border-color: var(--pause-lime);
+      background: #15231a;
     }
 
-    .subpage-icon-link:hover::after,
-    .subpage-icon-link:focus::after {
-      transform: translate(4px, -50%);
+    .subpage-icon-link:hover::after {
+      transform: translate(2px, -2px);
     }
 
     .subpage-icon-link:focus-visible {
@@ -153,68 +147,24 @@
       outline-offset: 4px;
     }
 
-    .subpage-icon-link img,
-    .subpage-icon-ascii {
-      grid-row: 1;
-      align-self: center;
-      width: 104px;
-      height: 68px;
-    }
-
-    .subpage-icon-link img {
-      image-rendering: pixelated;
-      object-fit: cover;
-      object-position: left center;
-    }
-
-    .subpage-icon-ascii {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      border: 1px dashed rgba(158, 255, 113, 0.5);
-      background: #05080c;
-      color: var(--pause-lime);
-      font-family: 'Share Tech Mono', monospace;
+    .subpage-symbol {
+      color: var(--pause-cyan);
+      font-size: 26px;
       text-align: center;
-    }
-
-    .ascii-symbol-prompt {
-      font-size: 1.45rem;
-      font-weight: 700;
       line-height: 1;
     }
 
-    .ascii-symbol-body {
-      margin-top: 5px;
-      color: var(--pause-cyan);
-      font-size: 0.64rem;
-    }
+    .subpage-symbol--return { color: #f4a8d6; }
 
     .subpage-icon-caption {
-      grid-column: 1 / -1;
-      grid-row: 2;
       color: var(--pause-lime);
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.78rem;
-      line-height: 1.1;
+      font-size: 13px;
+      line-height: 1.4;
       text-transform: uppercase;
+      overflow-wrap: anywhere;
     }
 
-    .author-meta {
-      grid-area: meta;
-      display: flex;
-      justify-content: space-between;
-      margin-top: 34px;
-      padding: 15px 0;
-      border-top: 1px solid rgba(158, 255, 113, 0.5);
-      border-bottom: 1px solid var(--pause-line);
-      color: #b7c0d1;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.9rem;
-    }
-
-    .pause-reading-stage,
+.pause-reading-stage,
     .pause-poem {
       width: 100%;
     }
@@ -362,8 +312,7 @@
       .pause-header {
         grid-template-areas:
           'title'
-          'paths'
-          'meta';
+          'paths';
         grid-template-columns: 1fr;
         row-gap: 34px;
       }
@@ -372,9 +321,7 @@
         font-size: 6rem;
       }
 
-      .subpage-icon-link {
-        min-height: 132px;
-      }
+
     }
 
     @media (max-width: 700px) {
@@ -397,44 +344,12 @@
         font-size: 4rem;
       }
 
-      .subpages-row {
-        gap: 10px;
-      }
-
       .subpage-icon-link {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: space-between;
+        grid-template-columns: 38px minmax(0, 1fr) 20px;
         gap: 12px;
-        min-height: 150px;
-        padding: 14px;
+        padding: 14px 12px;
       }
-
-      .subpage-icon-link::after {
-        top: 14px;
-        right: 14px;
-        bottom: auto;
-        transform: none;
-      }
-
-      .subpage-icon-link:hover::after,
-      .subpage-icon-link:focus::after {
-        transform: translateX(4px);
-      }
-
-      .subpage-icon-link img,
-      .subpage-icon-ascii {
-        width: 76px;
-        height: 52px;
-      }
-
-      .author-meta {
-        margin-top: 0;
-        font-size: 0.72rem;
-      }
-
-      .pause-poem {
+.pause-poem {
         padding-top: 34px;
         padding-bottom: 60px;
       }
@@ -484,6 +399,8 @@
     }
   </style>
   <script src="../../assets/scripts/maintenance-gate.js" defer></script>
+  <link rel="stylesheet" href="/assets/styles/home-terminal-menu.css?v=20260917-2" />
+  <script src="/assets/scripts/home-terminal-menu.js?v=20260917-2" defer></script>
 </head>
 <body>
   <aside class="scroll-meter" aria-hidden="true">
@@ -504,32 +421,21 @@
       </div>
 
       <nav class="subpages-row" aria-label="Rutas relacionadas">
-      <a href="./in-case-you-come-back/" class="subpage-icon-link" aria-label="Abrir In Case You Come Back" title="In Case You Come Back">
-        <img src="./in-case-you-come-back/assets/in-case-you-come-back-title.png" alt="" />
+      <a href="./in-case-you-come-back/intro.html" class="subpage-icon-link" aria-label="Abrir In Case You Come Back" title="In Case You Come Back">
+        <span class="subpage-symbol subpage-symbol--return" aria-hidden="true">↵</span>
         <span class="subpage-icon-caption">In case you come back</span>
       </a>
 
       <a href="./ascii/" class="subpage-icon-link" aria-label="Abrir ASCII - Poema visual de scroll" title="ASCII - Poema visual de scroll">
-        <div class="subpage-icon-ascii" aria-hidden="true">
-          <span class="ascii-symbol-prompt">[.:]</span>
-          <span class="ascii-symbol-body">0101</span>
-        </div>
+        <span class="subpage-symbol" aria-hidden="true">[:]</span>
         <span class="subpage-icon-caption">ASCII path</span>
       </a>
 
       <a href="../el-ojo/" class="subpage-icon-link" aria-label="Abrir El ojo que todo lo ve" title="El ojo que todo lo ve">
-        <div class="subpage-icon-ascii" aria-hidden="true">
-          <span class="ascii-symbol-prompt">&lt;O&gt;</span>
-          <span class="ascii-symbol-body">MIRADA</span>
-        </div>
+        <span class="subpage-symbol" aria-hidden="true">&lt;O&gt;</span>
         <span class="subpage-icon-caption">El ojo que todo lo ve</span>
       </a>
       </nav>
-
-      <div class="author-meta">
-        <span>Texto Curatorial</span>
-        <span>A&ntilde;o: 2026</span>
-      </div>
     </header>
 
     <section class="pause-reading-stage" id="pause-reading">
@@ -832,7 +738,7 @@ Pensar
     </section>
 
     <footer class="pause-end">
-      <a href="../../index.html" class="back-link">&lt; Volver al men&uacute; principal</a>
+      <a href="../../" class="back-link">&lt; Volver al men&uacute; principal</a>
       <span aria-hidden="true">[ fin / inicio ]</span>
     </footer>
   </div>

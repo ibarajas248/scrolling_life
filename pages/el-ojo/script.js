@@ -2,17 +2,9 @@
   const container = document.querySelector('[data-scroll-container]');
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
   const paragraphs = document.querySelectorAll('.poem p');
-  const sections = [...document.querySelectorAll('.movement')];
-  const links = [...document.querySelectorAll('nav a')];
   let scroll = null;
   const update = (position, limit) => {
     document.documentElement.style.setProperty('--progress', `${Math.min(100, Math.max(0, position / Math.max(1, limit) * 100))}%`);
-    let current = '';
-    sections.forEach(section => { if (section.getBoundingClientRect().top <= window.innerHeight * .55) current = section.id; });
-    links.forEach(link => {
-      if (link.hash === `#${current}`) link.setAttribute('aria-current', 'location');
-      else link.removeAttribute('aria-current');
-    });
   };
   const start = () => {
     if (!reduced.matches && window.LocomotiveScroll) {

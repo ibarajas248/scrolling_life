@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg?v=20260917" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Ensayo de proximidad - Scrolling Life</title>
+  <meta
+    name="description"
+    content="Ensayo de proximidad: un grafo interactivo de frases relacionadas para Scrolling Life."
+  />
+  <link rel="stylesheet" href="../assets/fonts/local-fonts.css" />
+  <link rel="stylesheet" href="./styles.css?v=20260917-input" />
+  <script src="../assets/scripts/maintenance-gate.js" defer></script>
+</head>
+<body>
+  <main class="graph-stage" aria-label="Ensayo de proximidad: frases relacionadas">
+    <button id="graphReplay" class="graph-replay" type="button" aria-label="Reproducir la formación del grafo" title="Reproducir la formación del grafo" disabled>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4v16l12-8z" /></svg>
+    </button>
+    <canvas id="graphCanvas" class="graph-canvas" aria-hidden="true"></canvas>
+    <div class="grid-field" aria-hidden="true"></div>
+    <div class="depth-fog" aria-hidden="true"></div>
+
+    <svg class="node-connector" aria-hidden="true"><path id="nodeConnector" /></svg>
+    <section class="node-panel" id="nodePanel" aria-label="Relacionar una frase" hidden>
+      <p id="nodePhrase" class="node-phrase"></p>
+      <form id="nodeForm" class="node-form">
+        <input
+          id="nodeInput"
+          name="text"
+          type="text"
+          maxlength="260"
+          autocomplete="off"
+          aria-label="Nueva frase relacionada"
+          placeholder="Escribe una frase relacionada…"
+          required
+        />
+        <button id="nodeSend" class="node-send" type="submit" aria-label="Enviar frase relacionada" title="Enviar frase relacionada">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6" /></svg>
+        </button>
+      </form>
+    </section>
+
+    <h1 class="sr-only">Ensayo de proximidad de frases relacionadas</h1>
+  </main>
+
+  <script type="module" src="./script.js?v=20260917-input"></script>
+
+  <!-- Cloudflare Web Analytics -->
+  <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "4ae4ff73465943b788027815f6676ab3"}'></script>
+  <!-- End Cloudflare Web Analytics -->
+  <script src="/assets/scripts/traffic-tracker.js" defer></script>
+</body>
+</html>

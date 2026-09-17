@@ -51,6 +51,16 @@ async function verify(browser, mobile) {
     isMobile: mobile, hasTouch: mobile, deviceScaleFactor: 1
   });
   const errors = [];
+  const openedUrls = [];
+  await page.context().route('**/*', (route) => {
+    if (new URL(route.request().url()).origin === new URL(base).origin) return route.continue();
+    return route.fulfill({ contentType: 'text/html', body: '<p>External destination</p>' });
+  });
+  page.on('popup', async (popup) => {
+    await popup.waitForLoadState();
+    openedUrls.push(popup.url());
+    await popup.close();
+  });
   page.on('pageerror', (error) => errors.push(error.message));
   page.on('response', (response) => { if (response.status() >= 400) errors.push(`${response.status()} ${response.url()}`); });
   await page.addInitScript(() => {
@@ -63,6 +73,12 @@ async function verify(browser, mobile) {
   await page.clock.install({ time: new Date('2026-09-02T12:00:00') });
   await page.clock.pauseAt(new Date('2026-09-02T12:00:10'));
   await page.goto(base);
+  await page.waitForLoadState('networkidle');
+  await page.getByRole('heading', { name: 'AAAA.txt', exact: true }).waitFor();
+  await page.clock.runFor(10000);
+  assert.equal(await page.locator('.art-window').count(), 0, 'The presentation does not start the piece');
+  await page.screenshot({ path: path.join(screenshots, `${name}-presentation.png`), fullPage: true });
+  await page.getByRole('link', { name: 'Entrar a la pieza' }).click();
   await page.waitForLoadState('networkidle');
   const manifest = await page.evaluate(() => window.SPAM_ASSETS);
   assert.deepEqual(manifest.clusters.map((cluster) => cluster.id), order);
@@ -119,6 +135,20 @@ async function verify(browser, mobile) {
       }
       if (cluster.id === 'C3' && index === 0) {
         assert.equal(await page.locator('[data-command="inbox"]').isDisabled(), false);
+        // Count the random window already created when entering C3 as well.
+        let randomCount = await page.locator('.art-window:not([data-cluster])').count();
+        await current.getByRole('button', { name: 'Minimizar', exact: true }).click();
+        for (let ticks = 0; randomCount < 6 && ticks < 200; ticks++) {
+          await page.clock.runFor(250);
+          const count = await page.locator('.art-window:not([data-cluster])').count();
+          if (count === randomCount) continue;
+          randomCount = count;
+          const onTop = await current.evaluate((node) => [...document.querySelectorAll('.art-window')].every((other) => Number(other.style.zIndex) <= Number(node.style.zIndex)));
+          assert.equal(onTop, count % 3 === 0, 'The fixed step is promoted exactly every third random window');
+          if (count % 3 === 0) assert.equal(await current.isVisible(), true);
+          await checkStep(page, 'C3', 0);
+        }
+        assert.equal(randomCount, 6);
         await page.clock.runFor(120000);
         await checkStep(page, 'C3', 0);
         const count = await page.locator('.art-window').count();
@@ -148,6 +178,9 @@ async function verify(browser, mobile) {
         assert.equal(await link.getAttribute('href'), item.url);
         assert.equal(await link.getAttribute('target'), '_blank');
         assert.equal(await link.getAttribute('rel'), 'noopener noreferrer');
+        assert.equal(await current.locator('iframe').count(), 0, 'External sites are not embedded');
+        for (let attempt = 0; attempt < 40 && !openedUrls.includes(item.url); attempt++) await sleep(100);
+        assert.ok(openedUrls.includes(item.url), 'The URL opens automatically when its step appears');
         await current.getByRole('button', { name: 'Continuar', exact: true }).click();
       } else {
         assert.equal(await current.locator('.artwork-button img').getAttribute('src'), item.src);

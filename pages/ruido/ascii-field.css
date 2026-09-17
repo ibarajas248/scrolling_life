@@ -1,0 +1,36 @@
+.noise-graph {
+  position: relative;
+  isolation: isolate;
+  height: clamp(560px, 65vw, 720px);
+  margin-top: 48px;
+  background: radial-gradient(ellipse at center, #14231555, transparent 65%);
+  font-family: 'Share Tech Mono', monospace;
+}
+.ascii-field { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.ascii-node { container-type: inline-size; }
+.ascii-node, .ascii-project { position: absolute; width: 250px; z-index: 2; }
+.ascii-node { display: block; color: #b9ffab; text-decoration: none; background: #020604ef; text-align: center; font-size: 17px; line-height: 1.4; transition: color 160ms, background 160ms; }
+.ascii-edge { display: block; white-space: nowrap; overflow: hidden; font: 15px/1 monospace; letter-spacing: .5px; }
+.ascii-label { position: relative; display: block; padding: 12px 14px; overflow-wrap: anywhere; }
+.ascii-label::before, .ascii-label::after { content: '|'; position: absolute; top: 50%; transform: translateY(-50%); color: #74b875; }
+.ascii-label::before { left: 4px; }
+.ascii-label::after { right: 4px; }
+.ascii-node:hover { color: #f0ffe8; background: #122815; text-shadow: 0 0 12px #a5ff8970; }
+.ascii-node:focus-visible, .noise-hub:focus-visible { outline: 2px solid #b9ffab; outline-offset: 7px; }
+.node-ecos { left: 0; top: 34px; }
+.node-caos { right: 0; top: 34px; }
+.node-text { left: 0; bottom: 34px; }
+.node-learning { right: 0; bottom: 34px; }
+.ascii-project .ascii-node { position: relative; width: 100%; }
+.ascii-credit { display: block; margin-top: 8px; font-size: 11px; color: #a8b0c0; text-align: center; }
+.noise-hub { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 3; padding: 20px 22px; color: #ddffd4; background: #071009e8; font: 30px/1.2 'Disket Mono', monospace; letter-spacing: .05em; text-decoration: none; text-shadow: 0 0 24px #9eff7170; transition: color 180ms, text-shadow 180ms; }
+.noise-hub:hover { color: #fff; text-shadow: 0 0 12px #adff8f, 0 0 28px #9eff7190; }
+@media (max-width: 600px) {
+  .noise-graph { height: 580px; margin-top: 32px; }
+  .ascii-node, .ascii-project { width: 46%; }
+  .ascii-node { font-size: 14px; }
+  .ascii-edge { font-size: min(10px, 6cqw); letter-spacing: 0; }
+  .ascii-label { min-height: 62px; display: grid; align-content: center; padding: 10px 12px; }
+  .ascii-credit { font-size: 10px; }
+  .noise-hub { font-size: 25px; padding: 16px; }
+}

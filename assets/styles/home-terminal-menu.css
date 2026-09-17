@@ -1,0 +1,31 @@
+.site-menu { font-family: 'Share Tech Mono', monospace; }
+.site-menu > summary { border-radius: 0; border: 1px solid #9eff71; color: #bcff9e; background: #040906; box-shadow: none; font-family: inherit; }
+.site-menu > summary::before { content: '>_'; width: auto; height: auto; background: none; box-shadow: none; border-radius: 0; }
+.site-menu[open] > summary { background: #9eff71; color: #071005; }
+.site-menu .site-menu-panel { width: min(520px, calc(100vw - 44px)); max-height: calc(100dvh - 110px); overflow-y: auto; overscroll-behavior: contain; padding: 20px; border-radius: 0; border: 1px solid #6f9876; background: #030907fa; box-shadow: 0 16px 55px #000b; scrollbar-color: #85b674 #071009; }
+.site-menu-panel::before { display: none; }
+.site-menu .site-menu-caption { margin: 0; padding: 12px 8px; border: 1px dashed #8caa94; border-bottom: 0; color: #e0eee5; font: 14px/1.5 'Share Tech Mono', monospace; letter-spacing: .05em; }
+.site-menu .site-menu-links { border: 1px dashed #8caa94; padding: 12px 8px; }
+.site-menu .site-menu-link { display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 8px; border: 0; transform: none; color: #eef6ee; text-decoration: none; }
+.site-menu .site-menu-link span { color: inherit; font: 16px/1.35 'Share Tech Mono', monospace; letter-spacing: 0; overflow-wrap: anywhere; }
+.site-menu .site-menu-link::before { content: '+-'; color: #88bc92; font: 15px monospace; transform: none; opacity: 1; flex-shrink: 0; }
+.terminal-row { display: flex; align-items: stretch; }
+.terminal-row > .site-menu-link { flex: 1; min-width: 0; }
+.site-menu .terminal-row > .site-menu-link::before { display: none; }
+.terminal-toggle { flex: 0 0 44px; border: 0; padding: 0; background: transparent; color: #9eff71; font: 15px monospace; cursor: pointer; }
+.site-menu .branch-open > .terminal-row { background: #102614; }
+.site-menu .branch-open > .terminal-row > .site-menu-link { background: #9eff71; color: #051004; }
+.site-menu .site-menu-link:hover, .site-menu .site-menu-link:focus-visible, .terminal-toggle:hover { background: #9eff71; color: #051004; }
+.site-menu .site-menu-link:hover::before { color: #051004; }
+.terminal-toggle:focus-visible, .site-menu .site-menu-link:focus-visible { outline: 1px solid #dcffd1; outline-offset: -2px; }
+.terminal-children { margin: 0 0 6px 22px; border-left: 1px dashed #5c8768; }
+.terminal-children[hidden] { display: none; }
+.site-menu .submenu-item { color: #69dfe6; padding-left: 12px; }
+.site-menu .submenu-item::before { content: '`--'; color: #709d84; }
+.terminal-prompt { margin: 16px 0 0; color: #b0d6da; font: 13px/1.5 'Share Tech Mono', monospace; }
+.terminal-prompt span { color: #9eff71; }
+@media (max-width: 600px) {
+  .site-menu .site-menu-panel { width: min(520px, calc(100vw - 32px)); padding: 12px; max-height: calc(100dvh - 100px); }
+  .site-menu .site-menu-caption { font-size: 12px; }
+  .site-menu .site-menu-link span { font-size: 15px; }
+}

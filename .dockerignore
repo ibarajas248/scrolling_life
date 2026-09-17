@@ -17,6 +17,7 @@ traffic-tracker
 traffic-dashboard
 server-metrics
 escritura-colectiva
+bot-service
 resize.py
 credenciales_scrolling_life_privado.docx
 .env
@@ -32,3 +33,5 @@ Thumbs.db
 *.tar.gz
 *.7z
 __pycache__
+
+.local-backup/

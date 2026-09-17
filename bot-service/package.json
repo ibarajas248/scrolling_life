@@ -1,0 +1,13 @@
+{
+  "name": "scrollinglife-wikipedia-bot",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": { "start": "node server.mjs", "test": "node --test test/*.test.mjs" },
+  "dependencies": {
+    "http-cache-semantics": "4.2.0",
+    "playwright": "1.58.2",
+    "robots-parser": "3.0.1",
+    "ws": "8.18.3"
+  }
+}

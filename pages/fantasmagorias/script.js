@@ -7,7 +7,7 @@
 
   let SOURCE_IMAGES = [];
   const RECENT_IMAGE_LIMIT = 40;
-  const LOCAL_IMAGE_MANIFEST = '../../assets/images/netart-cache/manifest.json';
+  const LOCAL_IMAGE_MANIFEST = '../../assets/images/fantasmagorias-library/manifest.json';
 
   function resolveManifestImageUrl(entry, manifestUrl) {
     const value = String(entry || '').trim();

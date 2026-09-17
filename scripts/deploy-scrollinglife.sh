@@ -19,6 +19,7 @@ fi
 
 export SCROLLING_LIFE_WEB_CONTEXT="${SCROLLING_LIFE_WEB_CONTEXT:-$PROJECT_DIR}"
 export CATH_REVIEW_CONTEXT="${CATH_REVIEW_CONTEXT:-$PROJECT_DIR/private-reviews/cath}"
+export BOT_CONTEXT="${BOT_CONTEXT:-$PROJECT_DIR/bot-service}"
 export GRAPH_BACKEND_CONTEXT="${GRAPH_BACKEND_CONTEXT:-$PROJECT_DIR/graph-backend}"
 export TRAFFIC_TRACKER_CONTEXT="${TRAFFIC_TRACKER_CONTEXT:-$PROJECT_DIR/traffic-tracker}"
 export TRAFFIC_DASHBOARD_CONTEXT="${TRAFFIC_DASHBOARD_CONTEXT:-$PROJECT_DIR/traffic-dashboard}"
@@ -29,6 +30,7 @@ docker compose --env-file "$ENV_FILE" -f "$COMPOSE_FILE" config >/dev/null
 docker compose --env-file "$ENV_FILE" -f "$COMPOSE_FILE" build \
   web \
   cath-review \
+  wikipedia-bot \
   graph-backend \
   traffic-tracker \
   traffic-dashboard \
@@ -38,6 +40,7 @@ docker compose --env-file "$ENV_FILE" -f "$COMPOSE_FILE" build \
 docker compose --env-file "$ENV_FILE" -f "$COMPOSE_FILE" up -d --remove-orphans \
   web \
   cath-review \
+  wikipedia-bot \
   graph-backend \
   traffic-tracker \
   traffic-dashboard \

@@ -1,6 +1,42 @@
 name: scrollinglife
 
 services:
+  wikipedia-bot:
+    container_name: scrollinglife_wikipedia_bot
+    image: scrollinglife_wikipedia_bot:latest
+    build:
+      context: ${BOT_CONTEXT:-./bot-service}
+    init: true
+    restart: unless-stopped
+    stop_grace_period: 20s
+    read_only: true
+    shm_size: 256mb
+    mem_limit: 1536m
+    cpus: 1.5
+    pids_limit: 160
+    tmpfs:
+      - /tmp:size=256m,mode=1777
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      BOT_CONTACT: ${BOT_CONTACT:-}
+      BOT_PROJECT_URL: ${BOT_PROJECT_URL:-https://scrollinglife.com}
+      BOT_PUBLIC_ORIGIN: ${BOT_PUBLIC_ORIGIN:-}
+      BOT_FPS: ${BOT_FPS:-12}
+      BOT_JPEG_QUALITY: ${BOT_JPEG_QUALITY:-70}
+      BOT_MAX_VIEWERS: ${BOT_MAX_VIEWERS:-80}
+    volumes:
+      - wikipedia_bot_data:/data
+    networks:
+      scrollinglife_net:
+        aliases:
+          - wikipedia_bot
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8094/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      start_period: 30s
+
   web:
     container_name: scrolling_life
     image: scrolling_life:latest
@@ -197,6 +233,8 @@ networks:
     external: ${SCROLLINGLIFE_NETWORK_EXTERNAL:-false}
 
 volumes:
+  wikipedia_bot_data:
+    name: scrollinglife_wikipedia_bot_data
   escritura_colectiva_data:
     name: ${ESCRITURA_COLECTIVA_VOLUME_NAME:-escritura_colectiva_data}
     external: ${ESCRITURA_COLECTIVA_VOLUME_EXTERNAL:-false}

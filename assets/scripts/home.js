@@ -24,6 +24,9 @@ const openDrawingCompanion = () => {
   if (!companionWindow) return false;
 
   companionWindow.opener = null;
+  // Browsers may ignore focus requests; keep the home in its original tab.
+  companionWindow.blur();
+  window.focus();
   markDrawingCompanionOpened();
   return true;
 };

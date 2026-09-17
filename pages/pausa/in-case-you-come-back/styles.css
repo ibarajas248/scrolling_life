@@ -391,12 +391,15 @@ h1 {
 
 .poem {
   position: relative;
+  z-index: 2;
+  isolation: isolate;
   width: min(920px, 100%);
   margin: 0 auto;
 }
 
 .stanza {
   position: relative;
+  z-index: 1;
   width: min(620px, 92%);
   margin: 0 0 clamp(70px, 11vh, 132px);
   padding: clamp(18px, 3vw, 30px);
@@ -406,7 +409,7 @@ h1 {
   font-family: 'Newsreader', Georgia, serif;
   font-size: clamp(1.2rem, 2.5vw, 1.85rem);
   line-height: 1.5;
-  opacity: 0.82;
+  opacity: 1;
   transform: translate3d(0, 18px, 0) rotate(-0.4deg);
   transition: opacity 420ms steps(4), transform 520ms steps(5);
 }
@@ -415,6 +418,15 @@ h1 {
   opacity: 1;
   transform: translate3d(0, 0, 0) rotate(0deg);
 }
+
+.stanza em { font-style: italic; }
+.stanza strong { font-weight: 700; }
+.poem-line { display: block; }
+.poem-gap { display: block; height: 1.5em; }
+.poem-line--right { text-align: right; }
+.poem-line--space-indent { padding-left: 3em; }
+.poem-line--three-tabs { padding-left: 22.5%; }
+.poem-line--one-tab { padding-left: 7.5%; }
 
 .stanza::after {
   content: '';
@@ -440,8 +452,14 @@ h1 {
   box-shadow: 8px 8px 0 var(--pink-hot), 13px 13px 0 var(--lime);
 }
 
+/* Paragraph shading in ICYCM-revised.docx defines these reading blocks. */
+.poem .stanza--pink { background: #f2ceed; color: #000; }
+.poem .stanza--green { background: #d9f2d0; color: #000; }
+
 .recipe-pop {
   position: absolute;
+  z-index: 0;
+  pointer-events: none;
   display: grid;
   justify-items: center;
   gap: 8px;
@@ -535,7 +553,7 @@ h1 {
   position: absolute;
   top: 5vh;
   left: clamp(16px, 3vw, 48px);
-  z-index: 18;
+  z-index: 1;
   width: 150px;
   border: 3px solid var(--ink);
   background: var(--lime);

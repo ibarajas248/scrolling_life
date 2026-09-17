@@ -1,0 +1,6 @@
+* { box-sizing: border-box; }
+html, body { margin: 0; background: #000; min-height: 100%; scrollbar-width: none; overflow-x: hidden; }
+::-webkit-scrollbar { display: none; }
+#canvas { position: relative; min-height: 300vh; background: #000; }
+#canvas img { position: absolute; display: block; height: auto; user-select: none; touch-action: none; cursor: grab; }
+#canvas img.dragging { cursor: grabbing; z-index: 2; }

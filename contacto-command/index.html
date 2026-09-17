@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg?v=20260917" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>contacto.command - Juliana Castro Duperly</title>
+  <meta
+    name="description"
+    content="contacto.command - Juliana Castro Duperly. Cuenta regresiva al 3 de octubre de 2026 a las 11:00 a. m., hora de Bogotá."
+  />
+  <link rel="stylesheet" href="../assets/fonts/local-fonts.css" />
+  <link rel="stylesheet" href="../mantenimiento/styles.css?v=20260911-mobile-labels" />
+  <style>
+    .contact-date { margin: 0 0 24px; color: #a8b0c0; font: 16px/1.5 'Share Tech Mono', monospace; }
+    .maintenance-copy h1 { font-size: clamp(20px, 5vw, 72px); overflow-wrap: normal; text-transform: none; letter-spacing: .02em; }
+    .maintenance-author, .contact-date { text-transform: none; }
+  </style>
+</head>
+<body>
+  <main class="maintenance-screen" aria-labelledby="maintenanceTitle">
+    <div class="maintenance-archive" aria-hidden="true">
+      <span class="strip strip-a"></span>
+      <span class="strip strip-b"></span>
+      <span class="strip strip-c"></span>
+      <span class="strip strip-d"></span>
+      <span class="strip strip-i"></span>
+      <span class="strip strip-j"></span>
+      <span class="strip strip-k"></span>
+      <span class="strip strip-l"></span>
+      <span class="strip strip-e"></span>
+      <span class="strip strip-f"></span>
+      <span class="strip strip-g"></span>
+      <span class="strip strip-h"></span>
+      <span class="maintenance-spotlight"></span>
+    </div>
+
+    <section class="maintenance-copy">
+      <h1 id="maintenanceTitle">contacto.command</h1>
+      <p class="maintenance-author">Juliana Castro Duperly</p>
+      <p class="contact-date"><time datetime="2026-10-03T11:00:00-05:00">3 de octubre de 2026 · 11:00 a. m. · Bogotá</time></p>
+      <div class="maintenance-countdown" aria-live="off" data-countdown>
+        <div class="countdown-grid" aria-label="Tiempo restante para contacto.command">
+          <span class="countdown-cell" aria-label="días">
+            <small>días</small>
+            <strong data-countdown-days>00</strong>
+          </span>
+          <span class="countdown-separator" aria-hidden="true">:</span>
+          <span class="countdown-cell" aria-label="horas">
+            <small>horas</small>
+            <strong data-countdown-hours>00</strong>
+          </span>
+          <span class="countdown-separator" aria-hidden="true">:</span>
+          <span class="countdown-cell" aria-label="minutos">
+            <small>minutos</small>
+            <strong data-countdown-minutes>00</strong>
+          </span>
+          <span class="countdown-separator" aria-hidden="true">:</span>
+          <span class="countdown-cell" aria-label="segundos">
+            <small>segundos</small>
+            <strong data-countdown-seconds>00</strong>
+          </span>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script>
+    const countdown = document.querySelector('[data-countdown]');
+    const countdownTarget = new Date('2026-10-03T11:00:00-05:00').getTime();
+    const countdownParts = {
+      days: document.querySelector('[data-countdown-days]'),
+      hours: document.querySelector('[data-countdown-hours]'),
+      minutes: document.querySelector('[data-countdown-minutes]'),
+      seconds: document.querySelector('[data-countdown-seconds]'),
+    };
+
+    const formatTimePart = (value) => String(value).padStart(2, '0');
+
+    const updateCountdown = () => {
+      if (!countdown || Object.values(countdownParts).some((node) => !node)) return;
+
+      const remaining = Math.max(0, countdownTarget - Date.now());
+      const totalSeconds = Math.floor(remaining / 1000);
+      const days = Math.floor(totalSeconds / 86400);
+      const hours = Math.floor((totalSeconds % 86400) / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+
+      countdownParts.days.textContent = formatTimePart(days);
+      countdownParts.hours.textContent = formatTimePart(hours);
+      countdownParts.minutes.textContent = formatTimePart(minutes);
+      countdownParts.seconds.textContent = formatTimePart(seconds);
+
+      if (remaining === 0) {
+        countdown.dataset.countdownComplete = 'true';
+      }
+    };
+
+    updateCountdown();
+    window.setInterval(updateCountdown, 1000);
+
+    const maintenanceScreen = document.querySelector('.maintenance-screen');
+    const maintenanceArchive = document.querySelector('.maintenance-archive');
+
+    if (maintenanceScreen && maintenanceArchive) {
+      const canTrackPointer = window.matchMedia?.('(hover: hover) and (pointer: fine)').matches ?? true;
+      let pendingPointer = null;
+      let rafId = null;
+
+      const updateSpotlight = () => {
+        rafId = null;
+        if (!pendingPointer) return;
+
+        const rect = maintenanceArchive.getBoundingClientRect();
+        const x = ((pendingPointer.clientX - rect.left) / rect.width) * 100;
+        const y = ((pendingPointer.clientY - rect.top) / rect.height) * 100;
+
+        maintenanceArchive.style.setProperty('--archive-cursor-x', `${Math.min(100, Math.max(0, x)).toFixed(2)}%`);
+        maintenanceArchive.style.setProperty('--archive-cursor-y', `${Math.min(100, Math.max(0, y)).toFixed(2)}%`);
+      };
+
+      const requestSpotlightUpdate = (event) => {
+        pendingPointer = event;
+        if (!rafId) {
+          rafId = window.requestAnimationFrame(updateSpotlight);
+        }
+      };
+
+      if (canTrackPointer) {
+        maintenanceScreen.addEventListener('pointerenter', (event) => {
+          maintenanceArchive.classList.add('is-pointer-active');
+          requestSpotlightUpdate(event);
+        }, { passive: true });
+
+        maintenanceScreen.addEventListener('pointermove', requestSpotlightUpdate, { passive: true });
+
+        maintenanceScreen.addEventListener('pointerleave', () => {
+          maintenanceArchive.classList.remove('is-pointer-active');
+          pendingPointer = null;
+
+          if (rafId) {
+            window.cancelAnimationFrame(rafId);
+            rafId = null;
+          }
+        });
+      }
+    }
+  </script>
+
+</body>
+</html>

@@ -17,6 +17,7 @@
   let serial = 0;
   let topZ = 0;
   let interactions = 0;
+  let randomSincePromotion = 0;
   let epoch = 0;
   let mode = 'running';
   let soundEnabled = false;
@@ -249,42 +250,14 @@
     positionWindow(record, options.near);
     updateCount();
     playSound(item.audio);
+    // Keep this synchronous with the click that reveals the URL step.
+    if (item.url) window.open(item.url, '_blank', 'noopener,noreferrer');
     return record;
   }
 
-  function toEmbedUrl(url) {
-    if (!url) return '';
-    try {
-      const u = new URL(url);
-      if (u.hostname.includes('youtube.com')) {
-        if (u.searchParams.get('v')) {
-          return `https://www.youtube-nocookie.com/embed/${u.searchParams.get('v')}`;
-        }
-        const shortsMatch = u.pathname.match(/\/shorts\/([a-zA-Z0-9_-]+)/);
-        if (shortsMatch) {
-          return `https://www.youtube-nocookie.com/embed/${shortsMatch[1]}`;
-        }
-      }
-      if (u.hostname.includes('youtu.be')) {
-        const id = u.pathname.replace(/^\//, '');
-        return `https://www.youtube-nocookie.com/embed/${id}`;
-      }
-      if (u.hostname.includes('tiktok.com')) {
-        const tiktokMatch = u.pathname.match(/\/video\/(\d+)/);
-        if (tiktokMatch) {
-          return `https://www.tiktok.com/embed/v2/${tiktokMatch[1]}`;
-        }
-      }
-    } catch {
-      // fallback
-    }
-    return url;
-  }
-
   function linkContent(item, record) {
-    const embedSrc = toEmbedUrl(item.url);
     const content = document.createElement('div');
-    content.className = 'link-page link-browser';
+    content.className = 'link-page';
 
     const toolbar = document.createElement('div');
     toolbar.className = 'browser-toolbar';
@@ -309,23 +282,14 @@
 
     toolbar.append(icon('globe'), addressLabel, addressBar, link);
 
-    const frameWrap = document.createElement('div');
-    frameWrap.className = 'browser-frame-wrap';
-
-    const iframe = document.createElement('iframe');
-    iframe.className = 'browser-iframe';
-    iframe.src = embedSrc;
-    iframe.title = item.title || 'Vista previa del enlace';
-    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-    iframe.setAttribute('loading', 'lazy');
-
-    frameWrap.append(iframe);
+    const message = document.createElement('p');
+    message.textContent = 'El enlace se abre automáticamente en otra pestaña. Si no aparece, pulsa «Abrir enlace».';
 
     const actions = document.createElement('div');
     actions.className = 'dialog-actions browser-footer';
     actions.append(button('Continuar', null, () => activate(record), 'raised'));
 
-    content.append(toolbar, frameWrap, actions);
+    content.append(message, toolbar, actions);
     return content;
   }
 
@@ -354,7 +318,15 @@
   }
 
   function spawnRandom(near) {
-    if (mode === 'running' && launched.has('C3')) createWindow(randomItem(), { near });
+    if (mode !== 'running' || !launched.has('C3')) return;
+    const record = createWindow(randomItem(), { near });
+    if (!record) return;
+    randomSincePromotion++;
+    if (randomSincePromotion === 3) {
+      randomSincePromotion = 0;
+      const current = [...windows.values()].find((entry) => entry.kind === 'cluster');
+      focusWindow(current);
+    }
   }
 
   function activate(record) {
@@ -446,6 +418,7 @@
     completed.clear();
     elapsed = 0;
     interactions = 0;
+    randomSincePromotion = 0;
     nextSpam = Infinity;
     topZ = 0;
     bag = [];

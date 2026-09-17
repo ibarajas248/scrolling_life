@@ -9,7 +9,7 @@ const metricPressure = document.getElementById('metricPressure');
 const metricMode = document.getElementById('metricMode');
 const matrixRain = document.getElementById('matrixRain');
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-const ochentasRoute = '/pages/ochentas/index.html';
+const ochentasRoute = '/pages/ochentas/';
 
 function redirectToOchentas(event) {
   event.preventDefault();

@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg?v=20260917" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Infinito - Scrolling Life</title>
   <meta
     name="description"
-    content="Pagina de Infinito para Scrolling Life con texto placeholder en formato curatorial."
+    content="Una reflexión sobre el infinito, la tecnología, el deseo y el escroleo en Scrolling Life."
   />
   <link rel="stylesheet" href="../../assets/fonts/local-fonts.css" />
   <link rel="stylesheet" href="../../assets/styles/home.css" />
@@ -32,6 +33,75 @@
       line-height: 1;
     }
 
+    .infinito-heading {
+      position: relative;
+      width: fit-content;
+      margin-top: 24px;
+    }
+
+    .bird-link {
+      position: absolute;
+      right: 0;
+      bottom: calc(100% - 5px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 44px;
+      color: #9eff71;
+      animation: bird-arrive 1.6s ease-out both;
+    }
+
+    .bird-sprite {
+      display: block;
+      width: 48px;
+      height: 42px;
+      overflow: visible;
+      shape-rendering: crispEdges;
+    }
+
+    .bird-wing {
+      transform-origin: 9px 8px;
+      animation: bird-ruffle 5s 1.6s steps(1) infinite;
+    }
+
+    .bird-call {
+      position: absolute;
+      left: calc(100% + 5px);
+      top: 10px;
+      padding: 3px 6px;
+      border: 1px solid currentColor;
+      background: #020304;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      font-weight: 400;
+      line-height: 1.2;
+      letter-spacing: 0;
+      text-transform: lowercase;
+    }
+
+    .bird-link:hover, .bird-link:focus-visible { color: #80e9ff; }
+    .bird-link:focus-visible { outline: 2px dashed currentColor; outline-offset: 3px; }
+    .bird-link:hover .bird-wing { animation: bird-ruffle 600ms steps(1) infinite; }
+
+    @keyframes bird-arrive {
+      0% { opacity: 0; transform: translate(65px, -38px); }
+      30% { opacity: 1; }
+      65% { transform: translate(12px, -16px); }
+      85% { transform: translate(-3px, -5px); }
+      100% { opacity: 1; transform: translate(0, 0); }
+    }
+
+    @keyframes bird-ruffle {
+      0%, 12%, 100% { transform: translateY(0); }
+      4%, 8% { transform: translateY(-2px); }
+      6%, 10% { transform: translateY(-1px); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .bird-link, .bird-wing, .bird-link:hover .bird-wing { animation: none; }
+    }
+
     .author-meta {
       display: flex;
       flex-direction: column;
@@ -47,6 +117,10 @@
       color: #d8e7ef;
       font-size: 1.1rem;
     }
+
+    .greek-pairs { max-width: 800px; margin-bottom: 1.5rem; }
+    .greek-pairs p { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.25rem 1.5rem; margin-bottom: 0.75rem; }
+    .greek-pairs span { overflow-wrap: anywhere; }
 
     .back-link {
       display: inline-block;
@@ -250,21 +324,76 @@
     }
   </style>
   <script src="../../assets/scripts/maintenance-gate.js" defer></script>
+  <link rel="stylesheet" href="/assets/styles/home-terminal-menu.css?v=20260917-2" />
+  <script src="/assets/scripts/home-terminal-menu.js?v=20260917-2" defer></script>
 </head>
 <body>
   <div class="content-container">
-    <h1>Infinito</h1>
+    <h1 class="infinito-heading">Infinito<a class="bird-link" href="/lluvia/" aria-label="Seguir al pájaro hacia la lluvia de imágenes">
+      <svg class="bird-sprite" viewBox="0 0 16 14" aria-hidden="true" focusable="false">
+        <path fill="currentColor" d="M9 1h4v1h1v4h-1v4h-2v1H5v-1H3V8H2V6H1V4h2v2h3V5h2V2h1z" />
+        <path fill="#5fd7df" class="bird-wing" d="M4 6h5v1h1v2H8v1H6V9H4z" />
+        <path fill="#ee7d59" d="M14 3h2v1h-2zM7 11h1v2H6v1h3v-3zm3 0h1v2h2v1h-3z" />
+        <path fill="#020304" d="M11 3h1v1h-1z" />
+      </svg>
+      <span class="bird-call" aria-hidden="true">seguir</span>
+    </a></h1>
+    <div class="author-meta">Por Manuel Torres</div>
 
 
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vitae massa nec magna cursus commodo. Vestibulum in sapien nec ipsum convallis dignissim. Aliquam erat volutpat. Nulla facilisi. Donec suscipit neque vitae lectus lacinia, vitae consequat mi gravida.</p>
+    <p>Indescifrables fósiles, muros pintados, rocas talladas, colosales papiros, pergaminos enrollados, libros, imprentas, tesis, pasquines, periódicos, revistas, copias impresas, memorias, computadores, microcomponentes, disquetes, casetes, discos compactos, memorias USB, microprocesadores, teléfonos, celulares y aquí seguimos en el constante devenir del imperioso flujo de la tecnología.</p>
 
-    <p>Morbi ut sem at justo vestibulum faucibus. Integer a orci vitae augue rhoncus dictum. Sed sodales urna id justo lacinia, ac vulputate lacus gravida. Fusce elementum, neque vitae ultrices tincidunt, nisl enim tincidunt dolor, nec gravida massa ligula in odio.</p>
+    <p>En un principio, lo infinito se relaciona con la materia abstracta, indefinida, indeterminada y eterna.</p>
 
-    <p>Vivamus sed tempor arcu. Nunc iaculis, nibh at tristique pretium, magna lorem blandit mi, sit amet pellentesque mauris neque sed eros. Duis consequat turpis in justo efficitur, vel porttitor sem viverra. Curabitur sit amet metus sed urna bibendum consequat.</p>
+    <p>Alzar la mirada, ver un cielo estrellado, un cosmos desconocido y andar por un camino sin rumbo alguno, pensando en nuestro breve paso por este universo tan complejo. Al detallar el suelo podemos ver raíces surgir y convertirse en hogares de pájaros; acompañantes del micelio que se vuelve socio de estos árboles; y también, en gusanos y hormigas que andan buscando comida. Un pájaro en la copa del árbol inicia su vuelo, el cielo se torna inmenso y pensar en el más allá del cielo, hace que la inmensidad comience un diálogo con la especulación, la curiosidad y profundos anhelos que quedarán plasmados en creativas y delirantes fantasías... Astros, púlsares, cuásares, asteroides, lejanas partículas, distantes planetas, abismales cosmos que se transforman, que se destruyen y resurgen o restauran de diferentes modos y bajo distintos métodos.</p>
 
-    <p>Phasellus luctus eros ut ante tincidunt, a aliquam augue bibendum. Suspendisse potenti. Cras euismod nisl sed est volutpat, eget feugiat leo luctus. Integer non risus sed lacus gravida semper. Donec non sapien at neque dictum pellentesque.</p>
+    <p>Agua, aire, tierra, fuego.<br />
+      Refrescos, Refrigerantes,<br />
+      molinos de viento, energía eólica,<br />
+      minerales raros, metales encontrados<br />
+      fragua, calor inducido.</p>
 
-    <p>Maecenas volutpat, metus vitae dictum tincidunt, est velit suscipit orci, sed fermentum risus massa id tellus. Praesent volutpat tellus vitae metus elementum, vitae tristique justo lacinia. Sed finibus dui eu nunc tempor, at interdum odio tristique.</p>
+    <p>∞</p>
+
+    <p>Arte e infinidad<br />
+      Ingenuidad y afinidad<br />
+      Comodidad y tranquilidad<br />
+      Deseo y prolongación<br />
+      Ignorancia e intolerancia<br />
+      Impotencia y extinción<br />
+      Devastación y revelación</p>
+
+    <p>Un universo inexplorado y un planeta entendido como un depósito regenerativo de recursos ilimitados. Abundantemente progresiva ha sido nuestra satisfacción de nuestro hogar. Lo sometimos, nos inmunizamos y nos volvimos herméticos ante sus quejas. Lo infinito quedó codificado en un ambiguo y volátil flujo ideológico de la necesidad de la inconmensurable abundancia de capital, inmortalidad, datos, vigilancia y placeres. Lo que una vez fue indeterminado, yace determinado por el destino de nuestro progreso, por encima del conocimiento, del arte y de la capacidad de contemplar y crear.</p>
+
+    <div class="greek-pairs">
+      <p><span>Apeiron-logos-pathos-ethos</span><span lang="el">Ἄπειρον - λόγος - πάθος - ἦθος</span></p>
+      <p><span>Apeiron-techné-poíesis-ataraxia</span><span lang="el">Ἄπειρον - τέχνη - ποίησις - ἀταραξία</span></p>
+      <p><span>Apeiron-prokopē-hybris-sophrosyne</span><span lang="el">Ἄπειρον - προκοπή - ὕβρις - σωφροσύνη</span></p>
+    </div>
+
+    <p>Unas, algunas y muchas manos pintaron alguna vez, tallaron innumerables ocasiones, escribieron en momentos cruciales, teclearon para alcanzar una meta… Ahora usamos META para ser virales. Ahora subimos y bajamos nuestro dedo índice en el vaivén de la ilusión del infinito. Escrolear un papiro o pergamino interminable pero determinado por nuestro deseo, saciable, pero con una sensación de insaciabilidad: hambre sin hambre; insatisfacción constantemente satisfecha; alienación y desolación.</p>
+
+    <p>Alguna vez un terapeuta del lenguaje afirmó:</p>
+
+    <p>“Los límites de tu lenguaje son los límites de tu mundo”</p>
+
+    <p>Tiene un buen punto y se aceleró a su tiempo, luego de darle un golpe a un loco de apellido que se inhala Popper. La anécdota queda limitada para nuestro punto, pero al abordar la sensación de lo infinito por medio de los dispositivos podemos replantearla:</p>
+
+    <p>“Los límites de tu lenguaje son los límites de tus datos, imágenes, videos y privacidad”</p>
+
+    <p>Bastante floja, se puede mejorar con ayuda de inteligencia artificial:</p>
+
+    <p>“Los límites del lenguaje son los límites del sempiterno escroleo”</p>
+
+    <p>Todavía sigue floja, ha de ser porque esta inteligencia está contenida por la mente de insípidas y obtusas mentes.</p>
+
+    <p>Sentenciemos:</p>
+
+    <p>Lo infinito se repliega en el orden de lo eterno, se desprende en lo abstracto de lo indeterminado y va con la corriente del devenir múltiple.<br />
+      Sin final, pero con revelaciones<br />
+      Sempiterno fantasioso, ideológico y epocal…<br />
+      La infinidad de un anhelo, de un deseo, de una fantasía ilimitada y destructiva.<br />
+      La finitud del yo, la muerte del nosotros y la infinidad del uno, del Gran Otro.</p>
 
     <div class="infinite-routes" aria-label="Rutas de Infinito">
       <a href="https://thescrollingdrawing.scrollinglife.com/" class="route-node">
@@ -273,7 +402,6 @@
         </span>
 
         <span class="route-node__title">The Scrolling Drawing</span>
-        <span class="route-node__meta">Cadáver exquisito</span>
       </a>
       <a href="../../logic-dream/" class="route-node route-node--sediment">
         <span class="route-node__visual" aria-hidden="true">
@@ -281,20 +409,19 @@
         </span>
 
         <span class="route-node__title">The Logic Dream</span>
-        <span class="route-node__meta">Deriva generativa</span>
       </a>
       <a href="../manifiesto-escrolleo/" class="route-node route-node--manifesto">
         <span class="route-node__visual route-node__visual--manifesto" aria-hidden="true">
           <span>Manifiesto<br />Escrolleo</span>
         </span>
         <span class="route-node__title">Manifiesto Escrolleo</span>
-        <span class="route-node__meta">Lectura crítica / scroll continuo</span>
       </a>
     </div>
 
-    <a href="../../index.html" class="back-link infinite-back">&lt; Volver al men&uacute; principal</a>
+    <a href="../../" class="back-link infinite-back">&lt; Volver al men&uacute; principal</a>
   </div>
 
+  <script src="./bird-song.js?v=1" defer></script>
   <!-- Cloudflare Web Analytics -->
   <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "4ae4ff73465943b788027815f6676ab3"}'></script>
   <!-- End Cloudflare Web Analytics -->

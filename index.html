@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg?v=20260917" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Scrolling Life</title>
@@ -10,23 +11,10 @@
   />
   <link rel="stylesheet" href="./assets/fonts/local-fonts.css" />
     <link rel="stylesheet" href="./assets/styles/home.css?v=20260915-ventanas-v2" />
+  <link rel="stylesheet" href="./assets/styles/home-ultramar.css?v=20260917-icons" />
   <script src="./assets/scripts/maintenance-gate.js" defer></script>
-  <style>
-    .submenu-container {
-      display: flex;
-      flex-direction: column;
-    }
-    .submenu-item {
-      display: none !important; /* Oculto por defecto */
-      padding-left: 2.5rem; 
-      background-color: rgba(255, 255, 255, 0.02); 
-      border-left: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    .submenu-container:hover .submenu-item,
-    .submenu-container:focus-within .submenu-item {
-      display: flex !important; /* Muestra al hacer hover o enfocar */
-    }
-  </style>
+  <link rel="stylesheet" href="./assets/styles/home-terminal-menu.css?v=20260917-2" />
+  <script src="./assets/scripts/home-terminal-menu.js?v=20260917-2" defer></script>
 </head>
 <body id="top">
   <a class="skip-link" href="#main-content">Saltar al contenido principal</a>
@@ -67,144 +55,7 @@
       </filter>
     </svg>
 
-    <details class="site-menu" aria-label="Otras salas">
-      <summary aria-controls="site-menu-panel" aria-expanded="false">
-        <span class="site-menu-label">menú </span>
-      </summary>
-      <nav class="site-menu-panel" id="site-menu-panel" aria-label="Otras salas">
-        <p class="site-menu-caption">otras salas</p>
-        <div class="site-menu-links">
-          <div class="submenu-container">
-            <a class="site-menu-link" href="./pages/infinito/">
-              <span>Infinito</span>
-              <small>texto curatorial</small>
-            </a>
-            <a class="site-menu-link submenu-item" href="https://thescrollingdrawing.scrollinglife.com/">
-              <span>↳ The Scrolling Drawing</span>
-              <small>dibujo infinito</small>
-            </a>
-          </div>
-          <a class="site-menu-link" href="./pages/consulta-imagenes/">
-            <span>Lluvia de Imagenes</span>
-            <small>cache 20 + scroll</small>
-          </a>
-          <div class="submenu-container">
-            <a class="site-menu-link" href="./pages/pausa/">
-              <span>Pausa</span>
-              <small>texto curatorial</small>
-            </a>
-            <a class="site-menu-link submenu-item" href="./pages/pausa/in-case-you-come-back/">
-              <span>In Case You Come Back</span>
-              <small>poema / recetas / rosa 90s</small>
-            </a>
-            <a class="site-menu-link submenu-item" href="./pages/pausa/ascii/">
-              <span>↳ ASCII</span>
-              <small>poema visual de scroll</small>
-            </a>
-          </div>
-          <div class="submenu-container">
-            <a class="site-menu-link" href="./lluvia_imagenes2/">
-              <span>pruebaslluvia</span>
-              <small>experimentos visuales</small>
-            </a>
-            <a class="site-menu-link submenu-item" href="./lluvia_imagenes2/">
-              <span>prueba1</span>
-              <small>lluvia permanente</small>
-            </a>
-            <a class="site-menu-link submenu-item" href="./pruebaslluvia/prueba2/">
-              <span>prueba2</span>
-              <small>tiras 150px</small>
-            </a>
-            <a class="site-menu-link submenu-item" href="./pruebaslluvia/prueba3/">
-              <span>prueba3</span>
-              <small>escultura 3D</small>
-            </a>
-            <a class="site-menu-link submenu-item" href="./pruebaslluvia/prueba4/">
-              <span>prueba4</span>
-              <small>sedimentacion</small>
-            </a>
-          </div>
-          <a class="site-menu-link" href="./pages/embedding-rain/">
-            <span>Embedding Rain</span>
-            <small>modelo + PCA 3D</small>
-          </a>
-          <a class="site-menu-link" href="./logic-dream/">
-            <span>Logic Dream</span>
-            <small>texto generativo infinito</small>
-          </a>
-          <a class="site-menu-link" href="./maqutacion/">
-            <span>Maquetacion Instagram</span>
-            <small>formatos 1:1 + fondos</small>
-          </a>
-          <div class="submenu-container">
-            <a class="site-menu-link" href="./pages/ruido/">
-              <span>Ruido</span>
-              <small>texto curatorial</small>
-            </a>
-            <a class="site-menu-link submenu-item" href="./pages/ruido/ecos/">
-              <span>↳ Ecos</span>
-              <small>archivo de voces</small>
-            </a>
-            <a class="site-menu-link submenu-item" href="./pages/ruido/mosquito-caos/">
-              <span>↳ Mosquito Caos</span>
-              <small>sonido molesto</small>
-            </a>
-            <a class="site-menu-link submenu-item" href="./pages/aaaaaa/">
-              <span>↳ aaaaaa.txt</span>
-              <small>Carmen + Javi</small>
-            </a>
-          </div>
-          <div class="submenu-container">
-            <a class="site-menu-link" href="./pages/archivo/">
-              <span>Archivo</span>
-              <small>texto curatorial</small>
-            </a>
-            <a class="site-menu-link submenu-item" href="./pages/archivo/inteligencias-colectivas/">
-              <span>↳ Inteligencias Colectivas</span>
-              <small>por Henry Lamiña</small>
-            </a>
-            <a class="site-menu-link submenu-item" href="./pages/archivo/precipitacion-critica/">
-              <span>↳ Precipitaci&oacute;n cr&iacute;tica</span>
-              <small>lluvia de Esfera P&uacute;blica</small>
-            </a>
-            <a class="site-menu-link submenu-item" href="./pages/scroll-vertical/">
-              <span>↳ Sedimento visual</span>
-              <small>recorrido vertical</small>
-            </a>
-            <a class="site-menu-link submenu-item" href="./pages/mundo-gif/">
-              <span>↳ Mundo GIF</span>
-              <small>web collage / pixel 90s</small>
-            </a>
-            <a class="site-menu-link submenu-item" href="./grafo_3d/">
-              <span>↳ Grafo 3D</span>
-              <small>frases conectadas</small>
-            </a>
-          </div>
-          <div class="submenu-container">
-            <a class="site-menu-link" href="./pages/cuerpo/">
-              <span>Cuerpo</span>
-              <small>lorem ipsum</small>
-            </a>
-            <a class="site-menu-link submenu-item" href="./pages/fantasmagorias/">
-              <span>↳ Fantasmagorías</span>
-              <small>deriva visual</small>
-            </a>
-            <a class="site-menu-link submenu-item" href="./pages/game_scroll/">
-              <span>↳ ▣ game_scroll</span>
-              <small>escapar del monstruo del scroll</small>
-            </a>
-            <a class="site-menu-link submenu-item" href="./pages/npc/">
-              <span>↳ ◉ NPC</span>
-              <small>muñeco interactivo</small>
-            </a>
-          </div>
-          <a class="site-menu-link" href="./pages/creditos/">
-            <span>Créditos</span>
-            <small>ficha técnica / equipo</small>
-          </a>
-        </div>
-      </nav>
-    </details>
+
 
     <header class="hero section" role="banner" aria-describedby="heroSummary">
       <div class="hero-archive" aria-hidden="true">
@@ -251,6 +102,8 @@
             <a
               class="mosquito-link"
               href="https://thescrollingdrawing.scrollinglife.com/"
+              target="_blank"
+              rel="noopener"
               title="seguir hacia The Scrolling Drawing"
               aria-hidden="true"
               tabindex="-1"
@@ -404,7 +257,7 @@
       
 
         <div class="win98-desktop-container reveal">
-          <div class="win98-desktop" id="win98Desktop">
+          <div class="win98-desktop ultramar-desktop" id="win98Desktop">
             <article class="concept-card concept-card-body win-draggable" id="winCuerpo">
             <div class="win-titlebar">
               <span>C:\SCROLL\CUERPO.TXT</span>
@@ -413,24 +266,21 @@
               </span>
             </div>
             <div class="concept-window-body">
-              <img
+              <div class="window-art" data-number="01" aria-hidden="true"><img
                 class="body-window-art"
-                src="./assets/images/cuerpo-window-transparent.png"
-                width="1144"
-                height="1375"
+                src="./assets/images/cuerpo-scroll-ultramar-transparent.png"
+                width="1024"
+                height="1536"
                 alt=""
                 aria-hidden="true"
                 decoding="async"
-              >
+              ></div>
               <h3>Cuerpo</h3>
-              <p style="white-space: pre-wrap;">El cuerpo también hace scroll...
-toca
-   obedece
-              se fatiga
-                  deja rastros.</p>
+              <p>El cuerpo también hace scroll… toca, obedece, se fatiga, deja rastros.</p>
               <a class="concept-card-link" href="./pages/cuerpo/">Abrir Cuerpo</a>
               
             </div>
+            <div class="window-status">SCROLLING LIFE · 01 / 05</div>
           </article>
             <article class="concept-card concept-card-infinite win-draggable" id="winInfinito">
             <div class="win-titlebar">
@@ -440,7 +290,7 @@ toca
               </span>
             </div>
             <div class="concept-window-body">
-              <img
+              <div class="window-art" data-number="02" aria-hidden="true"><img
                 class="infinite-window-art"
                 src="./assets/images/infinito-network-transparent.png"
                 width="602"
@@ -448,7 +298,7 @@ toca
                 alt=""
                 aria-hidden="true"
                 decoding="async"
-              >
+              ></div>
               <h3>Infinito</h3>
               <p>
                 Entramos a mirar una cosa y terminamos en otra. Nunca llegamos al fondo.
@@ -456,6 +306,7 @@ toca
               <a class="concept-card-link" href="./pages/infinito/">Abrir Infinito</a>
               
             </div>
+            <div class="window-status">SCROLLING LIFE · 02 / 05</div>
           </article>
             <article class="concept-card concept-card-noise win-draggable" id="winRuido">
             <div class="win-titlebar">
@@ -465,7 +316,7 @@ toca
               </span>
             </div>
             <div class="concept-window-body">
-              <img
+              <div class="window-art" data-number="03" aria-hidden="true"><img
                 class="noise-window-art"
                 src="./assets/images/ruido-window-transparent.png"
                 width="1942"
@@ -473,7 +324,7 @@ toca
                 alt=""
                 aria-hidden="true"
                 decoding="async"
-              >
+              ></div>
               <h3>Ruido</h3>
               <p>
                 Una noticia, un meme, alguien vendiendo algo. Todo aparece junto, aunque no tenga nada que ver.
@@ -481,6 +332,7 @@ toca
               <a class="concept-card-link" href="./pages/ruido/">Abrir Ruido</a>
               
             </div>
+            <div class="window-status">SCROLLING LIFE · 03 / 05</div>
           </article>
             <article class="concept-card concept-card-archive win-draggable" id="winArchivo">
             <div class="win-titlebar">
@@ -490,7 +342,7 @@ toca
               </span>
             </div>
             <div class="concept-window-body">
-              <img
+              <div class="window-art" data-number="04" aria-hidden="true"><img
                 class="archive-window-art"
                 src="./assets/images/archivo-window-transparent.png"
                 width="1388"
@@ -498,7 +350,7 @@ toca
                 alt=""
                 aria-hidden="true"
                 decoding="async"
-              >
+              ></div>
               <h3>Archivo</h3>
               <p>
                 Guardamos imágenes para después. Algunas vuelven a aparecer; de otras ni siquiera recordamos por qué las guardamos.
@@ -506,6 +358,7 @@ toca
               <a class="concept-card-link" href="./pages/archivo/">Abrir Archivo</a>
               
             </div>
+            <div class="window-status">SCROLLING LIFE · 04 / 05</div>
           </article>
             <article class="concept-card concept-card-pausa is-visible win-draggable" id="winPausa">
             <div class="win-titlebar">
@@ -517,12 +370,21 @@ toca
             <div class="concept-window-body">
               
               <h3>Pausa</h3>
+              <div class="window-art" data-number="05" aria-hidden="true"><svg
+                class="pause-window-art"
+                viewBox="400 380 490 530"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <image href="./assets/images/pausa-contemplar-transparent.png" width="1254" height="1254" />
+              </svg></div>
               <p>
                 Quedarse un rato con lo que estamos viendo. Sin buscar enseguida otra cosa.
               </p>
               <a class="concept-card-link" href="./pages/pausa/">Abrir Pausa</a>
               
             </div>
+            <div class="window-status">SCROLLING LIFE · 05 / 05</div>
           </article>
           </div>
         </div>
@@ -533,11 +395,12 @@ toca
     </main>
   </div>
 
-  <script src="./assets/scripts/home.js?v=20260913-drawing-companion-tab-v1"></script>
+  <script src="./assets/scripts/home.js?v=20260917-drawing-companion-focus"></script>
 
   <!-- Cloudflare Web Analytics -->
   <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "4ae4ff73465943b788027815f6676ab3"}'></script>
   <!-- End Cloudflare Web Analytics -->
   <script src="/assets/scripts/traffic-tracker.js" defer></script>
+  <script src="./assets/scripts/input-link.js" defer></script>
 </body>
 </html>

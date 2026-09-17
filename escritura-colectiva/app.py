@@ -12,12 +12,16 @@ from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import unquote, urlparse
+from input_store import InputStore
+from image_store import ImageStore, dispatch as dispatch_images
 
 
 APP_DIR = Path(__file__).resolve().parent
 PUBLIC_DIR = APP_DIR / "public"
 DATA_DIR = Path(os.environ.get("COLLECTIVE_SCROLL_DATA", "/data"))
 DB_PATH = DATA_DIR / "scroll_literario.sqlite3"
+input_store = InputStore(DATA_DIR / "input-sh.json")
+image_store = ImageStore(DATA_DIR / "lienzo")
 PORT = int(os.environ.get("PORT", "8080"))
 
 MAX_TEXT_LENGTH = 2400
@@ -258,7 +262,15 @@ class CollectiveScrollHandler(BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_GET(self) -> None:
+        if dispatch_images(self, image_store, 'GET'):
+            return
         path = self.request_path()
+        if path == "/api/input":
+            try:
+                self.send_json(input_store.snapshot())
+            except (OSError, ValueError):
+                self.send_json({"error": "No se pudo leer la consola."}, HTTPStatus.SERVICE_UNAVAILABLE)
+            return
         if path == "/healthz":
             self.send_json({"ok": True, **get_stats()})
             return
@@ -275,6 +287,23 @@ class CollectiveScrollHandler(BaseHTTPRequestHandler):
         self.serve_static(path)
 
     def do_POST(self) -> None:
+        if dispatch_images(self, image_store, 'POST'):
+            return
+        if self.request_path() == "/api/input":
+            if self.headers.get_content_type() != "application/json":
+                self.send_json({"error": "Se requiere application/json."}, HTTPStatus.UNSUPPORTED_MEDIA_TYPE)
+                return
+            payload = self.read_json_body()
+            if payload is None:
+                return
+            try:
+                entry = input_store.add(payload)
+                self.send_json({"entry": entry}, HTTPStatus.CREATED)
+            except ValueError as error:
+                self.send_json({"error": str(error)}, HTTPStatus.BAD_REQUEST)
+            except OSError:
+                self.send_json({"error": "No se pudo guardar. Tu texto sigue en la consola."}, HTTPStatus.SERVICE_UNAVAILABLE)
+            return
         if self.request_path() != "/api/fragments":
             self.send_json({"error": "Ruta no encontrada."}, HTTPStatus.NOT_FOUND)
             return
@@ -285,6 +314,8 @@ class CollectiveScrollHandler(BaseHTTPRequestHandler):
         self.send_json(body, status)
 
     def do_PATCH(self) -> None:
+        if dispatch_images(self, image_store, 'PATCH'):
+            return
         fragment_id = self.fragment_id_from_path()
         if fragment_id is None:
             self.send_json({"error": "Ruta no encontrada."}, HTTPStatus.NOT_FOUND)
@@ -296,6 +327,8 @@ class CollectiveScrollHandler(BaseHTTPRequestHandler):
         self.send_json(body, status)
 
     def do_DELETE(self) -> None:
+        if dispatch_images(self, image_store, 'DELETE'):
+            return
         fragment_id = self.fragment_id_from_path()
         if fragment_id is None:
             self.send_json({"error": "Ruta no encontrada."}, HTTPStatus.NOT_FOUND)
