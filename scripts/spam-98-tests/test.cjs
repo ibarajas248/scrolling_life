@@ -152,7 +152,7 @@ async function verify(browser, mobile) {
         await page.clock.runFor(120000);
         await checkStep(page, 'C3', 0);
         const count = await page.locator('.art-window').count();
-        assert.ok(count >= 10 && count <= (mobile ? 12 : 24), 'ALEATORIO invades without advancing C3');
+        assert.ok(count >= (mobile ? 6 : 10) && count <= (mobile ? 8 : 24), 'ALEATORIO invades within the device budget without advancing C3');
         await decodeImages(page);
         await checkGeometry(page);
         await page.screenshot({ path: path.join(screenshots, `${name}-invasion.png`) });
@@ -185,6 +185,10 @@ async function verify(browser, mobile) {
       } else {
         assert.equal(await current.locator('.artwork-button img').getAttribute('src'), item.src);
         await current.locator('.artwork-button img').evaluate((image) => image.decode());
+        if (mobile) {
+          const optimized = await page.evaluate((src) => window.SPAM_MOBILE_ASSETS?.[src], item.src);
+          if (optimized) assert.ok((await current.locator('.artwork-button img').evaluate((image) => image.currentSrc)).endsWith(optimized), 'Mobile uses the optimized image');
+        }
         if (mobile && cluster.id === 'C1' && index === 0) {
           await current.getByRole('button', { name: 'Cerrar', exact: true }).click();
         } else await current.locator('.artwork-button').click();

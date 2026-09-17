@@ -54,10 +54,16 @@ el mismo fondo de INICIO. Reiniciar limpia ventanas y recorridos.
 La barra inferior mantiene sonido, pausa y salida accesibles. Escape pausa
 las apariciones y el sonido; los GIF originales conservan su animacion.
 Al ocultar la pestana se detiene el tiempo de la pieza y su audio.
-Se mantienen hasta 24 ventanas en escritorio o 12 en movil, retirando las
+Se mantienen hasta 24 ventanas en escritorio u 8 en movil, retirando las
 aleatorias mas antiguas sin perder los recorridos de los clusters.
 
 `assets.js` contiene el inventario con rutas, dimensiones y asociaciones.
+En movil, `mobile-assets.js` selecciona versiones WebP de hasta 640 px mediante
+`picture`, conservando los originales en escritorio y como respaldo. Las
+animaciones mantienen sus tiempos. Para regenerarlas con Pillow, ejecutar
+`python scripts/optimize-aaaaaa-mobile.py`. Las 40 versiones reducen su peso
+conjunto de 10,3 MB a 4,3 MB. En movil se limitan a 3 sonidos simultaneos,
+8 audios en cache y un intervalo minimo de 2,4 s entre apariciones automaticas.
 No se necesitan dependencias externas en tiempo de ejecucion.
 Los iconos locales son de Lucide; su licencia esta en `icons/LICENSE`.
 

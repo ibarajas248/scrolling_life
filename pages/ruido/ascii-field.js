@@ -3,13 +3,14 @@
   const canvas = field.querySelector('.ascii-field');
   const ctx = canvas.getContext('2d');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  const mobile = matchMedia('(max-width: 720px)');
   let width = 0, height = 0, frame = 0, last = 0, visible = true;
   let links = [];
   const cellX = 7, cellY = 10;
   function measure() {
     const bounds = field.getBoundingClientRect();
     width = bounds.width; height = bounds.height;
-    const ratio = Math.min(devicePixelRatio || 1, 2);
+    const ratio = Math.min(devicePixelRatio || 1, mobile.matches ? 1.5 : 2);
     canvas.width = Math.round(width * ratio); canvas.height = Math.round(height * ratio);
     ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
     links = [...field.querySelectorAll('.ascii-node')].map(node => {
@@ -33,12 +34,14 @@
       if (!points.has(key) || points.get(key).strength < strength) points.set(key, { x: col * cellX, y: row * cellY, char, strength });
     }
     // Magnetic field contours, rendered entirely as individual ASCII glyphs.
-    for (let ring = 0; ring < 30; ring++) {
-      const u = ring / 29;
+    const rings = mobile.matches ? 18 : 30;
+    const samples = mobile.matches ? 126 : 210;
+    for (let ring = 0; ring < rings; ring++) {
+      const u = ring / (rings - 1);
       const rx = width * (.13 + .32 * u);
       const ry = height * (.09 + .34 * u);
-      for (let step = 0; step < 210; step++) {
-        const a = step / 210 * Math.PI * 2;
+      for (let step = 0; step < samples; step++) {
+        const a = step / samples * Math.PI * 2;
         const drift = Math.sin(a * 5 + phase + ring * .24) * 1.5;
         const x = cx + Math.cos(a) * rx;
         const y = cy + Math.sin(a) * ry * (.42 + .58 * Math.abs(Math.cos(a))) + drift;
@@ -70,7 +73,7 @@
     }
   }
   function tick(time) {
-    if (visible && !document.hidden && !reduced.matches && time - last >= 100) { draw(time); last = time; }
+    if (visible && !document.hidden && !reduced.matches && time - last >= (mobile.matches ? 160 : 100)) { draw(time); last = time; }
     frame = requestAnimationFrame(tick);
   }
   const resize = new ResizeObserver(measure); resize.observe(field);

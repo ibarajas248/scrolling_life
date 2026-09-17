@@ -90,6 +90,8 @@ button:disabled img { opacity: .4; }
 .noscript { position: fixed; top: 20%; left: 10%; right: 10%; padding: 25px; }
 @keyframes arrive { from { transform: scale(.97); } to { transform: scale(1); } }
 @media (max-width: 600px) {
+  .art-window { filter: none; }
+  .art-window.is-new { animation: none; }
   :root { --page-controls-height: calc(43px + env(safe-area-inset-bottom)); }
   .page-controls { padding: 3px 8px calc(3px + env(safe-area-inset-bottom)); gap: 12px; }
   .page-controls a, .text-link { font-size: 11px; }

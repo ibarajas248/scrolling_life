@@ -264,7 +264,7 @@ const randomizeNetArtItem = (item, subtle = false) => {
 
 const initNetArt = async () => {
   if (!netArtLayer) return;
-  const count = 45;
+  const count = window.matchMedia('(max-width: 720px)').matches ? 18 : 45;
   const vh = window.innerHeight;
 
   try {
@@ -895,9 +895,13 @@ const updateKinetic = () => {
   });
 };
 
-const animate = () => {
-  updateProgress();
-  updateKinetic();
+const mobileAnimation = window.matchMedia('(max-width: 720px)');
+let lastAnimationFrame = 0;
+const animate = (time) => {
+  if (!document.hidden && (!mobileAnimation.matches || time - lastAnimationFrame >= 1000 / 30)) {
+    updateKinetic();
+    lastAnimationFrame = time;
+  }
   requestAnimationFrame(animate);
 };
 
@@ -912,6 +916,7 @@ if (!reducedMotionEnabled) {
 
 window.addEventListener('scroll', updateProgress, { passive: true });
 window.addEventListener('resize', updateProgress);
+window.addEventListener('load', updateProgress, { once: true });
 
 const resetTerminalSequence = (sequence) => {
   sequence.dataset.forceReplay = 'true';

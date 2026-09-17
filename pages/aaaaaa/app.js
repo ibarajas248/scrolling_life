@@ -78,6 +78,8 @@
     const requestEpoch = epoch;
     try {
       if (!audioCache.has(path)) {
+        const cacheLimit = narrow() ? 8 : 24;
+        if (audioCache.size >= cacheLimit) audioCache.delete(audioCache.keys().next().value);
         audioCache.set(path, fetch(path).then((response) => {
           if (!response.ok) throw new Error('Audio unavailable');
           return response.arrayBuffer();
@@ -85,7 +87,11 @@
       }
       const buffer = await audioCache.get(path);
       if (!soundEnabled || mode !== 'running' || requestEpoch !== epoch || document.hidden) return;
-      if (voices.size >= 6) voices.values().next().value.stop();
+      if (voices.size >= (narrow() ? 3 : 6)) {
+        const oldest = voices.values().next().value;
+        voices.delete(oldest);
+        oldest.stop();
+      }
       const voice = audioContext.createBufferSource();
       const gain = audioContext.createGain();
       gain.gain.value = 0.24;
@@ -101,6 +107,10 @@
 
   function focusWindow(record, keyboard = false) {
     if (!record || !windows.has(record.id)) return;
+    if (!record.node.hidden && record.node.classList.contains('is-active')) {
+      if (keyboard) record.node.querySelector('button, a, video')?.focus({ preventScroll: true });
+      return;
+    }
     record.node.hidden = false;
     record.node.style.zIndex = String(++topZ);
     windows.forEach((other) => {
@@ -163,7 +173,7 @@
   }
 
   function createWindow(item, options = {}) {
-    const limit = narrow() ? 12 : 24;
+    const limit = narrow() ? 8 : 24;
     if (windows.size >= limit) {
       const oldest = [...windows.values()].find((record) => record.kind === 'random' && !record.node.contains(document.activeElement));
       if (oldest) removeWindow(oldest);
@@ -209,13 +219,23 @@
       art.className = 'artwork-button';
       art.setAttribute('aria-label', `Abrir ${item.title}`);
       const image = document.createElement('img');
+      image.decoding = 'async';
       image.src = item.src;
       image.alt = item.title;
       image.width = item.width;
       image.height = item.height;
       image.draggable = false;
       image.addEventListener('error', () => { image.alt = `${item.title} - archivo no disponible`; });
-      art.append(image);
+      const mobileSrc = window.SPAM_MOBILE_ASSETS?.[item.src];
+      if (mobileSrc) {
+        const picture = document.createElement('picture');
+        const source = document.createElement('source');
+        source.media = '(max-width: 600px)';
+        source.type = 'image/webp';
+        source.srcset = mobileSrc;
+        picture.append(source, image);
+        art.append(picture);
+      } else art.append(image);
       art.addEventListener('click', () => activate(record));
       body.append(art);
     } else if (item.url) {
@@ -511,7 +531,7 @@
     if (!launched.size && elapsed >= initialDelay) nextCluster();
     if (launched.has('C3') && elapsed >= nextSpam) {
       spawnRandom();
-      const minimum = narrow() ? 1800 : 1100;
+      const minimum = narrow() ? 2400 : 1100;
       nextSpam = elapsed + Math.max(minimum, 4800 - elapsed / 70 - interactions * 85) + Math.random() * 700;
     }
   }, 250);
