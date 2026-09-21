@@ -1,5 +1,15 @@
 # Revisión de rendimiento — 20 de septiembre de 2026
 
+## Adaptación automática de la portada — 21 de septiembre
+
+La portada decide su calidad en el navegador, antes de iniciar los efectos. No usa un test de velocidad que consuma datos. Activa el modo ligero con ahorro de datos, red 2G/3G, ancho de banda estimado inferior a 1.5 Mbps, RTT estimado desde 450 ms, o demora de respuesta del documento superior a 1200 ms. Esta última incluye tiempo del servidor y no equivale a latencia de red pura. También lo activa en dispositivos táctiles/pantallas hasta 1024 px, o con memoria/concurrencia declaradas de hasta 2 GB/hilos.
+
+Si no existen estas APIs, conserva la detección por pantalla y observa la fluidez: dos ventanas consecutivas de tres segundos con más del 30 % de cuadros separados por más de 50 ms reducen la calidad. La observación empieza después del arranque, excluye pestañas ocultas y termina tras 30 segundos visibles. La reducción por conexión o rendimiento se mantiene durante esa visita para evitar oscilaciones; una nueva carga evalúa de nuevo. No se almacena ni envía esta información.
+
+Modo ligero: seis imágenes decorativas locales, sin precarga del dataset; bloques del póster estáticos; menos filtros y animación JavaScript limitada a 30 fps. Las secciones fuera de pantalla pausan sus animaciones CSS y su movimiento de paralaje. El contenido, la navegación y la radio permanecen disponibles. Las cargas ya iniciadas antes de detectar mala fluidez no se pueden ahorrar retroactivamente. El script de adaptación solo se añade al home.
+
+Prueba reproducible: `node scripts/home-performance-tests.cjs` con Playwright y el servidor local activos. Incluye señales rápidas/lentas/desconocidas, lentitud breve frente a sostenida y comprobaciones de navegador en escritorio y móvil. Estas son simulaciones, no mediciones de redes físicas.
+
 ## Alcance y método
 
 Revisión del código compartido y una muestra de 22 rutas locales. Chromium con pantalla táctil emulada de 820 × 900, DPR 2 y CPU ralentizada 4 veces. Cada navegación se observó durante cinco segundos después de DOMContentLoaded, con contexto nuevo. Las solicitudes externas se bloquearon deliberadamente para comparar el trabajo local: estos resultados **no miden el rendimiento completo del servidor público, la conexión móvil ni un dispositivo físico**.

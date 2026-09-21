@@ -62,7 +62,11 @@ const mosquitoLink = document.querySelector('.mosquito-link');
 const hero = document.querySelector('.hero');
 const heroArchive = document.querySelector('.hero-archive');
 const netArtItems = [];
-const lightweightDevice = window.matchMedia('(max-width: 1024px), (pointer: coarse)');
+const lightweightViewport = window.matchMedia('(max-width: 1024px), (pointer: coarse)');
+const lightweightDevice = { get matches() {
+  return document.documentElement.dataset.homeQuality
+    ? document.documentElement.dataset.homeQuality === 'light' : lightweightViewport.matches;
+} };
 
 const MOSQUITO_CYCLE_MS = 60000;
 const MOSQUITO_ACTIVE_MS = 20000;
@@ -268,11 +272,10 @@ const randomizeNetArtItem = (item, subtle = false) => {
 
 const initNetArt = async () => {
   if (!netArtLayer) return;
-  const count = lightweightDevice.matches ? 12 : 36;
   const vh = window.innerHeight;
 
   try {
-    const localImages = await loadLocalNetArtImages();
+    const localImages = lightweightDevice.matches ? null : await loadLocalNetArtImages();
 
     if (localImages) {
       netArtImages = localImages;
@@ -283,6 +286,7 @@ const initNetArt = async () => {
 
   // Do not hide the page again when image loading finishes on a slow connection.
 
+  const count = lightweightDevice.matches ? 6 : 36;
   for (let i = 0; i < count; i++) {
     const item = document.createElement('div');
     item.className = 'netart-item';
@@ -817,12 +821,14 @@ const updateKinetic = () => {
   scrollRainEnergy = Math.max(0, scrollRainEnergy - 0.005);
 
   kineticNodes.forEach((node) => {
+    if (node.closest('.home-offscreen')) return;
     const speed = Number(node.dataset.speed || 0);
     const movement = offset * speed;
     node.style.transform = `translate3d(0, ${movement}px, 0)`;
   });
 
   bgLayers.forEach((layer) => {
+    if (layer.closest('.home-offscreen')) return;
     const speed = Number(layer.dataset.speed || 0);
     const movement = offset * speed;
     layer.style.transform = `translate3d(0, ${movement}px, 0)`;
@@ -847,7 +853,8 @@ const updateKinetic = () => {
     netArtLayer.style.opacity = rainPhase ? '1' : `${0.12 + scrollRainEnergy * 0.12}`;
   }
 
-  netArtItems.forEach((item) => {
+  netArtItems.forEach((item, index) => {
+    if (lightweightDevice.matches && index >= 6) return;
     const base = Number(item.dataset.baseY || 0);
     const rainSpeed = Number(item.dataset.rain || 1.4);
     const scrollRainSpeed = Number(item.dataset.scrollRain || 0.12);

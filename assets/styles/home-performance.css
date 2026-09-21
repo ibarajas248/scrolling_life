@@ -1,0 +1,18 @@
+/* Keep the composition; reduce decorative work on constrained devices. */
+html[data-home-quality="light"] .poster-shape {
+  animation: none !important;
+  will-change: auto;
+}
+html[data-home-quality="light"] :is(.hero-strip, .netart-item, .bg-orbit) {
+  filter: none !important;
+}
+html[data-home-quality="light"] :is(.site-menu, .site-menu-panel, .radio-float, .poster-shape) {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+html[data-home-quality="light"] .netart-item:nth-child(n+7) { display: none; }
+.home-offscreen, .home-offscreen *, .home-offscreen::before, .home-offscreen::after,
+.home-offscreen *::before, .home-offscreen *::after,
+.home-background *, .home-background *::before, .home-background *::after {
+  animation-play-state: paused !important;
+}
