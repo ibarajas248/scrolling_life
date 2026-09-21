@@ -3,7 +3,7 @@
   const canvas = field.querySelector('.ascii-field');
   const ctx = canvas.getContext('2d');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-  const mobile = matchMedia('(max-width: 720px)');
+  const mobile = matchMedia('(max-width: 1024px), (pointer: coarse)');
   let width = 0, height = 0, frame = 0, last = 0, visible = true;
   let links = [];
   const cellX = 7, cellY = 10;

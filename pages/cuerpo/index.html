@@ -1054,10 +1054,21 @@ en la misma posici&#243;n.</pre>
       });
 
       let angle = 0;
-      const animateLoop = () => {
+      let graphVisible = false;
+      let lastGraphFrame = 0;
+      const lightGraph = matchMedia('(max-width: 1024px), (pointer: coarse)');
+      const reducedGraph = matchMedia('(prefers-reduced-motion: reduce)');
+      new IntersectionObserver(entries => { graphVisible = entries[0].isIntersecting; }).observe(stage);
+      const animateLoop = (now = performance.now()) => {
+        requestAnimationFrame(animateLoop);
+        if (document.hidden || !graphVisible || reducedGraph.matches) return;
+        if (lightGraph.matches && now - lastGraphFrame < 1000 / 30) return;
+        const delta = Math.min((now - lastGraphFrame) / 16.667, 3);
+        lastGraphFrame = now;
+        updateEdgeLines();
         currentX += (mouseX - currentX) * 0.08;
         currentY += (mouseY - currentY) * 0.08;
-        angle += 0.02;
+        angle += 0.02 * delta;
 
         if (hub) {
           const oscX = Math.cos(angle) * 3;
@@ -1073,8 +1084,6 @@ en la misma posici&#243;n.</pre>
           sat.style.transform = `translate(calc(-50% + ${currentX * factor + satOscX}px), calc(-50% + ${currentY * factor + satOscY}px))`;
         });
 
-        updateEdgeLines();
-        requestAnimationFrame(animateLoop);
       };
 
       window.addEventListener('resize', updateEdgeLines);

@@ -1,18 +1,19 @@
 (() => {
-  const BATCH_SIZE = 20;
+  const LIGHT_DEVICE = matchMedia('(max-width: 1024px), (pointer: coarse)').matches;
+  const BATCH_SIZE = LIGHT_DEVICE ? 8 : 20;
   const REFILL_AT = 6;
   const THUMB_WIDTH = 420;
-  const PROCESS_MS = 1800; // Antes 1050 - Se aumenta para dar respiro al CPU
-  const MAX_ACTIVE_RAIN = 32; // Antes 72 - Reducción drástica
-  const MAX_MEMORY = 90; // Antes 140 - Reducción drástica
-  const MAX_VISIBLE_NODES = 45; // Antes 72 - Reducción drástica
+  const PROCESS_MS = LIGHT_DEVICE ? 3000 : 1800;
+  const MAX_ACTIVE_RAIN = LIGHT_DEVICE ? 12 : 32;
+  const MAX_MEMORY = LIGHT_DEVICE ? 45 : 90;
+  const MAX_VISIBLE_NODES = LIGHT_DEVICE ? 20 : 45;
   const VECTOR_DIMS = 64;
   const PCA_DIMS = 48;
   const MODEL_TIMEOUT_MS = 9000;
   const THREE_TIMEOUT_MS = 3600;
   const FETCH_TIMEOUT_MS = 6500;
   const STORAGE_KEY = 'scrolling_life_embedding_rain_memory_v1';
-  const LOCAL_CACHE_MANIFEST = '../../assets/images/netart-cache/manifest.json';
+  const LOCAL_CACHE_MANIFEST = '../../assets/images/netart-cache/manifest.json?v=20260920';
   const LOCAL_THREE_MODULE = '../../assets/vendor/three.module.js';
 
   const MODEL_SCRIPTS = [
@@ -341,7 +342,7 @@
   const loadLocalImageCache = async () => {
     if (localImagesCache) return localImagesCache;
 
-    const response = await fetch(`${LOCAL_CACHE_MANIFEST}?ts=${Date.now()}`, { cache: 'no-store' });
+    const response = await fetch(LOCAL_CACHE_MANIFEST);
     if (!response.ok) {
       throw new Error(`Manifest local ${response.status}`);
     }
@@ -1024,7 +1025,7 @@
   };
 
   const resizeCanvas = () => {
-    const ratio = Math.min(window.devicePixelRatio || 1, 1.6);
+    const ratio = Math.min(window.devicePixelRatio || 1, LIGHT_DEVICE ? 1 : 1.6);
     canvas.width = Math.round(window.innerWidth * ratio);
     canvas.height = Math.round(window.innerHeight * ratio);
     canvas.style.width = `${window.innerWidth}px`;
@@ -1044,7 +1045,7 @@
     if (!ctx) {
       ctx = canvas.getContext('2d', { alpha: true });
       if (!ctx) return;
-      ctx.setTransform(Math.min(window.devicePixelRatio || 1, 1.6), 0, 0, Math.min(window.devicePixelRatio || 1, 1.6), 0, 0);
+      ctx.setTransform(Math.min(window.devicePixelRatio || 1, LIGHT_DEVICE ? 1 : 1.6), 0, 0, Math.min(window.devicePixelRatio || 1, LIGHT_DEVICE ? 1 : 1.6), 0, 0);
     }
 
     const width = window.innerWidth;
@@ -1108,10 +1109,10 @@
       const renderer = new THREE.WebGLRenderer({
         canvas,
         alpha: true,
-        antialias: true,
+        antialias: !LIGHT_DEVICE,
         powerPreference: 'low-power'
       });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.6));
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, LIGHT_DEVICE ? 1 : 1.6));
       renderer.setSize(window.innerWidth, window.innerHeight, false);
       camera.position.set(0, 1.4, 6.4);
 
@@ -1174,7 +1175,11 @@
     pointGeometry.computeBoundingSphere();
   };
 
+  let lastRenderFrame = 0;
   const renderLoop = (time) => {
+    requestAnimationFrame(renderLoop);
+    if (document.hidden || (LIGHT_DEVICE && time - lastRenderFrame < 1000 / 24)) return;
+    lastRenderFrame = time;
     renderTime = time;
     if (threeState) {
       const { camera, renderer, scene } = threeState;
@@ -1189,11 +1194,10 @@
     }
 
     positionNodes(time);
-    requestAnimationFrame(renderLoop);
   };
 
   const processNext = async () => {
-    if (isProcessing) return;
+    if (isProcessing || document.hidden) return;
 
     const image = getNextImage();
     if (!image) return;

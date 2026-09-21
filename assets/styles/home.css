@@ -973,7 +973,7 @@ a {
   --strip-scroll-to: 45% 100%;
   --strip-rotate: -1.6deg;
   --strip-position: 45% center;
-  --strip-image: url('../images/archive-sides/paper-strips-installation.png');
+  --strip-image: url('../images/archive-sides/paper-strips-installation.webp');
 }
 
 .hero-strip-b {
@@ -988,7 +988,7 @@ a {
   --strip-size: 100% auto;
   --strip-shift: -4%;
   --strip-rotate: 1.2deg;
-  --strip-image: url('../images/archive-sides/dense-text-column.png');
+  --strip-image: url('../images/archive-sides/dense-text-column.webp');
 }
 
 .hero-strip-c {
@@ -1002,7 +1002,7 @@ a {
   --strip-scroll-to: 52% 96%;
   --strip-rotate: -0.8deg;
   --strip-position: 52% center;
-  --strip-image: url('../images/archive-sides/vertical-contact-strips.png');
+  --strip-image: url('../images/archive-sides/vertical-contact-strips.webp');
 }
 
 .hero-strip-d {
@@ -1017,7 +1017,7 @@ a {
   --strip-shift: 3%;
   --strip-rotate: 1.8deg;
   --strip-brightness: 0.72;
-  --strip-image: url('../images/archive-sides/sepia-contact-sheet.png');
+  --strip-image: url('../images/archive-sides/sepia-contact-sheet.webp');
 }
 
 .hero-strip-i {
@@ -1034,7 +1034,7 @@ a {
   --strip-rotate: -1.1deg;
   --strip-brightness: 0.74;
   --strip-position: 48% center;
-  --strip-image: url('../images/archive-sides/dense-text-column.png');
+  --strip-image: url('../images/archive-sides/dense-text-column.webp');
 }
 
 .hero-strip-j {
@@ -1050,7 +1050,7 @@ a {
   --strip-rotate: 0.8deg;
   --strip-brightness: 0.64;
   --strip-position: 52% center;
-  --strip-image: url('../images/archive-sides/vertical-contact-strips.png');
+  --strip-image: url('../images/archive-sides/vertical-contact-strips.webp');
 }
 
 .hero-strip-k {
@@ -1066,7 +1066,7 @@ a {
   --strip-shift: -5%;
   --strip-rotate: -0.5deg;
   --strip-brightness: 0.62;
-  --strip-image: url('../images/archive-sides/sepia-contact-sheet.png');
+  --strip-image: url('../images/archive-sides/sepia-contact-sheet.webp');
 }
 
 .hero-strip-l {
@@ -1082,7 +1082,7 @@ a {
   --strip-rotate: 1.2deg;
   --strip-brightness: 0.7;
   --strip-position: 50% center;
-  --strip-image: url('../images/archive-sides/folded-paper-floor.png');
+  --strip-image: url('../images/archive-sides/folded-paper-floor.webp');
 }
 
 .hero-strip-e {
@@ -1098,7 +1098,7 @@ a {
   --strip-shift: 2%;
   --strip-rotate: -1deg;
   --strip-brightness: 0.68;
-  --strip-image: url('../images/archive-sides/folded-paper-floor.png');
+  --strip-image: url('../images/archive-sides/folded-paper-floor.webp');
 }
 
 .hero-strip-f {
@@ -1113,7 +1113,7 @@ a {
   --strip-shift: -5%;
   --strip-rotate: 1.4deg;
   --strip-position: 44% center;
-  --strip-image: url('../images/archive-sides/paper-strips-installation.png');
+  --strip-image: url('../images/archive-sides/paper-strips-installation.webp');
 }
 
 .hero-strip-g {
@@ -1127,7 +1127,7 @@ a {
   --strip-scroll-to: center 0px;
   --strip-size: 100% auto;
   --strip-rotate: -0.7deg;
-  --strip-image: url('../images/archive-sides/dense-text-column.png');
+  --strip-image: url('../images/archive-sides/dense-text-column.webp');
 }
 
 .hero-strip-h {
@@ -1142,7 +1142,7 @@ a {
   --strip-shift: 4%;
   --strip-rotate: 1deg;
   --strip-position: 58% center;
-  --strip-image: url('../images/archive-sides/vertical-contact-strips.png');
+  --strip-image: url('../images/archive-sides/vertical-contact-strips.webp');
 }
 
 @keyframes archive-drift {

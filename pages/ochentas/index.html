@@ -154,6 +154,7 @@
     const datasetPath = "../../datasets/people_80s_style_compressed/";
     const manifestPath = `${datasetPath}manifest.json`;
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const lightDevice = window.matchMedia('(max-width: 1024px), (pointer: coarse)');
 
     let manifest = [];
     let placed = 0;
@@ -170,10 +171,11 @@
 
     function getTargetCount() {
       const area = window.innerWidth * window.innerHeight;
-      return Math.min(260, Math.max(80, Math.ceil(area / 5200)));
+      return lightDevice.matches ? Math.min(60, Math.max(30, Math.ceil(area / 14000))) : Math.min(260, Math.max(80, Math.ceil(area / 5200)));
     }
 
     function spawnPhoto() {
+      if (document.hidden) return;
       if (!manifest.length || placed >= targetCount) {
         window.clearInterval(timer);
         return;
@@ -206,13 +208,14 @@
     }
 
     function start() {
+      window.clearInterval(timer);
       placed = 0;
       targetCount = getTargetCount();
       counter.value = "000";
       stage.querySelectorAll(".photo").forEach((node) => node.remove());
 
-      const batch = reduceMotion ? 10 : 3;
-      const delay = reduceMotion ? 80 : 18;
+      const batch = lightDevice.matches ? 2 : reduceMotion ? 10 : 3;
+      const delay = lightDevice.matches ? 80 : reduceMotion ? 80 : 18;
       timer = window.setInterval(() => {
         for (let i = 0; i < batch; i += 1) {
           spawnPhoto();
@@ -226,9 +229,13 @@
       start();
     }
 
+    let resizeTimer;
+    let layoutWidth = window.innerWidth;
     window.addEventListener("resize", () => {
-      window.clearInterval(timer);
-      start();
+      if (layoutWidth === window.innerWidth) return;
+      layoutWidth = window.innerWidth;
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(start, 200);
     });
 
     stage.addEventListener("click", start);

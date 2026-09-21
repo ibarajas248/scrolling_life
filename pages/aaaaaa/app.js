@@ -26,7 +26,7 @@
   let bag = [];
   let finalVideo;
   let videoWasPlaying = false;
-  const narrow = () => stage.clientWidth < 600;
+  const narrow = () => stage.clientWidth <= 1024 || matchMedia('(pointer: coarse)').matches;
 
   function icon(name) {
     const img = document.createElement('img');
@@ -230,7 +230,7 @@
       if (mobileSrc) {
         const picture = document.createElement('picture');
         const source = document.createElement('source');
-        source.media = '(max-width: 600px)';
+        source.media = '(max-width: 1024px), (pointer: coarse)';
         source.type = 'image/webp';
         source.srcset = mobileSrc;
         picture.append(source, image);

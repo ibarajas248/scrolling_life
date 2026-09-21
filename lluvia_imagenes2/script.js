@@ -3,15 +3,16 @@
   const DATASET_BASE = '../datasets/people_80s_style_compressed/';
   const CACHE_MANIFEST = '../assets/images/netart-cache/manifest.json';
   const FALLBACK_IMAGES = [
-    '../assets/images/scroll-strips/strip_000001.jpg',
-    '../assets/images/scroll-strips/strip_000002.jpg',
-    '../assets/images/scroll-strips/strip_000003.jpg',
-    '../assets/images/scroll-strips/strip_000004.jpg'
+    '../assets/images/scroll-strips/strip_000001.webp',
+    '../assets/images/scroll-strips/strip_000002.webp',
+    '../assets/images/scroll-strips/strip_000003.webp',
+    '../assets/images/scroll-strips/strip_000004.webp'
   ];
-  const MAX_ACTIVE_DROPS = 64;
-  const PRELOAD_COUNT = 14;
+  const LIGHT_DEVICE = matchMedia('(max-width: 1024px), (pointer: coarse)').matches;
+  const MAX_ACTIVE_DROPS = LIGHT_DEVICE ? 24 : 64;
+  const PRELOAD_COUNT = LIGHT_DEVICE ? 6 : 14;
   const REMOTE_IMAGE_SIZE = 420;
-  const BASE_INTERVAL_MS = 118;
+  const BASE_INTERVAL_MS = LIGHT_DEVICE ? 220 : 118;
   const BURST_INTERVAL_MS = 1100;
 
   const rainField = document.getElementById('rainField');
@@ -133,6 +134,7 @@
   };
 
   const spawnDrop = (mode = 'normal') => {
+    if (isPaused || document.hidden) return;
     const drop = document.createElement('img');
     const near = mode === 'burst' || Math.random() > 0.72;
     const far = !near && Math.random() > 0.58;
@@ -220,7 +222,7 @@
 
   window.addEventListener('pointerdown', () => {
     if (isPaused) return;
-    for (let index = 0; index < 8; index += 1) {
+    for (let index = 0; index < (LIGHT_DEVICE ? 4 : 8); index += 1) {
       window.setTimeout(() => spawnDrop('burst'), index * 34);
     }
   }, { passive: true });
@@ -232,7 +234,7 @@
 
     preloadSomeImages();
 
-    const initialBurst = prefersReducedMotion.matches ? 6 : 22;
+    const initialBurst = prefersReducedMotion.matches ? 6 : LIGHT_DEVICE ? 8 : 22;
     for (let index = 0; index < initialBurst; index += 1) {
       window.setTimeout(() => spawnDrop(index < 12 ? 'burst' : 'normal'), index * 44);
     }

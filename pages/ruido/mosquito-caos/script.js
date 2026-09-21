@@ -9,6 +9,7 @@ const metricPressure = document.getElementById('metricPressure');
 const metricMode = document.getElementById('metricMode');
 const matrixRain = document.getElementById('matrixRain');
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+const lightDevice = window.matchMedia('(max-width: 1024px), (pointer: coarse)');
 const ochentasRoute = '/pages/ochentas/';
 
 function redirectToOchentas(event) {
@@ -61,7 +62,7 @@ const CHAOS_MODES = [
   { id: 'autoplay', label: 'fiebre autoplay', speed: 1.18, jitter: 1.22, glitch: 0.72, teleport: 0.34 }
 ];
 
-const frameCount = window.innerWidth < 640 ? 16 : window.innerWidth < 960 ? 24 : 32;
+const frameCount = lightDevice.matches ? 12 : 32;
 const frames = [];
 let bounds = { width: window.innerWidth, height: window.innerHeight };
 let lastTick = performance.now();
@@ -101,7 +102,7 @@ function createMatrixColumn(index) {
 function resizeMatrixRain() {
   if (!matrixRain) return;
 
-  const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+  const pixelRatio = Math.min(window.devicePixelRatio || 1, lightDevice.matches ? 1 : 2);
   const width = window.innerWidth;
   const height = window.innerHeight;
   matrixGlyphSize = width < 640 ? 13 : 16;
@@ -120,6 +121,8 @@ function resizeMatrixRain() {
 
 function drawMatrixRain(now) {
   if (!matrixContext || !matrixRain) return;
+  if (!prefersReducedMotion.matches) matrixAnimationFrame = requestAnimationFrame(drawMatrixRain);
+  if (document.hidden || (!prefersReducedMotion.matches && lightDevice.matches && now - matrixLastTick < 1000 / 24)) return;
 
   const dt = Math.min((now - matrixLastTick) / 1000, 0.06);
   matrixLastTick = now;
@@ -151,9 +154,6 @@ function drawMatrixRain(now) {
     }
   });
 
-  if (!prefersReducedMotion.matches) {
-    matrixAnimationFrame = requestAnimationFrame(drawMatrixRain);
-  }
 }
 
 function initMatrixRain() {
@@ -420,6 +420,8 @@ function cycleMode() {
 }
 
 function animate(now) {
+  requestAnimationFrame(animate);
+  if (document.hidden || prefersReducedMotion.matches || (lightDevice.matches && now - lastTick < 1000 / 30)) return;
   const dt = Math.min((now - lastTick) / 1000, 0.04);
   lastTick = now;
 
@@ -428,7 +430,6 @@ function animate(now) {
     placeFrame(frame, now);
   });
 
-  requestAnimationFrame(animate);
 }
 
 function rebuildLayout() {

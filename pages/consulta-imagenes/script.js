@@ -1,13 +1,14 @@
 (() => {
+  const LIGHT_DEVICE = matchMedia('(max-width: 1024px), (pointer: coarse)').matches;
   const API_URL = 'https://commons.wikimedia.org/w/api.php';
   const DEFAULT_QUERY = 'scroll internet visual culture';
-  const BATCH_SIZE = 20;
+  const BATCH_SIZE = LIGHT_DEVICE ? 8 : 20;
   const REFILL_AT = 6;
   const MAX_OFFSET = 420;
-  const THUMB_WIDTH = 560;
+  const THUMB_WIDTH = LIGHT_DEVICE ? 360 : 560;
   const SCROLL_DROP_STEP = 34;
-  const PASSIVE_RAIN_MS = 1000;
-  const MAX_ACTIVE_DROPS = 110;
+  const PASSIVE_RAIN_MS = LIGHT_DEVICE ? 1800 : 1000;
+  const MAX_ACTIVE_DROPS = LIGHT_DEVICE ? 28 : 110;
   const SEGMENT_SAMPLE_MAX = 180;
   const SEGMENT_GRID_COLUMNS = 18;
   const SEGMENT_GRID_ROWS = 12;
@@ -48,28 +49,28 @@
       title: 'Fragmento scroll 001',
       credit: 'Archivo local Scrolling Life',
       license: 'fallback local',
-      url: '../../assets/images/scroll-strips/strip_000001.jpg'
+      url: '../../assets/images/scroll-strips/strip_000001.webp'
     },
     {
       id: 'local-strip-002',
       title: 'Fragmento scroll 002',
       credit: 'Archivo local Scrolling Life',
       license: 'fallback local',
-      url: '../../assets/images/scroll-strips/strip_000002.jpg'
+      url: '../../assets/images/scroll-strips/strip_000002.webp'
     },
     {
       id: 'local-strip-003',
       title: 'Fragmento scroll 003',
       credit: 'Archivo local Scrolling Life',
       license: 'fallback local',
-      url: '../../assets/images/scroll-strips/strip_000003.jpg'
+      url: '../../assets/images/scroll-strips/strip_000003.webp'
     },
     {
       id: 'local-strip-004',
       title: 'Fragmento scroll 004',
       credit: 'Archivo local Scrolling Life',
       license: 'fallback local',
-      url: '../../assets/images/scroll-strips/strip_000004.jpg'
+      url: '../../assets/images/scroll-strips/strip_000004.webp'
     }
   ];
 
@@ -2026,11 +2027,13 @@
   };
 
   const launchRain = (count = 1, energy = 1) => {
-    if (isPaused) return;
+    if (isPaused || document.hidden) return;
+    if (LIGHT_DEVICE) count = Math.min(count, 5);
 
     let launched = 0;
     for (let index = 0; index < count; index += 1) {
       window.setTimeout(() => {
+        if (isPaused || document.hidden) return;
         if (spawnRainDrop(energy)) {
           setStatus('Lluvia activa: desliza para intensificar.');
         }

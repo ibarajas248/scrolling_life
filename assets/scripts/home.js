@@ -62,19 +62,20 @@ const mosquitoLink = document.querySelector('.mosquito-link');
 const hero = document.querySelector('.hero');
 const heroArchive = document.querySelector('.hero-archive');
 const netArtItems = [];
+const lightweightDevice = window.matchMedia('(max-width: 1024px), (pointer: coarse)');
 
 const MOSQUITO_CYCLE_MS = 60000;
 const MOSQUITO_ACTIVE_MS = 20000;
 const RAIN_PHASE_MS = 3000;
 const MOSQUITO_SOUND_ENABLED = false;
 const MOSQUITO_AUDIO_SRC = './assets/audio/mosquito-buzz.mp3';
-const NETART_DATASET_MANIFEST = './datasets/people_80s_style_compressed/manifest.json';
+const NETART_DATASET_MANIFEST = './datasets/people_80s_style_compressed/manifest.json?v=20260920';
 const NETART_DATASET_BASE = './datasets/people_80s_style_compressed/';
-const NETART_CACHE_MANIFEST = './assets/images/netart-cache/manifest.json';
+const NETART_CACHE_MANIFEST = './assets/images/netart-cache/manifest.json?v=20260920';
 const NETART_REMOTE_IMAGE_SIZE = 420;
-const NETART_PROBE_LIMIT = 70;
+const NETART_PROBE_LIMIT = lightweightDevice.matches ? 12 : 36;
 const NETART_MIN_VALID_IMAGES = 8;
-const NETART_IMAGE_TIMEOUT_MS = 650;
+const NETART_IMAGE_TIMEOUT_MS = 4000;
 
 let netArtStartTime = performance.now();
 let mosquitoCycleTimer = null;
@@ -97,15 +98,15 @@ if (mosquitoAudio) {
 }
 
 let netArtImages = [
-  './assets/images/scroll-strips/strip_000001.jpg',
-  './assets/images/scroll-strips/strip_000002.jpg',
-  './assets/images/scroll-strips/strip_000003.jpg',
-  './assets/images/scroll-strips/strip_000004.jpg',
-  './assets/images/archive-sides/paper-strips-installation.png',
-  './assets/images/archive-sides/dense-text-column.png',
-  './assets/images/archive-sides/vertical-contact-strips.png',
-  './assets/images/archive-sides/sepia-contact-sheet.png',
-  './assets/images/archive-sides/folded-paper-floor.png'
+  './assets/images/scroll-strips/strip_000001.webp',
+  './assets/images/scroll-strips/strip_000002.webp',
+  './assets/images/scroll-strips/strip_000003.webp',
+  './assets/images/scroll-strips/strip_000004.webp',
+  './assets/images/archive-sides/paper-strips-installation.webp',
+  './assets/images/archive-sides/dense-text-column.webp',
+  './assets/images/archive-sides/vertical-contact-strips.webp',
+  './assets/images/archive-sides/sepia-contact-sheet.webp',
+  './assets/images/archive-sides/folded-paper-floor.webp'
 ];
 
 const shuffleImages = (images) => {
@@ -179,7 +180,10 @@ const collectReachableImages = async (images) => {
 
   if (candidates.length === 0) return null;
 
-  const testedImages = await Promise.all(candidates.map((image) => probeImage(image)));
+  const testedImages = [];
+  for (let index = 0; index < candidates.length; index += 4) {
+    testedImages.push(...await Promise.all(candidates.slice(index, index + 4).map(probeImage)));
+  }
   const validImages = testedImages.filter(Boolean);
 
   return validImages.length >= NETART_MIN_VALID_IMAGES ? validImages : null;
@@ -187,7 +191,7 @@ const collectReachableImages = async (images) => {
 
 const loadDatasetNetArtImages = async () => {
   try {
-    const response = await fetch(`${NETART_DATASET_MANIFEST}?ts=${Date.now()}`, { cache: 'no-store' });
+    const response = await fetch(NETART_DATASET_MANIFEST);
     if (!response.ok) return null;
 
     const manifest = await response.json();
@@ -205,7 +209,7 @@ const loadDatasetNetArtImages = async () => {
 
 const loadLocalNetArtImages = async () => {
   try {
-    const response = await fetch(`${NETART_CACHE_MANIFEST}?ts=${Date.now()}`, { cache: 'no-store' });
+    const response = await fetch(NETART_CACHE_MANIFEST);
     if (response.ok) {
       const manifest = await response.json();
       const skipFallbackCache = manifest.source === 'local-fallback';
@@ -237,7 +241,7 @@ const loadRemoteNetArtImages = async () => {
   const response = await fetch(`https://picsum.photos/v2/list?page=${randomPage}&limit=30`);
   const data = await response.json();
 
-  return Array.isArray(data) ? data.map((item) => item.download_url).filter(Boolean) : [];
+  return Array.isArray(data) ? data.filter(item => item.id != null).map(item => `https://picsum.photos/id/${encodeURIComponent(item.id)}/${NETART_REMOTE_IMAGE_SIZE}/${NETART_REMOTE_IMAGE_SIZE}`) : [];
 };
 
 const randomBetween = (min, max) => min + Math.random() * (max - min);
@@ -264,7 +268,7 @@ const randomizeNetArtItem = (item, subtle = false) => {
 
 const initNetArt = async () => {
   if (!netArtLayer) return;
-  const count = window.matchMedia('(max-width: 720px)').matches ? 18 : 45;
+  const count = lightweightDevice.matches ? 12 : 36;
   const vh = window.innerHeight;
 
   try {
@@ -277,8 +281,7 @@ const initNetArt = async () => {
     console.warn('API de imágenes falló, usando imágenes locales de respaldo.', e);
   }
 
-  // Reiniciar el contador para que la ráfaga dure sus 3 segundos completos después de cargar la API
-  netArtStartTime = performance.now();
+  // Do not hide the page again when image loading finishes on a slow connection.
 
   for (let i = 0; i < count; i++) {
     const item = document.createElement('div');
@@ -895,7 +898,7 @@ const updateKinetic = () => {
   });
 };
 
-const mobileAnimation = window.matchMedia('(max-width: 720px)');
+const mobileAnimation = lightweightDevice;
 let lastAnimationFrame = 0;
 const animate = (time) => {
   if (!document.hidden && (!mobileAnimation.matches || time - lastAnimationFrame >= 1000 / 30)) {
