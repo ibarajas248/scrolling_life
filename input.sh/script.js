@@ -61,11 +61,15 @@
       if (!sending) status.textContent = 'consola conectada';
     } catch { if (version === requestVersion && !sending) status.textContent = 'sin conexión. tu texto permanece aquí; volveremos a intentar.'; }
   }
-  input.addEventListener('input', () => {
+  function resizeInput() {
     const follow = atBottom();
-    document.querySelector('#count').textContent = `${input.value.length} / 2000`;
     input.style.height = 'auto'; input.style.height = `${input.scrollHeight}px`;
     if (follow) toBottom();
+  }
+  window.addEventListener('resize', resizeInput);
+  input.addEventListener('input', () => {
+    document.querySelector('#count').textContent = `${input.value.length} / 2000`;
+    resizeInput();
   });
   input.addEventListener('keydown', event => {
     if (event.key === 'Enter' && !event.shiftKey && !event.isComposing) { event.preventDefault(); form.requestSubmit(); }
