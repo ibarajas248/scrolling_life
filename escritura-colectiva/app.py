@@ -21,6 +21,7 @@ PUBLIC_DIR = APP_DIR / "public"
 DATA_DIR = Path(os.environ.get("COLLECTIVE_SCROLL_DATA", "/data"))
 DB_PATH = DATA_DIR / "scroll_literario.sqlite3"
 input_store = InputStore(DATA_DIR / "input-sh.json")
+voice_store = InputStore(DATA_DIR / "voz-sh.json")
 image_store = ImageStore(DATA_DIR / "lienzo")
 PORT = int(os.environ.get("PORT", "8080"))
 
@@ -265,9 +266,10 @@ class CollectiveScrollHandler(BaseHTTPRequestHandler):
         if dispatch_images(self, image_store, 'GET'):
             return
         path = self.request_path()
-        if path == "/api/input":
+        if path in ("/api/input", "/api/voz"):
+            store = voice_store if path == "/api/voz" else input_store
             try:
-                self.send_json(input_store.snapshot())
+                self.send_json(store.snapshot())
             except (OSError, ValueError):
                 self.send_json({"error": "No se pudo leer la consola."}, HTTPStatus.SERVICE_UNAVAILABLE)
             return
@@ -289,7 +291,8 @@ class CollectiveScrollHandler(BaseHTTPRequestHandler):
     def do_POST(self) -> None:
         if dispatch_images(self, image_store, 'POST'):
             return
-        if self.request_path() == "/api/input":
+        if self.request_path() in ("/api/input", "/api/voz"):
+            store = voice_store if self.request_path() == "/api/voz" else input_store
             if self.headers.get_content_type() != "application/json":
                 self.send_json({"error": "Se requiere application/json."}, HTTPStatus.UNSUPPORTED_MEDIA_TYPE)
                 return
@@ -297,7 +300,7 @@ class CollectiveScrollHandler(BaseHTTPRequestHandler):
             if payload is None:
                 return
             try:
-                entry = input_store.add(payload)
+                entry = store.add(payload)
                 self.send_json({"entry": entry}, HTTPStatus.CREATED)
             except ValueError as error:
                 self.send_json({"error": str(error)}, HTTPStatus.BAD_REQUEST)

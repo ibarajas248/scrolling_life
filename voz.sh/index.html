@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080b09">
+  <title>voz.sh — Scrolling Life</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+  <script src="./script.js" defer></script>
+</head>
+<body><main>
+  <p class="prompt">visitante@scrollinglife <span>~/voz.sh</span></p>
+  <h1>$ habla y deja un rastro_</h1>
+  <p>Activa el micrófono y habla en español. Cada frase confirmada se envía automáticamente para imprimir.</p>
+  <div class="controls"><button id="start">Activar micrófono</button><button id="stop" disabled>Detener</button></div>
+  <p id="status" role="status">Micrófono apagado.</p>
+  <p id="delivery" role="status">Sin frases pendientes.</p>
+  <section aria-label="Transcripción en curso"><p class="label">escuchando / borrador</p><p id="interim">…</p></section>
+  <section aria-label="Frases de esta sesión"><p class="label">frases confirmadas</p><div id="feed"></div></section>
+  <p class="note">Usa Chrome con conexión a internet y permite el micrófono. El reconocimiento puede procesar audio en el servicio del navegador. El texto enviado es público. La impresora necesita el script local activo; «enviado» confirma la recepción del texto, no la salida de papel.</p>
+  <a href="/input.sh/">← escribir con teclado</a>
+</main></body></html>
