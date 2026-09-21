@@ -38,3 +38,48 @@ Pruebas:
 ```powershell
 python -m unittest discover -s escritura-colectiva -p test_input_store.py
 ```
+
+## Imprimir comentarios nuevos en una XP-58 USB (Windows)
+
+Dejar abierto este script local en el equipo donde está conectada e instalada
+la impresora. Reutiliza la API pública `https://scrollinglife.com/api/input`;
+no necesita una API adicional, Excel, un servicio instalado ni abrir puertos.
+
+Desde la raíz del proyecto, con Python 3.10 o posterior:
+
+```powershell
+python -m pip install -r scripts/input-print-requirements.txt
+python scripts/input-print.py --list-printers
+python scripts/input-print.py --printer "XP-58" --test
+python scripts/input-print.py --printer "XP-58"
+```
+
+Esperar el mensaje **Listo** y enviar un comentario con Enter desde `/input.sh/`.
+Consulta cada segundo; imprime mediante `win32print` en modo RAW ESC/POS, con
+líneas de 32 caracteres para papel de 58 mm. Translitera tildes y elimina emojis
+y controles. El texto llega como datos, nunca como comandos de impresora.
+La impresión depende de la conexión, del spooler, del papel y del controlador.
+
+La primera ejecución omite los comentarios anteriores. El estado se conserva
+fuera de Git, en `.local-backup/input-print/state.json`, para evitar duplicados
+al reiniciar y guardar la cola local pendiente. Ctrl+C detiene el script.
+Los comentarios que se publiquen mientras está cerrado se recuperan al volver
+a abrirlo **si todavía están en las últimas 500 entradas de la API**. No es un
+archivo ilimitado; deja el script abierto durante la instalación.
+
+Si se interrumpe una impresión, el script se detiene para no repetir papel.
+Revisa la cola de Windows y el papel. Si el trabajo ya fue enviado:
+
+```powershell
+python scripts/input-print.py --printer "XP-58" --resolve sent
+```
+
+Si no llegó a enviarse, usa `--resolve retry`. No borres el estado para resolver
+un fallo. Ejecuta solo una copia con el mismo archivo de estado. Un trabajo
+aceptado por Windows no confirma que el papel haya salido físicamente.
+
+Pruebas automáticas sin usar papel:
+
+```powershell
+python -m unittest discover -s scripts/input-print-tests -v
+```
