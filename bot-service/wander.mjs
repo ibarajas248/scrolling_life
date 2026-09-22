@@ -55,17 +55,34 @@ export class Wanderer {
   async chooseLink(page) {
     const links = await page.locator('#mw-content-text .mw-parser-output a[href]').evaluateAll(nodes => nodes.map((a, index) => {
       const r = a.getBoundingClientRect();
-      return { href: a.href, index, visible: r.top > 90 && r.bottom < innerHeight - 30 && r.left >= 0 && r.right <= innerWidth,
-        usable: r.width > 0 && r.height > 0 && !a.classList.contains('new') && !a.hasAttribute('download') && !a.closest('.navbox, .metadata, .reflist, .mw-editsection') };
+      const style = getComputedStyle(a);
+      // Wikipedia keeps many template and navigation links in the DOM while
+      // hiding their parents. A non-zero rectangle alone is not enough: those
+      // links make Playwright wait forever for a click that can never happen.
+      const rendered = a.getClientRects().length > 0 && a.offsetParent !== null &&
+        style.display !== 'none' && style.visibility !== 'hidden' && style.visibility !== 'collapse' &&
+        Number(style.opacity) > 0 && (!a.checkVisibility || a.checkVisibility({ visibilityProperty: true, opacityProperty: true }));
+      return { href: a.href, index, visible: rendered && r.top > 90 && r.bottom < innerHeight - 30 && r.left >= 0 && r.right <= innerWidth,
+        usable: rendered && r.width > 0 && r.height > 0 && !a.classList.contains('new') && !a.hasAttribute('download') && !a.closest('.navbox, .metadata, .reflist, .mw-editsection') };
     }));
     const candidates = links.filter(a => a.usable && articleUrl(a.href) && !this.history.includes(articleUrl(a.href)));
     const visible = candidates.filter(a => a.visible);
     const selected = pick(visible.length ? visible : candidates);
     if (!selected) return false;
     const locator = page.locator('#mw-content-text .mw-parser-output a[href]').nth(selected.index);
-    const offset = await locator.evaluate(a => a.getBoundingClientRect().top - innerHeight * 0.45);
-    if (!selected.visible) { await this.scroll(page, offset); await this.wait(random(900, 1800)); }
-    const box = await locator.boundingBox();
+    if (!selected.visible) {
+      await locator.scrollIntoViewIfNeeded({ timeout: 15_000 });
+      await this.wait(random(900, 1800));
+    }
+    const box = await locator.evaluate(a => {
+      const r = a.getBoundingClientRect();
+      const s = getComputedStyle(a);
+      const rendered = a.getClientRects().length > 0 && a.offsetParent !== null &&
+        s.display !== 'none' && s.visibility !== 'hidden' && s.visibility !== 'collapse' &&
+        Number(s.opacity) > 0 && (!a.checkVisibility || a.checkVisibility({ visibilityProperty: true, opacityProperty: true }));
+      return rendered && r.width > 0 && r.height > 0 && r.top >= 0 && r.bottom <= innerHeight && r.left >= 0 && r.right <= innerWidth
+        ? { x: r.x, y: r.y, width: r.width, height: r.height } : null;
+    });
     if (!box) return false;
     await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
     await this.wait(random(300, 800));
