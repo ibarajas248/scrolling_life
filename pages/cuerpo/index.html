@@ -902,11 +902,27 @@
     .terminal-bar > span:first-child { overflow: hidden; text-overflow: ellipsis; }
     .terminal-controls {
       flex: 0 0 auto;
+      display: flex;
+      gap: 2px;
+      align-items: center;
+    }
+    .terminal-controls i {
+      display: grid;
+      place-items: center;
+      width: 17px;
+      height: 17px;
       color: #111;
       background: #c3c3c3;
-      padding: 2px 3px;
-      border: 1px outset #eee;
-      font: bold 11px Arial, sans-serif;
+      border: 2px outset #eee;
+      font: bold 11px/1 Arial, sans-serif;
+      font-style: normal;
+    }
+    .terminal-controls i:last-child {
+      font-size: 14px;
+      border-color: #d8d8d8 #666 #666 #d8d8d8;
+    }
+    .terminal-controls i:active {
+      border-style: inset;
     }
     .hub-node h2 {
       display: grid;
@@ -1149,7 +1165,7 @@ en la misma posici&#243;n.</pre>
 
           <!-- Nodo Central Núcleo: CUERPO -->
           <div class="node-item hub-node" id="nodeHub">
-            <span class="terminal-bar" aria-hidden="true"><span>C:\SCROLL\CUERPO.EXE</span><span class="terminal-controls">_ □ ×</span></span>
+            <span class="terminal-bar" aria-hidden="true"><span>C:\SCROLL\CUERPO.EXE</span><span class="terminal-controls"><i>_</i><i>□</i><i>×</i></span></span>
             <div class="hub-shockwave" aria-hidden="true"></div>
             <h2>Cuerpo</h2>
             <span class="terminal-status" aria-hidden="true">SCROLLING LIFE</span>
@@ -1158,7 +1174,7 @@ en la misma posici&#243;n.</pre>
 
           <!-- Satélite 1: game_scroll (Verde Neón) -->
           <a class="node-item satellite-node satellite-game" id="nodeGameScroll" href="../game_scroll/" data-edge="edgeGameScroll">
-            <span class="terminal-bar" aria-hidden="true"><span>SCROLL\GAME.EXE</span><span class="terminal-controls">_ □ ×</span></span>
+            <span class="terminal-bar" aria-hidden="true"><span>SCROLL\GAME.EXE</span><span class="terminal-controls"><i>_</i><i>□</i><i>×</i></span></span>
             <div class="node-meta">
               <span class="node-title">El Mounstro del Scroll</span>
 
@@ -1168,7 +1184,7 @@ en la misma posici&#243;n.</pre>
 
           <!-- Satélite 2: NPC (Coral) -->
           <a class="node-item satellite-node satellite-npc" id="nodeNpc" href="../npc/" data-edge="edgeNpc">
-            <span class="terminal-bar" aria-hidden="true"><span>SCROLL\NPC.EXE</span><span class="terminal-controls">_ □ ×</span></span>
+            <span class="terminal-bar" aria-hidden="true"><span>SCROLL\NPC.EXE</span><span class="terminal-controls"><i>_</i><i>□</i><i>×</i></span></span>
             <div class="node-meta">
               <span class="node-title">NPC</span>
               <span class="node-caption">Juan Osorio</span>
@@ -1178,7 +1194,7 @@ en la misma posici&#243;n.</pre>
 
           <!-- Satélite 3: Fantasmagorías / Materia Inestable -->
           <a class="node-item satellite-node satellite-materia" id="nodeMateria" href="../fantasmagorias/" data-edge="edgeMateria">
-            <span class="terminal-bar" aria-hidden="true"><span>SCROLL\MATERIA.EXE</span><span class="terminal-controls">_ □ ×</span></span>
+            <span class="terminal-bar" aria-hidden="true"><span>SCROLL\MATERIA.EXE</span><span class="terminal-controls"><i>_</i><i>□</i><i>×</i></span></span>
             <div class="node-meta">
               <span class="node-title">Materia Inestable</span>
             </div>
@@ -1186,7 +1202,7 @@ en la misma posici&#243;n.</pre>
           </a>
 
           <a class="node-item satellite-node satellite-game" id="nodeApuntesColor" href="../video-texto/" data-edge="edgeApuntesColor">
-            <span class="terminal-bar" aria-hidden="true"><span>SCROLL\COLOR.EXE</span><span class="terminal-controls">_ □ ×</span></span>
+            <span class="terminal-bar" aria-hidden="true"><span>SCROLL\COLOR.EXE</span><span class="terminal-controls"><i>_</i><i>□</i><i>×</i></span></span>
             <div class="node-meta">
               <span class="node-title">Apuntes de color</span>
             </div>
@@ -1194,7 +1210,7 @@ en la misma posici&#243;n.</pre>
           </a>
 
           <a class="node-item satellite-node satellite-materia" id="nodeJuliana" href="../../contacto-command/" data-edge="edgeJuliana">
-            <span class="terminal-bar" aria-hidden="true"><span>SCROLL\COMMAND.EXE</span><span class="terminal-controls">_ □ ×</span></span>
+            <span class="terminal-bar" aria-hidden="true"><span>SCROLL\COMMAND.EXE</span><span class="terminal-controls"><i>_</i><i>□</i><i>×</i></span></span>
             <div class="node-meta">
               <span class="node-title">contacto.<wbr>command</span>
               <span class="node-caption">Juliana Castro Duperly</span>
