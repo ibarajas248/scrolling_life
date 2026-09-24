@@ -819,6 +819,7 @@
     }
 
     .satellite-node {
+      display: block;
       min-width: 190px;
       padding: 27px 4px 4px;
       border: 2px solid #efefef;
@@ -878,6 +879,53 @@
       #nodeApuntesColor { top: 87%; left: 31%; }
       #nodeJuliana { top: 14%; left: 30%; width: 185px; }
     }
+
+    .hub-node::before,
+    .satellite-node::before { display: none; }
+    .terminal-bar {
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 27px;
+      padding: 3px 5px;
+      overflow: hidden;
+      background: linear-gradient(90deg, #1531df, #526dff);
+      color: #fff;
+      font: bold 11px Arial, sans-serif;
+      white-space: nowrap;
+    }
+    .terminal-bar > span:first-child { overflow: hidden; text-overflow: ellipsis; }
+    .terminal-controls {
+      flex: 0 0 auto;
+      color: #111;
+      background: #c3c3c3;
+      padding: 2px 3px;
+      border: 1px outset #eee;
+      font: bold 11px Arial, sans-serif;
+    }
+    .hub-node h2 {
+      display: grid;
+      flex: 1;
+      place-items: center;
+      height: auto;
+      padding: 0;
+    }
+    .terminal-status {
+      display: block;
+      flex: 0 0 20px;
+      margin: 0;
+      padding: 3px 5px;
+      color: #454545;
+      background: #c3c3c3;
+      border-top: 1px solid #8a8a8a;
+      font: 10px Arial, sans-serif;
+    }
+    .satellite-node .node-meta { margin: 0; }
   </style>
   <script src="../../assets/scripts/maintenance-gate.js" defer></script>
   <link rel="stylesheet" href="/assets/styles/home-terminal-menu.css?v=20260917-2" />
@@ -1101,51 +1149,57 @@ en la misma posici&#243;n.</pre>
 
           <!-- Nodo Central Núcleo: CUERPO -->
           <div class="node-item hub-node" id="nodeHub">
+            <span class="terminal-bar" aria-hidden="true"><span>C:\SCROLL\CUERPO.EXE</span><span class="terminal-controls">_ □ ×</span></span>
             <div class="hub-shockwave" aria-hidden="true"></div>
             <h2>Cuerpo</h2>
+            <span class="terminal-status" aria-hidden="true">SCROLLING LIFE</span>
 
           </div>
 
           <!-- Satélite 1: game_scroll (Verde Neón) -->
           <a class="node-item satellite-node satellite-game" id="nodeGameScroll" href="../game_scroll/" data-edge="edgeGameScroll">
-
+            <span class="terminal-bar" aria-hidden="true"><span>SCROLL\GAME.EXE</span><span class="terminal-controls">_ □ ×</span></span>
             <div class="node-meta">
               <span class="node-title">El Mounstro del Scroll</span>
 
             </div>
-
+            <span class="terminal-status" aria-hidden="true">SCROLLING LIFE</span>
           </a>
 
           <!-- Satélite 2: NPC (Coral) -->
           <a class="node-item satellite-node satellite-npc" id="nodeNpc" href="../npc/" data-edge="edgeNpc">
-
+            <span class="terminal-bar" aria-hidden="true"><span>SCROLL\NPC.EXE</span><span class="terminal-controls">_ □ ×</span></span>
             <div class="node-meta">
               <span class="node-title">NPC</span>
               <span class="node-caption">Juan Osorio</span>
             </div>
-
+            <span class="terminal-status" aria-hidden="true">SCROLLING LIFE</span>
           </a>
 
           <!-- Satélite 3: Fantasmagorías / Materia Inestable -->
           <a class="node-item satellite-node satellite-materia" id="nodeMateria" href="../fantasmagorias/" data-edge="edgeMateria">
-
+            <span class="terminal-bar" aria-hidden="true"><span>SCROLL\MATERIA.EXE</span><span class="terminal-controls">_ □ ×</span></span>
             <div class="node-meta">
               <span class="node-title">Materia Inestable</span>
             </div>
-
+            <span class="terminal-status" aria-hidden="true">SCROLLING LIFE</span>
           </a>
 
           <a class="node-item satellite-node satellite-game" id="nodeApuntesColor" href="../video-texto/" data-edge="edgeApuntesColor">
+            <span class="terminal-bar" aria-hidden="true"><span>SCROLL\COLOR.EXE</span><span class="terminal-controls">_ □ ×</span></span>
             <div class="node-meta">
               <span class="node-title">Apuntes de color</span>
             </div>
+            <span class="terminal-status" aria-hidden="true">SCROLLING LIFE</span>
           </a>
 
           <a class="node-item satellite-node satellite-materia" id="nodeJuliana" href="../../contacto-command/" data-edge="edgeJuliana">
+            <span class="terminal-bar" aria-hidden="true"><span>SCROLL\COMMAND.EXE</span><span class="terminal-controls">_ □ ×</span></span>
             <div class="node-meta">
               <span class="node-title">contacto.<wbr>command</span>
               <span class="node-caption">Juliana Castro Duperly</span>
             </div>
+            <span class="terminal-status" aria-hidden="true">SCROLLING LIFE</span>
           </a>
 
         </div>
