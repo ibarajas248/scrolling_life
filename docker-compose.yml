@@ -12,7 +12,7 @@ services:
     read_only: true
     shm_size: 256mb
     mem_limit: 1536m
-    cpus: 1.5
+    cpus: 0.20
     pids_limit: 160
     tmpfs:
       - /tmp:size=256m,mode=1777
@@ -55,6 +55,9 @@ services:
       - no-new-privileges:true
     networks:
       scrollinglife_net:
+        aliases:
+          - scrolling_life
+      lienzo_net:
         aliases:
           - scrolling_life
     depends_on:
@@ -161,6 +164,7 @@ services:
       SERVER_METRICS_URL: http://server_metrics:8091
       TZ: America/Bogota
     restart: unless-stopped
+    init: true
     read_only: true
     tmpfs:
       - /tmp
@@ -192,6 +196,7 @@ services:
       SAMPLE_INTERVAL_SECONDS: "30"
       TZ: America/Bogota
     restart: unless-stopped
+    init: true
     read_only: true
     tmpfs:
       - /tmp
@@ -215,6 +220,7 @@ services:
       context: ${ESCRITURA_COLECTIVA_CONTEXT:-./escritura-colectiva}
       dockerfile: Dockerfile
     restart: unless-stopped
+    init: true
     read_only: true
     tmpfs:
       - /tmp
@@ -231,6 +237,10 @@ networks:
   scrollinglife_net:
     name: ${SCROLLINGLIFE_NETWORK_NAME:-scrollinglife_net}
     external: ${SCROLLINGLIFE_NETWORK_EXTERNAL:-false}
+
+  lienzo_net:
+    name: lienzo_lienzo_net
+    external: true
 
 volumes:
   wikipedia_bot_data:

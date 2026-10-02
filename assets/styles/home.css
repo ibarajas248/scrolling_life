@@ -4186,3 +4186,6 @@ p {
     max-width: calc(100vw - 24px);
   }
 }
+
+/* Radio accesible durante la capa de registro */
+.radio-float { z-index: 2147483648; }
