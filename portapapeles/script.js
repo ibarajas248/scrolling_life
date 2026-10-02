@@ -49,7 +49,7 @@
       if (!entry) {
         const img = new Image();
         img.alt = ''; img.draggable = false; img.decoding = 'async'; img.loading = 'lazy';
-        img.src = `${endpoint}/images/${item.id}.webp`;
+        img.src = `${endpoint}/images/${item.id}.webp?v=20260917`;
         img.addEventListener('pointerdown', event => startDrag(event, item.id));
         entry = {item, img}; items.set(item.id, entry); canvas.append(img);
       } else entry.item = item;

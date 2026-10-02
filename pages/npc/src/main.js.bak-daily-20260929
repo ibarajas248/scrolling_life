@@ -86,14 +86,6 @@ async function boot() {
     feed.onClipReady((ms) => scroller?.armFromMedia(ms));
     scroller.start();
 
-    // Cada día se reconstruye la playlist para cambiar el orden sin cortar el clip actual.
-    const dailyRotationTimer = setTimeout(function rotateDailyPlaylist() {
-      rebuildPlaylist();
-      scroller?.refreshPool();
-      setTimeout(rotateDailyPlaylist, 24 * 60 * 60 * 1000);
-    }, Math.max(60 * 1000, new Date().setHours(24, 0, 0, 0) - Date.now()));
-    void dailyRotationTimer;
-
     // Detecta library/manifest nuevos cada 5 min (sin reiniciar el clip actual)
     unwatchLibrary = watchLibrary({
       onUpdate({ videos }) {

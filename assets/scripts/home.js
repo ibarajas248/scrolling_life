@@ -1,5 +1,6 @@
 const DRAWING_COMPANION_URL = 'https://thescrollingdrawing.scrollinglife.com/';
 const DRAWING_COMPANION_SESSION_KEY = 'scrolling-life:drawing-companion-opened';
+const DRAWING_COMPANION_AUTO_OPEN_ENABLED = false;
 
 const drawingCompanionWasOpened = () => {
   try {
@@ -44,7 +45,7 @@ const initDrawingCompanion = () => {
   window.addEventListener('keydown', openOnFirstInteraction, true);
 };
 
-initDrawingCompanion();
+if (DRAWING_COMPANION_AUTO_OPEN_ENABLED) initDrawingCompanion();
 
 const progressBar = document.getElementById('progressBar');
 const revealNodes = document.querySelectorAll('.reveal');
