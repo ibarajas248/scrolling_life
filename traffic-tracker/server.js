@@ -35,6 +35,9 @@ const safeText = (value, limit = 255) => {
   return value.replace(/\s+/g, ' ').trim().slice(0, limit);
 };
 
+const normalizeEmail = (value) => safeText(value, 320).toLowerCase();
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 const safePath = (value) => {
   if (typeof value !== 'string') return '/';
   const trimmed = value.trim();
@@ -241,6 +244,30 @@ const initDb = async () => {
         INDEX idx_to (to_url_hash)
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
     `);
+
+    await connection.query(`
+      CREATE TABLE IF NOT EXISTS event_registrations (
+        id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        event_slug VARCHAR(128) NOT NULL,
+        first_name VARCHAR(120) NOT NULL,
+        last_name VARCHAR(160) NOT NULL,
+        email VARCHAR(320) NOT NULL,
+        registered_at DATETIME NOT NULL,
+        last_submitted_at DATETIME NOT NULL,
+        host VARCHAR(255) NOT NULL,
+        path VARCHAR(2048) NOT NULL,
+        referrer VARCHAR(2048),
+        cf_country VARCHAR(8),
+        cf_ray VARCHAR(128),
+        ip_hash CHAR(64),
+        user_agent_hash CHAR(64),
+        visitor_id VARCHAR(64),
+        session_id VARCHAR(64),
+        UNIQUE KEY uniq_event_email (event_slug, email),
+        INDEX idx_event_registered (event_slug, registered_at),
+        INDEX idx_registration_email (email)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+    `);
   } finally {
     connection.release();
   }
@@ -396,6 +423,80 @@ const collectEvent = async (req, payload) => {
   }
 };
 
+const collectEventRegistration = async (req, payload) => {
+  const eventSlug = safeText(payload.eventSlug, 128);
+  const firstName = safeText(payload.firstName, 120);
+  const lastName = safeText(payload.lastName, 160);
+  const email = normalizeEmail(payload.email);
+
+  if (!eventSlug || !firstName || !lastName || !emailPattern.test(email)) {
+    throw Object.assign(new Error('Datos de registro incompletos o inválidos.'), { status: 400 });
+  }
+
+  const receivedAt = nowSql();
+  const page = normalizePage(payload.pageUrl || payload.url || '', firstHeader(req.headers, 'host'));
+  const referrer = safeText(payload.referrer || firstHeader(req.headers, 'referer'), 2048);
+  const userAgent = safeText(firstHeader(req.headers, 'user-agent'), 768);
+  const clientIp = clientIpFromHeaders(req);
+  const ipHash = clientIp ? sha256(`${IP_HASH_SALT}:${clientIp}`) : null;
+  const userAgentHash = userAgent ? sha256(userAgent) : null;
+  const cfCountry = safeText(firstHeader(req.headers, 'cf-ipcountry'), 8);
+  const cfRay = safeText(firstHeader(req.headers, 'cf-ray'), 128);
+  const visitorId = uuidish(payload.visitorId);
+  const sessionId = uuidish(payload.sessionId);
+
+  const connection = await pool.getConnection();
+  try {
+    const [result] = await connection.execute(
+      `
+        INSERT INTO event_registrations
+          (event_slug, first_name, last_name, email, registered_at, last_submitted_at,
+           host, path, referrer, cf_country, cf_ray, ip_hash, user_agent_hash,
+           visitor_id, session_id)
+        VALUES
+          (:eventSlug, :firstName, :lastName, :email, :registeredAt, :lastSubmittedAt,
+           :host, :path, :referrer, :cfCountry, :cfRay, :ipHash, :userAgentHash,
+           :visitorId, :sessionId)
+        ON DUPLICATE KEY UPDATE
+          first_name = VALUES(first_name),
+          last_name = VALUES(last_name),
+          last_submitted_at = VALUES(last_submitted_at),
+          host = VALUES(host),
+          path = VALUES(path),
+          referrer = VALUES(referrer),
+          cf_country = VALUES(cf_country),
+          cf_ray = VALUES(cf_ray),
+          ip_hash = VALUES(ip_hash),
+          user_agent_hash = VALUES(user_agent_hash),
+          visitor_id = VALUES(visitor_id),
+          session_id = VALUES(session_id),
+          id = LAST_INSERT_ID(id)
+      `,
+      {
+        eventSlug,
+        firstName,
+        lastName,
+        email,
+        registeredAt: receivedAt,
+        lastSubmittedAt: receivedAt,
+        host: page.host,
+        path: page.path,
+        referrer,
+        cfCountry,
+        cfRay,
+        ipHash,
+        userAgentHash,
+        visitorId,
+        sessionId,
+      },
+    );
+
+    return { ok: true, registrationId: result.insertId };
+  } finally {
+    connection.release();
+  }
+};
+
 const nowSqlFromClient = (value) => {
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return nowSql();
@@ -460,6 +561,13 @@ const adminCsv = async (name) => {
              last_http_status, content_type, visits_count, source_url
       FROM tracked_pages
       ORDER BY last_seen DESC
+      LIMIT 20000
+    `,
+    registrations: `
+      SELECT id, event_slug, first_name, last_name, email, registered_at, last_submitted_at,
+             host, path, referrer, cf_country, cf_ray
+      FROM event_registrations
+      ORDER BY last_submitted_at DESC
       LIMIT 20000
     `,
   };
@@ -825,6 +933,12 @@ const router = async (req, res) => {
     return;
   }
 
+  if (req.method === 'POST' && url.pathname === '/event-registration') {
+    const payload = await parseJsonBody(req);
+    jsonResponse(res, 200, await collectEventRegistration(req, payload), cors);
+    return;
+  }
+
   if (req.method === 'GET' && url.pathname === '/admin/summary.json') {
     if (!adminAllowed(req, url)) {
       jsonResponse(res, 401, { error: 'No autorizado.' }, cors);
@@ -843,7 +957,7 @@ const router = async (req, res) => {
     return;
   }
 
-  const csvMatch = url.pathname.match(/^\/admin\/(visitors|sessions|events|pages)\.csv$/);
+  const csvMatch = url.pathname.match(/^\/admin\/(visitors|sessions|events|pages|registrations)\.csv$/);
   if (req.method === 'GET' && csvMatch) {
     if (!adminAllowed(req, url)) {
       jsonResponse(res, 401, { error: 'No autorizado.' }, cors);

@@ -37,11 +37,20 @@
       background: #000;
     }
 
+    body.is-form {
+      background: #fff;
+    }
+
     body.is-countdown {
       background: #1028ff;
     }
 
     body.is-countdown .consent-dialog {
+      display: none;
+    }
+
+    body.is-countdown .entry-form,
+    body.is-video .entry-form {
       display: none;
     }
 
@@ -272,6 +281,123 @@
       outline-offset: 3px;
     }
 
+    .entry-form {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: min(445px, calc(100vw - 40px));
+      height: 286px;
+      overflow: hidden;
+      border: 2px solid #696970;
+      border-radius: 12px;
+      background: #25252d;
+      box-shadow: 0 25px 35px rgb(0 0 0 / 34%), 0 5px 12px rgb(0 0 0 / 22%);
+      transform: translate(-50%, -50%);
+      z-index: 10;
+    }
+
+    .entry-form[hidden] {
+      display: none;
+    }
+
+    .entry-form__bar {
+      height: 40px;
+      border-bottom: 1px solid #19191e;
+      background: #3b3b42;
+    }
+
+    .entry-form__body {
+      height: 246px;
+      padding: 19px;
+      color: #ededf0;
+      font: 600 14px/1.3 Arial, Helvetica, sans-serif;
+    }
+
+    .entry-form__title {
+      margin: 0 0 16px;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .entry-form__fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px 10px;
+    }
+
+    .entry-form__field {
+      display: grid;
+      gap: 5px;
+    }
+
+    .entry-form__field--email {
+      grid-column: 1 / -1;
+    }
+
+    .entry-form__field label {
+      color: #d8d8dd;
+      font-size: 12px;
+    }
+
+    .entry-form__field input {
+      width: 100%;
+      height: 32px;
+      padding: 0 9px;
+      border: 1px solid #5c5c65;
+      border-radius: 4px;
+      color: #fff;
+      background: #15151a;
+      font: 14px/1 Arial, Helvetica, sans-serif;
+    }
+
+    .entry-form__field input:focus {
+      border-color: #1687e8;
+      outline: 2px solid rgb(22 135 232 / 28%);
+      outline-offset: 1px;
+    }
+
+    .entry-form__submit {
+      display: block;
+      width: 84px;
+      height: 27px;
+      margin: 18px 0 0 auto;
+      border: 0;
+      border-radius: 5px;
+      color: #fff;
+      background: #1687e8;
+      box-shadow: inset 0 1px rgb(255 255 255 / 14%);
+      font: 600 12px/1 Arial, Helvetica, sans-serif;
+      cursor: pointer;
+      transition: background 140ms ease, transform 140ms ease;
+    }
+
+    .entry-form__submit:hover {
+      background: #2a9af0;
+      transform: translateY(-1px);
+    }
+
+    .entry-form__submit:disabled {
+      cursor: wait;
+      opacity: 0.65;
+    }
+
+    .entry-form__submit:focus-visible {
+      outline: 3px solid #1687e8;
+      outline-offset: 3px;
+    }
+
+    .entry-form__status {
+      margin: 10px 0 0;
+      color: #ffb5b5;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .entry-form__status[hidden] {
+      display: none;
+    }
+
     .consent-dialog[hidden],
     body:not(.is-video) .video-stage {
       display: none;
@@ -364,6 +490,27 @@
         bottom: 17px;
       }
 
+      .entry-form {
+        height: 316px;
+      }
+
+      .entry-form__body {
+        height: 274px;
+        padding: 18px 17px;
+      }
+
+      .entry-form__fields {
+        grid-template-columns: 1fr;
+      }
+
+      .entry-form__field--email {
+        grid-column: auto;
+      }
+
+      .entry-form__submit {
+        margin-top: 19px;
+      }
+
     }
   </style>
 </head>
@@ -405,8 +552,30 @@
       </button>
     </div>
   </section>
+  <form class="entry-form" id="entry-form" hidden>
+    <div class="entry-form__bar" aria-hidden="true"></div>
+    <div class="entry-form__body">
+      <p class="entry-form__title">Registro Asistencia, Galería Santa Fe</p>
+      <div class="entry-form__fields">
+        <div class="entry-form__field">
+          <label for="entry-name">Nombre</label>
+          <input id="entry-name" name="nombre" type="text" autocomplete="given-name" required />
+        </div>
+        <div class="entry-form__field">
+          <label for="entry-last-name">Apellido</label>
+          <input id="entry-last-name" name="apellido" type="text" autocomplete="family-name" required />
+        </div>
+        <div class="entry-form__field entry-form__field--email">
+          <label for="entry-email">Correo electrónico</label>
+          <input id="entry-email" name="correo" type="email" autocomplete="email" required />
+        </div>
+      </div>
+      <p class="entry-form__status" id="entry-status" role="alert" hidden></p>
+      <button class="entry-form__submit" id="entry-submit" type="submit">Continuar</button>
+    </div>
+  </form>
   <main class="video-stage" aria-label="Video de contacto.command">
-    <video id="contact-video" loop playsinline preload="auto">
+    <video id="contact-video" playsinline preload="auto">
       <source src="./contacto.command.castroduperly.mp4" type="video/mp4" />
       Tu navegador no puede reproducir este video.
     </video>
@@ -415,6 +584,10 @@
     const video = document.getElementById('contact-video');
     const consentDialog = document.getElementById('consent-dialog');
     const consentButton = document.getElementById('consent-accept');
+    const entryForm = document.getElementById('entry-form');
+    const firstField = document.getElementById('entry-name');
+    const entryStatus = document.getElementById('entry-status');
+    const entrySubmit = document.getElementById('entry-submit');
     const countdownScreen = document.getElementById('countdown-screen');
     const countdownDigits = document.getElementById('countdown-digits');
     const eventDate = document.getElementById('event-date');
@@ -424,6 +597,7 @@
     // Formato: AAAA-MM-DDTHH:MM:SS-05:00 (hora de Colombia).
     const COUNTDOWN_END = new Date('2026-10-03T17:00:00-05:00');
     const BYPASS_COUNTDOWN = window.location.hostname === 'test.scrollinglife.com';
+    const NORMAL_PAGE = '/index%20copy';
 
     const dateFormatter = new Intl.DateTimeFormat('en-GB', {
       day: '2-digit',
@@ -446,11 +620,17 @@
 
     let countdownTimer;
 
+    video.addEventListener('ended', () => {
+      window.location.replace(NORMAL_PAGE);
+    });
+
     function showVideo() {
       window.clearInterval(countdownTimer);
       document.body.classList.remove('is-countdown');
+      document.body.classList.remove('is-form');
       countdownScreen.hidden = true;
       consentDialog.hidden = true;
+      entryForm.hidden = true;
       document.body.classList.add('is-video');
       video.muted = false;
       video.volume = 1;
@@ -462,6 +642,8 @@
 
     function startCountdown() {
       consentDialog.hidden = true;
+      entryForm.hidden = true;
+      document.body.classList.remove('is-form');
 
       if (BYPASS_COUNTDOWN || COUNTDOWN_END.getTime() <= Date.now()) {
         showVideo();
@@ -494,7 +676,56 @@
       countdownDigits.textContent = `${pad(days)} DÍAS ${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
     }
 
-    consentButton.addEventListener('click', startCountdown);
+    consentButton.addEventListener('click', () => {
+      consentDialog.hidden = true;
+      entryForm.hidden = false;
+      document.body.classList.add('is-form');
+      entryStatus.hidden = true;
+      firstField.focus();
+    });
+
+    entryForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!entryForm.reportValidity()) return;
+
+      entrySubmit.disabled = true;
+      entrySubmit.textContent = 'Guardando…';
+      entryStatus.hidden = true;
+
+      const formData = new FormData(entryForm);
+      const payload = {
+        eventSlug: 'contacto-command-galeria-santa-fe',
+        firstName: formData.get('nombre'),
+        lastName: formData.get('apellido'),
+        email: formData.get('correo'),
+        pageUrl: `${window.location.origin}${window.location.pathname}`,
+        referrer: document.referrer,
+      };
+
+      try {
+        const response = await fetch('/traffic/event-registration', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+          keepalive: true,
+        });
+
+        if (!response.ok) throw new Error('No se pudo guardar el registro.');
+        document.body.classList.remove('is-form');
+
+        if (BYPASS_COUNTDOWN || COUNTDOWN_END.getTime() <= Date.now()) {
+          showVideo();
+        } else {
+          startCountdown();
+        }
+      } catch {
+        entryStatus.textContent = 'No se pudo guardar el registro. Intenta de nuevo.';
+        entryStatus.hidden = false;
+      } finally {
+        entrySubmit.disabled = false;
+        entrySubmit.textContent = 'Continuar';
+      }
+    });
   </script>
 </body>
 </html>
