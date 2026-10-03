@@ -624,6 +624,17 @@
       window.location.replace(NORMAL_PAGE);
     });
 
+    function showRegistrationForm() {
+      window.clearInterval(countdownTimer);
+      document.body.classList.remove('is-countdown');
+      document.body.classList.add('is-form');
+      countdownScreen.hidden = true;
+      consentDialog.hidden = true;
+      entryForm.hidden = false;
+      entryStatus.hidden = true;
+      firstField.focus();
+    }
+
     function showVideo() {
       window.clearInterval(countdownTimer);
       document.body.classList.remove('is-countdown');
@@ -646,7 +657,7 @@
       document.body.classList.remove('is-form');
 
       if (BYPASS_COUNTDOWN || COUNTDOWN_END.getTime() <= Date.now()) {
-        showVideo();
+        showRegistrationForm();
         return;
       }
 
@@ -662,7 +673,7 @@
       const remaining = COUNTDOWN_END.getTime() - Date.now();
 
       if (remaining <= 0) {
-        showVideo();
+        showRegistrationForm();
         return;
       }
 
@@ -676,13 +687,7 @@
       countdownDigits.textContent = `${pad(days)} DÍAS ${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
     }
 
-    consentButton.addEventListener('click', () => {
-      consentDialog.hidden = true;
-      entryForm.hidden = false;
-      document.body.classList.add('is-form');
-      entryStatus.hidden = true;
-      firstField.focus();
-    });
+    consentButton.addEventListener('click', startCountdown);
 
     entryForm.addEventListener('submit', async (event) => {
       event.preventDefault();
@@ -711,13 +716,7 @@
         });
 
         if (!response.ok) throw new Error('No se pudo guardar el registro.');
-        document.body.classList.remove('is-form');
-
-        if (BYPASS_COUNTDOWN || COUNTDOWN_END.getTime() <= Date.now()) {
-          showVideo();
-        } else {
-          startCountdown();
-        }
+        showVideo();
       } catch {
         entryStatus.textContent = 'No se pudo guardar el registro. Intenta de nuevo.';
         entryStatus.hidden = false;
