@@ -33,8 +33,168 @@
       transition: background 180ms ease;
     }
 
-    body.is-accepted {
+    body.is-video {
       background: #000;
+    }
+
+    body.is-countdown {
+      background: #1028ff;
+    }
+
+    body.is-countdown .consent-dialog {
+      display: none;
+    }
+
+    .countdown-screen {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      gap: clamp(1rem, 3vh, 2.2rem);
+      overflow: auto;
+      padding: clamp(1.2rem, 4vw, 3rem);
+      color: #fff;
+      background: #1028ff;
+      font-family: "Courier New", Courier, monospace;
+      z-index: 20;
+    }
+
+    body:not(.is-countdown) .countdown-screen,
+    .countdown-screen[hidden] {
+      display: none;
+    }
+
+    .countdown-screen__signal {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      height: 1.1rem;
+    }
+
+    .countdown-screen__signal::before {
+      content: "";
+      width: clamp(5.5rem, 16vw, 9rem);
+      height: 0.65rem;
+      background: #00ff70;
+    }
+
+    .countdown-screen__signal::after {
+      content: "||||||||";
+      overflow: hidden;
+      width: 4.8rem;
+      color: #00ff70;
+      font-weight: 900;
+      letter-spacing: -0.18rem;
+      white-space: nowrap;
+    }
+
+    .countdown-screen__signal span {
+      width: 0.75rem;
+      height: 0.75rem;
+      margin-left: auto;
+      background: #00ff70;
+    }
+
+    .countdown-screen__brand {
+      width: max-content;
+      max-width: 100%;
+      padding: 0.35rem 0.7rem 0.15rem;
+      color: #00ff70;
+      background: #050505;
+      font-size: clamp(2.15rem, 8vw, 6.7rem);
+      font-weight: 900;
+      letter-spacing: -0.12em;
+      line-height: 0.9;
+      text-shadow: 0 0 0.1rem #00ff70;
+      white-space: nowrap;
+    }
+
+    .countdown-screen__subtitle {
+      align-self: flex-start;
+      margin: -1.5rem 0 0 clamp(1rem, 28vw, 20rem);
+      padding: 0.25rem 0.6rem;
+      color: #fff;
+      background: #1838ff;
+      font-size: clamp(1rem, 2.6vw, 2.3rem);
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .countdown-screen__content {
+      display: grid;
+      grid-template-columns: minmax(14rem, 1fr) minmax(15rem, 0.9fr);
+      align-items: end;
+      gap: clamp(1rem, 5vw, 5rem);
+      width: min(100%, 72rem);
+      margin: auto;
+    }
+
+    .countdown-screen__event {
+      display: grid;
+      gap: 0.4rem;
+      color: #fff;
+      font-weight: 900;
+      line-height: 0.82;
+    }
+
+    .countdown-screen__date {
+      font-size: clamp(4rem, 14vw, 10rem);
+      letter-spacing: -0.1em;
+    }
+
+    .countdown-screen__time {
+      font-size: clamp(3rem, 10vw, 7rem);
+      letter-spacing: -0.09em;
+    }
+
+    .countdown-screen__terminal {
+      min-height: 12rem;
+      padding: 0.3rem;
+      border: 0.25rem solid #d5d5d5;
+      color: #00ff70;
+      background: #030303;
+      box-shadow: 0.35rem 0.35rem 0 #d5d5d5;
+      font-size: clamp(0.85rem, 2vw, 1.35rem);
+      line-height: 1.15;
+    }
+
+    .countdown-screen__terminal-bar {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.2rem 0.35rem;
+      color: #1028ff;
+      background: #d5d5d5;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.75rem;
+    }
+
+    .countdown-screen__terminal-body {
+      padding: 1rem 0.8rem;
+    }
+
+    .countdown-screen__clock {
+      display: grid;
+      justify-items: center;
+      gap: 0.4rem;
+      width: min(100%, 34rem);
+      margin: 0 auto;
+      padding: 0.9rem 1rem 1.1rem;
+      border: 0.25rem solid #050505;
+      background: #00ff70;
+      color: #050505;
+      box-shadow: 0.35rem 0.35rem 0 #050505;
+    }
+
+    .countdown-screen__clock-label {
+      font-size: clamp(0.9rem, 2vw, 1.3rem);
+      font-weight: 900;
+    }
+
+    .countdown-screen__digits {
+      font-size: clamp(1.7rem, 5vw, 3.7rem);
+      font-weight: 900;
+      letter-spacing: -0.08em;
+      line-height: 1;
     }
 
     .consent-dialog {
@@ -42,7 +202,7 @@
       top: 50%;
       left: 50%;
       width: min(445px, calc(100vw - 40px));
-      height: 132px;
+      height: 164px;
       overflow: hidden;
       border: 2px solid #696970;
       border-radius: 12px;
@@ -53,14 +213,23 @@
     }
 
     .consent-dialog__bar {
-      height: 29px;
+      display: flex;
+      align-items: center;
+      height: 40px;
+      padding: 0 19px;
       border-bottom: 1px solid #19191e;
       background: #3b3b42;
     }
 
+    .consent-dialog__bar .consent-dialog__title {
+      margin: 0;
+      color: #fff;
+      font: 700 16px/1.2 Arial, Helvetica, sans-serif;
+    }
+
     .consent-dialog__body {
       position: relative;
-      height: 99px;
+      height: 123px;
       padding: 22px 19px;
       color: #ededf0;
       font: 600 14px/1.3 Arial, Helvetica, sans-serif;
@@ -104,7 +273,7 @@
     }
 
     .consent-dialog[hidden],
-    body:not(.is-accepted) .video-stage {
+    body:not(.is-video) .video-stage {
       display: none;
     }
 
@@ -141,12 +310,47 @@
     }
 
     @media (max-width: 520px) {
+      .countdown-screen {
+        gap: 1rem;
+        padding: 1.1rem;
+      }
+
+      .countdown-screen__brand {
+        font-size: clamp(1.9rem, 10vw, 3.2rem);
+      }
+
+      .countdown-screen__subtitle {
+        margin: -0.8rem 0 0 2rem;
+        font-size: 0.9rem;
+      }
+
+      .countdown-screen__content {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .countdown-screen__date {
+        font-size: clamp(4rem, 23vw, 7rem);
+      }
+
+      .countdown-screen__time {
+        font-size: clamp(3rem, 17vw, 5rem);
+      }
+
+      .countdown-screen__terminal {
+        min-height: 9rem;
+      }
+
+      .countdown-screen__clock {
+        margin-top: 0.4rem;
+      }
+
       .consent-dialog {
-        height: 142px;
+        height: 174px;
       }
 
       .consent-dialog__body {
-        height: 109px;
+        height: 133px;
         padding: 20px 17px;
       }
 
@@ -159,12 +363,40 @@
         right: 17px;
         bottom: 17px;
       }
+
     }
   </style>
 </head>
 <body>
-  <section class="consent-dialog" id="consent-dialog" aria-labelledby="consent-copy">
-    <div class="consent-dialog__bar" aria-hidden="true"></div>
+  <section class="countdown-screen" id="countdown-screen" aria-live="polite">
+    <div class="countdown-screen__signal"><span></span></div>
+    <div class="countdown-screen__subtitle">CONTACTO.COMMAND</div>
+    <div class="countdown-screen__content">
+      <div class="countdown-screen__event" aria-label="Fecha del evento">
+        <div class="countdown-screen__date" id="event-date">03/10</div>
+        <div class="countdown-screen__time" id="event-time">5 P.M.</div>
+      </div>
+      <div class="countdown-screen__terminal" aria-hidden="true">
+        <div class="countdown-screen__terminal-bar">
+          <span>CONTACTO.EXE</span>
+          <span>— □ ×</span>
+        </div>
+        <div class="countdown-screen__terminal-body">
+          &gt; con:<br />
+          &nbsp;&nbsp;Juliana Castro<br />
+          &nbsp;&nbsp;Duperly<span aria-hidden="true">█</span>
+        </div>
+      </div>
+    </div>
+    <div class="countdown-screen__clock">
+      <div class="countdown-screen__clock-label">FALTA</div>
+      <div class="countdown-screen__digits" id="countdown-digits">00 DÍAS 00:00:00</div>
+    </div>
+  </section>
+  <section class="consent-dialog" id="consent-dialog" aria-labelledby="consent-title consent-copy">
+    <div class="consent-dialog__bar">
+      <h1 class="consent-dialog__title" id="consent-title">Juliana Castro Duperly</h1>
+    </div>
     <div class="consent-dialog__body">
       <p id="consent-copy">Este es el espacio donde nuestro tacto podría encontrarse.</p>
       <button class="consent-dialog__accept" id="consent-accept" type="button" aria-label="Aceptar">
@@ -183,19 +415,86 @@
     const video = document.getElementById('contact-video');
     const consentDialog = document.getElementById('consent-dialog');
     const consentButton = document.getElementById('consent-accept');
+    const countdownScreen = document.getElementById('countdown-screen');
+    const countdownDigits = document.getElementById('countdown-digits');
+    const eventDate = document.getElementById('event-date');
+    const eventTime = document.getElementById('event-time');
 
-    consentButton.addEventListener('click', async () => {
-      document.body.classList.add('is-accepted');
+    // Cambia solamente esta fecha/hora para programar la apertura del acceso.
+    // Formato: AAAA-MM-DDTHH:MM:SS-05:00 (hora de Colombia).
+    const COUNTDOWN_END = new Date('2026-10-03T17:00:00-05:00');
+    const BYPASS_COUNTDOWN = window.location.hostname === 'test.scrollinglife.com';
+
+    const dateFormatter = new Intl.DateTimeFormat('en-GB', {
+      day: '2-digit',
+      month: '2-digit',
+      timeZone: 'America/Bogota'
+    });
+    const timeFormatter = new Intl.DateTimeFormat('en-US', {
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+      timeZone: 'America/Bogota'
+    });
+
+    eventDate.textContent = dateFormatter.format(COUNTDOWN_END);
+    eventTime.textContent = timeFormatter
+      .format(COUNTDOWN_END)
+      .replace(':00', '')
+      .replace(' AM', ' A.M.')
+      .replace(' PM', ' P.M.');
+
+    let countdownTimer;
+
+    function showVideo() {
+      window.clearInterval(countdownTimer);
+      document.body.classList.remove('is-countdown');
+      countdownScreen.hidden = true;
       consentDialog.hidden = true;
+      document.body.classList.add('is-video');
       video.muted = false;
       video.volume = 1;
 
-      try {
-        await video.play();
-      } catch {
+      video.play().catch(() => {
         video.controls = true;
+      });
+    }
+
+    function startCountdown() {
+      consentDialog.hidden = true;
+
+      if (BYPASS_COUNTDOWN || COUNTDOWN_END.getTime() <= Date.now()) {
+        showVideo();
+        return;
       }
-    });
+
+      document.body.classList.add('is-countdown');
+      countdownScreen.hidden = false;
+      updateCountdown();
+      if (document.body.classList.contains('is-countdown')) {
+        countdownTimer = window.setInterval(updateCountdown, 1000);
+      }
+    }
+
+    function updateCountdown() {
+      const remaining = COUNTDOWN_END.getTime() - Date.now();
+
+      if (remaining <= 0) {
+        showVideo();
+        return;
+      }
+
+      const totalSeconds = Math.floor(remaining / 1000);
+      const days = Math.floor(totalSeconds / 86400);
+      const hours = Math.floor((totalSeconds % 86400) / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+      const pad = (value) => String(value).padStart(2, '0');
+
+      countdownDigits.textContent = `${pad(days)} DÍAS ${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+    }
+
+    consentButton.addEventListener('click', startCountdown);
   </script>
 </body>
 </html>
