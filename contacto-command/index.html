@@ -302,6 +302,9 @@
 
     .entry-form__bar {
       height: 40px;
+      display: flex;
+      align-items: center;
+      padding: 0 19px;
       border-bottom: 1px solid #19191e;
       background: #3b3b42;
     }
@@ -314,9 +317,9 @@
     }
 
     .entry-form__title {
-      margin: 0 0 16px;
+      margin: 0;
       color: #fff;
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 700;
     }
 
@@ -552,10 +555,11 @@
       </button>
     </div>
   </section>
-  <form class="entry-form" id="entry-form" hidden>
-    <div class="entry-form__bar" aria-hidden="true"></div>
+  <form class="entry-form" id="entry-form" aria-labelledby="entry-form-title" hidden>
+    <div class="entry-form__bar">
+      <h1 class="entry-form__title" id="entry-form-title">sala virtual galería Santa Fe</h1>
+    </div>
     <div class="entry-form__body">
-      <p class="entry-form__title">Registro Asistencia, Galería Santa Fe</p>
       <div class="entry-form__fields">
         <div class="entry-form__field">
           <label for="entry-name">Nombre</label>
