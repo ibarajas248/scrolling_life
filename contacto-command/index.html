@@ -361,7 +361,10 @@
     }
 
     .entry-form__submit {
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.3rem;
       width: 84px;
       height: 27px;
       margin: 18px 0 0 auto;
@@ -557,7 +560,7 @@
   </section>
   <form class="entry-form" id="entry-form" aria-labelledby="entry-form-title" hidden>
     <div class="entry-form__bar">
-      <h1 class="entry-form__title" id="entry-form-title">sala virtual galería Santa Fe</h1>
+      <h1 class="entry-form__title" id="entry-form-title">Registro sala virtual galería Santa Fe</h1>
     </div>
     <div class="entry-form__body">
       <div class="entry-form__fields">
@@ -575,7 +578,10 @@
         </div>
       </div>
       <p class="entry-form__status" id="entry-status" role="alert" hidden></p>
-      <button class="entry-form__submit" id="entry-submit" type="submit">Continuar</button>
+      <button class="entry-form__submit" id="entry-submit" type="submit">
+        <span aria-hidden="true">👐</span>
+        <span id="entry-submit-label">Continuar</span>
+      </button>
     </div>
   </form>
   <main class="video-stage" aria-label="Video de contacto.command">
@@ -592,6 +598,7 @@
     const firstField = document.getElementById('entry-name');
     const entryStatus = document.getElementById('entry-status');
     const entrySubmit = document.getElementById('entry-submit');
+    const entrySubmitLabel = document.getElementById('entry-submit-label');
     const countdownScreen = document.getElementById('countdown-screen');
     const countdownDigits = document.getElementById('countdown-digits');
     const eventDate = document.getElementById('event-date');
@@ -698,7 +705,7 @@
       if (!entryForm.reportValidity()) return;
 
       entrySubmit.disabled = true;
-      entrySubmit.textContent = 'Guardando…';
+      entrySubmitLabel.textContent = 'Guardando…';
       entryStatus.hidden = true;
 
       const formData = new FormData(entryForm);
@@ -726,7 +733,7 @@
         entryStatus.hidden = false;
       } finally {
         entrySubmit.disabled = false;
-        entrySubmit.textContent = 'Continuar';
+        entrySubmitLabel.textContent = 'Continuar';
       }
     });
   </script>
