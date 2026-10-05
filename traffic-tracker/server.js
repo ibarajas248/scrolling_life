@@ -263,7 +263,9 @@ const initDb = async () => {
         user_agent_hash CHAR(64),
         visitor_id VARCHAR(64),
         session_id VARCHAR(64),
+        anonymous_visitor_id VARCHAR(64),
         UNIQUE KEY uniq_event_email (event_slug, email),
+        UNIQUE KEY uniq_event_anonymous_visitor (event_slug, anonymous_visitor_id),
         INDEX idx_event_registered (event_slug, registered_at),
         INDEX idx_registration_email (email)
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
@@ -277,6 +279,24 @@ const initDb = async () => {
         MODIFY COLUMN last_name VARCHAR(160) NULL,
         MODIFY COLUMN email VARCHAR(320) NULL
     `);
+
+    try {
+      await connection.query(`
+        ALTER TABLE event_registrations
+          ADD COLUMN anonymous_visitor_id VARCHAR(64) NULL
+      `);
+    } catch (error) {
+      if (!/duplicate column/i.test(error.message || '')) throw error;
+    }
+
+    try {
+      await connection.query(`
+        ALTER TABLE event_registrations
+          ADD UNIQUE KEY uniq_event_anonymous_visitor (event_slug, anonymous_visitor_id)
+      `);
+    } catch (error) {
+      if (!/duplicate key name/i.test(error.message || '')) throw error;
+    }
   } finally {
     connection.release();
   }
@@ -454,6 +474,7 @@ const collectEventRegistration = async (req, payload) => {
   const cfRay = safeText(firstHeader(req.headers, 'cf-ray'), 128);
   const visitorId = uuidish(payload.visitorId);
   const sessionId = uuidish(payload.sessionId);
+  const anonymousVisitorId = anonymous ? visitorId : null;
 
   const connection = await pool.getConnection();
   try {
@@ -462,11 +483,11 @@ const collectEventRegistration = async (req, payload) => {
         INSERT INTO event_registrations
           (event_slug, first_name, last_name, email, registered_at, last_submitted_at,
            host, path, referrer, cf_country, cf_ray, ip_hash, user_agent_hash,
-           visitor_id, session_id)
+           visitor_id, session_id, anonymous_visitor_id)
         VALUES
           (:eventSlug, :firstName, :lastName, :email, :registeredAt, :lastSubmittedAt,
            :host, :path, :referrer, :cfCountry, :cfRay, :ipHash, :userAgentHash,
-           :visitorId, :sessionId)
+           :visitorId, :sessionId, :anonymousVisitorId)
         ON DUPLICATE KEY UPDATE
           first_name = VALUES(first_name),
           last_name = VALUES(last_name),
@@ -480,6 +501,7 @@ const collectEventRegistration = async (req, payload) => {
           user_agent_hash = VALUES(user_agent_hash),
           visitor_id = VALUES(visitor_id),
           session_id = VALUES(session_id),
+          anonymous_visitor_id = VALUES(anonymous_visitor_id),
           id = LAST_INSERT_ID(id)
       `,
       {
@@ -498,6 +520,7 @@ const collectEventRegistration = async (req, payload) => {
         userAgentHash,
         visitorId,
         sessionId,
+        anonymousVisitorId,
       },
     );
 

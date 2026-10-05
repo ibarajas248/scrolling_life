@@ -426,6 +426,78 @@
     const BYPASS_COUNTDOWN = window.location.hostname === 'test.scrollinglife.com';
     const NORMAL_PAGE = '/index%20copy';
     let anonymousAccessSent = false;
+    const ANONYMOUS_SESSION_TTL_MS = 30 * 60 * 1000;
+
+    const randomTrackingId = () => {
+      if (window.crypto?.randomUUID) return window.crypto.randomUUID().replace(/-/g, '');
+      const values = new Uint32Array(4);
+      window.crypto?.getRandomValues?.(values);
+      return [...values].map((value) => value.toString(16).padStart(8, '0')).join('') || `${Date.now()}${Math.random().toString(16).slice(2)}`;
+    };
+
+    const readTrackingCookie = (name) => {
+      const prefix = `${name}=`;
+      return document.cookie
+        .split(';')
+        .map((part) => part.trim())
+        .find((part) => part.startsWith(prefix))
+        ?.slice(prefix.length) || '';
+    };
+
+    const writeTrackingCookie = (name, value) => {
+      const secure = window.location.protocol === 'https:' ? '; Secure' : '';
+      document.cookie = `${name}=${encodeURIComponent(value)}; Max-Age=34560000; Path=/; SameSite=Lax${secure}`;
+    };
+
+    const readTrackingStorage = (key) => {
+      try {
+        return window.localStorage.getItem(key) || '';
+      } catch {
+        return '';
+      }
+    };
+
+    const writeTrackingStorage = (key, value) => {
+      try {
+        window.localStorage.setItem(key, value);
+      } catch {
+        // El registro anónimo continúa funcionando aunque el almacenamiento esté bloqueado.
+      }
+    };
+
+    const getAnonymousVisitorId = () => {
+      const existing = readTrackingCookie('sl_visitor_id') || readTrackingStorage('sl_visitor_id');
+      if (existing) {
+        writeTrackingCookie('sl_visitor_id', existing);
+        return existing;
+      }
+      const next = randomTrackingId();
+      writeTrackingCookie('sl_visitor_id', next);
+      writeTrackingStorage('sl_visitor_id', next);
+      return next;
+    };
+
+    const getAnonymousSessionId = () => {
+      const raw = readTrackingStorage('sl_session_v1');
+      const now = Date.now();
+
+      if (raw) {
+        try {
+          const session = JSON.parse(raw);
+          if (session.id && now - Number(session.lastSeen || 0) < ANONYMOUS_SESSION_TTL_MS) {
+            session.lastSeen = now;
+            writeTrackingStorage('sl_session_v1', JSON.stringify(session));
+            return session.id;
+          }
+        } catch {
+          // Se regenera una sesión si el valor guardado está dañado.
+        }
+      }
+
+      const next = { id: randomTrackingId(), lastSeen: now };
+      writeTrackingStorage('sl_session_v1', JSON.stringify(next));
+      return next.id;
+    };
 
     const dateFormatter = new Intl.DateTimeFormat('en-GB', {
       day: '2-digit',
@@ -455,6 +527,8 @@
     function registerAnonymousAccess() {
       if (anonymousAccessSent) return;
       anonymousAccessSent = true;
+      const visitorId = getAnonymousVisitorId();
+      const sessionId = getAnonymousSessionId();
 
       fetch('/traffic/event-registration', {
         method: 'POST',
@@ -462,6 +536,8 @@
         body: JSON.stringify({
           anonymous: true,
           eventSlug: 'contacto-command-galeria-santa-fe',
+          visitorId,
+          sessionId,
           pageUrl: `${window.location.origin}${window.location.pathname}`,
           referrer: document.referrer,
         }),
