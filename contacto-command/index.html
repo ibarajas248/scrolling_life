@@ -37,20 +37,11 @@
       background: #000;
     }
 
-    body.is-form {
-      background: #fff;
-    }
-
     body.is-countdown {
       background: #1028ff;
     }
 
     body.is-countdown .consent-dialog {
-      display: none;
-    }
-
-    body.is-countdown .entry-form,
-    body.is-video .entry-form {
       display: none;
     }
 
@@ -281,183 +272,6 @@
       outline-offset: 3px;
     }
 
-    .entry-form {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      width: min(445px, calc(100vw - 40px));
-      height: 286px;
-      overflow: hidden;
-      border: 2px solid #696970;
-      border-radius: 12px;
-      background: #25252d;
-      box-shadow: 0 25px 35px rgb(0 0 0 / 34%), 0 5px 12px rgb(0 0 0 / 22%);
-      transform: translate(-50%, -50%);
-      z-index: 10;
-    }
-
-    .entry-form[hidden] {
-      display: none;
-    }
-
-    .entry-form__bar {
-      height: 40px;
-      display: flex;
-      align-items: center;
-      padding: 0 19px;
-      border-bottom: 1px solid #19191e;
-      background: #3b3b42;
-    }
-
-    .entry-form__body {
-      height: 246px;
-      padding: 19px;
-      color: #ededf0;
-      font: 600 14px/1.3 Arial, Helvetica, sans-serif;
-    }
-
-    .entry-form__bar,
-    .entry-form__body {
-      position: relative;
-      z-index: 1;
-    }
-
-    .entry-form__hearts {
-      position: absolute;
-      inset: -90px -70px;
-      overflow: hidden;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .entry-form__heart {
-      position: absolute;
-      bottom: -28px;
-      color: #ff6f91;
-      font-size: 18px;
-      line-height: 1;
-      opacity: 0;
-      animation: entry-heart-float 8s linear infinite;
-      text-shadow: 0 0 8px rgb(255 111 145 / 45%);
-    }
-
-    .entry-form__heart:nth-child(1) { left: 8%; animation-delay: -1s; }
-    .entry-form__heart:nth-child(2) { left: 22%; animation-delay: -5s; font-size: 13px; }
-    .entry-form__heart:nth-child(3) { left: 39%; animation-delay: -3s; font-size: 22px; }
-    .entry-form__heart:nth-child(4) { left: 57%; animation-delay: -7s; font-size: 14px; }
-    .entry-form__heart:nth-child(5) { left: 74%; animation-delay: -2s; font-size: 20px; }
-    .entry-form__heart:nth-child(6) { left: 90%; animation-delay: -6s; font-size: 12px; }
-
-    @keyframes entry-heart-float {
-      0% {
-        transform: translate3d(0, 0, 0) scale(0.65) rotate(-12deg);
-        opacity: 0;
-      }
-      12% { opacity: 0.8; }
-      58% { opacity: 0.55; }
-      100% {
-        transform: translate3d(42px, -360px, 0) scale(1.15) rotate(24deg);
-        opacity: 0;
-      }
-    }
-
-    .entry-form__title {
-      margin: 0;
-      color: #fff;
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    .entry-form__fields {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px 10px;
-    }
-
-    .entry-form__field {
-      display: grid;
-      gap: 5px;
-    }
-
-    .entry-form__field--email {
-      grid-column: 1 / -1;
-    }
-
-    .entry-form__field label {
-      color: #d8d8dd;
-      font-size: 12px;
-    }
-
-    .entry-form__field input {
-      width: 100%;
-      height: 32px;
-      padding: 0 9px;
-      border: 1px solid #5c5c65;
-      border-radius: 4px;
-      color: #fff;
-      background: #15151a;
-      font: 14px/1 Arial, Helvetica, sans-serif;
-    }
-
-    .entry-form__field input:focus {
-      border-color: #1687e8;
-      outline: 2px solid rgb(22 135 232 / 28%);
-      outline-offset: 1px;
-    }
-
-    .entry-form__note {
-      max-width: 350px;
-      margin: 12px 0 0;
-      color: #b8b8c0;
-      font-size: 11px;
-      font-weight: 400;
-      line-height: 1.35;
-    }
-
-    .entry-form__submit {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.3rem;
-      width: 84px;
-      height: 27px;
-      margin: 18px 0 0 auto;
-      border: 0;
-      border-radius: 5px;
-      color: #fff;
-      background: #1687e8;
-      box-shadow: inset 0 1px rgb(255 255 255 / 14%);
-      font: 600 12px/1 Arial, Helvetica, sans-serif;
-      cursor: pointer;
-      transition: background 140ms ease, transform 140ms ease;
-    }
-
-    .entry-form__submit:hover {
-      background: #2a9af0;
-      transform: translateY(-1px);
-    }
-
-    .entry-form__submit:disabled {
-      cursor: wait;
-      opacity: 0.65;
-    }
-
-    .entry-form__submit:focus-visible {
-      outline: 3px solid #1687e8;
-      outline-offset: 3px;
-    }
-
-    .entry-form__status {
-      margin: 10px 0 0;
-      color: #ffb5b5;
-      font-size: 12px;
-      font-weight: 600;
-    }
-
-    .entry-form__status[hidden] {
-      display: none;
-    }
-
     .consent-dialog[hidden],
     body:not(.is-video) .video-stage {
       display: none;
@@ -550,34 +364,6 @@
         bottom: 17px;
       }
 
-      .entry-form {
-        height: 350px;
-      }
-
-      .entry-form__body {
-        height: 308px;
-        padding: 18px 17px;
-      }
-
-      .entry-form__fields {
-        grid-template-columns: 1fr;
-      }
-
-      .entry-form__field--email {
-        grid-column: auto;
-      }
-
-      .entry-form__submit {
-        margin-top: 19px;
-      }
-
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .entry-form__heart {
-        animation: none;
-        opacity: 0;
-      }
     }
   </style>
 </head>
@@ -619,41 +405,6 @@
       </button>
     </div>
   </section>
-  <form class="entry-form" id="entry-form" aria-labelledby="entry-form-title" hidden>
-    <div class="entry-form__bar">
-      <h1 class="entry-form__title" id="entry-form-title">Registro sala virtual Galería Santa Fe</h1>
-    </div>
-    <div class="entry-form__hearts" aria-hidden="true">
-      <span class="entry-form__heart">♥</span>
-      <span class="entry-form__heart">♥</span>
-      <span class="entry-form__heart">♥</span>
-      <span class="entry-form__heart">♥</span>
-      <span class="entry-form__heart">♥</span>
-      <span class="entry-form__heart">♥</span>
-    </div>
-    <div class="entry-form__body">
-      <div class="entry-form__fields">
-        <div class="entry-form__field">
-          <label for="entry-name">Nombre</label>
-          <input id="entry-name" name="nombre" type="text" autocomplete="given-name" required />
-        </div>
-        <div class="entry-form__field">
-          <label for="entry-last-name">Apellido</label>
-          <input id="entry-last-name" name="apellido" type="text" autocomplete="family-name" required />
-        </div>
-        <div class="entry-form__field entry-form__field--email">
-          <label for="entry-email">Correo electrónico</label>
-          <input id="entry-email" name="correo" type="email" autocomplete="email" required />
-        </div>
-      </div>
-      <p class="entry-form__note">Usaremos estos datos únicamente para registrar tu asistencia.</p>
-      <p class="entry-form__status" id="entry-status" role="alert" hidden></p>
-      <button class="entry-form__submit" id="entry-submit" type="submit">
-        <span aria-hidden="true">👐</span>
-        <span id="entry-submit-label">Continuar</span>
-      </button>
-    </div>
-  </form>
   <main class="video-stage" aria-label="Video de contacto.command">
     <video id="contact-video" playsinline preload="auto">
       <source src="./contacto.command.castroduperly.mp4" type="video/mp4" />
@@ -664,11 +415,6 @@
     const video = document.getElementById('contact-video');
     const consentDialog = document.getElementById('consent-dialog');
     const consentButton = document.getElementById('consent-accept');
-    const entryForm = document.getElementById('entry-form');
-    const firstField = document.getElementById('entry-name');
-    const entryStatus = document.getElementById('entry-status');
-    const entrySubmit = document.getElementById('entry-submit');
-    const entrySubmitLabel = document.getElementById('entry-submit-label');
     const countdownScreen = document.getElementById('countdown-screen');
     const countdownDigits = document.getElementById('countdown-digits');
     const eventDate = document.getElementById('event-date');
@@ -679,6 +425,7 @@
     const COUNTDOWN_END = new Date('2026-10-03T17:00:00-05:00');
     const BYPASS_COUNTDOWN = window.location.hostname === 'test.scrollinglife.com';
     const NORMAL_PAGE = '/index%20copy';
+    let anonymousAccessSent = false;
 
     const dateFormatter = new Intl.DateTimeFormat('en-GB', {
       day: '2-digit',
@@ -705,24 +452,30 @@
       window.location.replace(NORMAL_PAGE);
     });
 
-    function showRegistrationForm() {
-      window.clearInterval(countdownTimer);
-      document.body.classList.remove('is-countdown');
-      document.body.classList.add('is-form');
-      countdownScreen.hidden = true;
-      consentDialog.hidden = true;
-      entryForm.hidden = false;
-      entryStatus.hidden = true;
-      firstField.focus();
+    function registerAnonymousAccess() {
+      if (anonymousAccessSent) return;
+      anonymousAccessSent = true;
+
+      fetch('/traffic/event-registration', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          anonymous: true,
+          eventSlug: 'contacto-command-galeria-santa-fe',
+          pageUrl: `${window.location.origin}${window.location.pathname}`,
+          referrer: document.referrer,
+        }),
+        keepalive: true,
+      }).catch(() => {});
     }
+
+    registerAnonymousAccess();
 
     function showVideo() {
       window.clearInterval(countdownTimer);
       document.body.classList.remove('is-countdown');
-      document.body.classList.remove('is-form');
       countdownScreen.hidden = true;
       consentDialog.hidden = true;
-      entryForm.hidden = true;
       document.body.classList.add('is-video');
       video.muted = false;
       video.volume = 1;
@@ -734,11 +487,9 @@
 
     function startCountdown() {
       consentDialog.hidden = true;
-      entryForm.hidden = true;
-      document.body.classList.remove('is-form');
 
       if (BYPASS_COUNTDOWN || COUNTDOWN_END.getTime() <= Date.now()) {
-        showRegistrationForm();
+        showVideo();
         return;
       }
 
@@ -754,7 +505,7 @@
       const remaining = COUNTDOWN_END.getTime() - Date.now();
 
       if (remaining <= 0) {
-        showRegistrationForm();
+        showVideo();
         return;
       }
 
@@ -769,43 +520,10 @@
     }
 
     consentButton.addEventListener('click', startCountdown);
-
-    entryForm.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      if (!entryForm.reportValidity()) return;
-
-      entrySubmit.disabled = true;
-      entrySubmitLabel.textContent = 'Guardando…';
-      entryStatus.hidden = true;
-
-      const formData = new FormData(entryForm);
-      const payload = {
-        eventSlug: 'contacto-command-galeria-santa-fe',
-        firstName: formData.get('nombre'),
-        lastName: formData.get('apellido'),
-        email: formData.get('correo'),
-        pageUrl: `${window.location.origin}${window.location.pathname}`,
-        referrer: document.referrer,
-      };
-
-      try {
-        const response = await fetch('/traffic/event-registration', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-          keepalive: true,
-        });
-
-        if (!response.ok) throw new Error('No se pudo guardar el registro.');
-        showVideo();
-      } catch {
-        entryStatus.textContent = 'No se pudo guardar el registro. Intenta de nuevo.';
-        entryStatus.hidden = false;
-      } finally {
-        entrySubmit.disabled = false;
-        entrySubmitLabel.textContent = 'Continuar';
-      }
-    });
   </script>
+  <!-- Cloudflare Web Analytics -->
+  <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "4ae4ff73465943b788027815f6676ab3"}'></script>
+  <!-- End Cloudflare Web Analytics -->
+  <script src="/assets/scripts/traffic-tracker.js" defer></script>
 </body>
 </html>

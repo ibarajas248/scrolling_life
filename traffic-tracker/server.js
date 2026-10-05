@@ -249,9 +249,9 @@ const initDb = async () => {
       CREATE TABLE IF NOT EXISTS event_registrations (
         id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
         event_slug VARCHAR(128) NOT NULL,
-        first_name VARCHAR(120) NOT NULL,
-        last_name VARCHAR(160) NOT NULL,
-        email VARCHAR(320) NOT NULL,
+        first_name VARCHAR(120),
+        last_name VARCHAR(160),
+        email VARCHAR(320),
         registered_at DATETIME NOT NULL,
         last_submitted_at DATETIME NOT NULL,
         host VARCHAR(255) NOT NULL,
@@ -267,6 +267,15 @@ const initDb = async () => {
         INDEX idx_event_registered (event_slug, registered_at),
         INDEX idx_registration_email (email)
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+    `);
+
+    // Permite conservar accesos anónimos en la misma tabla de registros.
+    // Es idempotente y también actualiza instalaciones creadas con el esquema anterior.
+    await connection.query(`
+      ALTER TABLE event_registrations
+        MODIFY COLUMN first_name VARCHAR(120) NULL,
+        MODIFY COLUMN last_name VARCHAR(160) NULL,
+        MODIFY COLUMN email VARCHAR(320) NULL
     `);
   } finally {
     connection.release();
@@ -424,12 +433,13 @@ const collectEvent = async (req, payload) => {
 };
 
 const collectEventRegistration = async (req, payload) => {
+  const anonymous = payload.anonymous === true;
   const eventSlug = safeText(payload.eventSlug, 128);
-  const firstName = safeText(payload.firstName, 120);
-  const lastName = safeText(payload.lastName, 160);
-  const email = normalizeEmail(payload.email);
+  const firstName = anonymous ? null : safeText(payload.firstName, 120);
+  const lastName = anonymous ? null : safeText(payload.lastName, 160);
+  const email = anonymous ? null : normalizeEmail(payload.email);
 
-  if (!eventSlug || !firstName || !lastName || !emailPattern.test(email)) {
+  if (!eventSlug || (!anonymous && (!firstName || !lastName || !emailPattern.test(email)))) {
     throw Object.assign(new Error('Datos de registro incompletos o inválidos.'), { status: 400 });
   }
 
