@@ -45,7 +45,7 @@
     node.setAttribute('aria-label', `Referencia abierta: ${work.title}`);
     node.innerHTML = `
       <div class="aaaaaa-spam-popup__bar">
-        <span>PELIGRO OBRA CENSURADA</span>
+        <span>PELIGRO IMAGEN CENSURADA EN EL MUSEO NACIONAL</span>
         <button class="aaaaaa-spam-popup__close" type="button" aria-label="Cerrar ${work.title}">×</button>
       </div>
       <div class="aaaaaa-spam-popup__mini-content">
