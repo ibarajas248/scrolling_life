@@ -29,10 +29,10 @@
     window.setTimeout(() => node.remove(), 180);
   };
 
-  const spawnWindow = (layer) => {
+  const spawnWindow = (layer, selectedWork) => {
     if (createdWindows >= maxWindows) return;
 
-    const work = works[Math.floor(Math.random() * works.length)];
+    const work = selectedWork || works[Math.floor(Math.random() * works.length)];
     const details = work.details || `${work.author}<br>${work.year}`;
     createdWindows += 1;
     const node = document.createElement('aside');
@@ -69,49 +69,18 @@
     layer.append(node);
   };
 
-  const flood = (popup) => {
+  const startInvasion = () => {
     if (document.querySelector('.aaaaaa-spam-popup__layer')) return;
 
-    popup.querySelector('.aaaaaa-spam-popup__accept').disabled = true;
-    popup.querySelector('.aaaaaa-spam-popup__accept').textContent = 'Abriendo...';
     const layer = document.createElement('div');
     layer.className = 'aaaaaa-spam-popup__layer';
     document.body.append(layer);
-    window.setTimeout(() => removeWindow(popup), 90);
 
     for (let index = 0; index < 3; index += 1) {
-      window.setTimeout(() => spawnWindow(layer), 120 + (index * 150));
+      const work = index === 0 ? works[0] : undefined;
+      window.setTimeout(() => spawnWindow(layer, work), 120 + (index * 150));
     }
   };
 
-  const showPopup = () => {
-    if (document.querySelector('.aaaaaa-spam-popup')) return;
-
-    const popup = document.createElement('aside');
-    popup.className = 'aaaaaa-spam-popup';
-    popup.setAttribute('role', 'dialog');
-    popup.setAttribute('aria-label', 'Referencia de obra Libertinaje y desorden');
-    popup.innerHTML = `
-      <div class="aaaaaa-spam-popup__bar">
-        <span>PELIGRO OBRA CENSURADA</span>
-        <button class="aaaaaa-spam-popup__close" type="button" aria-label="Cerrar ventana">×</button>
-      </div>
-      <div class="aaaaaa-spam-popup__content">
-        <img class="aaaaaa-spam-popup__image" src="${basePath}hs39.png" alt="Libertinaje y desorden, Carlos Correa" />
-        <p class="aaaaaa-spam-popup__copy"><strong>Libertinaje y desorden.</strong>Carlos Correa (1912-1985) / Taller de grabado La Estampa, ca. 1960. Aguafuerte, punta seca y buril; 38 x 56 cm. Reg. 5777. Donado por la Asociación de Amigos del Museo Nacional de Colombia (27.1.2006).</p>
-      </div>
-      <div class="aaaaaa-spam-popup__actions"><button class="aaaaaa-spam-popup__accept" type="button">Aceptar</button></div>
-    `;
-
-    const close = () => {
-      popup.classList.add('is-closing');
-      window.setTimeout(() => popup.remove(), 220);
-    };
-
-    popup.querySelector('.aaaaaa-spam-popup__close').addEventListener('click', close);
-    popup.querySelector('.aaaaaa-spam-popup__accept').addEventListener('click', () => flood(popup));
-    document.body.append(popup);
-  };
-
-  window.setTimeout(showPopup, 900);
+  window.setTimeout(startInvasion, 900);
 })();
