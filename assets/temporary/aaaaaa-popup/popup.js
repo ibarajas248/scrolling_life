@@ -54,18 +54,21 @@
       </div>
       <div class="aaaaaa-spam-popup__mini-actions"><button class="aaaaaa-spam-popup__accept" type="button">Aceptar</button></div>
     `;
-    node.querySelector('.aaaaaa-spam-popup__close').addEventListener('click', () => removeWindow(node));
-    node.querySelector('.aaaaaa-spam-popup__accept').addEventListener('click', () => {
-      const accept = node.querySelector('.aaaaaa-spam-popup__accept');
-      if (accept.disabled) return;
+    const openThreeMore = () => {
+      if (node.dataset.expanding === 'true') return;
 
+      node.dataset.expanding = 'true';
+      const accept = node.querySelector('.aaaaaa-spam-popup__accept');
       accept.disabled = true;
       accept.textContent = 'Abriendo...';
       window.setTimeout(() => removeWindow(node), 80);
       for (let index = 0; index < 3; index += 1) {
         window.setTimeout(() => spawnWindow(layer), 100 + (index * 140));
       }
-    });
+    };
+
+    node.querySelector('.aaaaaa-spam-popup__close').addEventListener('click', openThreeMore);
+    node.querySelector('.aaaaaa-spam-popup__accept').addEventListener('click', openThreeMore);
     layer.append(node);
   };
 
